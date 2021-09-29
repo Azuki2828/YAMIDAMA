@@ -48,6 +48,9 @@
     <Filter Include="ExEngine\level2D">
       <UniqueIdentifier>{80abc458-e4b9-4836-89c7-3eb842072871}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MiniEngine\Animation">
+      <UniqueIdentifier>{0d2aaa2c-ed86-49c9-bdf6-7de74543087c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -158,15 +161,6 @@
     <ClCompile Include="..\..\MiniEngine\raytracing\RaytracingWorld.cpp">
       <Filter>MiniEngine\raytracing</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\MiniEngine\AnimationClip.cpp">
-      <Filter>MiniEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\MiniEngine\AnimationPlayController.cpp">
-      <Filter>MiniEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\MiniEngine\Animation.cpp">
-      <Filter>MiniEngine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ExEngine\gameObject\IGameObject.cpp">
       <Filter>ExEngine\gameObject</Filter>
     </ClCompile>
@@ -208,6 +202,18 @@
     </ClCompile>
     <ClCompile Include="..\..\ExEngine\level2D\MapChip2D.cpp">
       <Filter>ExEngine\level2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\Animation.cpp">
+      <Filter>MiniEngine\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\AnimationClip.cpp">
+      <Filter>MiniEngine\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\AnimationPlayController.cpp">
+      <Filter>MiniEngine\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,15 +340,6 @@
     <ClInclude Include="..\..\MiniEngine\raytracing\RaytracingWorld.h">
       <Filter>MiniEngine\raytracing</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\MiniEngine\AnimationClip.h">
-      <Filter>MiniEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\MiniEngine\AnimationPlayController.h">
-      <Filter>MiniEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\MiniEngine\Animation.h">
-      <Filter>MiniEngine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ExEngine\gameObject\IGameobject.h">
       <Filter>ExEngine\gameObject</Filter>
     </ClInclude>
@@ -393,6 +390,18 @@
     </ClInclude>
     <ClInclude Include="..\..\ExEngine\level2D\MapChip2D.h">
       <Filter>ExEngine\level2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\Animation.h">
+      <Filter>MiniEngine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\AnimationClip.h">
+      <Filter>MiniEngine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\AnimationPlayController.h">
+      <Filter>MiniEngine\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
