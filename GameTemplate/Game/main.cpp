@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "system/system.h"
 #include "Enemy.h"
+#include "Player.h"
 
 
 
@@ -67,6 +68,7 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 
 	// とりあえずテストで敵を追加。
 	NewGO<Enemy>(0, nullptr);
+	NewGO<Player>(0);
 
 	// ここからゲームループ。
 	while (DispatchWindowMessage())

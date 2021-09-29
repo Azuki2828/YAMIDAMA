@@ -53,7 +53,7 @@ void Enemy::Update()
 			break;
 	}
 	auto updateFunc = m_enemyPyModule.attr("Update");
-	updateFunc();
+	//updateFunc();
 }
 void Enemy::Render(RenderContext& rc)
 {
