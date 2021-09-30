@@ -332,6 +332,22 @@ public:
 	/// <param name="worldPos">ワールド座標</param>
 	void CalcScreenPositionFromWorldPosition(Vector2& screenPos, const Vector3& worldPos) const;
 
+	/**
+	 * @brief ライトカメラを生成する関数。
+	*/
+	static void CreateLightCamera() {
+
+		m_lightCamera = new Camera;
+	}
+
+	/**
+	 * @brief ライトカメラを取得する関数。
+	 * @return ライトカメラ
+	*/
+	static Camera* GetLightCamera() {
+
+		return m_lightCamera;
+	}
 protected:
 	float		m_targetToPositionLen = 1.0f;			//注視点と視点まで距離。
 	Vector3		m_position = {0.0f, 0.0f, 1.0f};		//カメラ位置。
@@ -353,4 +369,6 @@ protected:
 	EnUpdateProjMatrixFunc m_updateProjMatrixFunc = enUpdateProjMatrixFunc_Perspective;	//プロジェクション行列の更新の仕方。
 	bool		m_isNeedUpdateProjectionMatrix = true;
 	bool		m_isDirty = false;						//ダーティフラグ。
+
+	static Camera* m_lightCamera;						//影描画用のライトカメラ。
 };

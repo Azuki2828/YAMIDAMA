@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "Camera.h"
 
-
+Camera* Camera::m_lightCamera = nullptr;
 
 void Camera::Update()
 {

@@ -30,6 +30,8 @@ void ModelRender::Init() {
 	//fxファイルパスを指定。
 	m_modelInitData.m_fxFilePath = FX_FILE_PATH_MODEL;
 
+	m_modelInitData.m_expandConstantBuffer = LightManager().GetInstance()->GetLigData();
+	m_modelInitData.m_expandConstantBufferSize = sizeof(*LightManager().GetInstance()->GetLigData());
 	//スケルトンを設定。
 	if (m_skeleton.IsInited()) {
 		m_modelInitData.m_skeleton = &m_skeleton;

@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "BackGround.h"
+#include "MainCamera.h"
 
 
 
@@ -61,6 +62,8 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 	//ゲームオブジェクトマネージャーのインスタンスを作成する。
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
+
+	LightManager::CreateInstance();
 	
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで
@@ -69,10 +72,15 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 
 	// とりあえずテストで敵を追加。
 	NewGO<Enemy>(0, nullptr);
-	NewGO<Player>(0);
+	NewGO<Player>(0,"player");
 	NewGO<BackGround>(0);
+	NewGO<MainCamera>(0);
 
-	// ここからゲームループ。
+	DirectionLight* m_dir = NewGO<DirectionLight>(0);
+	m_dir->SetLigDirection({0.0f,1.0f,1.0f});
+	m_dir->SetLigColor({3.0f,3.0f,3.0f});
+
+ 	// ここからゲームループ。
 	while (DispatchWindowMessage())
 	{
 		//レンダリング開始。

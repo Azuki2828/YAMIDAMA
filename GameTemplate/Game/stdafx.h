@@ -6,6 +6,10 @@
 
 #include "ModelRender.h"
 #include "GameTime.h"
+#include "DirectionLight.h"
+#include "LightBase.h"
+#include "LightManager.h"
+#include "LightCamera.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/eval.h>
 
