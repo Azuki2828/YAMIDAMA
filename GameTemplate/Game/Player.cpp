@@ -10,6 +10,7 @@ bool Player::Start() {
 	m_animationClip.SetLoopFlag(true);
 	m_modelRender->InitAnimation(&m_animationClip, 1);
 	m_modelRender->SetAnimFlg(true);
+	m_modelRender->SetModelUpAxis(EnModelUpAxis::enModelUpAxisY);
 	m_modelRender->Init();
 	return true;
 }

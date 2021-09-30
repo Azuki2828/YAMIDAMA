@@ -9,10 +9,6 @@ namespace {
 
 void ModelRender::Init() {
 
-	//ユニティーちゃんのアニメーションに合わせるため、今だけ軸をYUpにしておく。
-	m_modelInitData.m_modelUpAxis = enModelUpAxisY;
-
-
 	//tkmファイルのロード。
 	if (m_filePathTkm != nullptr) {
 		m_modelInitData.m_tkmFilePath = m_filePathTkm;
@@ -26,10 +22,6 @@ void ModelRender::Init() {
 	if (m_filePathTks != nullptr) {
 		m_skeleton.Init(m_filePathTks);
 	}
-	else {
-		//ロードエラー。
-		MessageBox(nullptr, L"tksファイルが読み込まれていません。", L"警告", MB_OK);
-	}
 
 	//頂点シェーダーのエントリーポイントを指定。
 	m_modelInitData.m_vsEntryPointFunc = VS_ENTRY_POINT_VS_MAIN;
@@ -42,14 +34,11 @@ void ModelRender::Init() {
 	if (m_skeleton.IsInited()) {
 		m_modelInitData.m_skeleton = &m_skeleton;
 	}
-	else {
-		//エラー。
-		MessageBox(nullptr, L"スケルトンが読み込まれていません。", L"警告", MB_OK);
-	}
 
 	//モデルデータを元にモデルを初期化。
 	m_model.Init(m_modelInitData);
 
+	//アニメーションを初期化。
 	m_animation.Init(m_skeleton, m_animationClip, m_animNum);
 }
 
