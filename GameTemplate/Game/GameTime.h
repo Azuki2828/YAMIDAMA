@@ -1,25 +1,14 @@
-/*!
-*@brief	ゲーム時間クラス。
-* シングルトン。
-*/
 #pragma once
+#include "stdafx.h"
 
-#include "Stopwatch.h"
-#include <queue>
-
-class TkEngine;
-
-/*!
- *@brief	ゲーム時間。
- */
-class GameTime{
-	GameTime() 
-	{
-	}
-	~GameTime()
-	{
-	}
+class GameTime
+{
 public:
+	static GameTime& GetInstance()
+	{
+		static GameTime t;
+		return t;
+	}
 	/*!
 	 *@brief	1フレームの経過時間を取得(単位・秒)。
 	 */
@@ -49,26 +38,18 @@ public:
 	/// 本関数はエンジン内でのみ使用します。
 	/// ユーザーは使用しないでください。
 	/// </remark>
-	void BeginMeasurement()
-	{
-		//計測開始。
-		m_sw.Start();
+	//void BeginMeasurement()
+	//{
+	//	//計測開始。
+	//	m_sw.Start();
+	//}
+	static GameTime& GameTimeFunc() {
+
+		return GameTime::GetInstance();
 	}
-	/// <summary>
-	/// 計測終了
-	/// </summary>
-	/// <remark>
-	/// 本関数はエンジン内でのみ使用します。
-	/// ユーザーは使用しないでください。
-	/// </remark>
-	void EndMeasurement()
-	{
-		m_sw.Stop();
-		PushFrameDeltaTime(m_sw.GetElapsed());
-	}
-private:
-	friend class TkEngine;
-	Stopwatch m_sw;
+
+	private:
 	std::list<float> m_frameDeltaTimeQue;
 	float		m_frameDeltaTime = 1.0f / 60.0f;		//1フレームの経過時間。
 };
+

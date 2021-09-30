@@ -9,6 +9,10 @@ namespace {
 
 void ModelRender::Init() {
 
+	//ユニティーちゃんのアニメーションに合わせるため、今だけ軸をYUpにしておく。
+	m_modelInitData.m_modelUpAxis = enModelUpAxisY;
+
+
 	//tkmファイルのロード。
 	if (m_filePathTkm != nullptr) {
 		m_modelInitData.m_tkmFilePath = m_filePathTkm;
@@ -45,12 +49,19 @@ void ModelRender::Init() {
 
 	//モデルデータを元にモデルを初期化。
 	m_model.Init(m_modelInitData);
+
+	m_animation.Init(m_skeleton, m_animationClip, m_animNum);
 }
 
 void ModelRender::Update() {
 
 	//スケルトンを更新。
 	m_skeleton.Update(m_model.GetWorldMatrix());
+
+	//アニメーションを進める。
+	if (m_animFlg) {
+		m_animation.Progress(GameTime().GameTimeFunc().GetFrameDeltaTime());
+	}
 
 	//モデルの情報を更新。
 	m_model.UpdateWorldMatrix(

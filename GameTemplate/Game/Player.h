@@ -8,5 +8,6 @@ public:
 
 private:
 	ModelRender* m_modelRender = nullptr;
+	AnimationClip m_animationClip;
 };
 

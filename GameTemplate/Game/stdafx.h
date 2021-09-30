@@ -5,6 +5,7 @@
 #include "ExEngine.h"
 
 #include "ModelRender.h"
+#include "GameTime.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/eval.h>
 
