@@ -2,14 +2,23 @@
 #pragma once
 
 #include "Texture.h"
+#include "../GameTemplate/Game/ConstValue.h"
 
 class GraphicsEngine;
+
+enum EnRenderTargetList {
+	enMainRT,
+	enLuminanceRT,
+
+	enRenderTargetNum
+};
 
 /// <summary>
 /// レンダリングターゲット。
 /// </summary>
 class RenderTarget {
 public:
+	~RenderTarget();
 	/// <summary>
 	/// レンダリングターゲットの作成。
 	/// </summary>
@@ -29,6 +38,41 @@ public:
 		DXGI_FORMAT depthStencilFormat,
 		float clearColor[4] = nullptr
 	);
+
+	static void CreateMainRenderTarget() {
+
+		m_renderTarget[enMainRT] = new RenderTarget;
+
+		m_renderTarget[enMainRT]->Create(
+			RENDER_TARGET_W1280H720.x,
+			RENDER_TARGET_W1280H720.y,
+			MIP_LEVEL1,
+			RENDER_ARRAY_SIZE1,
+			// 【注目】カラーバッファーのフォーマットを32bit浮動小数点にしている
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
+		);
+	}
+
+	static void CreateLuminanceRenderTarget() {
+
+		m_renderTarget[enLuminanceRT] = new RenderTarget;
+
+		m_renderTarget[enLuminanceRT]->Create(
+			RENDER_TARGET_W1280H720.x,       // 解像度はメインレンダリングターゲットと同じ
+			RENDER_TARGET_W1280H720.y,        // 解像度はメインレンダリングターゲットと同じ
+			MIP_LEVEL1,
+			RENDER_ARRAY_SIZE1,
+			// 【注目】カラーバッファーのフォーマットを32bit浮動小数点にしている
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
+		);
+	}
+
+	static RenderTarget* GetRenderTarget(EnRenderTargetList renderTarget) {
+
+		return m_renderTarget[renderTarget];
+	}
 	/// <summary>
 	/// CPU側のレンダリングターゲットのディスクリプタハンドルを取得。
 	/// </summary>
@@ -76,6 +120,14 @@ public:
 	int GetHeight() const
 	{
 		return m_height;
+	}
+	/// <summary>
+	/// カラーバッファのフォーマットを取得。
+	/// </summary>
+	/// <returns></returns>
+	DXGI_FORMAT GetColorBufferFormat() const
+	{
+		return m_renderTargetTexture.GetFormat();
 	}
 	const float* GetRTVClearColor() const
 	{
@@ -136,6 +188,7 @@ private:
 	/// <returns>trueが返ってｋチアら成功。</returns>
 	void CreateDescriptor(ID3D12Device5*& d3dDevice);
 private:
+	static RenderTarget* m_renderTarget[enRenderTargetNum];
 	Texture m_renderTargetTexture;
 	ID3D12Resource* m_renderTargetTextureDx12;	//レンダリングターゲットとなるテクスチャ。
 	ID3D12Resource* m_depthStencilTexture;		//深度ステンシルバッファとなるテクスチャ。

@@ -136,7 +136,6 @@ private:
 	const char* m_filePathTkm = nullptr;		//tkmファイルパス
 	const char* m_filePathTks = nullptr;		//tksファイルパス
 
-
 	Vector3 m_pos = Vector3::Zero;				//座標
 	Quaternion m_rot = Quaternion::Identity;	//回転率
 	Vector3 m_sca = Vector3::One;				//拡大率

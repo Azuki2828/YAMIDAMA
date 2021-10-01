@@ -41,7 +41,6 @@ void PostEffect::InitLuminance(RenderTarget& renderTarget) {
 
 void PostEffect::InitGaussianBlur(RenderTarget& renderTarget) {
 
-	//GaussianBlur gaussianBlur[4];
 
 	gaussianBlur[0].Init(&renderTarget.GetRenderTargetTexture());
 	gaussianBlur[1].Init(&gaussianBlur[0].GetBokeTexture());

@@ -2,6 +2,8 @@
 #include "RenderTarget.h"
 #include "GraphicsEngine.h"
 
+RenderTarget* RenderTarget::m_renderTarget[enRenderTargetNum] = { nullptr };
+
 RenderTarget::~RenderTarget()
 {
 	if (m_renderTargetTextureDx12) {

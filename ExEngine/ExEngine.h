@@ -14,3 +14,4 @@
 
 #include "gameObject/GameObjectManager.h"
 #include "gameObject/IGameObject.h"
+#include "../GameTemplate/Game/ConstValue.h"
