@@ -43,7 +43,7 @@ public:
 	 * @brief ディレクションライトを取得。
 	 * @return ディレクションライト
 	*/
-	Vector3* GetLigDirection() { 
+	const Vector3* GetLigDirection() { 
 		return &m_dirLigData.Dir;
 	}
 

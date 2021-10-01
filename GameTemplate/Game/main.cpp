@@ -76,9 +76,21 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 	NewGO<BackGround>(0);
 	NewGO<MainCamera>(0);
 
-	DirectionLight* m_dir = NewGO<DirectionLight>(0);
-	m_dir->SetLigDirection({0.0f,1.0f,1.0f});
-	m_dir->SetLigColor({3.0f,3.0f,3.0f});
+	DirectionLight* dirLight = NewGO<DirectionLight>(0);
+	dirLight->SetLigDirection({0.0f,1.0f,1.0f});
+	dirLight->SetLigColor({3.0f,3.0f,3.0f});
+
+	PointLight* poiLight = NewGO<PointLight>(0);
+	poiLight->SetPosition({ 100.0f,100.0f,0.0f });
+	poiLight->SetColor({ 5.0f,0.0f,0.0f });
+	poiLight->SetRange(200.0f);
+	poiLight->SetAffectPowParam(3.0f);
+
+	PointLight* poiLight2 = NewGO<PointLight>(0);
+	poiLight2->SetPosition({ -100.0f,100.0f,0.0f });
+	poiLight2->SetColor({ 0.0f,0.0f,5.0f });
+	poiLight2->SetRange(200.0f);
+	poiLight2->SetAffectPowParam(3.0f);
 
  	// ここからゲームループ。
 	while (DispatchWindowMessage())

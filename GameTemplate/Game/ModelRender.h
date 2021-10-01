@@ -63,7 +63,7 @@ public:
 	 * @param rot ‰ñ“]
 	 * @param sca Šg‘å—¦
 	*/
-	void UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 sca)
+	void UpdateWorldMatrix(const Vector3& pos, const Quaternion& rot, const Vector3& sca)
 	{
 		m_model.UpdateWorldMatrix(pos, rot, sca);
 	}
@@ -88,7 +88,7 @@ public:
 	 * @brief À•W‚ğæ“¾‚·‚éŠÖ”B
 	 * @return À•W
 	*/
-	Vector3 GetPosition() {
+	const Vector3& GetPosition()const {
 
 		return m_pos;
 	}
@@ -106,7 +106,7 @@ public:
 	 * @brief ‰ñ“]—¦‚ğæ“¾‚·‚éŠÖ”B
 	 * @return ‰ñ“]—¦
 	*/
-	Quaternion GetRotation() {
+	const Quaternion& GetRotation()const {
 
 		return m_rot;
 	}
@@ -124,7 +124,7 @@ public:
 	 * @brief Šg‘å—¦‚ğæ“¾‚·‚éŠÖ”B
 	 * @return Šg‘å—¦
 	*/
-	Vector3 GetScale() {
+	const Vector3& GetScale()const {
 
 		return m_sca;
 	}

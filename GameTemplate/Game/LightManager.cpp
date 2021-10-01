@@ -38,12 +38,37 @@ void LightManager::AddLight(LightBase* light) {
 			}
 		}
 		else {
-			//既に登録されてるよ。
+			//既に登録されている。
 			MessageBoxA(nullptr, "既に登録されています", "エラー", MB_OK);
 			return;
 		}
 	}
+	//ポイントライトだったら
+	else if (typeInfo == typeid(PointLight)) {
 
+		//登録済みか調べる。
+		auto findIt = std::find(m_pointLights.begin(), m_pointLights.end(), light->GetLigData());
+		if (findIt == m_pointLights.end()) {
+			//新規登録。
+			m_pointLights.push_back(reinterpret_cast<PointLigData*>(light->GetLigData()));
+
+			int a = 0;
+			std::list<PointLigData*>::iterator itr;
+			itr = m_pointLights.begin();
+
+			for (auto itr = m_pointLights.begin(); itr != m_pointLights.end(); ++itr) {
+
+				m_ligData.pointLigData[a] = *(*itr);
+				a++;
+			}
+			m_ligData.pointLightNum++;
+		}
+		else {
+			//既に登録されている。
+			MessageBoxA(nullptr, "既に登録されています", "エラー", MB_OK);
+			return;
+		}
+	}
 }
 
 void LightManager::RemoveLight(LightBase* light)
@@ -72,10 +97,29 @@ void LightManager::RemoveLight(LightBase* light)
 			a++;
 		}
 	}
+	//ポイントライトだったら
+	else if (typeInfo == typeid(PointLight)) {
+
+		//ライトを削除
+		m_pointLights.erase(
+			std::remove(m_pointLights.begin(), m_pointLights.end(), light->GetLigData()),
+			m_pointLights.end()
+		);
+
+		int a = 0;
+
+		for (auto itr = m_pointLights.begin(); itr != m_pointLights.end(); ++itr) {
+
+			m_ligData.pointLigData[a] = *(*itr);
+			a++;
+		}
+		m_ligData.pointLightNum--;
+	}
 }
 void LightManager::RemoveLightAll()
 {
 	m_directionLights.clear();
+	m_pointLights.clear();
 }
 void LightManager::Update() {
 
@@ -84,10 +128,6 @@ void LightManager::Update() {
 	//ライトカメラからプロジェクション行列を取得。
 	m_lightManager->m_ligData.m_viewProj = Camera::GetLightCamera()->GetViewProjectionMatrix();
 
-	////ライトの環境光は0.3fに設定
-	//m_ligData.ambient.Set(0.3f, 0.3f, 0.3f);
-
-
 	for (auto itr = m_directionLights.begin(); itr != m_directionLights.end(); ++itr) {
 
 		int a = 0;
@@ -95,4 +135,10 @@ void LightManager::Update() {
 		a++;
 	}
 
+	for (auto itr = m_pointLights.begin(); itr != m_pointLights.end(); ++itr) {
+
+		int a = 0;
+		m_ligData.pointLigData[a] = *(*itr);
+		a++;
+	}
 }

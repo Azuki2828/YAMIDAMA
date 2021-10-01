@@ -5,11 +5,14 @@
 #include "LightBase.h"
 
 static const int MAX_DIRECTION_LIGHT = 4;	//ディレクションライトの上限数
+static const int MAX_POINT_LIGHT = 100;
 
 struct LigData {
-	DirectionLigData directionLigData[MAX_DIRECTION_LIGHT];		//すべてのモデルが受けるディレクションライトのデータ
-	Matrix m_viewProj;											//プロジェクション行列
+	DirectionLigData directionLigData[MAX_DIRECTION_LIGHT];		//ディレクションライトのデータ
+	PointLigData pointLigData[MAX_POINT_LIGHT];					//ポイントライトのデータ
 	Vector3 eyePos = Vector3::Zero;								//視点の座標
+	int pointLightNum = 0;										//ポイントライトの総数
+	Matrix m_viewProj;											//プロジェクション行列
 };
 
 class LightManager
@@ -58,5 +61,6 @@ private:
 	LigData m_ligData;									//ライトのデータ
 	static LightManager* m_lightManager;				//ライトマネージャーのインスタンス
 	std::list<DirectionLigData*> m_directionLights;		//ディレクションライトのデータ
+	std::list<PointLigData*> m_pointLights;		//ディレクションライトのデータ
 };
 

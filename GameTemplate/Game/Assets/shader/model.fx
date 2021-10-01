@@ -3,6 +3,7 @@
  */
 
 static const int MAX_DIRECTION_LIGHT = 4;
+static const int MAX_POINT_LIGHT = 100;
 static const float PI = 3.1415926f;         // π
 
 struct DirectionLight {
@@ -10,10 +11,18 @@ struct DirectionLight {
 	float4 color;
 };
 
+struct PointLight {
+	float3 pos;
+	float4 color;
+	float2 attn;
+};
+
 cbuffer LightCb : register(b1) {
 	DirectionLight directionLight[MAX_DIRECTION_LIGHT];
-	float4 proj;
+	PointLight pointLight[MAX_POINT_LIGHT];
 	float3 eyePos;
+	int pointLightNum;
+	float4 proj;
 }
 ////////////////////////////////////////////////
 // 定数バッファ。
@@ -74,6 +83,35 @@ float3 GetNormal(float3 normal, float3 tangent, float3 biNormal, float2 uv)
 	float3 newNormal = tangent * binSpaceNormal.x + biNormal * binSpaceNormal.y + normal * binSpaceNormal.z;
 
 	return newNormal;
+}
+
+/// ランバート拡散反射光を計算する。
+float3 CalcLambertDiffuse(float3 lightDirection, float3 lightColor, float3 normal)
+{
+	//ピクセルの法線とライトの方向の内積を計算する。
+	float t = dot(normal, lightDirection) * -1.0f;
+	//内積の値を0以上の値にする。
+	t = max(0.0f, t);
+	//拡散反射光を計算する。
+	return lightColor * t;
+}
+
+/// フォン鏡面反射光を計算する。
+float3 CalcPhongSpecular(float3 lightDirection, float3 lightColor, float3 worldPos, float3 normal)
+{
+	//反射ベクトルを求める。
+	float3 refVec = reflect(lightDirection, normal);
+	//光が当たったサーフェイスから視点に伸びるベクトルを求める。
+	float3 toEye = eyePos - worldPos;
+	toEye = normalize(toEye);
+	//鏡面反射の強さを求める。
+	float t = dot(refVec, toEye);
+	//鏡面反射の強さを0以上の数値にする。
+	t = max(0.0f, t);
+	//鏡面反射の強さを絞る。
+	t = pow(t, 5.0f);
+	//鏡面反射光を求める。
+	return lightColor * t;
 }
 
 // ベックマン分布を計算する
@@ -249,33 +287,60 @@ SPSIn VSSkinMain( SVSIn vsIn )
 /// </summary>
 float4 PSMain( SPSIn psIn ) : SV_Target0
 {
+	//アルベドカラー
 	float4 albedoColor = g_albedo.Sample(g_sampler, psIn.uv);
+
 	// スペキュラカラー(鏡面反射光)
 	float3 specColor = g_specularMap.SampleLevel(g_sampler, psIn.uv, 0).rgb;
+
+	//金属度
 	float metaric = g_specularMap.Sample(g_sampler, psIn.uv).a;
 
+	//視点
 	float3 toEye = normalize(eyePos - psIn.worldPos);
-	float3 lig;
 
-	for (int ligNo = 0; ligNo < MAX_DIRECTION_LIGHT; ligNo++) {
+	//ライト
+	float3 lig = float3(0.0f, 0.0f, 0.0f);
 
-		float diffuseFromFresnel = CalcDiffuseFromFresnel(psIn.normal, -directionLight[ligNo].dir, toEye, 1.0f - 0.5f);
+	//ディレクションライトの計算。
+	for (int dirLigNo = 0; dirLigNo < MAX_DIRECTION_LIGHT; dirLigNo++) {
 
-		float NdotL = saturate(dot(psIn.normal, -directionLight[ligNo].dir));
+		float diffuseFromFresnel = CalcDiffuseFromFresnel(psIn.normal, -directionLight[dirLigNo].dir, toEye, 1.0f - 0.5f);
 
-		float3 lambertDiffuse = directionLight[ligNo].color * NdotL / PI;
+		float NdotL = saturate(dot(psIn.normal, -directionLight[dirLigNo].dir));
 
-		float3 diffuse = albedoColor * diffuseFromFresnel * lambertDiffuse;
+		float3 lambertDiffuse = directionLight[dirLigNo].color * NdotL / PI;
 
-		float3 spec = CookTorranceSpecular(-directionLight[ligNo].dir,
-			toEye, psIn.normal, metaric, 1.0f - 0.5f) * directionLight[ligNo].color;
+		float3 dirDiffuse = albedoColor * diffuseFromFresnel * lambertDiffuse;
 
-		spec *= lerp(float3(1.0f, 1.0f, 1.0f), specColor, 0.5f);
+		float3 dirSpec = CookTorranceSpecular(-directionLight[dirLigNo].dir,
+			toEye, psIn.normal, metaric, 1.0f - 0.5f) * directionLight[dirLigNo].color;
 
-		//鏡面反射率を使って、拡散反射光と鏡面反射光を合成する
-		// 
-		//return float4(diffuse, 1.0f);
-		lig += diffuse * (1.0f - 0.5f) + spec * 0.5f;
+		dirSpec *= lerp(float3(1.0f, 1.0f, 1.0f), specColor, 0.5f);
+
+		lig += dirDiffuse * (1.0f - 0.5f) + dirSpec * 0.5f;
+	}
+
+	//ポイントライトの計算。
+	for (int poiLigNo = 0; poiLigNo < pointLightNum; poiLigNo++) {
+
+		float3 ligDir = psIn.worldPos - pointLight[poiLigNo].pos;
+		ligDir = normalize(ligDir);
+
+		float3 poiDiffuse = CalcLambertDiffuse(ligDir, pointLight[poiLigNo].color, psIn.normal);
+		
+		float3 poiSpec = CalcPhongSpecular(ligDir, pointLight[poiLigNo].color, psIn.worldPos, psIn.normal);
+		
+		float3 distance = length(psIn.worldPos - pointLight[poiLigNo].pos);
+
+		float affect = max(0.0f, 1.0f - 1.0f / pointLight[poiLigNo].attn.x * distance);
+
+		affect = pow(affect, pointLight[poiLigNo].attn.y);
+
+		poiDiffuse *= affect;
+		poiSpec *= affect;
+
+		lig += poiDiffuse * (1.0f - 0.5f) + poiSpec * 0.5f;
 	}
 
 	lig += float3(0.3f,0.3f,0.3f) * albedoColor;

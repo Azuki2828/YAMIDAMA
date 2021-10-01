@@ -6,7 +6,7 @@ public:
 	bool Start()override final;
 	void Update()override final;
 
-	Vector3 GetPosition() {
+	const Vector3& GetPosition()const {
 
 		return m_pos;
 	}

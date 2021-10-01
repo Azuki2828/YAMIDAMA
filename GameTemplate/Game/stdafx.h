@@ -7,6 +7,7 @@
 #include "ModelRender.h"
 #include "GameTime.h"
 #include "DirectionLight.h"
+#include "PointLight.h"
 #include "LightBase.h"
 #include "LightManager.h"
 #include "LightCamera.h"
