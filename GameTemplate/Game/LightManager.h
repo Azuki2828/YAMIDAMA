@@ -5,7 +5,7 @@
 #include "LightBase.h"
 
 static const int MAX_DIRECTION_LIGHT = 4;	//ディレクションライトの上限数
-static const int MAX_POINT_LIGHT = 100;
+static const int MAX_POINT_LIGHT = 100;		//ポイントライトの上限数
 
 struct LigData {
 	DirectionLigData directionLigData[MAX_DIRECTION_LIGHT];		//ディレクションライトのデータ
@@ -61,6 +61,6 @@ private:
 	LigData m_ligData;									//ライトのデータ
 	static LightManager* m_lightManager;				//ライトマネージャーのインスタンス
 	std::list<DirectionLigData*> m_directionLights;		//ディレクションライトのデータ
-	std::list<PointLigData*> m_pointLights;		//ディレクションライトのデータ
+	std::list<PointLigData*> m_pointLights;				//ポイントライトのデータ
 };
 

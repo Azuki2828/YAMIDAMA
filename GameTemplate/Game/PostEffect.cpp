@@ -3,10 +3,6 @@
 
 bool PostEffect::Start() {
 
-	//for (int i = 0; i < 2; i++) {
-	//	m_sprite[i] = std::make_unique;
-	//}
-
 	return true;
 }
 void PostEffect::InitLuminance(RenderTarget& renderTarget) {
@@ -34,27 +30,25 @@ void PostEffect::InitLuminance(RenderTarget& renderTarget) {
 	luminanceSpriteInitData.m_colorBufferFormat = DXGI_FORMAT_R32G32B32A32_FLOAT;
 
 	// 作成した初期化情報をもとにスプライトを初期化する
-	sprite[0].Init(luminanceSpriteInitData);
-	//Sprite luminanceSprite;
-	//luminanceSprite.Init(luminanceSpriteInitData);
+	m_sprite[0].Init(luminanceSpriteInitData);
 }
 
 void PostEffect::InitGaussianBlur(RenderTarget& renderTarget) {
 
-
-	gaussianBlur[0].Init(&renderTarget.GetRenderTargetTexture());
-	gaussianBlur[1].Init(&gaussianBlur[0].GetBokeTexture());
-	gaussianBlur[2].Init(&gaussianBlur[1].GetBokeTexture());
-	gaussianBlur[3].Init(&gaussianBlur[2].GetBokeTexture());
+	//
+	m_gaussianBlur[0].Init(&renderTarget.GetRenderTargetTexture());
+	m_gaussianBlur[1].Init(&m_gaussianBlur[0].GetBokeTexture());
+	m_gaussianBlur[2].Init(&m_gaussianBlur[1].GetBokeTexture());
+	m_gaussianBlur[3].Init(&m_gaussianBlur[2].GetBokeTexture());
 
 	// step-2 ボケ画像を合成して書き込むためのスプライトを初期化
 
 	SpriteInitData finalSpriteInitData;
 
-	finalSpriteInitData.m_textures[0] = &gaussianBlur[0].GetBokeTexture();
-	finalSpriteInitData.m_textures[1] = &gaussianBlur[1].GetBokeTexture();
-	finalSpriteInitData.m_textures[2] = &gaussianBlur[2].GetBokeTexture();
-	finalSpriteInitData.m_textures[3] = &gaussianBlur[3].GetBokeTexture();
+	finalSpriteInitData.m_textures[0] = &m_gaussianBlur[0].GetBokeTexture();
+	finalSpriteInitData.m_textures[1] = &m_gaussianBlur[1].GetBokeTexture();
+	finalSpriteInitData.m_textures[2] = &m_gaussianBlur[2].GetBokeTexture();
+	finalSpriteInitData.m_textures[3] = &m_gaussianBlur[3].GetBokeTexture();
 
 	finalSpriteInitData.m_width = 1280;
 	finalSpriteInitData.m_height = 720;
@@ -65,7 +59,5 @@ void PostEffect::InitGaussianBlur(RenderTarget& renderTarget) {
 	finalSpriteInitData.m_alphaBlendMode = AlphaBlendMode_Add;
 	finalSpriteInitData.m_colorBufferFormat = DXGI_FORMAT_R32G32B32A32_FLOAT;
 
-	sprite[1].Init(finalSpriteInitData);
-	//Sprite finalSprite;
-	//finalSprite.Init(finalSpriteInitData);
+	m_sprite[1].Init(finalSpriteInitData);
 }

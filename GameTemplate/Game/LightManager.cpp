@@ -118,6 +118,7 @@ void LightManager::RemoveLight(LightBase* light)
 }
 void LightManager::RemoveLightAll()
 {
+	//ƒ‰ƒCƒg‚ğ‚·‚×‚Äíœ‚·‚éB
 	m_directionLights.clear();
 	m_pointLights.clear();
 }
@@ -135,10 +136,10 @@ void LightManager::Update() {
 		a++;
 	}
 
-	for (auto itr = m_pointLights.begin(); itr != m_pointLights.end(); ++itr) {
-
-		int a = 0;
-		m_ligData.pointLigData[a] = *(*itr);
-		a++;
-	}
+	//for (auto itr = m_pointLights.begin(); itr != m_pointLights.end(); itr++) {
+	//
+	//	int a = 0;
+	//	m_ligData.pointLigData[a] = *(*itr);
+	//	a++;
+	//}
 }
