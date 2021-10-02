@@ -68,6 +68,7 @@ Texture2D<float4> g_albedo : register(t0);				//アルベドマップ
 Texture2D<float4> g_normalMap : register(t1);   // 法線マップ
 Texture2D<float4> g_specularMap : register(t2); // スペキュラマップ。rgbにスペキュラカラー、aに金属度
 StructuredBuffer<float4x4> g_boneMatrix : register(t3);	//ボーン行列。
+Texture2D<float4> g_shadowMap : register(t10);	//シャドウマップ。
 sampler g_sampler : register(s0);	//サンプラステート。
 
 ////////////////////////////////////////////////
@@ -258,7 +259,7 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	}
 	psIn.pos = mul(m, vsIn.pos);
 	psIn.worldPos = psIn.pos;
-	psIn.pos = mul(mView, psIn.pos);
+	psIn.pos = mul(mView, float4(psIn.worldPos, 1.0f));
 	psIn.pos = mul(mProj, psIn.pos);
 	psIn.normal = normalize(mul(mWorld, vsIn.normal));
 	psIn.tangent = normalize(mul(mWorld, vsIn.tangent));
@@ -347,5 +348,31 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 
 	float4 finalColor = albedoColor;
 	finalColor.xyz = lig;
+
+
+
+	float4 posInLVP = mul(mLVP, float4(psIn.worldPos, 1.0f));
+	
+	//ライトビューの座標系を.wで割ることで正規化スクリーン座標系に変換できる。(重要)
+	float2 shadowMapUV = posInLVP.xy / posInLVP.w;
+
+	//ライトビュースクリーン空間からUV空間に座標変換。
+	shadowMapUV *= float2(0.5f, -0.5f);
+	shadowMapUV += 0.5f;
+
+	// ライトビュースクリーン空間でのZ値を計算する。
+	float zInLVP = posInLVP.z / posInLVP.w;
+
+	if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
+		&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
+		&& zInLVP > 0.0f && zInLVP < 1.0f
+		) {
+		//シャドウマップに描き込まれているZ値と比較する。
+		float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
+		if (zInLVP > zInShadowMap) {
+			finalColor.xyz *= 0.5f;
+		}
+	}
+
 	return finalColor;
 }

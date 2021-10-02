@@ -67,6 +67,8 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 
 	RenderTarget::CreateMainRenderTarget();
 	RenderTarget::CreateLuminanceRenderTarget();
+	RenderTarget::CreateShadowMap();
+	Camera::CreateLightCamera();
 	
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで
@@ -98,6 +100,15 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 	PostEffect* postEffect = NewGO<PostEffect>(0);
 	postEffect->InitLuminance(*RenderTarget::GetRenderTarget(enMainRT));
 	postEffect->InitGaussianBlur(*RenderTarget::GetRenderTarget(enLuminanceRT));
+
+	/*SpriteInitData spriteInitData;
+	spriteInitData.m_textures[0] = &RenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
+	spriteInitData.m_fxFilePath = SPRITE_SHADER_MONOCHROME_FILE_PATH;
+	spriteInitData.m_width = 256;
+	spriteInitData.m_height = 256;
+
+	Sprite sprite;
+	sprite.Init(spriteInitData);*/
  	// ここからゲームループ。
 	while (DispatchWindowMessage())
 	{
@@ -122,8 +133,25 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 		m_copyToMainRenderTargetSprite.Init(copyToMainRenderTargetSpriteInitData);
 
 		GameObjectManager::GetInstance()->ExecuteUpdate();
+		LightManager::GetInstance()->Update();
 
 
+		renderContext.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Shadow);
+
+		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
+
+		renderContext.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enShadowMap));
+
+		renderContext.ClearRenderTargetView(*RenderTarget::GetRenderTarget(enShadowMap));
+
+		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
+
+		renderContext.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
+
+
+
+
+		renderContext.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Normal);
 
 		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
 
@@ -176,6 +204,9 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
 		);
 		m_copyToMainRenderTargetSprite.Draw(renderContext);
+
+		//sprite.Update({ FRAME_BUFFER_W / -2.0f, FRAME_BUFFER_H / 2.0f,  0.0f }, g_quatIdentity, g_vec3One, { 0.0f, 1.0f });
+		//sprite.Draw(renderContext);
 
 		g_engine->EndFrame();
 	}

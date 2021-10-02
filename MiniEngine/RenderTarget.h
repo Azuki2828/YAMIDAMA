@@ -9,6 +9,7 @@ class GraphicsEngine;
 enum EnRenderTargetList {
 	enMainRT,
 	enLuminanceRT,
+	enShadowMap,
 
 	enRenderTargetNum
 };
@@ -66,6 +67,22 @@ public:
 			// 【注目】カラーバッファーのフォーマットを32bit浮動小数点にしている
 			DXGI_FORMAT_R32G32B32A32_FLOAT,
 			DXGI_FORMAT_D32_FLOAT
+		);
+	}
+
+	static void CreateShadowMap() {
+
+		m_renderTarget[enShadowMap] = new RenderTarget;
+
+		float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
+		m_renderTarget[enShadowMap]->Create(
+			1024,
+			1024,
+			1,
+			1,
+			DXGI_FORMAT_R32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT,
+			clearColor
 		);
 	}
 

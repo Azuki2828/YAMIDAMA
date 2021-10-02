@@ -8,6 +8,7 @@ bool BackGround::Start() {
 	m_modelRender->SetPosition(m_pos);
 	m_modelRender->SetRotation(m_rot);
 	m_modelRender->SetScale(m_sca);
+	m_modelRender->SetShadowReceiverFlag(true);
 	m_modelRender->Init();
 	m_modelRender->Update();
 	return true;

@@ -129,6 +129,28 @@ public:
 		return m_sca;
 	}
 
+	/**
+	 * @brief シャドウキャスターフラグを設定する関数。
+	 * @param flg シャドウキャスターフラグ。
+	*/
+	void SetShadowCasterFlag(bool flg) {
+
+		m_shadowCasterFlag = flg;
+	}
+
+	/**
+	 * @brief シャドウレシーバーフラグを設定する関数。
+	 * @param flg シャドウレシーバーフラグ
+	*/
+	void SetShadowReceiverFlag(bool flg) {
+
+		m_shadowReceiverFlag = flg;
+	}
+
+	/**
+	 * @brief モデルの上軸を設定する関数。
+	 * @param modelUpAxis 上にしたい軸
+	*/
 	void SetModelUpAxis(EnModelUpAxis modelUpAxis) {
 		m_modelInitData.m_modelUpAxis = modelUpAxis;
 	}
@@ -136,11 +158,15 @@ private:
 	const char* m_filePathTkm = nullptr;		//tkmファイルパス
 	const char* m_filePathTks = nullptr;		//tksファイルパス
 
+	bool m_shadowCasterFlag = false;			//シャドウキャスターフラグ。
+	bool m_shadowReceiverFlag = false;			//シャドウレシーバーフラグ。
+
 	Vector3 m_pos = Vector3::Zero;				//座標
 	Quaternion m_rot = Quaternion::Identity;	//回転率
 	Vector3 m_sca = Vector3::One;				//拡大率
 
 	Model m_model;								//モデル
+	Model m_shadowModel;						//シャドウ作成用のモデル。
 	ModelInitData m_modelInitData;				//モデルデータ
 	Skeleton m_skeleton;						//スケルトン
 

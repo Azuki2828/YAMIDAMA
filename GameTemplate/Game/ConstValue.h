@@ -54,6 +54,7 @@ namespace {
 	const char* SPRITE_SHADER_FILE_PATH = "Assets/shader/defferdLighting.fx";		//スプライトシェーダーのファイルパス
 	const char* SPRITE_SHADER_MONOCHROME_FILE_PATH = "Assets/shader/sample2D.fx";	//モノクロ表示用のシェーダーのファイルパス
 	const char* HUD_FILE_PATH = "Assets/shader/sprite.fx";
+	const char* FX_FILE_PATH_SHADOW_MAP = "Assets/shader/sampleDrawShadowMap.fx";
 
 	const int INITIALIZE_TIME = 0;
 	const int REST_INITIAL_TIME = 0;		//スピンロック時の待ちタイムの初期時間

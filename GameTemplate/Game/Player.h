@@ -15,6 +15,6 @@ private:
 	ModelRender* m_modelRender = nullptr;
 	AnimationClip m_animationClip;
 
-	Vector3 m_pos = Vector3::Zero;
+	Vector3 m_pos = {0.0f,0.0f,0.0f};
 };
 

@@ -13,6 +13,17 @@ namespace raytracing{
 /// </summary>
 class RenderContext {
 public:
+
+	//描画モード
+	enum EnRender_Mode {
+		enRenderMode_Normal,
+		enRenderMode_Shadow,
+		enRenderMode_ZPrepass,
+		enRenderMode_Font,
+
+		enRenderMode_Num
+	};
+
 	/// <summary>
 	/// 初期化。
 	/// </summary>
@@ -395,6 +406,15 @@ public:
 		m_commandList->CopyResource(pDst, pSrc);
 	}
 	
+	void SetRenderMode(EnRender_Mode mode) {
+
+		m_renderMode = mode;
+	}
+
+	EnRender_Mode GetRenderMode() {
+
+		return m_renderMode;
+	}
 	
 private:
 
@@ -436,5 +456,6 @@ private:
 	ID3D12DescriptorHeap* m_descriptorHeaps[MAX_DESCRIPTOR_HEAP];			//ディスクリプタヒープの配列。
 	ConstantBuffer* m_constantBuffers[MAX_CONSTANT_BUFFER] = { nullptr };	//定数バッファの配列。
 	Texture* m_shaderResources[MAX_SHADER_RESOURCE] = { nullptr };			//シェーダーリソースの配列。
+	EnRender_Mode m_renderMode = enRenderMode_Normal;							//描画モード
 };
 
