@@ -1,42 +1,51 @@
 #pragma once
-#include "stdafx.h"
-GaussianBlur g_blur;
+#include "PostEffect.h"
+
 class RenderingEngine
 {
-private:
-	void CreateRenderingTarget();
-	void InitPostEffect();
-	void InitDifferdRenderingSprite();
-	void InitCopyToMainRenderTargetSprite();
-	void InitFinalSprite();
-	void DefferdRenderingExecute(RenderContext& renderContext);
-	void DefferdLightingExecute(RenderContext& renderContext);
-	void CopyToRenderTarget(RenderContext& renderContext);
-	void ExecuteDrawLuminance(RenderContext& renderContext);
-	void ExecuteGaussianBlur(RenderContext& renderContext);
-	void DrawPostEffect(RenderContext& renderContext);
-	void DrawFinalSprite(RenderContext& renderContext);
 public:
+	/**
+	 * @brief レンダリングエンジンを作成する関数。
+	*/
 	static void CreateRenderingEngine() {
+
 		m_renderingEngine = new RenderingEngine;
 	}
 
-	static RenderingEngine* GetRenderingEngine() {
+	/**
+	 * @brief レンダリングエンジンを取得する関数。
+	 * @return レンダリングエンジン
+	*/
+	static RenderingEngine* GetInstance() {
 
 		return m_renderingEngine;
 	}
 
+	/**
+	 * @brief 初期化関数。
+	*/
 	void Init();
 
-	void UpdateInstance();
-
 	void Render();
-
 private:
-	static RenderingEngine* m_renderingEngine;
+	void CreateRenderTarget();
+
+	void InitPostEffect();
+
+	void InitCopyToMainRenderTargetSprite();
+
+	void DrawShadowMap();
+
+	void DrawModel();
+
+	void ExecuteDrawLuminanceTexture();
+
+	void ExecuteGaussianBlur();
+
+	void CopyToFrameBuffer();
+private:
+	static RenderingEngine* m_renderingEngine;	//レンダリングエンジンのインスタンス
 	PostEffect* m_postEffect = nullptr;
-	Sprite m_differdRenderingSprite;
 	Sprite m_copyToMainRenderTargetSprite;
-	Sprite m_finalSprite;
 };
 

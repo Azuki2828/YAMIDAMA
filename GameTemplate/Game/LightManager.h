@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "DirectionLight.h"
+#include "PointLight.h"
 #include "LightBase.h"
 
 static const int MAX_DIRECTION_LIGHT = 4;	//ディレクションライトの上限数

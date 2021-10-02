@@ -3,6 +3,7 @@
 #include "GraphicsEngine.h"
 
 RenderTarget* RenderTarget::m_renderTarget[enRenderTargetNum] = { nullptr };
+RenderTarget* RenderTarget::m_GBuffer[enGBufferNum] = { nullptr };
 
 RenderTarget::~RenderTarget()
 {

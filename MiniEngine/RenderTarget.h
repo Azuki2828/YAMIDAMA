@@ -14,6 +14,14 @@ enum EnRenderTargetList {
 	enRenderTargetNum
 };
 
+enum EnGBufferList {
+	enAlbedoAndShadowReceiverFlgMap,
+	enNormalAndDepthMap,
+	enWorldPosMap,
+
+	enGBufferNum
+};
+
 /// <summary>
 /// レンダリングターゲット。
 /// </summary>
@@ -70,6 +78,48 @@ public:
 		);
 	}
 
+	static void CreateAlbedoRenderTarget() {
+
+		m_GBuffer[enAlbedoAndShadowReceiverFlgMap] = new RenderTarget;
+
+		m_GBuffer[enAlbedoAndShadowReceiverFlgMap]->Create(
+			RENDER_TARGET_W1280H720.x,
+			RENDER_TARGET_W1280H720.y,
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			DXGI_FORMAT_D32_FLOAT
+		);
+	}
+
+	static void CreateNormalAndDepthRenderTarget() {
+
+		m_GBuffer[enNormalAndDepthMap] = new RenderTarget;
+
+		m_GBuffer[enNormalAndDepthMap]->Create(
+			RENDER_TARGET_W1280H720.x,
+			RENDER_TARGET_W1280H720.y,
+			1,
+			1,
+			DXGI_FORMAT_R16G16B16A16_SNORM,
+			DXGI_FORMAT_UNKNOWN
+		);
+	}
+
+	static void CreateWorldPosAndLigIDRenderTarget() {
+
+		m_GBuffer[enWorldPosMap] = new RenderTarget;
+
+		m_GBuffer[enWorldPosMap]->Create(
+			RENDER_TARGET_W1280H720.x,
+			RENDER_TARGET_W1280H720.y,
+			1,
+			1,
+			DXGI_FORMAT_R32G32B32A32_FLOAT, // ワールド座標を記録するので、32ビット浮動小数点バッファを利用する
+			DXGI_FORMAT_UNKNOWN
+		);
+	}
+
 	static void CreateShadowMap() {
 
 		m_renderTarget[enShadowMap] = new RenderTarget;
@@ -89,6 +139,11 @@ public:
 	static RenderTarget* GetRenderTarget(EnRenderTargetList renderTarget) {
 
 		return m_renderTarget[renderTarget];
+	}
+
+	static RenderTarget* GetGBufferRT(EnGBufferList gBufferRT) {
+
+		return m_GBuffer[gBufferRT];
 	}
 	/// <summary>
 	/// CPU側のレンダリングターゲットのディスクリプタハンドルを取得。
@@ -206,6 +261,8 @@ private:
 	void CreateDescriptor(ID3D12Device5*& d3dDevice);
 private:
 	static RenderTarget* m_renderTarget[enRenderTargetNum];
+	static RenderTarget* m_GBuffer[enGBufferNum];
+
 	Texture m_renderTargetTexture;
 	ID3D12Resource* m_renderTargetTextureDx12;	//レンダリングターゲットとなるテクスチャ。
 	ID3D12Resource* m_depthStencilTexture;		//深度ステンシルバッファとなるテクスチャ。

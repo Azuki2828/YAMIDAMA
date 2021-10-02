@@ -3,8 +3,7 @@
 
 #include "MiniEngine.h"
 #include "ExEngine.h"
-//#include "../GameTemplate/Game/PostEffect.h"
-
+#include "RenderingEngine.h"
 #include "ModelRender.h"
 #include "GameTime.h"
 #include "DirectionLight.h"

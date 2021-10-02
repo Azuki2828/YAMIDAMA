@@ -62,14 +62,12 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 	//ゲームオブジェクトマネージャーのインスタンスを作成する。
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
-
 	LightManager::CreateInstance();
-
-	RenderTarget::CreateMainRenderTarget();
-	RenderTarget::CreateLuminanceRenderTarget();
-	RenderTarget::CreateShadowMap();
 	Camera::CreateLightCamera();
+	RenderingEngine::CreateRenderingEngine();
 	
+	RenderingEngine::GetInstance()->Init();
+
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで
 	//////////////////////////////////////
@@ -97,18 +95,6 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 	poiLight2->SetRange(200.0f);
 	poiLight2->SetAffectPowParam(3.0f);
 
-	PostEffect* postEffect = NewGO<PostEffect>(0);
-	postEffect->InitLuminance(*RenderTarget::GetRenderTarget(enMainRT));
-	postEffect->InitGaussianBlur(*RenderTarget::GetRenderTarget(enLuminanceRT));
-
-	/*SpriteInitData spriteInitData;
-	spriteInitData.m_textures[0] = &RenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
-	spriteInitData.m_fxFilePath = SPRITE_SHADER_MONOCHROME_FILE_PATH;
-	spriteInitData.m_width = 256;
-	spriteInitData.m_height = 256;
-
-	Sprite sprite;
-	sprite.Init(spriteInitData);*/
  	// ここからゲームループ。
 	while (DispatchWindowMessage())
 	{
@@ -122,91 +108,13 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 		
 		//sprite[1].Update(pos[1], Quaternion::Identity, Vector3::One);
 
-		Sprite m_copyToMainRenderTargetSprite;
-		SpriteInitData copyToMainRenderTargetSpriteInitData;
-		copyToMainRenderTargetSpriteInitData.m_textures[0] = &RenderTarget::GetRenderTarget(enMainRT)->GetRenderTargetTexture();
-		copyToMainRenderTargetSpriteInitData.m_width = RENDER_TARGET_W1280H720.x;
-		copyToMainRenderTargetSpriteInitData.m_height = RENDER_TARGET_W1280H720.y;
-		copyToMainRenderTargetSpriteInitData.m_fxFilePath = SPRITE_SHADER_MONOCHROME_FILE_PATH;
-		copyToMainRenderTargetSpriteInitData.m_colorBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
-
-		m_copyToMainRenderTargetSprite.Init(copyToMainRenderTargetSpriteInitData);
-
 		GameObjectManager::GetInstance()->ExecuteUpdate();
 		LightManager::GetInstance()->Update();
 
-
-		renderContext.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Shadow);
-
-		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
-
-		renderContext.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enShadowMap));
-
-		renderContext.ClearRenderTargetView(*RenderTarget::GetRenderTarget(enShadowMap));
-
-		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
-
-		renderContext.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
-
-
-
-
-		renderContext.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Normal);
-
-		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
-
-		renderContext.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
-
-		renderContext.ClearRenderTargetView(*RenderTarget::GetRenderTarget(enMainRT));
-
-		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
-		
-		renderContext.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
-
-		{
-			auto& luminanceRenderTarget = *RenderTarget::GetRenderTarget(enLuminanceRT);
-
-			// 輝度抽出用のレンダリングターゲットに変更
-			renderContext.WaitUntilToPossibleSetRenderTarget(luminanceRenderTarget);
-
-			// レンダリングターゲットを設定
-			renderContext.SetRenderTargetAndViewport(luminanceRenderTarget);
-
-			// レンダリングターゲットをクリア
-			renderContext.ClearRenderTargetView(luminanceRenderTarget);
-
-			// 輝度抽出を行う
-			postEffect->GetLuminanceSprite().Draw(renderContext);
-
-			// レンダリングターゲットへの書き込み終了待ち
-			renderContext.WaitUntilFinishDrawingToRenderTarget(luminanceRenderTarget);
-		}
-		//ガウシアンブラーを4回実行する
-		for (int i = 0; i < GAUSSIAN_BLUR_NUM; i++) {
-
-			postEffect->GetGaussianBlurSprite(i).ExecuteOnGPU(renderContext, BLUR_POWER);
-		}
-
-		//4枚のボケ画像を合成してメインレンダリングターゲットに加算合成
-		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
-
-		renderContext.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
-
-		postEffect->GetFinalSprite().Draw(renderContext);
-
-		renderContext.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+		RenderingEngine::GetInstance()->Render();
 		//////////////////////////////////////
 		//絵を描くコードを書くのはここまで！！！
 		//////////////////////////////////////
-		// メインレンダリングターゲットの絵をフレームバッファーにコピー
-		renderContext.SetRenderTarget(
-			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
-			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
-		);
-		m_copyToMainRenderTargetSprite.Draw(renderContext);
-
-		//sprite.Update({ FRAME_BUFFER_W / -2.0f, FRAME_BUFFER_H / 2.0f,  0.0f }, g_quatIdentity, g_vec3One, { 0.0f, 1.0f });
-		//sprite.Draw(renderContext);
 
 		g_engine->EndFrame();
 	}
