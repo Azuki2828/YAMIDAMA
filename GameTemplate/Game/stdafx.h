@@ -5,6 +5,7 @@
 #include "ExEngine.h"
 #include "RenderingEngine.h"
 #include "ModelRender.h"
+#include "FontRender.h"
 #include "GameTime.h"
 #include "DirectionLight.h"
 #include "PointLight.h"

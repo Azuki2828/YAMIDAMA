@@ -1,6 +1,7 @@
 #pragma once
 #include "LightBase.h"
 
+//ポイントライトのデータ
 struct PointLigData {
 	Vector3 pos = Vector3::Zero;		//座標
 	float pad1;							//パディング
@@ -9,8 +10,12 @@ struct PointLigData {
 	Vector2 pad2;						//パディング
 };
 
+//点光源クラス
 class PointLight : public LightBase
 {
+	/**
+	 * @brief 開始処理関数。
+	*/
 	bool StartSub();
 	~PointLight();
 public:
@@ -100,14 +105,12 @@ public:
 	}
 
 	/**
-	 * @brief ライトの情報を取得。
-	 * @return ライトの情報
+	 * @brief ライトのデータを取得。
+	 * @return ライトのデータ
 	*/
 	void* GetLigData() { return &m_poiLigData; }
 
 private:
-	ConstantBuffer m_cb;					//コンスタントバッファ
-	DescriptorHeap m_ds;					//ディスクリプタヒープ
-	PointLigData m_poiLigData;				//ポイントライトの情報
+	PointLigData m_poiLigData;		//ポイントライトのデータ
 };
 

@@ -1,65 +1,66 @@
 #include "stdafx.h"
 #include "ModelRender.h"
 
-namespace {
-	constexpr const char* VS_ENTRY_POINT_VS_MAIN = "VSMain";
-	constexpr const char* VS_ENTRY_POINT_VS_SKIN_MAIN = "VSSkinMain";
-	constexpr const char* FX_FILE_PATH_MODEL = "Assets/shader/model.fx";
-}
+namespace NMyRenderer {
 
-void ModelRender::Init() {
-
-	//tkmファイルのロード。
-	if (m_filePathTkm != nullptr) {
-		m_modelInitData.m_tkmFilePath = m_filePathTkm;
-	}
-	else {
-		//ロードエラー。
-		MessageBox(nullptr, L"tkmファイルが読み込まれていません。", L"警告", MB_OK);
+	namespace {
+		constexpr const char* c_entryPointVSMain = "VSMain";
+		constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";
+		constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
 	}
 
-	//tksファイルのロード。
-	if (m_filePathTks != nullptr) {
-		m_skeleton.Init(m_filePathTks);
+	void ModelRender::Init() {
+
+		//tkmファイルとtksファイルのパスを設定。
+		SetFilePathTkmAndTks();
+
+		//頂点シェーダーのエントリーポイントを指定。
+		m_modelInitData.m_vsEntryPointFunc = c_entryPointVSMain;
+		m_modelInitData.m_vsSkinEntryPointFunc = c_entryPointVSSkinMain;
+
+		//fxファイルパスを指定。
+		m_modelInitData.m_fxFilePath = c_fxFilePath_Model;
+
+		//コンスタントバッファにモデルデータを入れる。
+		m_modelInitData.m_expandConstantBuffer = &m_sModelData;
+		m_modelInitData.m_expandConstantBufferSize = sizeof(m_sModelData);
+
+		//レジスタのt10にシャドウマップを設定。
+		m_modelInitData.m_expandShaderResoruceView = &RenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
+
+		//スケルトンを設定。
+		if (m_skeleton.IsInited()) {
+			m_modelInitData.m_skeleton = &m_skeleton;
+		}
+
+		//シャドウキャスターフラグがtrueならシャドウモデルを作成する。
+		if (m_shadowCasterFlag) { CreateShadowModel(); }
+
+		//モデルデータを元にモデルを初期化。
+		m_model.Init(m_modelInitData);
+
+		//アニメーションを初期化。
+		m_animation.Init(m_skeleton, m_animationClip, m_animNum);
 	}
 
-	//頂点シェーダーのエントリーポイントを指定。
-	m_modelInitData.m_vsEntryPointFunc = VS_ENTRY_POINT_VS_MAIN;
-	m_modelInitData.m_vsSkinEntryPointFunc = VS_ENTRY_POINT_VS_SKIN_MAIN;
+	void ModelRender::CreateShadowModel() {
 
-	//fxファイルパスを指定。
-	m_modelInitData.m_fxFilePath = FX_FILE_PATH_MODEL;
-
-	//シャドウレシーバーフラグがtrueならシャドウレシーバー専用のfxファイルを指定する。
-	if (m_shadowReceiverFlag) {
-		m_modelInitData.m_fxFilePath = "Assets/shader/shadowReceiverModel.fx";
-	}
-
-	//コンスタントバッファにライト情報を入れる。
-	m_modelInitData.m_expandConstantBuffer = LightManager().GetInstance()->GetLigData();
-	m_modelInitData.m_expandConstantBufferSize = sizeof(*LightManager().GetInstance()->GetLigData());
-
-	//レジスタのt10にシャドウマップを設定。
-	m_modelInitData.m_expandShaderResoruceView = &RenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
-
-	//スケルトンを設定。
-	if (m_skeleton.IsInited()) {
-		m_modelInitData.m_skeleton = &m_skeleton;
-	}
-
-	//シャドウキャスターフラグがtrueならシャドウモデルを作成する。
-	if (m_shadowCasterFlag) {
+		//シャドウモデルのデータを初期化。
 		ModelInitData ShadowModelInitData;
-		ShadowModelInitData.m_fxFilePath = FX_FILE_PATH_SHADOW_MAP;
+		ShadowModelInitData.m_fxFilePath = c_fxFilePath_ShadowMap;
 		ShadowModelInitData.m_tkmFilePath = m_filePathTkm;
 		ShadowModelInitData.m_colorBufferFormat = DXGI_FORMAT_R32_FLOAT;
-		ShadowModelInitData.m_vsEntryPointFunc = VS_ENTRY_POINT_VS_MAIN;
-		ShadowModelInitData.m_vsSkinEntryPointFunc = VS_ENTRY_POINT_VS_SKIN_MAIN;
+		ShadowModelInitData.m_vsEntryPointFunc = c_entryPointVSMain;
+		ShadowModelInitData.m_vsSkinEntryPointFunc = c_entryPointVSSkinMain;
 
+		//スケルトンを設定。
 		if (m_skeleton.IsInited()) {
 			ShadowModelInitData.m_skeleton = &m_skeleton;
 		}
+		//シャドウモデルを初期化。
 		m_shadowModel.Init(ShadowModelInitData);
+
+		//シャドウモデルの座標、回転率、拡大率を更新。
 		m_shadowModel.UpdateWorldMatrix(
 			m_pos,
 			m_rot,
@@ -67,52 +68,52 @@ void ModelRender::Init() {
 		);
 	}
 
-	//モデルデータを元にモデルを初期化。
-	m_model.Init(m_modelInitData);
+	void ModelRender::SetFilePathTkmAndTks() {
 
-	//アニメーションを初期化。
-	m_animation.Init(m_skeleton, m_animationClip, m_animNum);
-}
+		//tkmファイルのロード。
+		if (m_filePathTkm != nullptr) {
+			m_modelInitData.m_tkmFilePath = m_filePathTkm;
+		}
+		else {
+			//ロードエラー。
+			MessageBox(nullptr, L"tkmファイルが読み込まれていません。", L"警告", MB_OK);
+		}
 
-void ModelRender::Update() {
-
-	//スケルトンを更新。
-	m_skeleton.Update(m_model.GetWorldMatrix());
-
-	//アニメーションを進める。
-	if (m_animFlg) {
-		m_animation.Progress(GameTime().GameTimeFunc().GetFrameDeltaTime());
+		//tksファイルのロード。
+		if (m_filePathTks != nullptr) {
+			m_skeleton.Init(m_filePathTks);
+		}
 	}
 
-	//モデルの情報を更新。
-	m_model.UpdateWorldMatrix(
-		m_pos,
-		m_rot,
-		m_sca
-	);
+	void ModelRender::Update() {
 
-	//シャドウモデルの情報を更新。
-	m_shadowModel.UpdateWorldMatrix(
-		m_pos,
-		m_rot,
-		m_sca
-	);
+		//スケルトンを更新。
+		m_skeleton.Update(m_model.GetWorldMatrix());
 
-	//カメラの上方向を求める。
-	Vector3 Vec_x = Vector3::AxisX;
-	Vector3 TarPos = Camera::GetLightCamera()->GetTarget() - Camera::GetLightCamera()->GetPosition();
-	TarPos.Normalize();
-	Vector3 CameraUp;
+		//アニメーションを進める。
+		if (m_animFlg) {
+			m_animation.Progress(GameTime().GameTimeFunc().GetFrameDeltaTime());
+		}
 
-	CameraUp.Cross(TarPos, Vec_x);
-	CameraUp.Normalize();
-	Camera::GetLightCamera()->SetUp(CameraUp);
-	Camera::GetLightCamera()->Update();
-}
+		//モデルの座標、回転率、拡大率を更新。
+		m_model.UpdateWorldMatrix(
+			m_pos,
+			m_rot,
+			m_sca
+		);
 
-void ModelRender::Render(RenderContext& rc) {
+		//シャドウモデルの座標、回転率、拡大率を更新。
+		m_shadowModel.UpdateWorldMatrix(
+			m_pos,
+			m_rot,
+			m_sca
+		);
+	}
 
-	switch (rc.GetRenderMode()) {
+	void ModelRender::Render(RenderContext& rc) {
+
+		//描画モードに応じて描画するモデルを変える。
+		switch (rc.GetRenderMode()) {
 		case RenderContext::EnRender_Mode::enRenderMode_Normal:
 			//モデルを描画。
 			m_model.Draw(rc);
@@ -121,5 +122,6 @@ void ModelRender::Render(RenderContext& rc) {
 			//シャドウモデルを描画。
 			m_shadowModel.Draw(rc, *Camera::GetLightCamera());
 			break;
+		}
 	}
 }

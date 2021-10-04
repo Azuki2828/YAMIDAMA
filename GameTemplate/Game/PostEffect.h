@@ -20,18 +20,16 @@ public:
 		spriteInitData.m_height = FRAME_BUFFER_H;
 
 		// ディファードライティングで使用するテクスチャを設定
-		//spriteInitData.m_textures[0] = &RenderTarget::GetRenderTarget(enAlbedoAndShadowReceiverFlgMap)->GetRenderTargetTexture();
-		//spriteInitData.m_textures[1] = &RenderTarget::GetRenderTarget(enNormalAndDepthMap)->GetRenderTargetTexture();
-		//spriteInitData.m_textures[2] = &RenderTarget::GetRenderTarget(enWorldPosAndLigIDMap)->GetRenderTargetTexture();
-		//spriteInitData.m_textures[0] = &RenderTarget::GetRenderTarget(enMainRT)->GetRenderTargetTexture();
+		spriteInitData.m_textures[0] = &RenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[1] = &RenderTarget::GetGBufferRT(enNormalAndDepthMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[2] = &RenderTarget::GetGBufferRT(enWorldPosMap)->GetRenderTargetTexture();
 
 		spriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
 		spriteInitData.m_expandConstantBuffer = LightManager::GetInstance()->GetLigData();
 		spriteInitData.m_expandConstantBufferSize = sizeof(*LightManager::GetInstance()->GetLigData());
 
 		// 初期化データを使ってスプライトを作成
-		Sprite defferdLightinSpr;
-		defferdLightinSpr.Init(spriteInitData);
+		m_defferdLightingSprite.Init(spriteInitData);
 	}
 	void InitLuminance(RenderTarget& renderTarget);
 	Sprite& GetLuminanceSprite() { return m_sprite[0]; }
@@ -42,5 +40,6 @@ private:
 	/*SpritePtr m_sprite[2];*/
 	std::unique_ptr<Sprite[]> m_sprite = std::make_unique<Sprite[]>(2);
 	std::unique_ptr<GaussianBlur[]> m_gaussianBlur = std::make_unique<GaussianBlur[]>(4);
+	Sprite m_defferdLightingSprite;
 };
 

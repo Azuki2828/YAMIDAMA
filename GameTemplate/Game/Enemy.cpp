@@ -18,16 +18,16 @@ void GuardFunc() {
 }
 
 
-PYBIND11_MODULE(Game, m) {
-	m.def("IdleFunc", &IdleFunc);
-	m.def("AttackFunc", &AttackFunc);
-	m.def("GuardFunc", &GuardFunc);
-	
-	/*pybind11::class_<Enemy>(m, "Enemy")
-		.def(pybind11::init())
-		.def("CallTest", &Enemy::CallTest)
-		;*/
-}
+//PYBIND11_MODULE(Game, m) {
+//	m.def("IdleFunc", &IdleFunc);
+//	m.def("AttackFunc", &AttackFunc);
+//	m.def("GuardFunc", &GuardFunc);
+//	
+//	/*pybind11::class_<Enemy>(m, "Enemy")
+//		.def(pybind11::init())
+//		.def("CallTest", &Enemy::CallTest)
+//		;*/
+//}
 
 
 bool Enemy::Start()

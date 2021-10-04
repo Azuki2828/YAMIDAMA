@@ -37,38 +37,38 @@ enum HUDList {
 
 namespace {
 
-	const int PAD_0 = 0;
-	const int NAME_SIZE = 256;										//名前の最大のサイズ
-	const int TEXT_SIZE = 64;										//テキストの標準サイズ
-	const float TEXT_BIT_SIZE = 16.0f;								//テキストのビットサイズ
+	const int c_pad0 = 0;											//0番目のパッド
+	const int c_nameSize = 256;										//名前の最大のサイズ
+	const int c_textSize = 64;										//テキストの標準サイズ
+	const float c_textBitSize = 16.0f;								//テキストのビットサイズ
 
-	const Vector3 GRAVITY_VALUE = { 0.0f,-300.0f,0.0f };			//標準の重力
+	const Vector3 c_gravityScale = { 0.0f,-300.0f,0.0f };			//標準の重力
 
-	const Vector3 CAMERA_UP = { 0.0f,1.0f,0.0f };					//カメラの標準の上方向
+	const Vector3 c_cameraUp = { 0.0f,1.0f,0.0f };					//カメラの標準の上方向
 
-	const Vector2 RENDER_TARGET_W1280H720 = { 1280.0f,720.0f };						//レンダリングターゲットで使用する幅と高さ
-	const int MIP_LEVEL1 = 1;														//レンダリングターゲットで使用するミップマップレベル
-	const int RENDER_ARRAY_SIZE1 = 1;												//レンダリングターゲットで使用するテクスチャ配列のサイズ
-	const int GAUSSIAN_BLUR_NUM = 4;												//ガウシアンブラーをかける回数
-	const int BLUR_POWER = 10;														//ブラーの強さ
-	const char* SPRITE_SHADER_FILE_PATH = "Assets/shader/defferdLighting.fx";		//スプライトシェーダーのファイルパス
-	const char* SPRITE_SHADER_MONOCHROME_FILE_PATH = "Assets/shader/sample2D.fx";	//モノクロ表示用のシェーダーのファイルパス
-	const char* HUD_FILE_PATH = "Assets/shader/sprite.fx";
-	const char* FX_FILE_PATH_SHADOW_MAP = "Assets/shader/sampleDrawShadowMap.fx";
+	const Vector2 c_renderTargetW1280H720 = { 1280.0f,720.0f };						//レンダリングターゲットで使用する幅と高さ
+	const Vector2 c_shadowMapWH = { 1024.0f,1024.0f };
+	const int c_mipLevel1 = 1;														//レンダリングターゲットで使用するミップマップレベル
+	const int c_renderArraySize1 = 1;												//レンダリングターゲットで使用するテクスチャ配列のサイズ
+	const int c_gaussianBlurNum = 4;												//ガウシアンブラーをかける回数
+	const int c_blurPower = 10;														//ブラーの強さ
+	const char* c_fxFilePath_DeferredLighting = "Assets/shader/deferredLighting.fx";//スプライトシェーダーのファイルパス
+	const char* c_fxFilePath_Sprite = "Assets/shader/sprite.fx";
+	const char* c_fxFilePath_ShadowMap = "Assets/shader/sampleDrawShadowMap.fx";
 
-	const int INITIALIZE_TIME = 0;
-	const int REST_INITIAL_TIME = 0;		//スピンロック時の待ちタイムの初期時間
-	const int SPIN_LOCK_CRITERIA = 16;		//スピンロック時の基準となる時間
+	const int c_initializeTime = 0;
+	const int c_restInitialTime = 0;		//スピンロック時の待ちタイムの初期時間
+	const int c_spinLockCriteria = 16;		//スピンロック時の基準となる時間
 
-	const Vector4 TRANSLUCENT_VALUE_HALF = { 1.0f,1.0f,1.0f,0.5f };			//透明率50%
-	const Vector4 TRANSLUCENT_VALUE_ONE_THIRD = { 1.0f,1.0f,1.0f,0.3f };	//透明率70%
-	const Vector4 TRANSLUCENT_VALUE_MAX = { 1.0f,1.0f,1.0f,1.0f };			//透明率0%
+	const Vector4 c_translucentValue_Half = { 1.0f,1.0f,1.0f,0.5f };			//透明率50%
+	const Vector4 c_translucentValue_OneThird = { 1.0f,1.0f,1.0f,0.3f };	//透明率70%
+	const Vector4 c_translucentValue_Max = { 1.0f,1.0f,1.0f,1.0f };			//透明率0%
 
-	const float TEXT_SHADOW_THICKNESS = 1.0f;					//テキストの影（枠線）の厚さ
+	const float c_textShadowThickness = 1.0f;					//テキストの影（枠線）の厚さ
 
-	const Vector3 SCALE_VALUE_HALF = { 0.5f,0.5f,0.5f };		//拡大率50%
-	const Vector3 SCALE_VALUE_A_TENTH = { 0.1f,0.1f,0.1f };		//拡大率10%
-	const Vector3 SCALE_VALUE_A_FIFTH = { 0.2f,0.2f,0.2f };		//拡大率20%
+	const Vector3 c_scaleValue_Half = { 0.5f,0.5f,0.5f };		//拡大率50%
+	const Vector3 c_scaleValue_ATenth = { 0.1f,0.1f,0.1f };		//拡大率10%
+	const Vector3 c_scaleValue_AFifth = { 0.2f,0.2f,0.2f };		//拡大率20%
 }
 
 /**

@@ -1,17 +1,21 @@
 #pragma once
 #include "LightBase.h"
 
-/**
- * @brief ディレクションライトの情報。
-*/
+
+//ディレクションライトのデータ
 struct DirectionLigData {
 	Vector3 Dir	= Vector3::Zero;	//方向
 	float pad = 0.0f;				//パディング
 	Vector4 Col	= Vector4::White;	//色
 };
 
+//平行光源クラス
 class DirectionLight : public LightBase
 {
+	/**
+	 * @brief オーバーライドされた開始処理関数。
+	 * @return 成功した？
+	*/
 	bool StartSub();
 	~DirectionLight();
 public:
@@ -68,12 +72,10 @@ public:
 	}
 
 	/**
-	 * @brief ライトの情報を取得。
-	 * @return ライトの情報
+	 * @brief ライトのデータ取得。
+	 * @return ライトのデータ
 	*/
 	void* GetLigData() { return &m_dirLigData; }
-
-	ConstantBuffer m_cb;					//コンスタントバッファ
-	DescriptorHeap m_ds;					//ディスクリプタヒープ
-	DirectionLigData m_dirLigData;		//ディレクションライトの情報
+private:
+	DirectionLigData m_dirLigData;					//ディレクションライトのデータ
 };

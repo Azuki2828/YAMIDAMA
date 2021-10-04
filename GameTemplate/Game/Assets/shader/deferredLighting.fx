@@ -39,12 +39,10 @@ struct PSInput {
 	float2 uv  : TEXCOORD0;
 };
 
-//Texture2D<float4> colorTexture : register(t0);	//�J���[�e�N�X�`���B
 Texture2D<float4> albedoAndShadowReceiverTexture : register(t0);
 Texture2D<float4> normalAndDepthTexture : register(t1);
-Texture2D<float4> worldPosAndLigIDTexture : register(t2);
+Texture2D<float4> worldPosTexture : register(t2);
 Texture2D<float4> g_shadowMap : register(t10);	//シャドウマップ。
-Texture2D<float4> g_depthTexture : register(t11);	//深度テクスチャ。
 
 sampler g_sampler : register(s0);
 
@@ -203,113 +201,77 @@ float SimplexNoise(float3 x)
 		lerp(lerp(hash(n + 113.0), hash(n + 114.0), f.x),
 			lerp(hash(n + 170.0), hash(n + 171.0), f.x), f.y), f.z);
 }
-/// <summary>
-//スキン行列を計算する。
-/// </summary>
-float4x4 CalcSkinMatrix(SSkinVSIn skinVert)
-{
-	float4x4 skinning = 0;	
-	float w = 0.0f;
-	[unroll]
-    for (int i = 0; i < 3; i++)
-    {
-        skinning += g_boneMatrix[skinVert.Indices[i]] * skinVert.Weights[i];
-        w += skinVert.Weights[i];
-    }
-    
-    skinning += g_boneMatrix[skinVert.Indices[3]] * (1.0f - w);
-	
-    return skinning;
-}
+
 
 /// <summary>
 /// 頂点シェーダーのコア関数。
 /// </summary>
-SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
+PSInput VSMain(VSInput In)
 {
-	SPSIn psIn;
-	float4x4 m;
-	if( hasSkin ){
-		m = CalcSkinMatrix(vsIn.skinVert);
-	}else{
-		m = mWorld;
-	}
-	psIn.pos = mul(m, vsIn.pos);
-	psIn.worldPos = psIn.pos;
-	psIn.pos = mul(mView, float4(psIn.worldPos, 1.0f));
-	psIn.pos = mul(mProj, psIn.pos);
-	psIn.normal = normalize(mul(mWorld, vsIn.normal));
-	psIn.tangent = normalize(mul(mWorld, vsIn.tangent));
-	psIn.biNormal = normalize(mul(mWorld, vsIn.biNormal));
-	psIn.uv = vsIn.uv;
-
+	PSInput psIn;
+	psIn.pos = mul(mvp, In.pos);
+	psIn.uv = In.uv;
 	return psIn;
-}
-
-/// <summary>
-/// スキンなしメッシュ用の頂点シェーダーのエントリー関数。
-/// </summary>
-SPSIn VSMain(SVSIn vsIn)
-{
-	return VSMainCore(vsIn, false);
-}
-/// <summary>
-/// スキンありメッシュの頂点シェーダーのエントリー関数。
-/// </summary>
-SPSIn VSSkinMain( SVSIn vsIn ) 
-{
-	return VSMainCore(vsIn, true);
 }
 /// <summary>
 /// ピクセルシェーダーのエントリー関数。
 /// </summary>
-float4 PSMain( SPSIn psIn ) : SV_Target0
+float4 PSMain(PSInput psIn) : SV_Target0
 {
 	//アルベドカラー
-	float4 albedoColor = g_albedo.Sample(g_sampler, psIn.uv);
+	float3 albedoColor = albedoAndShadowReceiverTexture.Sample(g_sampler, psIn.uv).xyz;
+
+	//return float4(albedoColor, 1.0f);
+	int shadowReceiverFlg = albedoAndShadowReceiverTexture.Sample(g_sampler, psIn.uv).w;
 
 	// スペキュラカラー(鏡面反射光)
-	float3 specColor = g_specularMap.SampleLevel(g_sampler, psIn.uv, 0).rgb;
+	float3 specColor = albedoColor;
+	//float3 specColor = g_specularMap.SampleLevel(g_sampler, psIn.uv, 0).rgb;
 
+	float3 worldPos = worldPosTexture.Sample(g_sampler, psIn.uv).xyz;
+
+	float3 normal = normalAndDepthTexture.Sample(g_sampler, psIn.uv).xyz;
+	
 	//金属度
-	float metaric = g_specularMap.Sample(g_sampler, psIn.uv).a;
+	float metaric = 0.0f;
+	//float metaric = g_specularMap.Sample(g_sampler, psIn.uv).a;
 
 	//視点
-	float3 toEye = normalize(eyePos - psIn.worldPos);
+	float3 toEye = normalize(eyePos - worldPos);
 
 	//ライト
 	float3 lig = float3(0.0f, 0.0f, 0.0f);
 
 	//ディレクションライトの計算。
-	for (int dirLigNo = 0; dirLigNo < MAX_DIRECTION_LIGHT; dirLigNo++) {
+	for (int dirLigNo = 0; dirLigNo < /*MAX_DIRECTION_LIGHT*/1; dirLigNo++) {
 
-		float diffuseFromFresnel = CalcDiffuseFromFresnel(psIn.normal, -directionLight[dirLigNo].dir, toEye, 1.0f - 0.5f);
+		float diffuseFromFresnel = CalcDiffuseFromFresnel(normal, -directionLight[dirLigNo].dir, toEye, 1.0f - 0.5f);
 
-		float NdotL = saturate(dot(psIn.normal, -directionLight[dirLigNo].dir));
+		float NdotL = saturate(dot(normal, -directionLight[dirLigNo].dir));
 
 		float3 lambertDiffuse = directionLight[dirLigNo].color * NdotL / PI;
-
+		
 		float3 dirDiffuse = albedoColor * diffuseFromFresnel * lambertDiffuse;
 
 		float3 dirSpec = CookTorranceSpecular(-directionLight[dirLigNo].dir,
-			toEye, psIn.normal, metaric, 1.0f - 0.5f) * directionLight[dirLigNo].color;
+			toEye, normal, metaric, 1.0f - 0.5f) * directionLight[dirLigNo].color;
 
 		dirSpec *= lerp(float3(1.0f, 1.0f, 1.0f), specColor, 0.5f);
 
 		lig += dirDiffuse * (1.0f - 0.5f) + dirSpec * 0.5f;
+		
 	}
-
 	//ポイントライトの計算。
 	for (int poiLigNo = 0; poiLigNo < pointLightNum; poiLigNo++) {
 
-		float3 ligDir = psIn.worldPos - pointLight[poiLigNo].pos;
+		float3 ligDir = worldPos - pointLight[poiLigNo].pos;
 		ligDir = normalize(ligDir);
 
-		float3 poiDiffuse = CalcLambertDiffuse(ligDir, pointLight[poiLigNo].color, psIn.normal);
+		float3 poiDiffuse = CalcLambertDiffuse(ligDir, pointLight[poiLigNo].color, normal);
 		
-		float3 poiSpec = CalcPhongSpecular(ligDir, pointLight[poiLigNo].color, psIn.worldPos, psIn.normal);
+		float3 poiSpec = CalcPhongSpecular(ligDir, pointLight[poiLigNo].color, worldPos, normal);
 		
-		float3 distance = length(psIn.worldPos - pointLight[poiLigNo].pos);
+		float3 distance = length(worldPos - pointLight[poiLigNo].pos);
 
 		float affect = max(0.0f, 1.0f - 1.0f / pointLight[poiLigNo].attn.x * distance);
 
@@ -321,33 +283,35 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 		lig += poiDiffuse * (1.0f - 0.5f) + poiSpec * 0.5f;
 	}
 
-	lig += float3(0.3f,0.3f,0.3f) * albedoColor;
-
-	float4 finalColor = albedoColor;
-	finalColor.xyz = lig;
-
-
-
-	float4 posInLVP = mul(mLVP, float4(psIn.worldPos, 1.0f));
+	lig += float3(0.3f,0.3f,0.3f);
 	
-	//ライトビューの座標系を.wで割ることで正規化スクリーン座標系に変換できる。(重要)
-	float2 shadowMapUV = posInLVP.xy / posInLVP.w;
+	float4 finalColor = float4(albedoColor, 1.0f);
+	finalColor.xyz *= lig;
 
-	//ライトビュースクリーン空間からUV空間に座標変換。
-	shadowMapUV *= float2(0.5f, -0.5f);
-	shadowMapUV += 0.5f;
 
-	// ライトビュースクリーン空間でのZ値を計算する。
-	float zInLVP = posInLVP.z / posInLVP.w;
+	if (shadowReceiverFlg) {
+		
+		float4 posInLVP = mul(mLVP, float4(worldPos, 1.0f));
 
-	if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
-		&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
-		&& zInLVP > 0.0f && zInLVP < 1.0f
-		) {
-		//シャドウマップに描き込まれているZ値と比較する。
-		float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
-		if (zInLVP > zInShadowMap) {
-			finalColor.xyz *= 0.5f;
+		//ライトビューの座標系を.wで割ることで正規化スクリーン座標系に変換できる。(重要)
+		float2 shadowMapUV = posInLVP.xy / posInLVP.w;
+
+		//ライトビュースクリーン空間からUV空間に座標変換。
+		shadowMapUV *= float2(0.5f, -0.5f);
+		shadowMapUV += 0.5f;
+
+		// ライトビュースクリーン空間でのZ値を計算する。
+		float zInLVP = posInLVP.z / posInLVP.w;
+
+		if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
+			&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
+			&& zInLVP > 0.0f && zInLVP < 1.0f
+			) {
+			//シャドウマップに描き込まれているZ値と比較する。
+			float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
+			if (zInLVP > zInShadowMap + 0.0001f) {
+				finalColor.xyz *= 0.5f;
+			}
 		}
 	}
 

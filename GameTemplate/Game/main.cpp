@@ -74,14 +74,14 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 	auto& renderContext = g_graphicsEngine->GetRenderContext();
 
 	// とりあえずテストで敵を追加。
-	NewGO<Enemy>(0, nullptr);
+	//NewGO<Enemy>(0, nullptr);
 	NewGO<Player>(0,"player");
 	NewGO<BackGround>(0);
 	NewGO<MainCamera>(0);
 
 	DirectionLight* dirLight = NewGO<DirectionLight>(0);
-	dirLight->SetLigDirection({0.0f,1.0f,1.0f});
-	dirLight->SetLigColor({20.0f,20.0f,20.0f});
+	dirLight->SetLigDirection({0.0f,-1.0f,-1.0f});
+	dirLight->SetLigColor({5.0f,5.0f,5.0f});
 
 	PointLight* poiLight = NewGO<PointLight>(0);
 	poiLight->SetPosition({ 100.0f,100.0f,0.0f });

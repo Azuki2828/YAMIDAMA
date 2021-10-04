@@ -28,6 +28,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EnemyIdle.py" />
+    <Compile Include="PlayerDeath.py" />
+    <Compile Include="PlayerNormal.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlayerYoi.py" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Game.vcxproj">

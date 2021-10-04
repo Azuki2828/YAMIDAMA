@@ -6,7 +6,7 @@ public:
 	void Update()override final;
 
 private:
-	ModelRender* m_modelRender = nullptr;
+	NMyRenderer::ModelRender* m_modelRender = nullptr;
 
 	Vector3 m_pos = Vector3::Zero;
 	Quaternion m_rot = Quaternion::Identity;

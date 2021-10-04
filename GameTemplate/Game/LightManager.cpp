@@ -7,7 +7,7 @@ LightManager* LightManager::m_lightManager = nullptr;
 void LightManager::AddLight(LightBase* light) {
 
 	//もし規定されている数に達していたら置けない
-	if (m_directionLights.size() >= MAX_DIRECTION_LIGHT) {
+	if (m_directionLights.size() >= c_maxDirectionLightNum) {
 		MessageBoxA(nullptr, "これ以上ディレクションライトは置けません", "エラー", MB_OK);
 		return;
 	}

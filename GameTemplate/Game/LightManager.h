@@ -5,17 +5,20 @@
 #include "PointLight.h"
 #include "LightBase.h"
 
-static const int MAX_DIRECTION_LIGHT = 4;	//ディレクションライトの上限数
-static const int MAX_POINT_LIGHT = 100;		//ポイントライトの上限数
+static const int c_maxDirectionLightNum = 4;	//ディレクションライトの上限数
+static const int c_maxPointLightNum = 100;		//ポイントライトの上限数
 
+
+//ライトのデータ
 struct LigData {
-	DirectionLigData directionLigData[MAX_DIRECTION_LIGHT];		//ディレクションライトのデータ
-	PointLigData pointLigData[MAX_POINT_LIGHT];					//ポイントライトのデータ
+	DirectionLigData directionLigData[c_maxDirectionLightNum];		//ディレクションライトのデータ
+	PointLigData pointLigData[c_maxPointLightNum];					//ポイントライトのデータ
 	Vector3 eyePos = Vector3::Zero;								//視点の座標
 	int pointLightNum = 0;										//ポイントライトの総数
 	Matrix m_viewProj;											//プロジェクション行列
 };
 
+//ライト管理クラス
 class LightManager
 {
 public:
@@ -36,8 +39,6 @@ public:
 		return m_lightManager;
 	}
 
-	void Update();
-
 	/**
 	 * @brief ライトを追加する関数。
 	 * @param light ライトのインスタンス
@@ -49,8 +50,9 @@ public:
 	 * @param light ライトのインスタンス
 	*/
 	void RemoveLight(LightBase* light);
+
 	/**
-	 * @brief 登録されているライトを全て削除。
+	 * @brief 登録されているライトを全て削除する関数。
 	*/
 	void RemoveLightAll();
 	/**
@@ -58,6 +60,11 @@ public:
 	 * @return ライトのデータ
 	*/
 	LigData* GetLigData() { return &m_ligData; }
+
+	/**
+	 * @brief 更新関数。
+	*/
+	void Update();
 private:
 	LigData m_ligData;									//ライトのデータ
 	static LightManager* m_lightManager;				//ライトマネージャーのインスタンス

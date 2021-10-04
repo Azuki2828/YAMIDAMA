@@ -150,7 +150,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MY_DEBUG;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
@@ -294,6 +294,7 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="LightBase.cpp" />
     <ClCompile Include="LightCamera.cpp" />
     <ClCompile Include="LightManager.cpp" />
@@ -380,6 +381,7 @@
     <ClInclude Include="ConstValue.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FontRender.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="LightBase.h" />
     <ClInclude Include="LightCamera.h" />

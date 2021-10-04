@@ -3,7 +3,7 @@
 
 bool BackGround::Start() {
 
-	m_modelRender = NewGO<ModelRender>(0);
+	m_modelRender = NewGO<NMyRenderer::ModelRender>(0);
 	m_modelRender->SetFilePathTkm("Assets/modelData/bg/bg.tkm");
 	m_modelRender->SetPosition(m_pos);
 	m_modelRender->SetRotation(m_rot);
