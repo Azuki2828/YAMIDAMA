@@ -31,10 +31,10 @@ void RenderingEngine::Render() {
 	ExecuteDeferredLighting();
 
 	//輝度テクスチャを作成。
-	//ExecuteDrawLuminanceTexture();
+	ExecuteDrawLuminanceTexture();
 
 	//ブルーム。
-	//ExecuteGaussianBlur();
+	ExecuteGaussianBlur();
 
 	DrawFont();
 	//フレームバッファを描画。

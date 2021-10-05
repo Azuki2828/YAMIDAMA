@@ -3,20 +3,11 @@ from Game import Move
 from Game import Drink
 from Game import GetYoiParam
 from Game import ChangeState
+from Game import LightCameraUpdate
+from Game import FontUpdate
 
 def Update() :
 
     Death()
-    Move()
-    Drink()
-
-    yoiParam = GetYoiParam()
-
-    if(yoiParam <= 50):
-        ChangeState(0)
-
-    elif(yoiParam < 100):
-        ChangeState(1)
-
-    else:
-        ChangeState(2)
+    LightCameraUpdate()
+    FontUpdate()

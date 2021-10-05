@@ -82,6 +82,7 @@ extern "C" __declspec(dllexport) int WINAPI AppMain(HINSTANCE hInstance, HINSTAN
 	DirectionLight* dirLight = NewGO<DirectionLight>(0);
 	dirLight->SetLigDirection({0.0f,-1.0f,-1.0f});
 	dirLight->SetLigColor({5.0f,5.0f,5.0f});
+	//dirLight->SetLigColor({30.0f,30.0f,30.0f});
 
 	PointLight* poiLight = NewGO<PointLight>(0);
 	poiLight->SetPosition({ 100.0f,100.0f,0.0f });
