@@ -3,11 +3,9 @@
 
 namespace NMyRenderer {
 
-	namespace {
-		constexpr const char* c_entryPointVSMain = "VSMain";
-		constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";
-		constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
-	}
+	constexpr const char* c_entryPointVSMain = "VSMain";
+	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";
+	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
 
 	void ModelRender::Init() {
 

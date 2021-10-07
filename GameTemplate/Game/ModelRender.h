@@ -3,7 +3,7 @@
 //モデル管理クラス
 
 namespace NMyRenderer {
-
+	
 	//モデル描画クラス
 	class ModelRender : public IGameObject
 	{
