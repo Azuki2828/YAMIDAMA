@@ -10,9 +10,7 @@ class GraphicsEngine;
 //レンダリングターゲットのリスト
 enum EnRenderTargetList {
 	enMainRT,
-	enLuminanceRT,
 	enShadowMap,
-	enFXAART,
 
 	enRenderTargetNum
 };
@@ -76,37 +74,7 @@ public:
 		);
 	}
 
-	/**
-	 * @brief 輝度抽出用のレンダリングターゲットを作成する関数。
-	*/
-	static void CreateLuminanceRenderTarget() {
 
-		m_renderTarget[enLuminanceRT] = new RenderTarget;
-
-		m_renderTarget[enLuminanceRT]->Create(
-			c_renderTargetW1280H720.x,       // 解像度はメインレンダリングターゲットと同じ
-			c_renderTargetW1280H720.y,        // 解像度はメインレンダリングターゲットと同じ
-			c_mipLevel1,
-			c_renderArraySize1,
-			// 【注目】カラーバッファーのフォーマットを32bit浮動小数点にしている
-			DXGI_FORMAT_R32G32B32A32_FLOAT,
-			DXGI_FORMAT_D32_FLOAT
-		);
-	}
-
-	static void CreateFXAARenderTarget() {
-
-		m_renderTarget[enFXAART] = new RenderTarget;
-
-		m_renderTarget[enFXAART]->Create(
-			RenderTarget::GetRenderTarget(enMainRT)->GetWidth(),
-			RenderTarget::GetRenderTarget(enMainRT)->GetHeight(),
-			c_mipLevel1,
-			c_renderArraySize1,
-			DXGI_FORMAT_R8G8B8A8_UNORM, // HDR系のエフェクトは終了しているので、8bit整数バッファでＯＫ。
-			DXGI_FORMAT_UNKNOWN
-		);
-	}
 	/**
 	 * @brief アルベドカラーとシャドウレシーバーフラグを保管するGBufferを作成する関数。
 	*/

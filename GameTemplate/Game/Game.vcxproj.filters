@@ -54,6 +54,9 @@
     <Filter Include="MiniEngine\light">
       <UniqueIdentifier>{8c43f612-3492-4bac-925e-bdcae3c04ef5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MiniEngine\postEffect">
+      <UniqueIdentifier>{4d460603-d8d0-470f-8c85-e87047b39acb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -227,9 +230,6 @@
     <ClCompile Include="MainCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\MiniEngine\GaussianBlur.cpp">
-      <Filter>MiniEngine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\MiniEngine\RenderTarget.cpp">
       <Filter>MiniEngine</Filter>
     </ClCompile>
@@ -251,14 +251,23 @@
     <ClCompile Include="..\..\MiniEngine\font\FontRender.cpp">
       <Filter>MiniEngine\font</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\MiniEngine\PostEffect.cpp">
-      <Filter>MiniEngine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\MiniEngine\RenderingEngine.cpp">
       <Filter>MiniEngine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\MiniEngine\FXAA.cpp">
-      <Filter>MiniEngine</Filter>
+    <ClCompile Include="..\..\MiniEngine\postEffect\Bloom.cpp">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\postEffect\FXAA.cpp">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\postEffect\GaussianBlur.cpp">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\postEffect\PostEffect.cpp">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\postEffect\PostEffectComponentBase.cpp">
+      <Filter>MiniEngine\postEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -457,9 +466,6 @@
     <ClInclude Include="MainCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\MiniEngine\GaussianBlur.h">
-      <Filter>MiniEngine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\MiniEngine\RenderTarget.h">
       <Filter>MiniEngine</Filter>
     </ClInclude>
@@ -484,17 +490,26 @@
     <ClInclude Include="..\..\MiniEngine\font\FontRender.h">
       <Filter>MiniEngine\font</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\MiniEngine\PostEffect.h">
-      <Filter>MiniEngine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\MiniEngine\GameTime.h">
       <Filter>MiniEngine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\RenderingEngine.h">
       <Filter>MiniEngine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\MiniEngine\FXAA.h">
-      <Filter>MiniEngine</Filter>
+    <ClInclude Include="..\..\MiniEngine\postEffect\Bloom.h">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\postEffect\FXAA.h">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\postEffect\GaussianBlur.h">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\postEffect\PostEffect.h">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\postEffect\PostEffectComponentBase.h">
+      <Filter>MiniEngine\postEffect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

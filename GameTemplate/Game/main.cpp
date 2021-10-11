@@ -4,7 +4,6 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "MainCamera.h"
-#include "PostEffect.h"
 
 namespace nsMyGame {
 

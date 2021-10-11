@@ -53,8 +53,6 @@
 #include "DescriptorHeap.h"
 #include "RenderTarget.h"
 #include "Animation.h"
-#include "GaussianBlur.h"
-#include "FXAA.h"
 #include "GameTime.h"
 
 #include "RenderContext_inline.h"

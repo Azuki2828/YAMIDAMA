@@ -4,8 +4,6 @@
 
 namespace nsMyGame {
 
-	const Vector2 c_deferredSpriteWH = { 1280.0f,720.0f };
-
 	namespace nsLight {
 
 		constexpr int c_maxDirectionLightNum = 4;	//ディレクションライトの上限数
@@ -14,9 +12,19 @@ namespace nsMyGame {
 
 	namespace nsFont {
 
-		constexpr int c_maxTextSize = 256;
+		constexpr int c_maxTextSize = 256;		//テキストの上限数
+	}
+
+	namespace nsPostEffect {
+
+		constexpr const char* c_fxFilePathCopySprite = "Assets/shader/Sprite.fx";		//メインレンダリングターゲットにコピーする時に使用するシェーダーのファイルパス
+		constexpr const char* c_fxFilePathGaussianBlur = "Assets/shader/gaussianBlur.fx" //ガウシアンブラーで使用するシェーダーのファイルパス
+
+		constexpr int c_gaussianBlurNumWeight = 8;		//ガウシアンブラーの重みの数
 	}
 }
+
+
 /**
  * @brief 優先度。enPriority_Zerothが最も先に描画される。
 */

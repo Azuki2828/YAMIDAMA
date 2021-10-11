@@ -1,5 +1,5 @@
 #pragma once
-#include "PostEffect.h"
+#include "../MiniEngine/postEffect/PostEffect.h"
 
 namespace nsMyGame {
 	//レンダリングエンジンクラス
@@ -39,15 +39,14 @@ namespace nsMyGame {
 		void CreateRenderTarget();
 
 		/**
-		 * @brief ポストエフェクトを初期化する関数。
-		*/
-		void InitPostEffect();
-
-		/**
 		 * @brief ディファードライティングで使用するスプライトを初期化する関数。
 		*/
 		void InitDeferredRenderingSprite();
 
+		/**
+		 * @brief メインレンダリングターゲットのコピーを取るためのレンダーターゲットを作成する関数。
+		*/
+		void CreateSnapShotMainRT();
 		/**
 		 * @brief フレームバッファにコピーするスプライトを作成する関数。
 		*/
@@ -55,46 +54,45 @@ namespace nsMyGame {
 
 		/**
 		 * @brief シャドウマップを描画する関数。
+		 * @param rc レンダーコンテキスト。
 		*/
-		void DrawShadowMap();
+		void DrawShadowMap(RenderContext& rc);
 
 		/**
 		 * @brief フォントを描画する関数。
+		 * @param rc レンダーコンテキスト。
 		*/
-		void DrawFont();
+		void DrawFont(RenderContext& rc);
 
 		/**
 		 * @brief ディファードレンダリングを実行する関数。
+		 * @param rc レンダーコンテキスト。
 		*/
-		void ExecuteDeferredRendering();
+		void ExecuteDeferredRendering(RenderContext& rc);
 
 		/**
 		 * @brief ディファードライティングを実行する関数。
+		 * @param rc レンダーコンテキスト。
 		*/
-		void ExecuteDeferredLighting();
+		void ExecuteDeferredLighting(RenderContext& rc);
 
 		/**
-		 * @brief 輝度テクスチャを描画する関数。
+		 * @brief フレームバッファ用に、メインレンダリングターゲットの内容をコピーする関数。
+		 * @param rc レンダーコンテキスト。
 		*/
-		void ExecuteDrawLuminanceTexture();
+		void SnapShotMainRenderTarget(RenderContext& rc);
 
-		/**
-		 * @brief ガウシアンブラーをかける関数。
-		*/
-		void ExecuteGaussianBlur();
-
-		/**
-		 * @brief FXAAを実行する関数。
-		*/
-		void ExecuteFXAA();
 
 		/**
 		 * @brief フレームバッファにスプライトをコピーする関数。
+		 * @param rc レンダーコンテキスト。
 		*/
-		void CopyToFrameBuffer();
+		void CopyToFrameBuffer(RenderContext& rc);
+
 	private:
 		static RenderingEngine* m_renderingEngine;	//レンダリングエンジンのインスタンス
-		PostEffect* m_postEffect = nullptr;			//ポストエフェクト
+		RenderTarget m_snapShotMainRT;				//メインレンダリングターゲットのスナップショットを取るためのレンダリングターゲット
+		nsPostEffect::PostEffect m_postEffect;		//ポストエフェクト
 		Sprite m_copyToMainRenderTargetSprite;		//メインレンダリングターゲットのスプライト
 		Sprite m_deferredRenderingSprite;			//ディファードライティング用のスプライト
 	};

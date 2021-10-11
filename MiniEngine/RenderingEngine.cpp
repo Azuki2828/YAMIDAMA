@@ -2,6 +2,8 @@
 #include "RenderingEngine.h"
 
 namespace nsMyGame {
+
+	//レンダリングエンジンのインスタンス
 	RenderingEngine* RenderingEngine::m_renderingEngine = nullptr;
 
 
@@ -11,7 +13,7 @@ namespace nsMyGame {
 		CreateRenderTarget();
 
 		//ポストエフェクトを初期化。
-		InitPostEffect();
+		m_postEffect.Init();
 
 		//ディファードライティング用のスプライトを初期化。
 		InitDeferredRenderingSprite();
@@ -22,50 +24,40 @@ namespace nsMyGame {
 
 	void RenderingEngine::Render() {
 
-		//シャドウマップを描画。
-		DrawShadowMap();
+		//レンダーコンテキストを取得。
+		auto& renderContext = g_graphicsEngine->GetRenderContext();
 
-		//ディファードレンダリング
-		ExecuteDeferredRendering();
+		//シャドウマップを描画。
+		DrawShadowMap(renderContext);
+
+		//ディファードレンダリング。
+		ExecuteDeferredRendering(renderContext);
 
 		//ディファードライティング。
-		ExecuteDeferredLighting();
+		ExecuteDeferredLighting(renderContext);
 
-		//輝度テクスチャを作成。
-		ExecuteDrawLuminanceTexture();
+		//メインレンダリングターゲットの絵をスナップショット。
+		SnapShotMainRenderTarget(renderContext);
 
-		//ブルーム。
-		ExecuteGaussianBlur();
-
-		//FXAA。
-		ExecuteFXAA();
+		//ポストエフェクト。
+		m_postEffect.Render(renderContext);
 
 		//フォントを描画。
-		DrawFont();
+		DrawFont(renderContext);
 
 		//フレームバッファを描画。
-		CopyToFrameBuffer();
+		CopyToFrameBuffer(renderContext);
 	}
 
 	void RenderingEngine::CreateRenderTarget() {
 
 		//レンダリングターゲットを作成。
 		RenderTarget::CreateMainRenderTarget();
-		RenderTarget::CreateLuminanceRenderTarget();
 		RenderTarget::CreateShadowMap();
 		RenderTarget::CreateAlbedoAndShadowReceiverFlagRenderTarget();
 		RenderTarget::CreateNormalAndDepthRenderTarget();
 		RenderTarget::CreateWorldPosRenderTarget();
-		RenderTarget::CreateFXAARenderTarget();
-	}
-
-	void RenderingEngine::InitPostEffect() {
-
-		//ブルームに必要なテクスチャを初期化。
-		m_postEffect = NewGO<PostEffect>(0);
-		m_postEffect->InitLuminance(*RenderTarget::GetRenderTarget(enMainRT));
-		m_postEffect->InitGaussianBlur(*RenderTarget::GetRenderTarget(enLuminanceRT));
-		m_postEffect->InitFXAA();
+		CreateSnapShotMainRT();
 	}
 
 	void RenderingEngine::InitDeferredRenderingSprite() {
@@ -87,6 +79,19 @@ namespace nsMyGame {
 		m_deferredRenderingSprite.Init(spriteInitData);
 	}
 
+
+	void RenderingEngine::CreateSnapShotMainRT() {
+
+		//メインレンダリングターゲットの内容をコピーするレンダリングターゲットを作成。
+		m_snapShotMainRT.Create(
+			g_graphicsEngine->GetFrameBufferWidth(),
+			g_graphicsEngine->GetFrameBufferHeight(),
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			DXGI_FORMAT_UNKNOWN
+		);
+	}
 	void RenderingEngine::InitCopyToMainRenderTargetSprite() {
 
 		SpriteInitData copyToMainRenderTargetSpriteInitData;
@@ -101,44 +106,48 @@ namespace nsMyGame {
 		m_copyToMainRenderTargetSprite.Init(copyToMainRenderTargetSpriteInitData);
 	}
 
-	void RenderingEngine::DrawShadowMap() {
-
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
+	void RenderingEngine::DrawShadowMap(RenderContext& rc) {
 
 		//描画モードをシャドウマップ用に設定する。
-		renderContext.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Shadow);
+		rc.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Shadow);
 
-		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
+		//レンダリングターゲットを設定。
+		rc.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
 
-		renderContext.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enShadowMap));
+		//ビューポートを設定。
+		rc.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enShadowMap));
 
-		renderContext.ClearRenderTargetView(*RenderTarget::GetRenderTarget(enShadowMap));
+		//レンダーターゲットをクリア。
+		rc.ClearRenderTargetView(*RenderTarget::GetRenderTarget(enShadowMap));
 
 		//シャドウモデルを描画。
-		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
+		GameObjectManager::GetInstance()->ExecuteRender(rc);
 
-		renderContext.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
+		//描き込み終了待ち。
+		rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
 	}
 
-	void RenderingEngine::DrawFont() {
+	void RenderingEngine::DrawFont(RenderContext& rc) {
 
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
+		//レンダーモードをフォント用にする。
+		rc.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Font);
 
-		renderContext.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Font);
+		//レンダリングターゲットを設定。
+		rc.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
 
-		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+		//ビューポートを設定。
+		rc.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
 
-		renderContext.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
+		//シャドウモデルを描画。
+		GameObjectManager::GetInstance()->ExecuteRender(rc);
 
-		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
-
-		renderContext.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+		//描き込み終了待ち。
+		rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
 	}
 
-	void RenderingEngine::ExecuteDeferredRendering() {
+	void RenderingEngine::ExecuteDeferredRendering(RenderContext& rc) {
 
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
-
+		//レンダリングターゲットを作成。
 		RenderTarget* rts[] = {
 				RenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap),   // 0番目のレンダリングターゲット
 				RenderTarget::GetGBufferRT(enNormalAndDepthMap),  // 1番目のレンダリングターゲット
@@ -146,10 +155,10 @@ namespace nsMyGame {
 		};
 
 		// まず、レンダリングターゲットとして設定できるようになるまで待つ
-		renderContext.WaitUntilToPossibleSetRenderTargets(ARRAYSIZE(rts), rts);
+		rc.WaitUntilToPossibleSetRenderTargets(ARRAYSIZE(rts), rts);
 
 		// レンダリングターゲットを設定
-		renderContext.SetRenderTargets(ARRAYSIZE(rts), rts);
+		rc.SetRenderTargets(ARRAYSIZE(rts), rts);
 
 		//ビューポートを設定。
 		D3D12_VIEWPORT viewport;
@@ -160,91 +169,58 @@ namespace nsMyGame {
 		viewport.Height = static_cast<float>(rts[0]->GetHeight());
 		viewport.MinDepth = D3D12_MIN_DEPTH;
 		viewport.MaxDepth = D3D12_MAX_DEPTH;
-		renderContext.SetViewportAndScissor(viewport);
+		rc.SetViewportAndScissor(viewport);
 
 		// レンダリングターゲットをクリア
-		renderContext.ClearRenderTargetViews(ARRAYSIZE(rts), rts);
+		rc.ClearRenderTargetViews(ARRAYSIZE(rts), rts);
 
 		//モデルの描画
-		renderContext.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Normal);
-		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
+		rc.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Normal);
+		GameObjectManager::GetInstance()->ExecuteRender(rc);
 
 		// レンダリングターゲットへの書き込み待ち
-		renderContext.WaitUntilFinishDrawingToRenderTargets(ARRAYSIZE(rts), rts);
+		rc.WaitUntilFinishDrawingToRenderTargets(ARRAYSIZE(rts), rts);
 	}
 
-	void RenderingEngine::ExecuteDeferredLighting() {
+	void RenderingEngine::ExecuteDeferredLighting(RenderContext& rc) {
 
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
+		//レンダリングターゲットを設定。
+		rc.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
 
-		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+		//ビューポートを設定。
+		rc.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
 
-		renderContext.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
+		//ディファードライティング。
+		m_deferredRenderingSprite.Draw(rc);
 
-		m_deferredRenderingSprite.Draw(renderContext);
-
-		renderContext.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+		//描き込み終了待ち。
+		rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
 	}
 
-	void RenderingEngine::ExecuteDrawLuminanceTexture() {
+	void RenderingEngine::SnapShotMainRenderTarget(RenderContext& rc) {
 
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
+		//レンダリングターゲットを設定。
+		rc.WaitUntilToPossibleSetRenderTarget(m_snapShotMainRT);
 
-		auto& luminanceRenderTarget = *RenderTarget::GetRenderTarget(enLuminanceRT);
+		//ビューポートを設定。
+		rc.SetRenderTargetAndViewport(m_snapShotMainRT);
 
-		// 輝度抽出用のレンダリングターゲットに変更
-		renderContext.WaitUntilToPossibleSetRenderTarget(luminanceRenderTarget);
+		//メインレンダリングターゲットの絵をスナップショット。
+		m_copyToMainRenderTargetSprite.Draw(rc);
 
-		// レンダリングターゲットを設定
-		renderContext.SetRenderTargetAndViewport(luminanceRenderTarget);
-
-		// レンダリングターゲットをクリア
-		renderContext.ClearRenderTargetView(luminanceRenderTarget);
-
-		// 輝度抽出を行う
-		m_postEffect->GetLuminanceSprite().Draw(renderContext);
-
-		// レンダリングターゲットへの書き込み終了待ち
-		renderContext.WaitUntilFinishDrawingToRenderTarget(luminanceRenderTarget);
+		//描き込み終了待ち。
+		rc.WaitUntilFinishDrawingToRenderTarget(m_snapShotMainRT);
 	}
 
-	void RenderingEngine::ExecuteGaussianBlur() {
+	void RenderingEngine::CopyToFrameBuffer(RenderContext& rc) {
 
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
-
-		//ガウシアンブラーを4回実行する
-		for (int i = 0; i < c_gaussianBlurNum; i++) {
-
-			m_postEffect->GetGaussianBlurSprite(i).ExecuteOnGPU(renderContext, c_blurPower);
-		}
-
-		//4枚のボケ画像を合成してメインレンダリングターゲットに加算合成
-		renderContext.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
-
-		renderContext.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
-
-		m_postEffect->GetFinalSprite().Draw(renderContext);
-
-		renderContext.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
-	}
-
-	void RenderingEngine::ExecuteFXAA() {
-
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
-
-		m_postEffect->RenderFXAA(renderContext);
-	}
-
-	void RenderingEngine::CopyToFrameBuffer() {
-
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
-
-		// メインレンダリングターゲットの絵をフレームバッファーにコピー
-		renderContext.SetRenderTarget(
+		//メインレンダリングターゲットの絵をフレームバッファーにコピー
+		rc.SetRenderTarget(
 			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
 			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
 		);
-		//m_copyToMainRenderTargetSprite.Draw(renderContext);
-		m_postEffect->GetFXAASprite().Draw(renderContext);
+		
+		//最終スプライトを描画。
+		m_copyToMainRenderTargetSprite.Draw(rc);
 	}
 }
