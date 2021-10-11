@@ -12,6 +12,7 @@ enum EnRenderTargetList {
 	enMainRT,
 	enLuminanceRT,
 	enShadowMap,
+	enFXAART,
 
 	enRenderTargetNum
 };
@@ -93,6 +94,19 @@ public:
 		);
 	}
 
+	static void CreateFXAARenderTarget() {
+
+		m_renderTarget[enFXAART] = new RenderTarget;
+
+		m_renderTarget[enFXAART]->Create(
+			RenderTarget::GetRenderTarget(enMainRT)->GetWidth(),
+			RenderTarget::GetRenderTarget(enMainRT)->GetHeight(),
+			c_mipLevel1,
+			c_renderArraySize1,
+			DXGI_FORMAT_R8G8B8A8_UNORM, // HDR系のエフェクトは終了しているので、8bit整数バッファでＯＫ。
+			DXGI_FORMAT_UNKNOWN
+		);
+	}
 	/**
 	 * @brief アルベドカラーとシャドウレシーバーフラグを保管するGBufferを作成する関数。
 	*/

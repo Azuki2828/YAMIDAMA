@@ -13,6 +13,7 @@ const Vector4 Vector4::Yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
 const Vector4 Vector4::Gray = { 0.5f, 0.5f, 0.5f, 1.0f };
 
 const Vector2 Vector2::Zero   = { 0.0f,  0.0f };
+const Vector2 Vector2::Half = { 0.5f,  0.5f };
 const Vector3 Vector3::Zero	= {  0.0f,  0.0f,  0.0f };
 const Vector3 Vector3::Right	= {  1.0f,  0.0f,  0.0f };
 const Vector3 Vector3::Left	= { -1.0f,  0.0f,  0.0f };

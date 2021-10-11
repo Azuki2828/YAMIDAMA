@@ -9,6 +9,7 @@ class Matrix;
 class Vector2 {
 public:
 	static const Vector2 Zero;
+	static const Vector2 Half;
 	/// <summary>
 	/// コンストラクタ。
 	/// </summary>

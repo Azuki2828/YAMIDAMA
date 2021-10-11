@@ -1,10 +1,8 @@
 #pragma once
 
-//モデル管理クラス
+namespace nsMyGame {
 
-namespace NMyRenderer {
-	
-	//モデル描画クラス
+	//モデル管理クラス
 	class ModelRender : public IGameObject
 	{
 		//コンスタントバッファに転送するデータ

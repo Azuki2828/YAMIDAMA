@@ -51,6 +51,9 @@
     <Filter Include="MiniEngine\Animation">
       <UniqueIdentifier>{0d2aaa2c-ed86-49c9-bdf6-7de74543087c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MiniEngine\light">
+      <UniqueIdentifier>{8c43f612-3492-4bac-925e-bdcae3c04ef5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -218,31 +221,10 @@
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ModelRender.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="LightBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="LightManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectionLight.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="LightCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="MainCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PointLight.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PostEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="..\..\MiniEngine\GaussianBlur.cpp">
@@ -251,11 +233,32 @@
     <ClCompile Include="..\..\MiniEngine\RenderTarget.cpp">
       <Filter>MiniEngine</Filter>
     </ClCompile>
-    <ClCompile Include="RenderingEngine.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="..\..\MiniEngine\ModelRender.cpp">
+      <Filter>MiniEngine</Filter>
     </ClCompile>
-    <ClCompile Include="FontRender.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="..\..\MiniEngine\light\DirectionLight.cpp">
+      <Filter>MiniEngine\light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\light\PointLight.cpp">
+      <Filter>MiniEngine\light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\light\LightManager.cpp">
+      <Filter>MiniEngine\light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\light\LightBase.cpp">
+      <Filter>MiniEngine\light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\font\FontRender.cpp">
+      <Filter>MiniEngine\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\PostEffect.cpp">
+      <Filter>MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\RenderingEngine.cpp">
+      <Filter>MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\FXAA.cpp">
+      <Filter>MiniEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -448,34 +451,10 @@
     <ClInclude Include="Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ModelRender.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameTime.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="LightBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="LightManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectionLight.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="LightCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MainCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PointLight.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PostEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\GaussianBlur.h">
@@ -487,11 +466,35 @@
     <ClInclude Include="ConstValue.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="RenderingEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="..\..\MiniEngine\ModelRender.h">
+      <Filter>MiniEngine</Filter>
     </ClInclude>
-    <ClInclude Include="FontRender.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="..\..\MiniEngine\light\DirectionLight.h">
+      <Filter>MiniEngine\light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\light\PointLight.h">
+      <Filter>MiniEngine\light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\light\LightManager.h">
+      <Filter>MiniEngine\light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\light\LightBase.h">
+      <Filter>MiniEngine\light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\font\FontRender.h">
+      <Filter>MiniEngine\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\PostEffect.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\GameTime.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\RenderingEngine.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\FXAA.h">
+      <Filter>MiniEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,15 +3,7 @@
 
 #include "MiniEngine.h"
 #include "ExEngine.h"
-#include "RenderingEngine.h"
-#include "ModelRender.h"
-#include "FontRender.h"
-#include "GameTime.h"
-#include "DirectionLight.h"
-#include "PointLight.h"
-#include "LightBase.h"
-#include "LightManager.h"
-#include "LightCamera.h"
+
 #include <pybind11/pybind11.h>
 #include <pybind11/eval.h>
 

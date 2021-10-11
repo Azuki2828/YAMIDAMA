@@ -53,8 +53,9 @@
 #include "DescriptorHeap.h"
 #include "RenderTarget.h"
 #include "Animation.h"
-#include "font/Font.h"
 #include "GaussianBlur.h"
+#include "FXAA.h"
+#include "GameTime.h"
 
 #include "RenderContext_inline.h"
 #include "DescriptorHeap_inline.h"
@@ -62,6 +63,19 @@
 #include "Sprite.h"
 #include "Model.h"
 #include "HID/GamePad.h"
+
+#include "light/DirectionLight.h"
+#include "light/PointLight.h"
+#include "light/LightManager.h"
+#include "light/LightBase.h"
+
+#include "font/Font.h"
+#include "font/FontRender.h"
+
+#include "LightCamera.h"
+
+#include "ModelRender.h"
+#include "RenderingEngine.h"
 
 const UINT FRAME_BUFFER_W = 1280;				//フレームバッファの幅。
 const UINT FRAME_BUFFER_H = 720;				//フレームバッファの高さ。

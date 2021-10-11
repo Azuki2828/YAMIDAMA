@@ -195,7 +195,7 @@ public:
 	/// フォントエンジンを取得。
 	/// </summary>
 	/// <returns></returns>
-	FontEngine& GetFontEngine()
+	nsMyGame::nsFont::FontEngine& GetFontEngine()
 	{
 		return m_fontEngine;
 	}
@@ -307,7 +307,7 @@ private:
 	Camera m_camera3D;							//3Dカメラ。
 	raytracing::Engine m_raytracingEngine;		//レイトレエンジン。
 	NullTextureMaps m_nullTextureMaps;			//ヌルテクスチャマップ。
-	FontEngine m_fontEngine;					//フォントエンジン。
+	nsMyGame::nsFont::FontEngine m_fontEngine;	//フォントエンジン。
 	public:
 	std::unique_ptr<DirectX::GraphicsMemory> m_directXTKGfxMemroy;	//DirectXTKのグラフィックメモリシステム。
 };

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ModelRender.h"
 
-namespace NMyRenderer {
+namespace nsMyGame {
 
 	constexpr const char* c_entryPointVSMain = "VSMain";
 	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "HID/GamePad.h"
-#include "../GameTemplate/Game/GameTime.h"
+#include "../MiniEngine/GameTime.h"
 
 class GraphicsEngine;
 

@@ -1,12 +1,22 @@
 #pragma once
 #include "stdafx.h"
 
-//////////////////////////////////////////////////
-///　２つ以上のクラスで使う定数をまとめている　///
-//////////////////////////////////////////////////
 
+namespace nsMyGame {
 
+	const Vector2 c_deferredSpriteWH = { 1280.0f,720.0f };
 
+	namespace nsLight {
+
+		constexpr int c_maxDirectionLightNum = 4;	//ディレクションライトの上限数
+		constexpr int c_maxPointLightNum = 100;		//ポイントライトの上限数
+	}
+
+	namespace nsFont {
+
+		constexpr int c_maxTextSize = 256;
+	}
+}
 /**
  * @brief 優先度。enPriority_Zerothが最も先に描画される。
 */
