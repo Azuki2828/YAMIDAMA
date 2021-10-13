@@ -8,7 +8,7 @@
 #include "RaytracingShaderTable.h"
 #include "RaytracingDescriptorHeaps.h"
 
-class Model;
+class CModel;
 
 namespace raytracing {
 	
@@ -20,12 +20,12 @@ namespace raytracing {
 		/// レイトレーシングをディスパッチ。
 		/// </summary>
 		/// <param name="rc">レンダリングコンテキスト</param>
-		void Dispatch(RenderContext& rc);
+		void Dispatch(CRenderContext& rc);
 		/// <summary>
 		/// ジオメトリを登録。
 		/// </summary>
 		/// <param name="model">モデル</param>
-		void RegistGeometry(Model& model)
+		void RegistGeometry(CModel& model)
 		{
 			//レイトレワールドにジオメトリを登録。
 			m_world.RegistGeometry(model);
@@ -33,13 +33,13 @@ namespace raytracing {
 		/// <summary>
 		/// ジオメトリの登録を確定。
 		/// </summary>
-		void CommitRegistGeometry(RenderContext& rc);
+		void CommitRegistGeometry(CRenderContext& rc);
 	private:
 		/// <summary>
 		/// シェーダーテーブルを作成。
 		/// </summary>
 		/// <param name="rc"></param>
-		void CreateShaderTable(RenderContext& rc);
+		void CreateShaderTable(CRenderContext& rc);
 		
 		/// <summary>
 		/// シェーダーリソースを作成。
@@ -51,8 +51,8 @@ namespace raytracing {
 		/// カメラ
 		/// </summary>
 		struct Camera {
-			Matrix mRot;	//回転行列
-			Vector3 pos;	//視点。
+			CMatrix mRot;	//回転行列
+			CVector3 pos;	//視点。
 			float aspect;	//アスペクト比。
 			float fFar;		//遠平面。
 			float fNear;	//近平面。

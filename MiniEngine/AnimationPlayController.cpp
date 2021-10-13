@@ -16,7 +16,7 @@ void AnimationPlayController::Init(Skeleton* skeleton, int footStepBoneNo)
 	m_boneMatrix.resize(numBones);
 	m_skeleton = skeleton;
 }
-void AnimationPlayController::ChangeAnimationClip(AnimationClip* clip)
+void AnimationPlayController::ChangeAnimationClip(CAnimationClip* clip)
 {
 	m_animationClip = clip;
 	m_currentKeyFrameNo = 0;
@@ -56,11 +56,11 @@ void AnimationPlayController::StartLoop()
 		animEventArray[i].SetInvokedFlag(false);
 	}
 }
-void AnimationPlayController::CalcBoneMatrixInRootBoneSpace(Bone& bone, Matrix parentMatrix)
+void AnimationPlayController::CalcBoneMatrixInRootBoneSpace(Bone& bone, CMatrix parentMatrix)
 {
 	//ワールド行列を計算する。
 	auto& mBoneInRootSpace = m_boneMatrix[bone.GetNo()];
-	Matrix localMatrix = m_boneMatrix[bone.GetNo()];
+	CMatrix localMatrix = m_boneMatrix[bone.GetNo()];
 	//親の行列とローカル行列を乗算して、ワールド行列を計算する。
 	mBoneInRootSpace = localMatrix * parentMatrix;
 
@@ -108,7 +108,7 @@ void AnimationPlayController::SamplingDeltaValueFootstepBone()
 		auto bone = m_skeleton->GetBone(boneNo);
 		if (m_footstepBoneNo == bone->GetNo()) {
 			auto mat = m_boneMatrix[bone->GetNo()];
-			Vector3 footstepBonePos;
+			CVector3 footstepBonePos;
 			footstepBonePos.x = mat.m[3][0];
 			footstepBonePos.y = mat.m[3][1];
 			footstepBonePos.z = mat.m[3][2];

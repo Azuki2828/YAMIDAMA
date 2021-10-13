@@ -30,25 +30,25 @@ public:
 		*@param[in]	height		カプセルコライダーの高さ。
 		*@param[in]	position	初期位置。
 		*/
-	void Init(float radius, float height, const Vector3& position);
+	void Init(float radius, float height, const CVector3& position);
 	/*!
 		* @brief	実行。
 		*@param[in, out]	moveSpeed		移動速度。
 		*@param[in]	deltaTime		経過時間。単位は秒。デフォルトでは、１フレームの経過時間が渡されています。
 		*@return 移動後のキャラクターの座標。
 		*/
-	const Vector3& Execute(Vector3& moveSpeed, float deltaTime);
+	const CVector3& Execute(CVector3& moveSpeed, float deltaTime);
 	/*!
 		* @brief	座標を取得。
 		*/
-	const Vector3& GetPosition() const
+	const CVector3& GetPosition() const
 	{
 		return m_position;
 	}
 	/*!
 		* @brief	座標を設定。
 		*/
-	void SetPosition(const Vector3& pos)
+	void SetPosition(const CVector3& pos)
 	{
 		m_position = pos;
 	}
@@ -87,7 +87,7 @@ public:
 	void RemoveRigidBoby();
 private:
 	bool				m_isInited = false;				//!<初期化済み？
-	Vector3 			m_position;						//!<座標。
+	CVector3 			m_position;						//!<座標。
 	bool 				m_isJump = false;				//!<ジャンプ中？
 	bool				m_isOnGround = true;			//!<地面の上にいる？
 	CCapsuleCollider	m_collider;						//!<コライダー。

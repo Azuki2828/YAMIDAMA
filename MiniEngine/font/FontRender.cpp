@@ -8,11 +8,11 @@ namespace nsMyGame {
 
 		void CFontRender::Init(
 			const wchar_t* text,
-			const Vector2& position,
-			const Vector4& color,
+			const CVector2& position,
+			const CVector4& color,
 			const float rotation,
 			const float scale,
-			const Vector2& pivot
+			const CVector2& pivot
 		) {
 			//各々のパラメーターを設定。
 			swprintf_s(m_fontValue.text, text);
@@ -23,11 +23,11 @@ namespace nsMyGame {
 			m_fontValue.pivot = pivot;
 		}
 
-		void CFontRender::Render(RenderContext& rc) {
+		void CFontRender::Render(CRenderContext& rc) {
 
 
 			//描画モードがフォント用の時だけ描画する。
-			if (rc.GetRenderMode() == RenderContext::EnRender_Mode::enRenderMode_Font) {
+			if (rc.GetRenderMode() == CRenderContext::EnRender_Mode::enRenderMode_Font) {
 				m_font.Begin(rc);
 
 				//フォントを描画。

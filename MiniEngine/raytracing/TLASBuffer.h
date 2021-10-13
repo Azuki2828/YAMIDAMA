@@ -1,6 +1,6 @@
 #pragma once
 #include "RaytracingInstance.h"
-class RenderContext;
+class CRenderContext;
 
 namespace raytracing {
 	/// <summary>
@@ -21,7 +21,7 @@ namespace raytracing {
 		/// <param name="rc"></param>
 		/// <param name="instances"></param>
 		void Init(
-			RenderContext& rc,
+			CRenderContext& rc,
 			const std::vector<InstancePtr>& instances,
 			const std::vector< AccelerationStructureBuffers>& bottomLevelASBuffers
 		);

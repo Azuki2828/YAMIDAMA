@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "tkFile/TksFile.h"
 
-void TksFile::Load(const char* filePath)
+void CTksFile::Load(const char* filePath)
 {
 	auto fp = fopen(filePath, "rb");
 	if (fp == nullptr) {

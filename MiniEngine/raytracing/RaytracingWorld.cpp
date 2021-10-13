@@ -6,7 +6,7 @@
 #define align_to(_alignment, _val) (((_val + _alignment - 1) / _alignment) * _alignment)
 namespace raytracing {
 
-	void World::RegistGeometry(Model& model)
+	void World::RegistGeometry(CModel& model)
 	{
 		model.QueryMeshAndDescriptorHeap([&](const SMesh& mesh, const DescriptorHeap& ds) {
 
@@ -36,7 +36,7 @@ namespace raytracing {
 		});
 	}
 
-	void World::CommitRegistGeometry(RenderContext& rc)
+	void World::CommitRegistGeometry(CRenderContext& rc)
 	{
 		//BLASÇç\ízÅB
 		m_blasBuffer.Init(rc, m_instances);

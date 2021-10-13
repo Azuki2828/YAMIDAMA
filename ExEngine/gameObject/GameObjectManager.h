@@ -59,13 +59,13 @@ public:
 	/// 描画処理を実行。
 	/// </summary>
 	/// <param name="rc"></param>
-	void ExecuteRender(RenderContext& rc);
+	void ExecuteRender(CRenderContext& rc);
 
 	/// <summary>
 	/// 描画処理を実行。
 	/// </summary>
 	/// <param name="rc"></param>
-	void Execute2DRender(RenderContext& rc);
+	void Execute2DRender(CRenderContext& rc);
 	
 	
 	/*!
@@ -86,7 +86,7 @@ public:
 	/*!
 		*@brief	ゲームオブジェクトの削除。
 		*/
-	void DeleteGameObject( IGameObject* gameObject )
+	void DeleteGameObject( CIGameObject* gameObject )
 	{
 		if (gameObject != nullptr) {
 			gameObject->Dead();
@@ -134,7 +134,7 @@ public:
 	
 private:
 	enum { GAME_OBJECT_PRIO_MAX = 255 };		//!<ゲームオブジェクトの優先度の最大値。
-	typedef std::list<IGameObject*>	 GameObjectList;
+	typedef std::list<CIGameObject*>	 GameObjectList;
 	std::array<GameObjectList, GAME_OBJECT_PRIO_MAX>	m_gameObjectListArray;							//!<ゲームオブジェクトの優先度付きリスト。
 	static GameObjectManager* m_instance;		//唯一のインスタンスのアドレスを記録する変数。
 };
@@ -180,7 +180,7 @@ static inline T* NewGO( int priority, const char* objectName = nullptr)
 	* NewGOを使用して作成したオブジェクトは必ずDeleteGOを実行するように。
 	*@param[in]	go		削除するゲームオブジェクト。
 	*/
-static inline void DeleteGO(IGameObject* go)
+static inline void DeleteGO(CIGameObject* go)
 {
 	GameObjectManager::GetInstance()->DeleteGameObject(go);
 }

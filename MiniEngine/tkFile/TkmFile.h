@@ -12,7 +12,7 @@
 /// <summary>
 /// tkmファイルクラス。
 /// </summary>
-class  TkmFile {
+class  CTkmFile {
 public:
 	/// <summary>
 	/// マテリアル
@@ -41,13 +41,13 @@ public:
 	/// ここを編集したら、レイトレのシェーダーで定義されている頂点構造体も変更する必要がある。
 	/// </remarks>
 	struct SVertex {
-		Vector3 pos;			//座標。
-		Vector3 normal;		//法線。
-		Vector3 tangent;		//接ベクトル。
-		Vector3 binormal;		//従ベクトル。
-		Vector2 uv;			//UV座標。
+		CVector3 pos;			//座標。
+		CVector3 normal;		//法線。
+		CVector3 tangent;		//接ベクトル。
+		CVector3 binormal;		//従ベクトル。
+		CVector2 uv;			//UV座標。
 		int indices[4];			//スキンインデックス。
-		Vector4 skinWeights;	//スキンウェイト。
+		CVector4 skinWeights;	//スキンウェイト。
 	};
 	/// <summary>
 	/// 32ビットのインデックスバッファ。

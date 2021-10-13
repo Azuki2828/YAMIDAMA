@@ -15,7 +15,7 @@ namespace raytracing {
 	extern const D3D12_HEAP_PROPERTIES kDefaultHeapProps;
 
 	void TLASBuffer::Init(
-		RenderContext& rc,
+		CRenderContext& rc,
 		const std::vector<InstancePtr>& instances,
 		const std::vector< AccelerationStructureBuffers>& bottomLevelASBuffers
 	)
@@ -54,8 +54,8 @@ namespace raytracing {
 		m_topLevelASBuffers.pInstanceDesc->Map(0, nullptr, (void**)&instanceDescs);
 		ZeroMemory(instanceDescs, sizeof(D3D12_RAYTRACING_INSTANCE_DESC) * numInstance);
 
-		Matrix mRot;
-		mRot.MakeRotationX(Math::PI * -0.5f);
+		CMatrix mRot;
+		mRot.MakeRotationX(CMath::PI * -0.5f);
 		mRot.Transpose();
 
 		for (int i = 0; i < numInstance; i++) {

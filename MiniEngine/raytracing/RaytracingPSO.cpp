@@ -288,9 +288,9 @@ namespace raytracing {
 		ShaderConfigSubobject shaderConfig;
 		struct RayPayload
 		{
-			Vector4 color;
-			Vector4 reflectionColor;
-			Vector4 hit_depth;
+			CVector4 color;
+			CVector4 reflectionColor;
+			CVector4 hit_depth;
 		};
 		shaderConfig.Init(sizeof(float) * 2, sizeof(RayPayload));
 		subobjects[index] = shaderConfig.subobject; // 

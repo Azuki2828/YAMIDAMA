@@ -13,7 +13,7 @@
 struct KeyFrame {
 	uint32_t boneIndex;	//!<ボーンインデックス。
 	float time;					//!<時間。
-	Matrix transform;			//!<トランスフォーム。
+	CMatrix transform;			//!<トランスフォーム。
 };
 
 /*!
@@ -72,20 +72,20 @@ private:
 /*!
 	*@brief	アニメーションクリップ。
 	*/
-class AnimationClip  {
+class CAnimationClip  {
 public:
 	
 	using keyFramePtrList = std::vector<KeyFrame*>;
 	/*!
 	* @brief	コンストラクタ
 	*/
-	AnimationClip()
+	CAnimationClip()
 	{
 	}
 	/*!
 		*@brief	デストラクタ。
 		*/
-	~AnimationClip();
+	~CAnimationClip();
 	/// <summary>
 	/// アニメーションクリップを同期ロード。
 	/// </summary>
@@ -156,6 +156,6 @@ private:
 	std::unique_ptr<AnimationEvent[]>	m_animationEvent;			//アニメーションイベント。
 	int									m_numAnimationEvent = 0;	//アニメーションイベントの数。
 	keyFramePtrList*					m_topBoneKeyFramList = nullptr;
-	TkaFile							m_tkaFile;			//tkaファイル
+	CTkaFile							m_tkaFile;			//tkaファイル
 };
-using AnimationClipPtr = std::unique_ptr<AnimationClip>;
+using AnimationClipPtr = std::unique_ptr<CAnimationClip>;

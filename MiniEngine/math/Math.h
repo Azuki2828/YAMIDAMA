@@ -1,6 +1,6 @@
 #pragma once
 
-class Math{
+class CMath{
 public:
 	//‰~Žü—¦
 	static constexpr float PI = 3.14159265358979323846f;

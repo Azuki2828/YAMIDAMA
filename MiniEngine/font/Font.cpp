@@ -9,24 +9,24 @@ namespace nsMyGame {
 
 	namespace nsFont {
 
-		void Font::Begin(RenderContext& rc)
+		void CFont::Begin(CRenderContext& rc)
 		{
 			auto& fontEngine = g_graphicsEngine->GetFontEngine();
 			fontEngine.BeginDraw(rc);
 		}
 
-		void Font::End(RenderContext& rc)
+		void CFont::End(CRenderContext& rc)
 		{
 			auto& fontEngine = g_graphicsEngine->GetFontEngine();
 			fontEngine.EndDraw(rc);
 		}
-		void Font::Draw(
+		void CFont::Draw(
 			wchar_t const* text,
-			const Vector2& position,
-			const Vector4& color,
+			const CVector2& position,
+			const CVector4& color,
 			float rotation,
 			float scale,
-			Vector2 pivot)
+			CVector2 pivot)
 		{
 			if (text == nullptr) {
 				return;
@@ -34,7 +34,7 @@ namespace nsMyGame {
 			pivot.y = 1.0f - pivot.y;
 			DirectX::XMFLOAT2 tkFloat2Zero(0, 0);
 			//座標系をスプライトと合わせる。
-			Vector2 pos = position;
+			CVector2 pos = position;
 			float frameBufferHalfWidth = g_graphicsEngine->GetFrameBufferWidth() * 0.5f;
 			float frameBufferHalfHeight = g_graphicsEngine->GetFrameBufferHeight() * 0.5f;
 			pos.x += frameBufferHalfWidth;
@@ -44,7 +44,7 @@ namespace nsMyGame {
 
 			if (m_isDrawShadow) {
 				//影を書く。
-				Vector2 offsetTbl[] = {
+				CVector2 offsetTbl[] = {
 					{ m_shadowOffset , 0.0f},
 					{ -m_shadowOffset , 0.0f },
 					{ 0.0f , m_shadowOffset },
@@ -57,7 +57,7 @@ namespace nsMyGame {
 				};
 				for (auto offset : offsetTbl) {
 
-					Vector2 sPos = pos;
+					CVector2 sPos = pos;
 					sPos.x += offset.x;
 					sPos.y += offset.y;
 					fontEngine.Draw(

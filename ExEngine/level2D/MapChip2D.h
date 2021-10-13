@@ -23,14 +23,14 @@ public:
 	/// スプライトを描画する。
 	/// </summary>
 	/// <param name="renderContext">レンダーコンテキスト。</param>
-	void Draw(RenderContext& renderContext)
+	void Draw(CRenderContext& renderContext)
 	{
 		m_sprite.Draw(renderContext);
 	}
 private:
-	Vector3 m_position;					//座標。
-	Quaternion m_rotation;				//回転。
-	Vector3 m_scale = g_vec3One;	//大きさ。
-	Sprite m_sprite;						//スプライト。
+	CVector3 m_position;					//座標。
+	CQuaternion m_rotation;				//回転。
+	CVector3 m_scale = g_vec3One;	//大きさ。
+	CSprite m_sprite;						//スプライト。
 };
 

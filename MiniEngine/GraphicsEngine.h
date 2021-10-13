@@ -17,12 +17,12 @@
 /// <summary>
 /// DirectX12に依存するグラフィックスエンジン
 /// </summary>
-class GraphicsEngine {
+class CGraphicsEngine {
 public:
 	/// <summary>
 	/// デストラクタ。
 	/// </summary>
-	~GraphicsEngine();
+	~CGraphicsEngine();
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -100,7 +100,7 @@ public:
 	/// レンダリングコンテキストを取得。
 	/// </summary>
 	/// <returns></returns>
-	RenderContext& GetRenderContext()
+	CRenderContext& GetRenderContext()
 	{
 		return m_renderContext;
 	}
@@ -124,7 +124,7 @@ public:
 	/// レンダリングターゲットをフレームバッファに変更する。
 	/// </summary>
 	/// <param name="rc"></param>
-	void ChangeRenderTargetToFrameBuffer(RenderContext& rc);
+	void ChangeRenderTargetToFrameBuffer(CRenderContext& rc);
 	/// <summary>
 	/// 現在のフレームバッファのレンダリングターゲットビューを取得。
 	/// </summary>
@@ -145,14 +145,14 @@ public:
 	/// 3DModelをレイトレワールドに登録。
 	/// </summary>
 	/// <param name="model"></param>
-	void RegistModelToRaytracingWorld(Model& model)
+	void RegistModelToRaytracingWorld(CModel& model)
 	{
 		m_raytracingEngine.RegistGeometry(model);
 	}
 	/// <summary>
 	/// ここまで登録されたモデルを使ってレイトレワールドを構築。
 	/// </summary>
-	void BuildRaytracingWorld(RenderContext& rc)
+	void BuildRaytracingWorld(CRenderContext& rc)
 	{
 		m_raytracingEngine.CommitRegistGeometry(rc);
 	}
@@ -160,7 +160,7 @@ public:
 	/// レイトレーシングをディスパッチ。
 	/// </summary>
 	/// <param name="rc"></param>
-	void DispatchRaytracing(RenderContext& rc)
+	void DispatchRaytracing(CRenderContext& rc)
 	{
 		m_raytracingEngine.Dispatch(rc);
 	}
@@ -168,7 +168,7 @@ public:
 	/// フレームバッファにコピー。
 	/// </summary>
 	/// <param name="pDst"></param>
-	void CopyToFrameBuffer(RenderContext& rc, ID3D12Resource* pSrc)
+	void CopyToFrameBuffer(CRenderContext& rc, ID3D12Resource* pSrc)
 	{
 		D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 			m_renderTargets[m_frameIndex],
@@ -195,7 +195,7 @@ public:
 	/// フォントエンジンを取得。
 	/// </summary>
 	/// <returns></returns>
-	nsMyGame::nsFont::FontEngine& GetFontEngine()
+	nsMyGame::nsFont::CFontEngine& GetFontEngine()
 	{
 		return m_fontEngine;
 	}
@@ -293,7 +293,7 @@ private:
 	ID3D12Resource* m_depthStencilBuffer = nullptr;	//深度ステンシルバッファ。
 	D3D12_VIEWPORT m_viewport;			//ビューポート。
 	D3D12_RECT m_scissorRect;			//シザリング矩形。
-	RenderContext m_renderContext;		//レンダリングコンテキスト。
+	CRenderContext m_renderContext;		//レンダリングコンテキスト。
 	D3D12_CPU_DESCRIPTOR_HANDLE m_currentFrameBufferRTVHandle;		//現在書き込み中のフレームバッファのレンダリングターゲットビューのハンドル。
 	D3D12_CPU_DESCRIPTOR_HANDLE m_currentFrameBufferDSVHandle;		//現在書き込み中のフレームバッファの深度ステンシルビューの
 	// GPUとの同期で使用する変数。
@@ -303,14 +303,14 @@ private:
 	UINT64 m_fenceValue = 0;
 	UINT m_frameBufferWidth = 0;				//フレームバッファの幅。
 	UINT m_frameBufferHeight = 0;				//フレームバッファの高さ。
-	Camera m_camera2D;							//2Dカメラ。
-	Camera m_camera3D;							//3Dカメラ。
+	CCamera m_camera2D;							//2Dカメラ。
+	CCamera m_camera3D;							//3Dカメラ。
 	raytracing::Engine m_raytracingEngine;		//レイトレエンジン。
 	NullTextureMaps m_nullTextureMaps;			//ヌルテクスチャマップ。
-	nsMyGame::nsFont::FontEngine m_fontEngine;	//フォントエンジン。
+	nsMyGame::nsFont::CFontEngine m_fontEngine;	//フォントエンジン。
 	public:
 	std::unique_ptr<DirectX::GraphicsMemory> m_directXTKGfxMemroy;	//DirectXTKのグラフィックメモリシステム。
 };
-extern GraphicsEngine* g_graphicsEngine;	//グラフィックスエンジン
-extern Camera* g_camera2D;					//2Dカメラ。
-extern Camera* g_camera3D;					//3Dカメラ。
+extern CGraphicsEngine* g_graphicsEngine;	//グラフィックスエンジン
+extern CCamera* g_camera2D;					//2Dカメラ。
+extern CCamera* g_camera3D;					//3Dカメラ。

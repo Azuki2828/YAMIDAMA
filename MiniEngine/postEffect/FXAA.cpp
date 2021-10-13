@@ -9,8 +9,8 @@ namespace nsMyGame {
 
             //FXAA用のレンダリングターゲットを作成する。
             m_fxaaRT.Create(
-                RenderTarget::GetRenderTarget(enMainRT)->GetWidth(),
-                RenderTarget::GetRenderTarget(enMainRT)->GetHeight(),
+                CRenderTarget::GetRenderTarget(enMainRT)->GetWidth(),
+                CRenderTarget::GetRenderTarget(enMainRT)->GetHeight(),
                 c_mipLevel1,
                 c_renderArraySize1,
                 DXGI_FORMAT_R8G8B8A8_UNORM,
@@ -19,11 +19,11 @@ namespace nsMyGame {
 
             //最終合成用のスプライトを初期化する。
             SpriteInitData spriteInitData;
-            spriteInitData.m_textures[0] = &RenderTarget::GetRenderTarget(enMainRT)->GetRenderTargetTexture();
+            spriteInitData.m_textures[0] = &CRenderTarget::GetRenderTarget(enMainRT)->GetRenderTargetTexture();
 
             //解像度はmainRenderTargetの幅と高さと同じにする。
-            spriteInitData.m_width = RenderTarget::GetRenderTarget(enMainRT)->GetWidth();
-            spriteInitData.m_height = RenderTarget::GetRenderTarget(enMainRT)->GetHeight();
+            spriteInitData.m_width = CRenderTarget::GetRenderTarget(enMainRT)->GetWidth();
+            spriteInitData.m_height = CRenderTarget::GetRenderTarget(enMainRT)->GetHeight();
 
             //FXAA用のシェーダーを使用する。
             spriteInitData.m_fxFilePath = c_fxFilePathFXAA;
@@ -42,7 +42,7 @@ namespace nsMyGame {
             m_finalSprite.Init(spriteInitData);
         }
 
-        void CFXAA::OnRender(RenderContext& rc) {
+        void CFXAA::OnRender(CRenderContext& rc) {
 
             // レンダリングターゲットとして利用できるまで待つ
             rc.WaitUntilToPossibleSetRenderTarget(m_fxaaRT);

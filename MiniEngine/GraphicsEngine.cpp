@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "GraphicsEngine.h"
 
-GraphicsEngine* g_graphicsEngine = nullptr;	//グラフィックスエンジン
-Camera* g_camera2D = nullptr;				//2Dカメラ。
-Camera* g_camera3D = nullptr;				//3Dカメラ。
+CGraphicsEngine* g_graphicsEngine = nullptr;	//グラフィックスエンジン
+CCamera* g_camera2D = nullptr;				//2Dカメラ。
+CCamera* g_camera3D = nullptr;				//3Dカメラ。
 
-GraphicsEngine::~GraphicsEngine()
+CGraphicsEngine::~CGraphicsEngine()
 {
 	WaitDraw();
 	//後始末。
@@ -48,7 +48,7 @@ GraphicsEngine::~GraphicsEngine()
 
 	CloseHandle(m_fenceEvent);
 }
-void GraphicsEngine::WaitDraw()
+void CGraphicsEngine::WaitDraw()
 {
 	//描画終了待ち
 	// Signal and increment the fence value.
@@ -63,7 +63,7 @@ void GraphicsEngine::WaitDraw()
 		WaitForSingleObject(m_fenceEvent, INFINITE);
 	}
 }
-bool GraphicsEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight)
+bool CGraphicsEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight)
 {
 	//
 	g_graphicsEngine = this;
@@ -165,7 +165,7 @@ bool GraphicsEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeig
 	m_nullTextureMaps.Init();
 
 	//カメラを初期化する。
-	m_camera2D.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Ortho);
+	m_camera2D.SetUpdateProjMatrixFunc(CCamera::enUpdateProjMatrixFunc_Ortho);
 	m_camera2D.SetWidth( static_cast<float>(m_frameBufferWidth) );
 	m_camera2D.SetHeight( static_cast<float>(m_frameBufferHeight) );
 	m_camera2D.SetPosition({0.0f, 0.0f, -1.0f});
@@ -185,7 +185,7 @@ bool GraphicsEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeig
 	return true;
 }
 
-IDXGIFactory4* GraphicsEngine::CreateDXGIFactory()
+IDXGIFactory4* CGraphicsEngine::CreateDXGIFactory()
 {
 	UINT dxgiFactoryFlags = 0;
 #ifdef _DEBUG
@@ -205,7 +205,7 @@ IDXGIFactory4* GraphicsEngine::CreateDXGIFactory()
 	return factory;
 }
 
-bool GraphicsEngine::CreateD3DDevice( IDXGIFactory4* dxgiFactory )
+bool CGraphicsEngine::CreateD3DDevice( IDXGIFactory4* dxgiFactory )
 {
 	D3D_FEATURE_LEVEL featureLevels[] = {
 		D3D_FEATURE_LEVEL_12_1,	//Direct3D 12.1の機能を使う。
@@ -266,7 +266,7 @@ bool GraphicsEngine::CreateD3DDevice( IDXGIFactory4* dxgiFactory )
 	}
 	return m_d3dDevice != nullptr;
 }
-bool GraphicsEngine::CreateCommandQueue()
+bool CGraphicsEngine::CreateCommandQueue()
 {
 	D3D12_COMMAND_QUEUE_DESC queueDesc = {};
 	queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
@@ -279,7 +279,7 @@ bool GraphicsEngine::CreateCommandQueue()
 	}
 	return true;
 }
-bool GraphicsEngine::CreateSwapChain(
+bool CGraphicsEngine::CreateSwapChain(
 	HWND hwnd,
 	UINT frameBufferWidth,
 	UINT frameBufferHeight,
@@ -311,7 +311,7 @@ bool GraphicsEngine::CreateSwapChain(
 	m_currentBackBufferIndex = m_swapChain->GetCurrentBackBufferIndex();
 	return true;
 }
-bool GraphicsEngine::CreateDescriptorHeapForFrameBuffer()
+bool CGraphicsEngine::CreateDescriptorHeapForFrameBuffer()
 {
 	//RTV用のディスクリプタヒープを作成する。
 	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
@@ -338,7 +338,7 @@ bool GraphicsEngine::CreateDescriptorHeapForFrameBuffer()
 	m_dsvDescriptorSize = m_d3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 	return true;
 }
-bool GraphicsEngine::CreateRTVForFameBuffer()
+bool CGraphicsEngine::CreateRTVForFameBuffer()
 {
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = m_rtvHeap->GetCPUDescriptorHandleForHeapStart();
 
@@ -352,7 +352,7 @@ bool GraphicsEngine::CreateRTVForFameBuffer()
 	}
 	return true;
 }
-bool GraphicsEngine::CreateDSVForFrameBuffer( UINT frameBufferWidth, UINT frameBufferHeight )
+bool CGraphicsEngine::CreateDSVForFrameBuffer( UINT frameBufferWidth, UINT frameBufferHeight )
 {
 	D3D12_CLEAR_VALUE dsvClearValue;
 	dsvClearValue.Format = DXGI_FORMAT_D32_FLOAT;
@@ -394,7 +394,7 @@ bool GraphicsEngine::CreateDSVForFrameBuffer( UINT frameBufferWidth, UINT frameB
 
 	return true;
 }
-bool GraphicsEngine::CreateCommandList()
+bool CGraphicsEngine::CreateCommandList()
 {
 	//コマンドリストの作成。
 	m_d3dDevice->CreateCommandList(
@@ -408,7 +408,7 @@ bool GraphicsEngine::CreateCommandList()
 
 	return true;
 }
-bool GraphicsEngine::CreateSynchronizationWithGPUObject()
+bool CGraphicsEngine::CreateSynchronizationWithGPUObject()
 {
 	m_d3dDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_fence));
 	if (!m_fence) {
@@ -423,7 +423,7 @@ bool GraphicsEngine::CreateSynchronizationWithGPUObject()
 	}
 	return true;
 }
-void GraphicsEngine::BeginRender()
+void CGraphicsEngine::BeginRender()
 {
 	m_frameIndex = m_swapChain->GetCurrentBackBufferIndex();
 
@@ -456,11 +456,11 @@ void GraphicsEngine::BeginRender()
 	m_renderContext.ClearDepthStencilView(m_currentFrameBufferDSVHandle, 1.0f);
 
 }
-void GraphicsEngine::ChangeRenderTargetToFrameBuffer(RenderContext& rc)
+void CGraphicsEngine::ChangeRenderTargetToFrameBuffer(CRenderContext& rc)
 {
 	rc.SetRenderTarget(m_currentFrameBufferRTVHandle, m_currentFrameBufferDSVHandle);
 }
-void GraphicsEngine::EndRender()
+void CGraphicsEngine::EndRender()
 {
 	// レンダリングターゲットへの描き込み完了待ち
 	m_renderContext.WaitUntilFinishDrawingToRenderTarget(m_renderTargets[m_frameIndex]);

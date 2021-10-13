@@ -6,16 +6,16 @@
 class NormalSmoothing {
 private:
 	struct SSmoothVertex {
-		Vector3 newNormal = g_vec3Zero;
-		TkmFile::SVertex* vertex = nullptr;
+		CVector3 newNormal = g_vec3Zero;
+		CTkmFile::SVertex* vertex = nullptr;
 	};
 	struct SFace {
-		Vector3 normal;
+		CVector3 normal;
 		std::vector<int> vertexNos;
 	};
 public:
 	template <class IndexBuffer>
-	void Execute(TkmFile::SMesh& mesh, const IndexBuffer& indexBuffer)
+	void Execute(CTkmFile::SMesh& mesh, const IndexBuffer& indexBuffer)
 	{
 
 		//ステップ１面法線を計算していく。
@@ -34,9 +34,9 @@ public:
 			auto& vert_2 = mesh.vertexBuffer[vertNo_2];
 
 			//法線を計算する。
-			Vector3 v0tov1 = vert_1.pos - vert_0.pos;
-			Vector3 v0tov2 = vert_2.pos - vert_0.pos;
-			Vector3 normal = Cross(v0tov1, v0tov2);
+			CVector3 v0tov1 = vert_1.pos - vert_0.pos;
+			CVector3 v0tov2 = vert_2.pos - vert_0.pos;
+			CVector3 normal = Cross(v0tov1, v0tov2);
 			normal.Normalize();
 			SFace face;
 			face.normal = normal;
@@ -129,7 +129,7 @@ namespace tkmFileFormat {
 	};
 };
 template< class IndexBuffer>
-void BuildTangentAndBiNormalImp(TkmFile::SMesh& mesh, const IndexBuffer& indexBuffer)
+void BuildTangentAndBiNormalImp(CTkmFile::SMesh& mesh, const IndexBuffer& indexBuffer)
 {
 	//頂点スムースは気にしない。
 	auto numPolygon = indexBuffer.indices.size()/3;
@@ -143,26 +143,26 @@ void BuildTangentAndBiNormalImp(TkmFile::SMesh& mesh, const IndexBuffer& indexBu
 		auto& vert_1 = mesh.vertexBuffer[vertNo_1];
 		auto& vert_2 = mesh.vertexBuffer[vertNo_2];
 
-		Vector3 cp0[] = {
+		CVector3 cp0[] = {
 			{ vert_0.pos.x, vert_0.uv.x, vert_0.uv.y},
 			{ vert_0.pos.y, vert_0.uv.x, vert_0.uv.y},
 			{ vert_0.pos.z, vert_0.uv.x, vert_0.uv.y}
 		};
 
-		Vector3 cp1[] = {
+		CVector3 cp1[] = {
 			{ vert_1.pos.x, vert_1.uv.x, vert_1.uv.y},
 			{ vert_1.pos.y, vert_1.uv.x, vert_1.uv.y},
 			{ vert_1.pos.z, vert_1.uv.x, vert_1.uv.y}
 		};
 
-		Vector3 cp2[] = {
+		CVector3 cp2[] = {
 			{ vert_2.pos.x, vert_2.uv.x, vert_2.uv.y},
 			{ vert_2.pos.y, vert_2.uv.x, vert_2.uv.y},
 			{ vert_2.pos.z, vert_2.uv.x, vert_2.uv.y}
 		};
 
 		// 平面パラメータからUV軸座標算出する。
-		Vector3 tangent, binormal;
+		CVector3 tangent, binormal;
 		for (int i = 0; i < 3; ++i) {
 			auto V1 = cp1[i] - cp0[i];
 			auto V2 = cp2[i] - cp1[i];
@@ -196,7 +196,7 @@ void BuildTangentAndBiNormalImp(TkmFile::SMesh& mesh, const IndexBuffer& indexBu
 	}
 		
 }
-std::string TkmFile::LoadTextureFileName(FILE* fp)
+std::string CTkmFile::LoadTextureFileName(FILE* fp)
 {
 	std::string fileName;
 	std::uint32_t fileNameLen;
@@ -213,7 +213,7 @@ std::string TkmFile::LoadTextureFileName(FILE* fp)
 	return fileName;
 }
 template<class T>
-void TkmFile::LoadIndexBuffer(std::vector<T>& indices, int numIndex, FILE* fp)
+void CTkmFile::LoadIndexBuffer(std::vector<T>& indices, int numIndex, FILE* fp)
 {
 	indices.resize(numIndex);
 	for (int indexNo = 0; indexNo < numIndex; indexNo++) {
@@ -224,7 +224,7 @@ void TkmFile::LoadIndexBuffer(std::vector<T>& indices, int numIndex, FILE* fp)
 	}
 }
 
-void TkmFile::BuildMaterial(SMaterial& tkmMat, FILE* fp, const char* filePath)
+void CTkmFile::BuildMaterial(SMaterial& tkmMat, FILE* fp, const char* filePath)
 {
 	//アルベドのファイル名をロード。
 	tkmMat.albedoMapFileName = LoadTextureFileName(fp);
@@ -283,7 +283,7 @@ void TkmFile::BuildMaterial(SMaterial& tkmMat, FILE* fp, const char* filePath)
 	loadTexture( tkmMat.reflectionMapFileName, tkmMat.reflectionMap, tkmMat.reflectionMapSize );
 	loadTexture( tkmMat.refractionMapFileName, tkmMat.refractionMap, tkmMat.refractionMapSize) ;
 }
-void TkmFile::BuildTangentAndBiNormal()
+void CTkmFile::BuildTangentAndBiNormal()
 {
 	NormalSmoothing normalSmoothing;
 	for (auto& mesh : m_meshParts) {
@@ -297,7 +297,7 @@ void TkmFile::BuildTangentAndBiNormal()
 		}
 	}
 }
-void TkmFile::Load(const char* filePath)
+void CTkmFile::Load(const char* filePath)
 {
 	FILE* fp = fopen(filePath, "rb");
 	if (fp == nullptr) {

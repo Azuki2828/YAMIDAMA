@@ -55,7 +55,7 @@ void CEnemy::Update()
 	auto updateFunc = m_enemyPyModule.attr("Update");
 	//updateFunc();
 }
-void CEnemy::Render(RenderContext& rc)
+void CEnemy::Render(CRenderContext& rc)
 {
 
 }

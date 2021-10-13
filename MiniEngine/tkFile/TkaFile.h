@@ -7,7 +7,7 @@
 /// </remarks>
 #pragma once
 
-class TkaFile {
+class CTkaFile {
 public:
 	/// <summary>
 	/// アニメーションクリップのヘッダー。
@@ -30,7 +30,7 @@ public:
 	struct KeyFrame {
 		std::uint32_t boneIndex;	//ボーンインデックス。
 		float time;					//時間。
-		Vector3 transform[4];		//トランスフォーム。
+		CVector3 transform[4];		//トランスフォーム。
 	};
 	/// <summary>
 	/// 読み込み処理。

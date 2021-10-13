@@ -26,7 +26,7 @@ namespace nsMyGame {
 		m_sprite.Update(m_pos, m_rot, m_sca);
 	}
 
-	void CSpriteRender::Render2D(RenderContext& rc) {
+	void CSpriteRender::Render2D(CRenderContext& rc) {
 
 		m_sprite.Draw(rc);
 	}

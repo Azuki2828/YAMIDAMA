@@ -13,7 +13,7 @@ namespace nsMyGame {
 			enAnimNum
 
 		};
-		class CPlayer : public IGameObject
+		class CPlayer : public CIGameObject
 		{
 			//プレイヤーの状態
 			enum class EnPlayerState {
@@ -66,7 +66,7 @@ namespace nsMyGame {
 			 * @brief 座標を取得する関数。
 			 * @return
 			*/
-			const Vector3& GetPosition()const {
+			const CVector3& GetPosition()const {
 
 				return m_pos;
 			}
@@ -128,14 +128,14 @@ namespace nsMyGame {
 			}
 		private:
 			int m_yoiParam = 0;
-			Vector4 m_color = Vector4::White;
+			CVector4 m_color = CVector4::White;
 			EnColor m_colorState = en1;
 			int m_count = 0;
 			EnPlayerState m_playerState = EnPlayerState::enState_Normal;
 			CModelRender* m_modelRender = nullptr;
-			AnimationClip m_animationClip[enAnimNum];
+			CAnimationClip m_animationClip[enAnimNum];
 
-			Vector3 m_pos = { 0.0f,0.0f,0.0f };
+			CVector3 m_pos = { 0.0f,0.0f,0.0f };
 			pybind11::module m_playerPyModule;
 
 			nsFont::CFontRender* m_fontRender = nullptr;

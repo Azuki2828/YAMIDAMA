@@ -31,7 +31,7 @@ struct ModelInitData {
 /// <summary>
 /// モデルクラス。
 /// </summary>
-class Model {
+class CModel {
 
 public:
 
@@ -46,24 +46,24 @@ public:
 	/// <param name="pos">座標</param>
 	/// <param name="rot">回転</param>
 	/// <param name="scale">拡大率</param>
-	void UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 scale);
+	void UpdateWorldMatrix(CVector3 pos, CQuaternion rot, CVector3 scale);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	/// <param name="renderContext">レンダリングコンテキスト</param>
-	void Draw(RenderContext& renderContext);
+	void Draw(CRenderContext& renderContext);
 
 	/// <summary>
 	/// 描画(カメラを指定)
 	/// </summary>
 	/// <param name="renderContext">レンダリングコンテキスト</param>
-	void Draw(RenderContext& rc, Camera& camera);
+	void Draw(CRenderContext& rc, CCamera& camera);
 	/// <summary>
 	/// ワールド行列を取得。
 	/// </summary>
 	/// <returns></returns>
-	const Matrix& GetWorldMatrix() const
+	const CMatrix& GetWorldMatrix() const
 	{
 		return m_world;
 	}
@@ -93,14 +93,14 @@ public:
 	/// TKMファイルを取得。
 	/// </summary>
 	/// <returns></returns>
-	const TkmFile& GetTkmFile() const
+	const CTkmFile& GetTkmFile() const
 	{
 		return m_tkmFile;
 	}
 private:
 
-	Matrix m_world;														//ワールド行列。
-	TkmFile m_tkmFile;													//tkmファイル。
+	CMatrix m_world;														//ワールド行列。
+	CTkmFile m_tkmFile;													//tkmファイル。
 	Skeleton m_skeleton;												//スケルトン。
 	MeshParts m_meshParts;											//メッシュパーツ。
 	EnModelUpAxis m_modelUpAxis = enModelUpAxisY;		//モデルの上方向。

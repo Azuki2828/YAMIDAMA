@@ -41,10 +41,10 @@ struct SpriteInitData {
 /// <summary>
 /// スプライトクラス。
 /// </summary>
-class Sprite  {
+class CSprite  {
 public:
-	static const Vector2	DEFAULT_PIVOT;					//!<ピボット。
-	virtual ~Sprite();
+	static const CVector2	DEFAULT_PIVOT;					//!<ピボット。
+	virtual ~CSprite();
 	/// <summary>
 	/// 初期化。
 	/// </summary>
@@ -63,12 +63,12 @@ public:
 	/// 1.0, 1.0で画像の右上。
 	/// UnityのuGUIに準拠。
 	/// </param>
-	void Update(const Vector3& pos, const Quaternion& rot, const Vector3& scale, const Vector2& pivot = DEFAULT_PIVOT);
+	void Update(const CVector3& pos, const CQuaternion& rot, const CVector3& scale, const CVector2& pivot = DEFAULT_PIVOT);
 	/// <summary>
 	/// 描画。
 	/// </summary>
 	/// <param name="renderContext">レンダリングコンテキスト/param>
-	void Draw(RenderContext& renderContext);
+	void Draw(CRenderContext& renderContext);
 	/// <summary>
 	/// 初期化されているか判定。
 	/// </summary>
@@ -109,16 +109,16 @@ private:
 	void InitConstantBuffer(const SpriteInitData& initData);
 
 public:
-	void SetPosition(const Vector3& pos) {
+	void SetPosition(const CVector3& pos) {
 		m_position = pos;
 	}
-	void SetRotation(const Quaternion& rot) {
+	void SetRotation(const CQuaternion& rot) {
 		m_rotation = rot;
 	}
-	void SetScale(const Vector3& sca) {
+	void SetScale(const CVector3& sca) {
 		m_scale = sca;
 	}
-	void SetMulColor(const Vector4& mulCol) {
+	void SetMulColor(const CVector4& mulCol) {
 
 		m_mulColor = mulCol;
 	}
@@ -128,17 +128,17 @@ private:
 	int m_numTexture = 0;				//テクスチャの枚数。
 	Texture m_textures[MAX_TEXTURE];	//テクスチャ。
 	Texture* m_textureExternal[MAX_TEXTURE] = {nullptr};	//外部から指定されたテクスチャ
-	Vector3 m_position;				//座標。
-	Vector3 m_scale;				//拡大率。
-	Vector2 m_size;						//サイズ。
-	Quaternion m_rotation ;			//回転。
-	Vector4 m_mulColor = { 1.0f,1.0f,1.0f,1.0f };		//乗算カラー。
-	Matrix m_world;					//ワールド行列。
+	CVector3 m_position;				//座標。
+	CVector3 m_scale;				//拡大率。
+	CVector2 m_size;						//サイズ。
+	CQuaternion m_rotation ;			//回転。
+	CVector4 m_mulColor = { 1.0f,1.0f,1.0f,1.0f };		//乗算カラー。
+	CMatrix m_world;					//ワールド行列。
 
 	struct LocalConstantBuffer {
-		Matrix mvp;
-		Vector4 mulColor;
-		Vector4 screenParam;
+		CMatrix mvp;
+		CVector4 mulColor;
+		CVector4 screenParam;
 	};
 	LocalConstantBuffer m_constantBufferCPU;	//CPU側の定数バッファ。
 	ConstantBuffer		m_constantBufferGPU;	//GPU側の定数バッファ。

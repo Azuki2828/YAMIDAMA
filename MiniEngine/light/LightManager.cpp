@@ -130,7 +130,7 @@ namespace nsMyGame {
 			//カメラの座標を更新
 			m_lightManager->m_ligData.eyePos = g_camera3D->GetPosition();
 			//ライトカメラからプロジェクション行列を取得。
-			m_lightManager->m_ligData.m_viewProj = Camera::GetLightCamera()->GetViewProjectionMatrix();
+			m_lightManager->m_ligData.m_viewProj = CCamera::GetLightCamera()->GetViewProjectionMatrix();
 
 			for (auto itr = m_directionLights.begin(); itr != m_directionLights.end(); ++itr) {
 

@@ -24,7 +24,7 @@ namespace nsMyGame {
 			InitGaussianBlurSprite();
 		}
 
-		void CBloom::OnRender(RenderContext& rc) {
+		void CBloom::OnRender(CRenderContext& rc) {
 
 			//輝度抽出
 			ExecuteDrawLuminanceSprite(rc);
@@ -53,7 +53,7 @@ namespace nsMyGame {
 			luminanceSpriteInitData.m_height = m_luminanceRT.GetHeight();
 
 			//テクスチャはメインレンダリングターゲットのカラーバッファー。
-			luminanceSpriteInitData.m_textures[0] = &RenderTarget::GetRenderTarget(enMainRT)->GetRenderTargetTexture();
+			luminanceSpriteInitData.m_textures[0] = &CRenderTarget::GetRenderTarget(enMainRT)->GetRenderTargetTexture();
 
 			//描き込むレンダリングターゲットのフォーマットを指定する。
 			luminanceSpriteInitData.m_colorBufferFormat = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -80,8 +80,8 @@ namespace nsMyGame {
 			finalSpriteInitData.m_textures[3] = &m_gaussianBlur[3].GetBokeTexture();
 
 			//スプライトの幅と高さはメインレンダリングターゲットと同じ
-			finalSpriteInitData.m_width = RenderTarget::GetRenderTarget(enMainRT)->GetWidth();
-			finalSpriteInitData.m_height = RenderTarget::GetRenderTarget(enMainRT)->GetHeight();
+			finalSpriteInitData.m_width = CRenderTarget::GetRenderTarget(enMainRT)->GetWidth();
+			finalSpriteInitData.m_height = CRenderTarget::GetRenderTarget(enMainRT)->GetHeight();
 
 			//ガウシアンブラー用のシェーダーのファイルパスを指定する
 			finalSpriteInitData.m_fxFilePath = c_fxFilePathBloom;
@@ -93,13 +93,13 @@ namespace nsMyGame {
 			finalSpriteInitData.m_alphaBlendMode = AlphaBlendMode_Add;
 
 			//カラーバッファのフォーマットはメインレンダリングターゲットと同じにする。
-			finalSpriteInitData.m_colorBufferFormat = RenderTarget::GetRenderTarget(enMainRT)->GetColorBufferFormat();
+			finalSpriteInitData.m_colorBufferFormat = CRenderTarget::GetRenderTarget(enMainRT)->GetColorBufferFormat();
 
 			//スプライトを初期化。
 			m_bloomFinalSprite.Init(finalSpriteInitData);
 		}
 
-		void CBloom::ExecuteDrawLuminanceSprite(RenderContext& rc) {
+		void CBloom::ExecuteDrawLuminanceSprite(CRenderContext& rc) {
 
 			// 輝度抽出用のレンダリングターゲットに変更
 			rc.WaitUntilToPossibleSetRenderTarget(m_luminanceRT);
@@ -117,7 +117,7 @@ namespace nsMyGame {
 			rc.WaitUntilFinishDrawingToRenderTarget(m_luminanceRT);
 		}
 
-		void CBloom::ExecuteGaussianBlur(RenderContext& rc) {
+		void CBloom::ExecuteGaussianBlur(CRenderContext& rc) {
 
 			//ガウシアンブラーを4回実行する
 			for (int i = 0; i < c_gaussianBlurNum; i++) {
@@ -126,16 +126,16 @@ namespace nsMyGame {
 			}
 
 			//4枚のボケ画像を合成してメインレンダリングターゲットに加算合成
-			rc.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+			rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 
 			//レンダリングターゲットとビューポートを設定。
-			rc.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
+			rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
 			//最終スプライトを描画。
 			m_bloomFinalSprite.Draw(rc);
 
 			//描き込み終了待ち。
-			rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+			rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 		}
 	}
 }

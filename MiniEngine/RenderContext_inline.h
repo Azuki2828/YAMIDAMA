@@ -1,6 +1,6 @@
 #pragma once
 
-inline void RenderContext::SetDescriptorHeap(DescriptorHeap& descHeap)
+inline void CRenderContext::SetDescriptorHeap(DescriptorHeap& descHeap)
 {
 	m_descriptorHeaps[0] = descHeap.Get();
 	m_commandList->SetDescriptorHeaps(1, m_descriptorHeaps);
@@ -16,7 +16,7 @@ inline void RenderContext::SetDescriptorHeap(DescriptorHeap& descHeap)
 		SetGraphicsRootDescriptorTable(2, descHeap.GetUavResourceGpuDescritorStartHandle());
 	}
 }
-inline void RenderContext::SetComputeDescriptorHeap(DescriptorHeap& descHeap)
+inline void CRenderContext::SetComputeDescriptorHeap(DescriptorHeap& descHeap)
 {
 	m_descriptorHeaps[0] = descHeap.Get();
 	m_commandList->SetDescriptorHeaps(1, m_descriptorHeaps);
@@ -32,27 +32,27 @@ inline void RenderContext::SetComputeDescriptorHeap(DescriptorHeap& descHeap)
 		SetComputeRootDescriptorTable(2, descHeap.GetUavResourceGpuDescritorStartHandle());
 	}
 }
-inline void RenderContext::WaitUntilFinishDrawingToRenderTarget(RenderTarget& renderTarget)
+inline void CRenderContext::WaitUntilFinishDrawingToRenderTarget(CRenderTarget& renderTarget)
 {
 	WaitUntilFinishDrawingToRenderTarget(renderTarget.GetRenderTargetTexture().Get());
 }
-inline void RenderContext::WaitUntilToPossibleSetRenderTarget(RenderTarget& renderTarget)
+inline void CRenderContext::WaitUntilToPossibleSetRenderTarget(CRenderTarget& renderTarget)
 {
 	WaitUntilToPossibleSetRenderTarget(renderTarget.GetRenderTargetTexture().Get());
 }
-inline void RenderContext::WaitUntilToPossibleSetRenderTargets(int numRt, RenderTarget* renderTargets[])
+inline void CRenderContext::WaitUntilToPossibleSetRenderTargets(int numRt, CRenderTarget* renderTargets[])
 {
 	for (int i = 0; i < numRt; i++) {
 		WaitUntilToPossibleSetRenderTarget(*renderTargets[i]);
 	}
 }
-inline void RenderContext::WaitUntilFinishDrawingToRenderTargets(int numRt, RenderTarget* renderTargets[])
+inline void CRenderContext::WaitUntilFinishDrawingToRenderTargets(int numRt, CRenderTarget* renderTargets[])
 {
 	for (int i = 0; i < numRt; i++) {
 		WaitUntilFinishDrawingToRenderTarget(*renderTargets[i]);
 	}
 }
-inline void RenderContext::SetRenderTargets(UINT numRT, RenderTarget* renderTargets[])
+inline void CRenderContext::SetRenderTargets(UINT numRT, CRenderTarget* renderTargets[])
 {
 	//d
 	D3D12_CPU_DESCRIPTOR_HANDLE rtDSHandleTbl[32];
@@ -71,7 +71,7 @@ inline void RenderContext::SetRenderTargets(UINT numRT, RenderTarget* renderTarg
 	}
 
 }
-inline void RenderContext::SetRenderTargetAndViewport(RenderTarget& renderTarget)
+inline void CRenderContext::SetRenderTargetAndViewport(CRenderTarget& renderTarget)
 {
 	D3D12_VIEWPORT viewport;
 	viewport.TopLeftX = 0;
@@ -84,7 +84,7 @@ inline void RenderContext::SetRenderTargetAndViewport(RenderTarget& renderTarget
 	
 	SetRenderTarget(renderTarget);
 }
-inline void RenderContext::SetRenderTargetsAndViewport(UINT numRT, RenderTarget* renderTargets[])
+inline void CRenderContext::SetRenderTargetsAndViewport(UINT numRT, CRenderTarget* renderTargets[])
 {
 	D3D12_VIEWPORT viewport;
 	viewport.TopLeftX = 0;
@@ -96,7 +96,7 @@ inline void RenderContext::SetRenderTargetsAndViewport(UINT numRT, RenderTarget*
 	SetViewportAndScissor(viewport);
 	SetRenderTargets(numRT, renderTargets);
 }
-inline void RenderContext::ClearRenderTargetViews(int numRt, RenderTarget* renderTargets[])
+inline void CRenderContext::ClearRenderTargetViews(int numRt, CRenderTarget* renderTargets[])
 {
 	if (renderTargets[0]->IsExsitDepthStencilBuffer()) {
 		//深度バッファがある。
@@ -106,7 +106,7 @@ inline void RenderContext::ClearRenderTargetViews(int numRt, RenderTarget* rende
 		ClearRenderTargetView(renderTargets[i]->GetRTVCpuDescriptorHandle(), renderTargets[i]->GetRTVClearColor());
 	}
 }
-inline void RenderContext::SetPipelineState(raytracing::PSO& pso)
+inline void CRenderContext::SetPipelineState(raytracing::PSO& pso)
 {
 	m_commandList->SetPipelineState1(pso.Get());
 }

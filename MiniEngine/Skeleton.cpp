@@ -6,9 +6,9 @@
 #include <comdef.h> 
 
 
-void Bone::CalcWorldTRS(Vector3& trans, Quaternion& rot, Vector3& scale)
+void Bone::CalcWorldTRS(CVector3& trans, CQuaternion& rot, CVector3& scale)
 {
-	Matrix mWorld = m_worldMatrix;
+	CMatrix mWorld = m_worldMatrix;
 	//行列から拡大率を取得する。
 	scale.x = mWorld.v[0].Length();
 	scale.y = mWorld.v[1].Length();
@@ -33,10 +33,10 @@ Skeleton::Skeleton()
 Skeleton::~Skeleton()
 {
 }
-void Skeleton::UpdateBoneWorldMatrix(Bone& bone, const Matrix& parentMatrix)
+void Skeleton::UpdateBoneWorldMatrix(Bone& bone, const CMatrix& parentMatrix)
 {
-	Matrix mBoneWorld;
-	Matrix localMatrix = bone.GetLocalMatrix();
+	CMatrix mBoneWorld;
+	CMatrix localMatrix = bone.GetLocalMatrix();
 	mBoneWorld = localMatrix * parentMatrix;
 	
 	bone.SetWorldMatrix(mBoneWorld);
@@ -54,9 +54,9 @@ bool Skeleton::Init(const char* tksFilePath)
 }
 void Skeleton::BuildBoneMatrices()
 {
-	m_tksFile.QueryBone([&](TksFile::SBone & tksBone) {
+	m_tksFile.QueryBone([&](CTksFile::SBone & tksBone) {
 		//バインドポーズ。
-		Matrix bindPoseMatrix;
+		CMatrix bindPoseMatrix;
 		memcpy(bindPoseMatrix.m[0], &tksBone.bindPose[0], sizeof(tksBone.bindPose[0]));
 		memcpy(bindPoseMatrix.m[1], &tksBone.bindPose[1], sizeof(tksBone.bindPose[1]));
 		memcpy(bindPoseMatrix.m[2], &tksBone.bindPose[2], sizeof(tksBone.bindPose[2]));
@@ -67,7 +67,7 @@ void Skeleton::BuildBoneMatrices()
 		bindPoseMatrix.m[3][3] = 1.0f;
 
 		//バインドポーズの逆行列。
-		Matrix invBindPoseMatrix;
+		CMatrix invBindPoseMatrix;
 		memcpy(invBindPoseMatrix.m[0], &tksBone.invBindPose[0], sizeof(tksBone.invBindPose[0]));
 		memcpy(invBindPoseMatrix.m[1], &tksBone.invBindPose[1], sizeof(tksBone.invBindPose[1]));
 		memcpy(invBindPoseMatrix.m[2], &tksBone.invBindPose[2], sizeof(tksBone.invBindPose[2]));
@@ -103,8 +103,8 @@ void Skeleton::BuildBoneMatrices()
 		if (bone->GetParentBoneNo() != -1) {
 			m_bones.at(bone->GetParentBoneNo())->AddChild(bone.get());
 			//ローカルマトリクスを計算。
-			const Matrix& parentMatrix = m_bones.at(bone->GetParentBoneNo())->GetInvBindPoseMatrix();
-			Matrix localMatrix;
+			const CMatrix& parentMatrix = m_bones.at(bone->GetParentBoneNo())->GetInvBindPoseMatrix();
+			CMatrix localMatrix;
 			localMatrix = bone->GetBindPoseMatrix() * parentMatrix;
 			bone->SetLocalMatrix(localMatrix);
 		}
@@ -115,18 +115,18 @@ void Skeleton::BuildBoneMatrices()
 
 
 	//ボーン行列を確保
-	m_boneMatrixs = std::make_unique<Matrix[]>(m_bones.size());
+	m_boneMatrixs = std::make_unique<CMatrix[]>(m_bones.size());
 	m_isInited = true;
 
 }
 
-void Skeleton::Update(const Matrix& mWorld)
+void Skeleton::Update(const CMatrix& mWorld)
 {
 	if (m_isPlayAnimation) {
 		//ボーン行列をルートボーンの空間からワールド空間を構築していく。
 		for (auto& bone : m_bones) {
-			Matrix mBoneWorld;
-			Matrix localMatrix = bone->GetLocalMatrix();
+			CMatrix mBoneWorld;
+			CMatrix localMatrix = bone->GetLocalMatrix();
 			//親の行列とローカル行列を乗算して、ワールド行列を計算する。
 			mBoneWorld = localMatrix * mWorld;
 			bone->SetWorldMatrix(mBoneWorld);
@@ -148,7 +148,7 @@ void Skeleton::Update(const Matrix& mWorld)
 	//ボーン行列を計算。
 	int boneNo = 0;
 	for (auto& bonePtr : m_bones) {
-		Matrix mBone;
+		CMatrix mBone;
 		mBone = bonePtr->GetInvBindPoseMatrix() * bonePtr->GetWorldMatrix();
 		m_boneMatrixs[boneNo] = mBone;
 		boneNo++;

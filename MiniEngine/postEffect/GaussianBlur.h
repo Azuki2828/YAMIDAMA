@@ -23,7 +23,7 @@ namespace nsMyGame {
 			 * 
 			 * 本関数の呼び出しは、DirectX12を利用した描画コマンド生成中に呼び出す必要があります。
 			*/
-			void ExecuteOnGPU(RenderContext& rc, float blurPower);
+			void ExecuteOnGPU(CRenderContext& rc, float blurPower);
 
 			/**
 			 * @brief ボケテクスチャを取得する関数。
@@ -54,20 +54,20 @@ namespace nsMyGame {
 			/**
 			 * @brief 縦ブラーを実行。
 			*/
-			void ExecuteVerticalBlur(RenderContext& rc);
+			void ExecuteVerticalBlur(CRenderContext& rc);
 
 			/**
 			 * @brief 横ブラーを実行。
 			*/
-			void ExecuteBesideBlur(RenderContext& rc);
+			void ExecuteBesideBlur(CRenderContext& rc);
 
 		private:
 			float m_weights[c_gaussianBlurNumWeight];			//重みテーブル
 			Texture* m_originalTexture = nullptr;	//オリジナルテクスチャ
-			RenderTarget m_xBlurRenderTarget;		//横ボケ画像を描画するレンダリングターゲット
-			RenderTarget m_yBlurRenderTarget;		//縦ボケ画像を描画するレンダリングターゲット
-			Sprite m_xBlurSprite;					//横ボケ画像を描画するためのスプライト
-			Sprite m_yBlurSprite;					//縦ボケ画像を描画するためのスプライト
+			CRenderTarget m_xBlurRenderTarget;		//横ボケ画像を描画するレンダリングターゲット
+			CRenderTarget m_yBlurRenderTarget;		//縦ボケ画像を描画するレンダリングターゲット
+			CSprite m_xBlurSprite;					//横ボケ画像を描画するためのスプライト
+			CSprite m_yBlurSprite;					//縦ボケ画像を描画するためのスプライト
 		};
 	}
 }

@@ -3,7 +3,7 @@
 namespace nsMyGame {
 
 	//モデル管理クラス
-	class CModelRender : public IGameObject
+	class CModelRender : public CIGameObject
 	{
 		//コンスタントバッファに転送するデータ
 		struct SModelData {
@@ -19,7 +19,7 @@ namespace nsMyGame {
 		 * @brief 描画関数。
 		 * @param rc レンダーコンテキスト
 		*/
-		void Render(RenderContext& rc)override final;
+		void Render(CRenderContext& rc)override final;
 	public:
 		/**
 		 * @brief 初期化関数。
@@ -47,7 +47,7 @@ namespace nsMyGame {
 		 * @param animClip アニメーションクリップ
 		 * @param animNum アニメーション数。
 		*/
-		void InitAnimation(AnimationClip* animClip, int animNum) {
+		void InitAnimation(CAnimationClip* animClip, int animNum) {
 			m_animationClip = animClip;
 			m_animNum = animNum;
 		}
@@ -76,7 +76,7 @@ namespace nsMyGame {
 		 * @param rot 回転
 		 * @param sca 拡大率
 		*/
-		void UpdateWorldMatrix(const Vector3& pos, const Quaternion& rot, const Vector3& sca)
+		void UpdateWorldMatrix(const CVector3& pos, const CQuaternion& rot, const CVector3& sca)
 		{
 			m_model.UpdateWorldMatrix(pos, rot, sca);
 		}
@@ -93,7 +93,7 @@ namespace nsMyGame {
 		 * @brief 座標を設定する関数。
 		 * @param pos 座標
 		*/
-		void SetPosition(const Vector3& pos) {
+		void SetPosition(const CVector3& pos) {
 			m_pos = pos;
 		}
 
@@ -101,7 +101,7 @@ namespace nsMyGame {
 		 * @brief 座標を取得する関数。
 		 * @return 座標
 		*/
-		const Vector3& GetPosition()const {
+		const CVector3& GetPosition()const {
 
 			return m_pos;
 		}
@@ -110,7 +110,7 @@ namespace nsMyGame {
 		 * @brief 回転率を設定する関数。
 		 * @param rot 回転率
 		*/
-		void SetRotation(const Quaternion& rot) {
+		void SetRotation(const CQuaternion& rot) {
 
 			m_rot = rot;
 		}
@@ -119,7 +119,7 @@ namespace nsMyGame {
 		 * @brief 回転率を取得する関数。
 		 * @return 回転率
 		*/
-		const Quaternion& GetRotation()const {
+		const CQuaternion& GetRotation()const {
 
 			return m_rot;
 		}
@@ -128,7 +128,7 @@ namespace nsMyGame {
 		 * @brief 拡大率を設定する関数。
 		 * @param sca 拡大率
 		*/
-		void SetScale(const Vector3& sca) {
+		void SetScale(const CVector3& sca) {
 
 			m_sca = sca;
 		}
@@ -137,7 +137,7 @@ namespace nsMyGame {
 		 * @brief 拡大率を取得する関数。
 		 * @return 拡大率
 		*/
-		const Vector3& GetScale()const {
+		const CVector3& GetScale()const {
 
 			return m_sca;
 		}
@@ -183,12 +183,12 @@ namespace nsMyGame {
 
 		bool m_shadowCasterFlag = false;			//シャドウキャスターフラグ。
 
-		Vector3 m_pos = Vector3::Zero;				//座標
-		Quaternion m_rot = Quaternion::Identity;	//回転率
-		Vector3 m_sca = Vector3::One;				//拡大率
+		CVector3 m_pos = CVector3::Zero;				//座標
+		CQuaternion m_rot = CQuaternion::Identity;	//回転率
+		CVector3 m_sca = CVector3::One;				//拡大率
 
-		Model m_model;								//モデル
-		Model m_shadowModel;						//シャドウ作成用のモデル。
+		CModel m_model;								//モデル
+		CModel m_shadowModel;						//シャドウ作成用のモデル。
 		SModelData m_sModelData;					//コンスタントバッファに転送するデータ
 		ModelInitData m_modelInitData;				//モデルデータ
 		Skeleton m_skeleton;						//スケルトン
@@ -196,7 +196,7 @@ namespace nsMyGame {
 		bool m_animFlg = false;						//アニメーション再生フラグ
 		int m_animNum = 0;							//アニメーション数
 		Animation m_animation;						//アニメーション
-		AnimationClip* m_animationClip = nullptr;	//アニメーションクリップ
+		CAnimationClip* m_animationClip = nullptr;	//アニメーションクリップ
 	};
 }
 

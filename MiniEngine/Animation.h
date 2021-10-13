@@ -47,7 +47,7 @@ public:
 	/// <param name="numAnimClip">アニメーションクリップの数</param>
 	void Init(
 		Skeleton& skeleton, 
-		AnimationClip* animClips,
+		CAnimationClip* animClips,
 		int numAnimClip
 	);
 	/// <summary>
@@ -128,10 +128,10 @@ public:
 	/// <param name="rotation">モデルの回転</param>
 	/// <param name="scale">モデルの拡大率</param>
 	/// <returns>ワールド空間でのフットステップの移動量。</returns>
-	Vector3 CalcFootstepDeltaValueInWorldSpace(Quaternion rotation, Vector3 scale) const;
+	CVector3 CalcFootstepDeltaValueInWorldSpace(CQuaternion rotation, CVector3 scale) const;
 
 private:
-	void PlayCommon(AnimationClip* nextClip, float interpolateTime)
+	void PlayCommon(CAnimationClip* nextClip, float interpolateTime)
 	{
 		int index = GetLastAnimationControllerIndex();
 		if (index != -1) {
@@ -183,7 +183,7 @@ private:
 		
 private:
 	static const int ANIMATION_PLAY_CONTROLLER_NUM = 32;	//!<アニメーションコントローラの数。
-	std::vector<AnimationClip*>	m_animationClips;	//!<アニメーションクリップの配列。
+	std::vector<CAnimationClip*>	m_animationClips;	//!<アニメーションクリップの配列。
 	Skeleton* m_skeleton = nullptr;	//!<アニメーションを適用するスケルトン。
 	AnimationPlayController	m_animationPlayController[ANIMATION_PLAY_CONTROLLER_NUM];	//!<アニメーションコントローラ。リングバッファ。
 	int m_numAnimationPlayController = 0;		//!<現在使用中のアニメーション再生コントローラの数。
@@ -192,7 +192,7 @@ private:
 	float m_interpolateTimeEnd = 0.0f;
 	bool m_isInterpolate = false;								//!<補間中？
 	std::vector<AnimationEventListener>	m_animationEventListeners;	//!<アニメーションイベントリスナーのリスト。
-	Vector3 m_footstepDeltaValue = g_vec3Zero;					//footstepボーンの移動量。
+	CVector3 m_footstepDeltaValue = g_vec3Zero;					//footstepボーンの移動量。
 	bool m_isInited = false;
 	float m_deltaTimeOnUpdate = 0.0f;							//Update関数を実行したときのデルタタイム。
 };

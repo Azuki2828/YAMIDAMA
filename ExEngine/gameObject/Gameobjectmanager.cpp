@@ -23,7 +23,7 @@ void GameObjectManager::ExecuteUpdate()
 {	
 	//死亡フラグがついているゲームオブジェクトを破棄する。
 	for (auto& goList : m_gameObjectListArray) {
-		goList.remove_if([&](IGameObject* go) {	
+		goList.remove_if([&](CIGameObject* go) {	
 			if (go->IsDead()) {
 				delete go;
 				return true;
@@ -47,7 +47,7 @@ void GameObjectManager::ExecuteUpdate()
 	//物理エンジンのアップデートを呼び出す。
 	PhysicsWorld::GetInstance()->Update(1.0f/60.0f);
 }
-void GameObjectManager::ExecuteRender(RenderContext& rc)
+void GameObjectManager::ExecuteRender(CRenderContext& rc)
 {
 	//レンダラーを変更するならここを改造していくと良い。
 	for (auto& goList : m_gameObjectListArray) {
@@ -57,7 +57,7 @@ void GameObjectManager::ExecuteRender(RenderContext& rc)
 	}
 }
 
-void GameObjectManager::Execute2DRender(RenderContext& rc)
+void GameObjectManager::Execute2DRender(CRenderContext& rc)
 {
 	//レンダラーを変更するならここを改造していくと良い。
 	for (auto& goList : m_gameObjectListArray) {

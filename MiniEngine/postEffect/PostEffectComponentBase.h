@@ -16,7 +16,7 @@ namespace nsMyGame {
 			 * @brief 描画関数。派生クラスのスプライトを描画し、メインレンダリングターゲットに反映させる。
 			 * @param rc
 			*/
-			void Render(RenderContext& rc);
+			void Render(CRenderContext& rc);
 		private:
 			/**
 			 * @brief 派生クラスで定義すべき初期化関数。
@@ -27,7 +27,7 @@ namespace nsMyGame {
 			 * @brief 派生クラスで定義すべき描画関数。
 			 * @param rc レンダーコンテキスト
 			*/
-			virtual void OnRender(RenderContext& rc) = 0;
+			virtual void OnRender(CRenderContext& rc) = 0;
 
 			/**
 			 * @brief 派生クラスで定義すべき、テクスチャを取得する関数。
@@ -45,7 +45,7 @@ namespace nsMyGame {
 			}
 
 		private:
-			Sprite m_copyMainRtSprite;		//メインレンダリングターゲットに描画するためのスプライト。
+			CSprite m_copyMainRtSprite;		//メインレンダリングターゲットに描画するためのスプライト。
 		};
 	}
 }

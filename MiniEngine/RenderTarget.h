@@ -4,7 +4,7 @@
 #include "Texture.h"
 #include "../GameTemplate/Game/ConstValue.h"
 
-class GraphicsEngine;
+class CGraphicsEngine;
 
 
 //レンダリングターゲットのリスト
@@ -28,13 +28,13 @@ enum EnGBufferList {
 
 /// レンダリングターゲットクラス。
 
-class RenderTarget {
+class CRenderTarget {
 public:
 	
 	/**
 	 * @brief デストラクタ。
 	*/
-	~RenderTarget();
+	~CRenderTarget();
 
 	/**
 	 * @brief レンダリングターゲットの作成。
@@ -62,7 +62,7 @@ public:
 	*/
 	static void CreateMainRenderTarget() {
 
-		m_renderTarget[enMainRT] = new RenderTarget;
+		m_renderTarget[enMainRT] = new CRenderTarget;
 
 		m_renderTarget[enMainRT]->Create(
 			c_renderTargetW1280H720.x,
@@ -80,7 +80,7 @@ public:
 	*/
 	static void CreateAlbedoAndShadowReceiverFlagRenderTarget() {
 
-		m_GBuffer[enAlbedoAndShadowReceiverFlgMap] = new RenderTarget;
+		m_GBuffer[enAlbedoAndShadowReceiverFlgMap] = new CRenderTarget;
 
 		m_GBuffer[enAlbedoAndShadowReceiverFlgMap]->Create(
 			c_renderTargetW1280H720.x,
@@ -97,7 +97,7 @@ public:
 	*/
 	static void CreateNormalAndDepthRenderTarget() {
 
-		m_GBuffer[enNormalAndDepthMap] = new RenderTarget;
+		m_GBuffer[enNormalAndDepthMap] = new CRenderTarget;
 
 		m_GBuffer[enNormalAndDepthMap]->Create(
 			c_renderTargetW1280H720.x,
@@ -114,7 +114,7 @@ public:
 	*/
 	static void CreateWorldPosRenderTarget() {
 
-		m_GBuffer[enWorldPosMap] = new RenderTarget;
+		m_GBuffer[enWorldPosMap] = new CRenderTarget;
 
 		m_GBuffer[enWorldPosMap]->Create(
 			c_renderTargetW1280H720.x,
@@ -131,7 +131,7 @@ public:
 	*/
 	static void CreateShadowMap() {
 
-		m_renderTarget[enShadowMap] = new RenderTarget;
+		m_renderTarget[enShadowMap] = new CRenderTarget;
 
 		float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
 		m_renderTarget[enShadowMap]->Create(
@@ -150,7 +150,7 @@ public:
 	 * @param renderTarget 指定するレンダリングターゲット
 	 * @return 指定したレンダリングターゲット
 	*/
-	static RenderTarget* GetRenderTarget(EnRenderTargetList renderTarget) {
+	static CRenderTarget* GetRenderTarget(EnRenderTargetList renderTarget) {
 
 		return m_renderTarget[renderTarget];
 	}
@@ -160,7 +160,7 @@ public:
 	 * @param gBufferRT 指定するレンダリングターゲット
 	 * @return 指定したレンダリングターゲット
 	*/
-	static RenderTarget* GetGBufferRT(EnGBufferList gBufferRT) {
+	static CRenderTarget* GetGBufferRT(EnGBufferList gBufferRT) {
 
 		return m_GBuffer[gBufferRT];
 	}
@@ -253,7 +253,7 @@ private:
 	 * @param d3dDevice D3Dデバイス
 	 * @return 作成に成功した？
 	*/
-	bool CreateDescriptorHeap(GraphicsEngine& ge, ID3D12Device5*& d3dDevice);
+	bool CreateDescriptorHeap(CGraphicsEngine& ge, ID3D12Device5*& d3dDevice);
 
 	/**
 	 * @brief レンダリングターゲットとなるテクスチャを作成。
@@ -268,7 +268,7 @@ private:
 	 * @return 作成に成功した？
 	*/
 	bool CreateRenderTargetTexture(
-		GraphicsEngine& ge,
+		CGraphicsEngine& ge,
 		ID3D12Device5*& d3dDevice,
 		int w, 
 		int h,
@@ -288,7 +288,7 @@ private:
 	 * @return 作成に成功した？
 	*/
 	bool CreateDepthStencilTexture(
-		GraphicsEngine& ge,
+		CGraphicsEngine& ge,
 		ID3D12Device5*& d3dDevice,
 		int w,
 		int h,
@@ -300,8 +300,8 @@ private:
 	*/
 	void CreateDescriptor(ID3D12Device5*& d3dDevice);
 private:
-	static RenderTarget* m_renderTarget[enRenderTargetNum];		//レンダリングターゲット
-	static RenderTarget* m_GBuffer[enGBufferNum];				//GBuffer用のレンダリングターゲット
+	static CRenderTarget* m_renderTarget[enRenderTargetNum];		//レンダリングターゲット
+	static CRenderTarget* m_GBuffer[enGBufferNum];				//GBuffer用のレンダリングターゲット
 
 	Texture m_renderTargetTexture;				//レンダリングターゲットとなるテクスチャ。
 	ID3D12Resource* m_renderTargetTextureDx12;	//レンダリングターゲットとなるテクスチャ。

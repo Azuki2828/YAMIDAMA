@@ -6,7 +6,7 @@
 
 
 class Skeleton;
-class AnimationClip;
+class CAnimationClip;
 class Animation;
 class Bone;
 
@@ -38,7 +38,7 @@ public:
 	/*!
 	* @brief	アニメーションクリップの変更。
 	*/
-	void ChangeAnimationClip(AnimationClip* clip);
+	void ChangeAnimationClip(CAnimationClip* clip);
 	
 	void SetInterpolateTime(float interpolateTime)
 	{
@@ -67,11 +67,11 @@ public:
 	/*!
 		* @brief	ローカルボーン行列を取得。
 		*/
-	const std::vector<Matrix>& GetBoneLocalMatrix() const
+	const std::vector<CMatrix>& GetBoneLocalMatrix() const
 	{
 		return m_boneMatrix;
 	}
-	AnimationClip* GetAnimClip() const
+	CAnimationClip* GetAnimClip() const
 	{
 		return m_animationClip;
 	}
@@ -86,7 +86,7 @@ public:
 	/// Update関数を呼び出したときの、footstepボーンの移動量を取得。
 	/// </summary>
 	/// <returns></returns>
-	Vector3 GetFootStepDeltaValueOnUpdate() const
+	CVector3 GetFootStepDeltaValueOnUpdate() const
 	{
 		return m_footstepDeltaValue;
 	}
@@ -104,7 +104,7 @@ private:
 	/// </summary>
 	/// <param name="bone">計算する骨</param>
 	/// <param name="parentMatrix">親の行列</param>
-	void CalcBoneMatrixInRootBoneSpace(Bone& bone, Matrix parentMatrix);
+	void CalcBoneMatrixInRootBoneSpace(Bone& bone, CMatrix parentMatrix);
 	/// <summary>
 	/// ボーン行列をアニメーションクリップからサンプリングする。
 	/// </summary>
@@ -126,16 +126,16 @@ private:
 	/// </summary>
 	void ProgressKeyframeNo(float deltaTime);
 private:
-	AnimationClip*			m_animationClip = nullptr;			//アニメーションクリップ。
+	CAnimationClip*			m_animationClip = nullptr;			//アニメーションクリップ。
 	int						m_currentKeyFrameNoLastFrame = 0;	//一フレーム前のキーフレーム番号。
 	int						m_currentKeyFrameNo = 0;			//現在再生中のキーフレーム番号。
 	float					m_time = 0.0f;
-	std::vector<Matrix>		m_boneMatrix;						//!<このコントローラで再生中のアニメーションのボーン行列。
+	std::vector<CMatrix>		m_boneMatrix;						//!<このコントローラで再生中のアニメーションのボーン行列。
 	float					m_interpolateTime;					//!<補完時間
 	float					m_interpolateEndTime;				//!<補完終了時間
 	bool					m_isPlaying = false;				//!<再生中？
 	Skeleton*				m_skeleton = nullptr;				//!<スケルトン。
-	Vector3					m_footstepDeltaValue = g_vec3Zero;	//フットステップの移動ベクトル。
-	Vector3					m_footstepPos = g_vec3Zero;			//フットステップボーンの座標。
+	CVector3					m_footstepDeltaValue = g_vec3Zero;	//フットステップの移動ベクトル。
+	CVector3					m_footstepPos = g_vec3Zero;			//フットステップボーンの座標。
 	int						m_footstepBoneNo = -1;				//フットステップのボーンの番号。
 };

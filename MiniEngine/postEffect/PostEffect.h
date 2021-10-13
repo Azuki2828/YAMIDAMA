@@ -20,7 +20,7 @@ namespace nsMyGame {
 			 * @brief 描画関数。
 			 * @param rc レンダーコンテキスト
 			*/
-			void Render(RenderContext& rc);
+			void Render(CRenderContext& rc);
 		private:
 			CBloom m_bloom;		//ブルーム
 			CFXAA m_fxaa;		//FXAA

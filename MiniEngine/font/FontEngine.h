@@ -19,13 +19,13 @@ namespace nsMyGame {
 		/// font.Draw("Hello world", pos, color, rot, scale, pivot);
 		/// font.EndDraw( renderContext );
 		/// </example>
-		class FontEngine {
+		class CFontEngine {
 
 		public:
 			/// <summary>
 			/// デストラクタ。
 			/// </summary>
-			~FontEngine();
+			~CFontEngine();
 			/// <summary>
 			/// 初期化。
 			/// </summary>
@@ -33,7 +33,7 @@ namespace nsMyGame {
 			/// <summary>
 			/// 描画開始。
 			/// </summary>
-			void BeginDraw(RenderContext& rc);
+			void BeginDraw(CRenderContext& rc);
 			/// <summary>
 			/// 文字列を描画。
 			/// </summary>
@@ -44,16 +44,16 @@ namespace nsMyGame {
 			/// <param name="pivot">ピボット</param>
 			void Draw(
 				const wchar_t* text,
-				const Vector2& position,
-				const Vector4& color,
+				const CVector2& position,
+				const CVector4& color,
 				float rotation,
 				float scale,
-				Vector2 pivot
+				CVector2 pivot
 			);
 			/// <summary>
 			/// 描画終了。
 			/// </summary>
-			void EndDraw(RenderContext& rc);
+			void EndDraw(CRenderContext& rc);
 		private:
 			std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;	//スプライトバッチ。
 			std::unique_ptr<DirectX::SpriteFont>	m_spriteFont;	//スプライトフォント。

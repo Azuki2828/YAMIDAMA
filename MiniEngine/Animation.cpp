@@ -13,7 +13,7 @@ namespace {
 
 void Animation::Init(
 	Skeleton& skeleton, 
-	AnimationClip* animClips,
+	CAnimationClip* animClips,
 	int numAnimClip)
 {
 	m_skeleton = &skeleton;
@@ -61,13 +61,13 @@ void Animation::UpdateLocalPose(float deltaTime)
 	m_animationPlayController[lastIndex].Update(deltaTime, this);
 		
 }
-Vector3 Animation::CalcFootstepDeltaValueInWorldSpace(Quaternion rotation, Vector3 scale) const
+CVector3 Animation::CalcFootstepDeltaValueInWorldSpace(CQuaternion rotation, CVector3 scale) const
 {
 
 	auto footstepDeltaValueInWorldSpace = m_footstepDeltaValue;
 
-	Matrix mBias = Matrix::Identity;
-	mBias.MakeRotationX(Math::PI * -0.5f);
+	CMatrix mBias = CMatrix::Identity;
+	mBias.MakeRotationX(CMath::PI * -0.5f);
 	mBias.Apply(footstepDeltaValueInWorldSpace);
 
 	//フットステップの移動量を拡大する。
@@ -85,14 +85,14 @@ void Animation::UpdateGlobalPose()
 {
 	//グローバルポーズ計算用のメモリをスタックから確保。
 	int numBone = m_skeleton->GetNumBones();
-	Quaternion* qGlobalPose = (Quaternion*)alloca(sizeof(Quaternion) * numBone);
-	Vector3* vGlobalPose = (Vector3*)alloca(sizeof(Vector3) * numBone);
-	Vector3* vGlobalScale = (Vector3*)alloca(sizeof(Vector3) * numBone);
+	CQuaternion* qGlobalPose = (CQuaternion*)alloca(sizeof(CQuaternion) * numBone);
+	CVector3* vGlobalPose = (CVector3*)alloca(sizeof(CVector3) * numBone);
+	CVector3* vGlobalScale = (CVector3*)alloca(sizeof(CVector3) * numBone);
 	m_footstepDeltaValue = g_vec3Zero;
 	for (int i = 0; i < numBone; i++) {
-		qGlobalPose[i] = Quaternion::Identity;
-		vGlobalPose[i] = Vector3::Zero;
-		vGlobalScale[i] = Vector3::One;
+		qGlobalPose[i] = CQuaternion::Identity;
+		vGlobalPose[i] = CVector3::Zero;
+		vGlobalScale[i] = CVector3::One;
 	}
 	//グローバルポーズを計算していく。
 	int startIndex = m_startAnimationPlayController;
@@ -105,11 +105,11 @@ void Animation::UpdateGlobalPose()
 		m_footstepDeltaValue.Lerp(intepolateRate, m_footstepDeltaValue, deltaValueFootStep);
 		for (int boneNo = 0; boneNo < numBone; boneNo++) {
 			//平行移動の補完
-			Matrix m = localBoneMatrix[boneNo];
+			CMatrix m = localBoneMatrix[boneNo];
 			vGlobalPose[boneNo].Lerp(
 				intepolateRate, 
 				vGlobalPose[boneNo], 
-				*(Vector3*)m.m[3]
+				*(CVector3*)m.m[3]
 			);
 			//平行移動成分を削除。
 			m.m[3][0] = 0.0f;
@@ -117,10 +117,10 @@ void Animation::UpdateGlobalPose()
 			m.m[3][2] = 0.0f;
 				
 			//拡大成分の補間。
-			Vector3 vBoneScale;
-			vBoneScale.x = (*(Vector3*)m.m[0]).Length();
-			vBoneScale.y = (*(Vector3*)m.m[1]).Length();
-			vBoneScale.z = (*(Vector3*)m.m[2]).Length();
+			CVector3 vBoneScale;
+			vBoneScale.x = (*(CVector3*)m.m[0]).Length();
+			vBoneScale.y = (*(CVector3*)m.m[1]).Length();
+			vBoneScale.z = (*(CVector3*)m.m[2]).Length();
 
 			vGlobalScale[boneNo].Lerp(
 				intepolateRate,
@@ -141,7 +141,7 @@ void Animation::UpdateGlobalPose()
 			m.m[2][2] /= vBoneScale.z;
 
 			//回転の補完
-			Quaternion qBone;
+			CQuaternion qBone;
 			qBone.SetRotation(m);
 			qGlobalPose[boneNo].Slerp(intepolateRate, qGlobalPose[boneNo], qBone);		
 		}
@@ -150,17 +150,17 @@ void Animation::UpdateGlobalPose()
 	for (int boneNo = 0; boneNo < numBone; boneNo++) {
 			
 		//拡大行列を作成。
-		Matrix scaleMatrix;
+		CMatrix scaleMatrix;
 		scaleMatrix.MakeScaling(vGlobalScale[boneNo]);
 		//回転行列を作成。
-		Matrix rotMatrix;
+		CMatrix rotMatrix;
 		rotMatrix.MakeRotationFromQuaternion(qGlobalPose[boneNo]);
 		//平行移動行列を作成。
-		Matrix transMat;
+		CMatrix transMat;
 		transMat.MakeTranslation(vGlobalPose[boneNo]);
 
 		//全部を合成して、ボーン行列を作成。
-		Matrix boneMatrix;
+		CMatrix boneMatrix;
 		boneMatrix = scaleMatrix * rotMatrix;
 		boneMatrix = boneMatrix * transMat;
 			

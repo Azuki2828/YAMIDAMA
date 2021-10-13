@@ -19,7 +19,7 @@ MeshParts::~MeshParts()
 	}
 }
 void MeshParts::InitFromTkmFile(
-	const TkmFile& tkmFile, 
+	const CTkmFile& tkmFile, 
 	const wchar_t* fxFilePath,
 	const char* vsEntryPointFunc,
 	const char* vsSkinEntryPointFunc,
@@ -31,7 +31,7 @@ void MeshParts::InitFromTkmFile(
 {
 	m_meshs.resize(tkmFile.GetNumMesh());
 	int meshNo = 0;
-	tkmFile.QueryMeshParts([&](const TkmFile::SMesh& mesh) {
+	tkmFile.QueryMeshParts([&](const CTkmFile::SMesh& mesh) {
 		//tkmファイルのメッシュ情報からメッシュを作成する。
 		CreateMeshFromTkmMesh(mesh, meshNo, fxFilePath, vsEntryPointFunc, vsSkinEntryPointFunc, psEntryPointFunc);
 		meshNo++;
@@ -83,7 +83,7 @@ void MeshParts::CreateDescriptorHeaps()
 	}
 }
 void MeshParts::CreateMeshFromTkmMesh(
-	const TkmFile::SMesh& tkmMesh, 
+	const CTkmFile::SMesh& tkmMesh, 
 	int meshNo,
 	const wchar_t* fxFilePath,
 	const char* vsEntryPointFunc,
@@ -92,7 +92,7 @@ void MeshParts::CreateMeshFromTkmMesh(
 {
 	//1. 頂点バッファを作成。
 	int numVertex = (int)tkmMesh.vertexBuffer.size();
-	int vertexStride = sizeof(TkmFile::SVertex);
+	int vertexStride = sizeof(CTkmFile::SVertex);
 	auto mesh = new SMesh;
 	mesh->skinFlags.reserve(tkmMesh.materials.size());
 	mesh->m_vertexBuffer.Init(vertexStride * numVertex, vertexStride);
@@ -154,16 +154,16 @@ void MeshParts::BindSkeleton(Skeleton& skeleton)
 	m_skeleton = &skeleton;
 	//構造化バッファを作成する。
 	m_boneMatricesStructureBuffer.Init(
-		sizeof(Matrix),
+		sizeof(CMatrix),
 		m_skeleton->GetNumBones(),
 		m_skeleton->GetBoneMatricesTopAddress()
 	);
 }
 void MeshParts::Draw(
-	RenderContext& rc,
-	const Matrix& mWorld,
-	const Matrix& mView,
-	const Matrix& mProj
+	CRenderContext& rc,
+	const CMatrix& mWorld,
+	const CMatrix& mView,
+	const CMatrix& mProj
 )
 {
 	//メッシュごとにドロー

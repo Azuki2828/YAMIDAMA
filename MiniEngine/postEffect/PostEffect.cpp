@@ -15,7 +15,7 @@ namespace nsMyGame {
 			m_fxaa.Init();
 		}
 
-		void CPostEffect::Render(RenderContext& rc) {
+		void CPostEffect::Render(CRenderContext& rc) {
 			
 			//ƒuƒ‹[ƒ€B
 			m_bloom.Render(rc);

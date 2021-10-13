@@ -8,7 +8,7 @@ enum {
 	enNumDescriptorHeap
 };
 	
-void Material::InitTexture(const TkmFile::SMaterial& tkmMat)
+void Material::InitTexture(const CTkmFile::SMaterial& tkmMat)
 {
 	const auto& nullTextureMaps = g_graphicsEngine->GetNullTextureMaps();
 	if (tkmMat.albedoMap != nullptr) {
@@ -55,7 +55,7 @@ void Material::InitTexture(const TkmFile::SMaterial& tkmMat)
 	}
 }
 void Material::InitFromTkmMaterila(
-	const TkmFile::SMaterial& tkmMat,
+	const CTkmFile::SMaterial& tkmMat,
 	const wchar_t* fxFilePath,
 	const char* vsEntryPointFunc,
 	const char* vsSkinEntryPointFunc,
@@ -159,7 +159,7 @@ void Material::InitShaders(
 	
 	m_psModel.LoadPS(fxFilePath, psEntryPointFunc);
 }
-void Material::BeginRender(RenderContext& rc, int hasSkin)
+void Material::BeginRender(CRenderContext& rc, int hasSkin)
 {
 	rc.SetRootSignature(m_rootSignature);
 	

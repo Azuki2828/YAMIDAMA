@@ -15,16 +15,16 @@ namespace nsMyGame {
 			//ブルーム等、メインレンダリングターゲットに直接加算合成するものは派生クラスのfalseを使用する。
 			if (IsCopyResultTextureToMainRenderTarget()) {
 				SpriteInitData initData;
-				initData.m_width = RenderTarget::GetRenderTarget(enMainRT)->GetWidth();
-				initData.m_height = RenderTarget::GetRenderTarget(enMainRT)->GetHeight();
-				initData.m_colorBufferFormat = RenderTarget::GetRenderTarget(enMainRT)->GetColorBufferFormat();
+				initData.m_width = CRenderTarget::GetRenderTarget(enMainRT)->GetWidth();
+				initData.m_height = CRenderTarget::GetRenderTarget(enMainRT)->GetHeight();
+				initData.m_colorBufferFormat = CRenderTarget::GetRenderTarget(enMainRT)->GetColorBufferFormat();
 				initData.m_fxFilePath = c_fxFilePathCopySprite;
 				initData.m_textures[0] = &GetResultTexture();
 				m_copyMainRtSprite.Init(initData);
 			}
 		}
 
-		void CPostEffectComponentBase::Render(RenderContext& rc) {
+		void CPostEffectComponentBase::Render(CRenderContext& rc) {
 
 			//派生クラスの描画関数呼び出し。
 			OnRender(rc);
@@ -36,13 +36,13 @@ namespace nsMyGame {
 			//派生クラスでコピー許可されているなら、ポストエフェクトの結果をメインレンダリングターゲットに反映。
 			if (IsCopyResultTextureToMainRenderTarget()) {
 				// レンダリングターゲットとして利用できるまで待つ
-				rc.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+				rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 				// レンダリングターゲットを設定
-				rc.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
+				rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 				// ポストエフェクトの結果をメインレンダリングターゲットに反映。
 				m_copyMainRtSprite.Draw(rc);
 				// レンダリングターゲットへの書き込み終了待ち
-				rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+				rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 			}
 		}
 	}

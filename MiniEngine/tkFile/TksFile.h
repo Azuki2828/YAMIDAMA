@@ -7,7 +7,7 @@
 /// </remarks>
 #pragma once
 
-class TksFile {
+class CTksFile {
 public:
 	/// <summary>
 	/// ƒ{[ƒ“B

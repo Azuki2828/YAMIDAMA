@@ -16,7 +16,7 @@ namespace nsMyGame {
 		}
 
 
-		void CGaussianBlur::ExecuteOnGPU(RenderContext& rc, float blurPower)
+		void CGaussianBlur::ExecuteOnGPU(CRenderContext& rc, float blurPower)
 		{
 			//重みテーブルを更新する。
 			UpdateWeightsTable(blurPower);
@@ -108,7 +108,7 @@ namespace nsMyGame {
 			}
 		}
 
-		void CGaussianBlur::ExecuteVerticalBlur(RenderContext& rc) {
+		void CGaussianBlur::ExecuteVerticalBlur(CRenderContext& rc) {
 
 			//レンダリングターゲットとして利用できるようになるまでwaitを入れる。
 			rc.WaitUntilToPossibleSetRenderTarget(m_yBlurRenderTarget);
@@ -122,7 +122,7 @@ namespace nsMyGame {
 			rc.WaitUntilFinishDrawingToRenderTarget(m_yBlurRenderTarget);
 		}
 
-		void CGaussianBlur::ExecuteBesideBlur(RenderContext& rc) {
+		void CGaussianBlur::ExecuteBesideBlur(CRenderContext& rc) {
 
 			//レンダリングターゲットとして利用できるようになるまでwaitを入れる。
 			rc.WaitUntilToPossibleSetRenderTarget(m_xBlurRenderTarget);

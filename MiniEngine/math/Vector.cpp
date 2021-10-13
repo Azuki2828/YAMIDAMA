@@ -7,55 +7,55 @@
 
 
 
-const Vector4 Vector4::White = {1.0f, 1.0f, 1.0f, 1.0f};
-const Vector4 Vector4::Black = { 0.0f, 0.0f, 0.0f, 1.0f };
-const Vector4 Vector4::Yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
-const Vector4 Vector4::Gray = { 0.5f, 0.5f, 0.5f, 1.0f };
+const CVector4 CVector4::White = {1.0f, 1.0f, 1.0f, 1.0f};
+const CVector4 CVector4::Black = { 0.0f, 0.0f, 0.0f, 1.0f };
+const CVector4 CVector4::Yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
+const CVector4 CVector4::Gray = { 0.5f, 0.5f, 0.5f, 1.0f };
 
-const Vector2 Vector2::Zero   = { 0.0f,  0.0f };
-const Vector2 Vector2::Half = { 0.5f,  0.5f };
-const Vector3 Vector3::Zero	= {  0.0f,  0.0f,  0.0f };
-const Vector3 Vector3::Right	= {  1.0f,  0.0f,  0.0f };
-const Vector3 Vector3::Left	= { -1.0f,  0.0f,  0.0f };
-const Vector3 Vector3::Up		= {  0.0f,  1.0f,  0.0f };
-const Vector3 Vector3::Down	= {  0.0f, -1.0f,  0.0f };
-const Vector3 Vector3::Front	= { 0.0f,   0.0f,  1.0f };
-const Vector3 Vector3::Back	= { 0.0f,   0.0f, -1.0f };
+const CVector2 CVector2::Zero   = { 0.0f,  0.0f };
+const CVector2 CVector2::Half = { 0.5f,  0.5f };
+const CVector3 CVector3::Zero	= {  0.0f,  0.0f,  0.0f };
+const CVector3 CVector3::Right	= {  1.0f,  0.0f,  0.0f };
+const CVector3 CVector3::Left	= { -1.0f,  0.0f,  0.0f };
+const CVector3 CVector3::Up		= {  0.0f,  1.0f,  0.0f };
+const CVector3 CVector3::Down	= {  0.0f, -1.0f,  0.0f };
+const CVector3 CVector3::Front	= { 0.0f,   0.0f,  1.0f };
+const CVector3 CVector3::Back	= { 0.0f,   0.0f, -1.0f };
 
-const Vector3 Vector3::AxisX	= { 1.0f,  0.0f,  0.0f };
-const Vector3 Vector3::AxisY	= { 0.0f,  1.0f,  0.0f };
-const Vector3 Vector3::AxisZ	= { 0.0f,  0.0f,  1.0f };
-const Vector3 Vector3::One = { 1.0f, 1.0f, 1.0f };
-const Quaternion Quaternion::Identity = { 0.0f,  0.0f, 0.0f, 1.0f };
+const CVector3 CVector3::AxisX	= { 1.0f,  0.0f,  0.0f };
+const CVector3 CVector3::AxisY	= { 0.0f,  1.0f,  0.0f };
+const CVector3 CVector3::AxisZ	= { 0.0f,  0.0f,  1.0f };
+const CVector3 CVector3::One = { 1.0f, 1.0f, 1.0f };
+const CQuaternion CQuaternion::Identity = { 0.0f,  0.0f, 0.0f, 1.0f };
 
 /*!
 *@brief	行列からクォータニオンを作成。
 */
-void Quaternion::SetRotation(const Matrix& m)
+void CQuaternion::SetRotation(const CMatrix& m)
 {
 	DirectX::XMStoreFloat4(&vec, DirectX::XMQuaternionRotationMatrix(m));
 }
 /*!
 *@brief	fromベクトルからtoベクトルに回転させるクォータニオンを作成。
 */
-void Quaternion::SetRotation(Vector3 from, Vector3 to)
+void CQuaternion::SetRotation(CVector3 from, CVector3 to)
 {
 from.Normalize();
 	to.Normalize();
 	auto t = ::Dot(from, to);
-	Vector3 rotAxis;
+	CVector3 rotAxis;
 	if (t > 0.998f) {
 		//ほぼ同じ向きなので単位クォータニオンにする。
-		*this = Quaternion::Identity;
+		*this = CQuaternion::Identity;
 	}
 	else if (t < -0.998f) {
 		//ほぼ逆向きなので、
 		if (fabsf(to.x) < 1.0f) {
 			//
-			rotAxis = Cross(Vector3::AxisX, to);
+			rotAxis = Cross(CVector3::AxisX, to);
 		}
 		else {
-			rotAxis = Cross(Vector3::AxisY, to);
+			rotAxis = Cross(CVector3::AxisY, to);
 		}
 	}
 	else {

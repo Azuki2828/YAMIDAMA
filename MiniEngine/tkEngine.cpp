@@ -14,7 +14,7 @@ TkEngine::~TkEngine()
 void TkEngine::Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight)
 {
 	//グラフィックエンジンの初期化。
-	m_graphicsEngine = new GraphicsEngine();
+	m_graphicsEngine = new CGraphicsEngine();
 	m_graphicsEngine->Init(hwnd, frameBufferWidth, frameBufferHeight);
 	g_gameTime = &m_gameTime;
 

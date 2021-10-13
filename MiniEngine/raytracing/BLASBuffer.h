@@ -17,7 +17,7 @@ namespace raytracing {
 		/// </summary>
 		/// <param name="rc"></param>
 		/// <param name="instance"></param>
-		void Init(RenderContext& rc, const std::vector<InstancePtr>& instance);
+		void Init(CRenderContext& rc, const std::vector<InstancePtr>& instance);
 		/// <summary>
 		/// BLASBuffer‚ÌƒŠƒXƒg‚ğæ“¾B
 		/// </summary>

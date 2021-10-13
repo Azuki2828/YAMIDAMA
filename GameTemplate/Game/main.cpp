@@ -63,7 +63,7 @@ namespace nsMyGame {
 		GameObjectManager::CreateInstance();
 		PhysicsWorld::CreateInstance();
 		nsLight::CLightManager::CreateInstance();
-		Camera::CreateLightCamera();
+		CCamera::CreateLightCamera();
 		CRenderingEngine::CreateRenderingEngine();
 
 		CRenderingEngine::GetInstance()->Init();
@@ -75,7 +75,7 @@ namespace nsMyGame {
 
 		// とりあえずテストで敵を追加。
 		//NewGO<Enemy>(0, nullptr);
-		NewGO<nsPlayer::CPlayer>(0, "player");
+		//NewGO<nsPlayer::CPlayer>(0, "player");
 		NewGO<CBackGround>(0);
 		NewGO<CMainCamera>(0);
 		CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);

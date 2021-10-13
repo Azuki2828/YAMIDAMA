@@ -2,7 +2,7 @@
 #include "tkFile/TkaFile.h"
 #include <errno.h>
 
-void TkaFile::Load(const char* filePath)
+void CTkaFile::Load(const char* filePath)
 {
 	FILE* fp = fopen( filePath, "rb");
 	if (fp == nullptr) {

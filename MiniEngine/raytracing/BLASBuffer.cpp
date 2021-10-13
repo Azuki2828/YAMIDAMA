@@ -5,7 +5,7 @@ namespace raytracing {
 	
 
 
-	void BLASBuffer::Init(RenderContext& rc, const std::vector<InstancePtr>& instances)
+	void BLASBuffer::Init(CRenderContext& rc, const std::vector<InstancePtr>& instances)
 	{
 		for (auto& instance : instances) {
 			D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS inputs = {};

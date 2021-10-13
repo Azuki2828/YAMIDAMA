@@ -5,7 +5,7 @@
 
 
 
-void MeshCollider::CreateFromModel(const Model& model, const Matrix& worldMatrix)
+void MeshCollider::CreateFromModel(const CModel& model, const CMatrix& worldMatrix)
 {
 	m_stridingMeshInterface = std::make_unique<btTriangleIndexVertexArray>();
 	int numMesh = 0;
@@ -39,7 +39,7 @@ void MeshCollider::CreateFromModel(const Model& model, const Matrix& worldMatrix
 			indexedMesh.m_triangleIndexStride = 12;
 			indexedMesh.m_numVertices = (int)pVb->size();
 			indexedMesh.m_vertexBase = (unsigned char*)(&pVb->front());
-			indexedMesh.m_vertexStride = sizeof(Vector3);
+			indexedMesh.m_vertexStride = sizeof(CVector3);
 			m_stridingMeshInterface->addIndexedMesh(indexedMesh);
 		}
 		//ŽŸ‚Í32ƒrƒbƒg”Å
@@ -58,7 +58,7 @@ void MeshCollider::CreateFromModel(const Model& model, const Matrix& worldMatrix
 			indexedMesh.m_triangleIndexStride = 12;
 			indexedMesh.m_numVertices = (int)pVb->size();
 			indexedMesh.m_vertexBase = (unsigned char*)(&pVb->front());
-			indexedMesh.m_vertexStride = sizeof(Vector3);
+			indexedMesh.m_vertexStride = sizeof(CVector3);
 			m_stridingMeshInterface->addIndexedMesh(indexedMesh);
 		}
 	}

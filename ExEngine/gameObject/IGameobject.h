@@ -6,17 +6,17 @@
 
 #include <list>
 #include <string>
-class RenderContext;
+class CRenderContext;
 
 /*!
 	*@brief	ゲームオブジェクト。
 	*/
-class IGameObject {
+class CIGameObject {
 public:
 	/*!
 		*@brief	デストラクタ
 		*/
-	virtual ~IGameObject()
+	virtual ~CIGameObject()
 	{
 	}
 public:
@@ -39,11 +39,11 @@ public:
 	/*!
 	 *@brief	描画
 	*/
-	virtual void Render(RenderContext& renderContext)
+	virtual void Render(CRenderContext& renderContext)
 	{
 		(void)renderContext;
 	}
-	virtual void Render2D(RenderContext& renderContext)
+	virtual void Render2D(CRenderContext& renderContext)
 	{
 		(void)renderContext;
 	}
@@ -117,14 +117,14 @@ public:
 	}
 public:
 
-	void RenderWrapper(RenderContext& renderContext)
+	void RenderWrapper(CRenderContext& renderContext)
 	{
 		if (m_isActive && m_isStart && !m_isDead ) {
 			Render(renderContext);
 		}
 	}
 
-	void Render2DWrapper(RenderContext& renderContext)
+	void Render2DWrapper(CRenderContext& renderContext)
 	{
 		if (m_isActive && m_isStart && !m_isDead) {
 			Render2D(renderContext);

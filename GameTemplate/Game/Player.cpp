@@ -94,12 +94,12 @@ namespace nsMyGame {
 			m_fontRender = NewGO<nsFont::CFontRender>(0);
 			m_fontRender->Init(L"酔い度：", { -550.0f,310.0f });	//場所
 			m_fontRender->SetColor({ 1.0f,0.0f,0.0f,1.0f });			//赤色
-			m_fontRender->SetShadowParam(true, 1.0f, Vector4::Black);
+			m_fontRender->SetShadowParam(true, 1.0f, CVector4::Black);
 
 			m_fontRender2 = NewGO<nsFont::CFontRender>(0);
 			m_fontRender2->Init(L"A：飲む", { 450.0f,310.0f });	//場所
 			m_fontRender2->SetColor({ 1.0f,0.0f,0.0f,1.0f });			//赤色
-			m_fontRender2->SetShadowParam(true, 1.0f, Vector4::Black);
+			m_fontRender2->SetShadowParam(true, 1.0f, CVector4::Black);
 			return true;
 		}
 
@@ -153,28 +153,28 @@ namespace nsMyGame {
 		void CPlayer::LightCameraUpdate() {
 
 			//ライトカメラの情報を更新
-			Vector3 m_lightCameraTar = m_pos;
-			Vector3 m_lightCameraPos = m_lightCameraTar;
+			CVector3 m_lightCameraTar = m_pos;
+			CVector3 m_lightCameraPos = m_lightCameraTar;
 
 			//ライトカメラの座標を設定
 			m_lightCameraPos.y += 300.0f;
 			m_lightCameraPos.z += 300.0f;
 
 			//ライトカメラの情報を設定
-			Camera::GetLightCamera()->SetPosition(m_lightCameraPos);
-			Camera::GetLightCamera()->SetTarget(m_lightCameraTar);
-			Camera::GetLightCamera()->SetFar(800.0f);
+			CCamera::GetLightCamera()->SetPosition(m_lightCameraPos);
+			CCamera::GetLightCamera()->SetTarget(m_lightCameraTar);
+			CCamera::GetLightCamera()->SetFar(800.0f);
 
 			//カメラの上方向を求める。
-			Vector3 Vec_x = Vector3::AxisX;
-			Vector3 TarPos = Camera::GetLightCamera()->GetTarget() - Camera::GetLightCamera()->GetPosition();
+			CVector3 Vec_x = CVector3::AxisX;
+			CVector3 TarPos = CCamera::GetLightCamera()->GetTarget() - CCamera::GetLightCamera()->GetPosition();
 			TarPos.Normalize();
-			Vector3 CameraUp;
+			CVector3 CameraUp;
 
 			CameraUp.Cross(TarPos, Vec_x);
 			CameraUp.Normalize();
-			Camera::GetLightCamera()->SetUp(CameraUp);
-			Camera::GetLightCamera()->Update();
+			CCamera::GetLightCamera()->SetUp(CameraUp);
+			CCamera::GetLightCamera()->Update();
 		}
 
 		void CPlayer::Move() {

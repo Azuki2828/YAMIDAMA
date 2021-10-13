@@ -21,7 +21,7 @@ namespace nsMyGame {
 			 * @brief 描画関数。
 			 * @param rc レンダーコンテキスト
 			*/
-			void OnRender(RenderContext& rc)override final;
+			void OnRender(CRenderContext& rc)override final;
 
 			/**
 			 * @brief 輝度テクスチャを取得する関数。
@@ -47,19 +47,19 @@ namespace nsMyGame {
 			 * @brief 輝度抽出を実行する関数。
 			 * @param rc レンダーコンテキスト
 			*/
-			void ExecuteDrawLuminanceSprite(RenderContext& rc);
+			void ExecuteDrawLuminanceSprite(CRenderContext& rc);
 
 			/**
 			 * @brief ガウシアンブラーを実行する関数。
 			 * @param rc レンダーコンテキスト
 			*/
-			void ExecuteGaussianBlur(RenderContext& rc);
+			void ExecuteGaussianBlur(CRenderContext& rc);
 
 		private:
-			RenderTarget m_luminanceRT;							//輝度抽出用のレンダリングターゲット
+			CRenderTarget m_luminanceRT;							//輝度抽出用のレンダリングターゲット
 			CGaussianBlur m_gaussianBlur[c_gaussianBlurNum];		//ガウシアンブラークラスのインスタンス
-			Sprite m_luminanceSprite;							//輝度抽出用のスプライト
-			Sprite m_bloomFinalSprite;							//ブルームの最終スプライト
+			CSprite m_luminanceSprite;							//輝度抽出用のスプライト
+			CSprite m_bloomFinalSprite;							//ブルームの最終スプライト
 		};
 	}
 }

@@ -7,9 +7,9 @@ namespace nsMyGame {
 
 		//ディレクションライトのデータ
 		struct DirectionLigData {
-			Vector3 Dir = Vector3::Zero;	//方向
+			CVector3 Dir = CVector3::Zero;	//方向
 			float pad = 0.0f;				//パディング
-			Vector4 Col = Vector4::White;	//色
+			CVector4 Col = CVector4::White;	//色
 		};
 
 		//平行光源クラス
@@ -40,7 +40,7 @@ namespace nsMyGame {
 			 * @brief ライトの方向を設定する関数。
 			 * @param dir 方向
 			*/
-			void SetLigDirection(const Vector3& dir) {
+			void SetLigDirection(const CVector3& dir) {
 				m_dirLigData.Dir = dir;
 				//正規化。
 				m_dirLigData.Dir.Normalize();
@@ -50,7 +50,7 @@ namespace nsMyGame {
 			 * @brief ディレクションライトを取得。
 			 * @return ディレクションライト
 			*/
-			const Vector3* GetLigDirection() {
+			const CVector3* GetLigDirection() {
 				return &m_dirLigData.Dir;
 			}
 
@@ -70,7 +70,7 @@ namespace nsMyGame {
 			 * @brief ライトの色を設定。
 			 * @param col 色情報(RGB)
 			*/
-			void SetLigColor(const Vector3& col) {
+			void SetLigColor(const CVector3& col) {
 				m_dirLigData.Col = col;
 			}
 

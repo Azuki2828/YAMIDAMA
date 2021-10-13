@@ -11,7 +11,7 @@ public:
 	/// </summary>
 	/// <param name="tkmMat">tkmマテリアル</param>
 	void InitFromTkmMaterila(
-		const TkmFile::SMaterial& tkmMat,
+		const CTkmFile::SMaterial& tkmMat,
 		const wchar_t* fxFilePath,
 		const char* vsEntryPointFunc,
 		const char* vsSkinEntriyPointFunc,
@@ -21,7 +21,7 @@ public:
 	/// </summary>
 	/// <param name="rc">レンダリングコンテキスト</param>
 	/// <param name="hasSkin">スキンがあるかどうかのフラグ</param>
-	void BeginRender(RenderContext& rc, int hasSkin);
+	void BeginRender(CRenderContext& rc, int hasSkin);
 
 	/// <summary>
 	/// アルベドマップを取得。
@@ -92,7 +92,7 @@ private:
 	/// テクスチャを初期化。
 	/// </summary>
 	/// <param name="tkmMat"></param>
-	void InitTexture(const TkmFile::SMaterial& tkmMat);
+	void InitTexture(const CTkmFile::SMaterial& tkmMat);
 private:
 	/// <summary>
 	/// マテリアルパラメータ。

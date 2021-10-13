@@ -1,19 +1,19 @@
 #pragma once
 
-class Matrix;
+class CMatrix;
 
 
 /// <summary>
 /// 2次元ベクトルクラス。
 /// </summary>
-class Vector2 {
+class CVector2 {
 public:
-	static const Vector2 Zero;
-	static const Vector2 Half;
+	static const CVector2 Zero;
+	static const CVector2 Half;
 	/// <summary>
 	/// コンストラクタ。
 	/// </summary>
-	explicit Vector2()
+	explicit CVector2()
 	{
 		x = 0.0f;
 		y = 0.0f;
@@ -23,7 +23,7 @@ public:
 	/// </summary>
 	/// <param name="x"></param>
 	/// <param name="y"></param>
-	Vector2(float x, float y)
+	CVector2(float x, float y)
 	{
 		this->x = x;
 		this->y = y;
@@ -34,7 +34,7 @@ public:
 	/// </summary>
 	/// <param name="_v"></param>
 	/// <returns></returns>
-	Vector2& operator=(const Vector2& _v)
+	CVector2& operator=(const CVector2& _v)
 	{
 		vec = _v.vec;
 		return *this;
@@ -56,7 +56,7 @@ public:
 	/// <param name="t">補完率</param>
 	/// <param name="v0">補完開始のベクトル。</param>
 	/// <param name="v1">補完終了のベクトル。</param>
-	void Lerp(float t, const Vector2& v0, const Vector2& v1)
+	void Lerp(float t, const CVector2& v0, const CVector2& v1)
 	{
 		x = v0.x + (v1.x - v0.x) * t;
 		y = v0.y + (v1.y - v0.y) * t;
@@ -65,24 +65,24 @@ public:
 /// <summary>
 /// 3次元ベクトル。
 /// </summary>
-class Vector3{
+class CVector3{
 public:
 	union{
 		DirectX::XMFLOAT3 vec;
 		float v[3];
 		struct { float x, y, z; };
 	};
-	static const Vector3 Zero;
-	static const Vector3 Right;
-	static const Vector3 Left;
-	static const Vector3 Up;
-	static const Vector3 Down;
-	static const Vector3 Front;
-	static const Vector3 Back;
-	static const Vector3 AxisX;
-	static const Vector3 AxisY;
-	static const Vector3 AxisZ;
-	static const Vector3 One;
+	static const CVector3 Zero;
+	static const CVector3 Right;
+	static const CVector3 Left;
+	static const CVector3 Up;
+	static const CVector3 Down;
+	static const CVector3 Front;
+	static const CVector3 Back;
+	static const CVector3 AxisX;
+	static const CVector3 AxisY;
+	static const CVector3 AxisZ;
+	static const CVector3 One;
 public:
 	/// <summary>
 	/// XMVECTORへの暗黙の変換。
@@ -97,7 +97,7 @@ public:
 	/// </summary>
 	/// <param name="_v"></param>
 	/// <returns></returns>
-	Vector3& operator=(const Vector3& _v)
+	CVector3& operator=(const CVector3& _v)
 	{
 		vec = _v.vec;
 		return *this;
@@ -108,7 +108,7 @@ public:
 	/// <remarks>
 	/// x,y,z全ての要素0で初期化されます。
 	/// </remarks>
-	explicit Vector3()
+	explicit CVector3()
 	{
 		x = y = z = 0.0f;
 	}
@@ -118,7 +118,7 @@ public:
 	/// <param name="x"></param>
 	/// <param name="y"></param>
 	/// <param name="z"></param>
-	Vector3(float x, float y, float z)
+	CVector3(float x, float y, float z)
 	{
 		Set(x, y, z);
 	}
@@ -131,7 +131,7 @@ public:
 	/// <param name="t">補完率。</param>
 	/// <param name="v0">補完開始のベクトル。</param>
 	/// <param name="v1">補完終了のベクトル。</param>
-	void Lerp(float t, const Vector3& v0, const Vector3& v1)
+	void Lerp(float t, const CVector3& v0, const CVector3& v1)
 	{
 		DirectX::XMVECTOR _v = DirectX::XMVectorLerp(
 			DirectX::XMLoadFloat3(&v0.vec),
@@ -174,7 +174,7 @@ public:
 	/// this += _v;
 	/// </remarks>
 	/// <param name="_v">加算されるベクトル。</param>
-	void Add( const Vector3& _v) 
+	void Add( const CVector3& _v) 
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&_v.vec);
@@ -187,7 +187,7 @@ public:
 	/// <remarks>
 	/// this = v0 + v1;
 	/// </remarks>
-	void Add( const Vector3& v0, const Vector3& v1 )
+	void Add( const CVector3& v0, const CVector3& v1 )
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&v0.vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&v1.vec);
@@ -200,7 +200,7 @@ public:
 	/// <remarks>
 	/// this -= _v;
 	/// </remarks>
-	void Subtract( const Vector3& _v )
+	void Subtract( const CVector3& _v )
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&_v.vec);
@@ -213,7 +213,7 @@ public:
 	/// <remarks>
 	/// this = v0 - v1;
 	/// </remarks>
-	void Subtract( const Vector3& v0, const Vector3& v1 )
+	void Subtract( const CVector3& v0, const CVector3& v1 )
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&v0.vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&v1.vec);
@@ -228,7 +228,7 @@ public:
 	/// float d = this->x * _v.x + this->y * _v.y + this->z * _v.z;
 	/// return d;
 	/// </remarks>
-	float Dot( const Vector3& _v ) const
+	float Dot( const CVector3& _v ) const
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&_v.vec);
@@ -245,7 +245,7 @@ public:
 	/// v.z = this->x * _v.y - this->y * _v.x;
 	/// this = v;
 	/// </remarks>
-	void Cross(const Vector3& _v)
+	void Cross(const CVector3& _v)
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&_v.vec);
@@ -260,7 +260,7 @@ public:
 	/// this->y = v0.z * v1.x - v0.x * v1.z;
 	/// this->z = v0.x * v1.y - v0.y * v1.x; 
 	/// </remarks>
-	void Cross(const Vector3& v0, const Vector3& v1)
+	void Cross(const CVector3& v0, const CVector3& v1)
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&v0.vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&v1.vec);
@@ -343,7 +343,7 @@ public:
 	/// this->y = max( this->y, v.y );
 	/// this->z = max( this->z, v.z );
 	/// </remarks>
-	void Max(const Vector3& v)
+	void Max(const CVector3& v)
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&v.vec);
@@ -359,7 +359,7 @@ public:
 	/// this->y = min( this->y, v.y );
 	/// this->z = min( this->z, v.z );
 	/// </remarks>
-	void Min(const Vector3& v)
+	void Min(const CVector3& v)
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3(&v.vec);
@@ -375,7 +375,7 @@ public:
 	///	Vector3 v1 = {10.0f, 20.0f, 30.0f};
 	///	v0 += v1;
 	/// </remarks>
-	const Vector3& operator+=(const Vector3& _v)
+	const CVector3& operator+=(const CVector3& _v)
 	{
 		Add(_v);
 		return *this;
@@ -388,7 +388,7 @@ public:
 	/// Vector3 v = {20.0f, 30.0f, 40.0f};
 	///	v *= 10;
 	/// </remarks>
-	const Vector3& operator*=(float s) 
+	const CVector3& operator*=(float s) 
 	{
 		Scale(s);
 		return *this;
@@ -402,7 +402,7 @@ public:
 	///	Vector3 v1 = {10.0f, 20.0f, 30.0f};
 	///	v0 -= v1;
 	/// </remarks>
-	const Vector3& operator-=(const Vector3& _v)
+	const CVector3& operator-=(const CVector3& _v)
 	{
 		Subtract(_v);
 		return *this;
@@ -415,7 +415,7 @@ public:
 	/// Vector3 v = {20.0f, 30.0f, 40.0f};
 	///	v /= 10;
 	/// </remarks>
-	const Vector3& operator/=(const float s)
+	const CVector3& operator/=(const float s)
 	{
 		Div(s);
 		return *this;
@@ -424,7 +424,7 @@ public:
 /// <summary>
 /// 4次元ベクトルクラス。
 /// </summary>
-class Vector4{
+class CVector4{
 public:
 	union{
 		DirectX::XMFLOAT4 vec;
@@ -432,10 +432,10 @@ public:
 		struct { float r, g, b, a; };
 		float v[4];
 	};
-	static const Vector4 White;
-	static const Vector4 Black;
-	static const Vector4 Yellow;
-	static const Vector4 Gray;
+	static const CVector4 White;
+	static const CVector4 Black;
+	static const CVector4 Yellow;
+	static const CVector4 Gray;
 public:
 	/// <summary>
 	/// XMVECTORへの暗黙の型変換。
@@ -451,7 +451,7 @@ public:
 	/// <remarks>
 	/// x,y,zが0.0、wは1.0で初期化されます。
 	/// </remarks>
-	explicit Vector4()
+	explicit CVector4()
 	{
 		x = y = z = 0.0f;
 		w = 1.0f;
@@ -477,7 +477,7 @@ public:
 	/// Vector4 v1;
 	/// v1 = v0;
 	/// </remarks>
-	Vector4& operator=(const Vector4& _v)
+	CVector4& operator=(const CVector4& _v)
 	{
 		vec = _v.vec;
 		return *this;
@@ -486,7 +486,7 @@ public:
 	/// <summary>
 	/// コンストラクタ。
 	/// </summary>
-	Vector4(float x, float y, float z, float w)
+	CVector4(float x, float y, float z, float w)
 	{
 		Set(x, y, z, w);
 	}
@@ -496,7 +496,7 @@ public:
 	/// <remarks>
 	/// wには1.0が格納されます。
 	/// </remarks>
-	Vector4(const Vector3& v)
+	CVector4(const CVector3& v)
 	{
 		Set(v);
 	}
@@ -523,7 +523,7 @@ public:
 	/// ベクトルを設定。
 	/// </summary>
 	/// <param name="_v"></param>
-	void Set(const Vector4& _v)
+	void Set(const CVector4& _v)
 	{
 		*this = _v;
 	}
@@ -533,7 +533,7 @@ public:
 	/// <remarks>
 	/// wには1.0が設定されます。
 	/// </remarks>
-	void Set(const Vector3& _v)
+	void Set(const CVector3& _v)
 	{
 		this->x = _v.x;
 		this->y = _v.y;
@@ -546,7 +546,7 @@ public:
 	/// <remarks>
 	/// this += _v;
 	/// </remarks>
-	void Add( const Vector4& _v )
+	void Add( const CVector4& _v )
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat4(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat4(&_v.vec);
@@ -559,7 +559,7 @@ public:
 	/// <remarks>
 	/// this = v0 + v1;
 	/// </remarks>
-	void Add( const Vector4& v0, const Vector4& v1 )
+	void Add( const CVector4& v0, const CVector4& v1 )
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat4(&v0.vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat4(&v1.vec);
@@ -572,7 +572,7 @@ public:
 	/// <remarks>
 	/// this -= _v;
 	/// </remarks>
-	void Subtract( const Vector4& _v )
+	void Subtract( const CVector4& _v )
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat4(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat4(&_v.vec);
@@ -585,7 +585,7 @@ public:
 	/// <remarks>
 	/// this = v0 - v1;
 	/// </remarks>
-	void Subtract( const Vector4& v0, const Vector4& v1 )
+	void Subtract( const CVector4& v0, const CVector4& v1 )
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat4(&v0.vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat4(&v1.vec);
@@ -600,7 +600,7 @@ public:
 	/// float d = this->x * _v.x + this->y * _v.y + this->z * _v.z + this->w * _v.w;
 	/// return d;
 	/// </remarks>
-	float Dot( const Vector4& _v ) const
+	float Dot( const CVector4& _v ) const
 	{
 		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat4(&vec);
 		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat4(&_v.vec);
@@ -640,31 +640,31 @@ public:
 	}
 };
 
-const Vector2 g_vec2Zero = { 0.0f, 0.0f };
-const Vector3 g_vec3Zero = { 0.0f,  0.0f,  0.0f };
-const Vector3 g_vec3Right = { 1.0f,  0.0f,  0.0f };
-const Vector3 g_vec3Left = { -1.0f,  0.0f,  0.0f };
-const Vector3 g_vec3Up = { 0.0f,  1.0f,  0.0f };
-const Vector3 g_vec3Down = { 0.0f, -1.0f,  0.0f };
-const Vector3 g_vec3Front = { 0.0f,   0.0f,  1.0f };
-const Vector3 g_vec3Back = { 0.0f,   0.0f, -1.0f };
-const Vector3 g_vec3AxisX = { 1.0f,  0.0f,  0.0f };
-const Vector3 g_vec3AxisY = { 0.0f,  1.0f,  0.0f };
-const Vector3 g_vec3AxisZ = { 0.0f,  0.0f,  1.0f };
-const Vector3 g_vec3One = { 1.0f, 1.0f, 1.0f };
+const CVector2 g_vec2Zero = { 0.0f, 0.0f };
+const CVector3 g_vec3Zero = { 0.0f,  0.0f,  0.0f };
+const CVector3 g_vec3Right = { 1.0f,  0.0f,  0.0f };
+const CVector3 g_vec3Left = { -1.0f,  0.0f,  0.0f };
+const CVector3 g_vec3Up = { 0.0f,  1.0f,  0.0f };
+const CVector3 g_vec3Down = { 0.0f, -1.0f,  0.0f };
+const CVector3 g_vec3Front = { 0.0f,   0.0f,  1.0f };
+const CVector3 g_vec3Back = { 0.0f,   0.0f, -1.0f };
+const CVector3 g_vec3AxisX = { 1.0f,  0.0f,  0.0f };
+const CVector3 g_vec3AxisY = { 0.0f,  1.0f,  0.0f };
+const CVector3 g_vec3AxisZ = { 0.0f,  0.0f,  1.0f };
+const CVector3 g_vec3One = { 1.0f, 1.0f, 1.0f };
 
-const Vector4 g_vec4White = { 1.0f, 1.0f, 1.0f, 1.0f };
-const Vector4 g_vec4Black = { 0.0f, 0.0f, 0.0f, 1.0f };
-const Vector4 g_vec4Gray = { 0.5f, 0.5f, 0.5f, 1.0f };
-const Vector4 g_vec4Yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
+const CVector4 g_vec4White = { 1.0f, 1.0f, 1.0f, 1.0f };
+const CVector4 g_vec4Black = { 0.0f, 0.0f, 0.0f, 1.0f };
+const CVector4 g_vec4Gray = { 0.5f, 0.5f, 0.5f, 1.0f };
+const CVector4 g_vec4Yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
 
 /// <summary>
 /// クォータニオンクラス。
 /// </summary>
-class Quaternion : public Vector4{
+class CQuaternion : public CVector4{
 public:
-	static const Quaternion Identity;		//!<単位クォータニオン。
-	Quaternion() 
+	static const CQuaternion Identity;		//!<単位クォータニオン。
+	CQuaternion() 
 	{
 		x = y = z = 0.0f;
 		w = 1.0f;
@@ -672,8 +672,8 @@ public:
 	/// <summary>
 	/// コンストラクタ。
 	/// </summary>
-	Quaternion(float x, float y, float z, float w) :
-		Vector4(x, y, z, w)
+	CQuaternion(float x, float y, float z, float w) :
+		CVector4(x, y, z, w)
 	{
 	}
 	/// <summary>
@@ -736,7 +736,7 @@ public:
 	/// </summary>
 	/// <param name="axis">回転軸</param>
 	/// <param name="angle">回転角度。単位ラジアン。</param>
-	void SetRotation( const Vector3& axis, float angle )
+	void SetRotation( const CVector3& axis, float angle )
 	{
 		float s;
 		float halfAngle = angle * 0.5f;
@@ -751,10 +751,10 @@ public:
 	/// </summary>
 	/// <param name="axis">回転軸</param>
 	/// <param name="angle">回転角度。単位Degree</param>
-	void SetRotationDeg(const Vector3& axis, float angle)
+	void SetRotationDeg(const CVector3& axis, float angle)
 	{
 		float s;
-		float halfAngle = Math::DegToRad(angle) * 0.5f;
+		float halfAngle = CMath::DegToRad(angle) * 0.5f;
 		s = sinf(halfAngle);
 		w = cosf(halfAngle);
 		x = axis.x * s;
@@ -765,20 +765,20 @@ public:
 	/// 行列からクォータニオンを作成。
 	/// </summary>
 	/// <param name="m">行列</param>
-	void SetRotation(const Matrix& m);
+	void SetRotation(const CMatrix& m);
 	/// <summary>
 	/// fromベクトルからtoベクトルに回転させるクォータニオンを作成。
 	/// </summary>
 	/// <param name="from">回転前のベクトル</param>
 	/// <param name="to">回転後のベクトル</param>
-	void SetRotation( Vector3 from,  Vector3 to);
+	void SetRotation( CVector3 from,  CVector3 to);
 	/// <summary>
 	/// 球面線形補完
 	/// </summary>
 	/// <param name="t">補完率</param>
 	/// <param name="q1">開始クォータニオン。</param>
 	/// <param name="q2">終了クォータニオン。</param>
-	void Slerp(float t, Quaternion q1, Quaternion q2)
+	void Slerp(float t, CQuaternion q1, CQuaternion q2)
 	{
 		DirectX::XMVECTOR xmv = DirectX::XMQuaternionSlerp(
 			DirectX::XMLoadFloat4(&q1.vec),
@@ -793,15 +793,15 @@ public:
 	/// <returns>加算する回転角度。ラジアン単位。</returns>
 	void AddRotationY(float angle)
 	{
-		Quaternion addRot;
-		addRot.SetRotation(Vector3::AxisY, angle);
+		CQuaternion addRot;
+		addRot.SetRotation(CVector3::AxisY, angle);
 		*this *= addRot;
 	}
 	/// <summary>
 	/// クォータニオン同士の乗算
 	/// </summary>
 	/// <param name="rot"></param>
-	void Multiply(const Quaternion& rot)
+	void Multiply(const CQuaternion& rot)
 	{
 		float pw, px, py, pz;
 		float qw, qx, qy, qz;
@@ -820,7 +820,7 @@ public:
 	/// </summary>
 	/// <param name="rot0"></param>
 	/// <param name="rot1"></param>
-	void Multiply(const Quaternion& rot0, const Quaternion& rot1)
+	void Multiply(const CQuaternion& rot0, const CQuaternion& rot1)
 	{
 		float pw, px, py, pz;
 		float qw, qx, qy, qz;
@@ -836,7 +836,7 @@ public:
 	/// <summary>
 	/// クォータニオンの代入乗算演算子
 	/// </summary>
-	const Quaternion& operator*=(const Quaternion& rot0)
+	const CQuaternion& operator*=(const CQuaternion& rot0)
 	{
 		Multiply(rot0, *this);
 		return *this;
@@ -844,7 +844,7 @@ public:
 	/// <summary>
 	/// ベクトルにクォータニオンを適用する。
 	/// </summary>
-	void Apply(Vector4& _v) const
+	void Apply(CVector4& _v) const
 	{
 		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate(_v, *this);
 		DirectX::XMStoreFloat4(&_v.vec, xmv);
@@ -852,7 +852,7 @@ public:
 	/// <summary>
 	/// ベクトルにクォータニオンを適用する。
 	/// </summary>
-	void Apply(Vector3& _v) const
+	void Apply(CVector3& _v) const
 	{
 		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate(_v, *this);
 		DirectX::XMStoreFloat3(&_v.vec, xmv);
@@ -870,9 +870,9 @@ public:
 /// <summary>
 /// ベクトル同士の加算。
 /// </summary>
-static inline Vector3 operator+(const Vector3& v0, const Vector3& v1)
+static inline CVector3 operator+(const CVector3& v0, const CVector3& v1)
 {
-	Vector3 result;
+	CVector3 result;
 	result.Add(v0, v1);
 	return result;
 }
@@ -880,9 +880,9 @@ static inline Vector3 operator+(const Vector3& v0, const Vector3& v1)
 /// ベクトルとスカラーの乗算。
 /// </summary>
 
-static inline Vector3 operator*(const Vector3& v, float s)
+static inline CVector3 operator*(const CVector3& v, float s)
 {
-	Vector3 result;
+	CVector3 result;
 	result = v;
 	result.Scale(s);
 	return result;
@@ -890,9 +890,9 @@ static inline Vector3 operator*(const Vector3& v, float s)
 /// <summary>
 /// ベクトルとスカラーの除算。
 /// </summary>
-static inline Vector3 operator/(const Vector3& v, float s)
+static inline CVector3 operator/(const CVector3& v, float s)
 {
-	Vector3 result;
+	CVector3 result;
 	result = v;
 	result.Div(s);
 	return result;
@@ -900,9 +900,9 @@ static inline Vector3 operator/(const Vector3& v, float s)
 /// <summary>
 /// ベクトル同士の減算。
 /// </summary>
-static inline Vector3 operator-(const Vector3& v0, const Vector3& v1)
+static inline CVector3 operator-(const CVector3& v0, const CVector3& v1)
 {
-	Vector3 result;
+	CVector3 result;
 	result.Subtract(v0, v1);
 	return result;
 }
@@ -910,16 +910,16 @@ static inline Vector3 operator-(const Vector3& v0, const Vector3& v1)
 /// <summary>
 /// 外積を計算。
 /// </summary>
-static inline Vector3 Cross(const Vector3& v0, const Vector3& v1)
+static inline CVector3 Cross(const CVector3& v0, const CVector3& v1)
 {
-	Vector3 result;
+	CVector3 result;
 	result.Cross(v0, v1);
 	return result;
 }
 /// <summary>
 /// 内積を計算。
 /// </summary>
-static inline float Dot(const Vector3& v0, const Vector3& v1)
+static inline float Dot(const CVector3& v0, const CVector3& v1)
 {
 	return v0.Dot(v1);
 }
@@ -928,9 +928,9 @@ static inline float Dot(const Vector3& v0, const Vector3& v1)
 /// ベクトル同士の加算。
 /// </summary>
 
-static inline Vector4 operator+(const Vector4& v0, const Vector4& v1)
+static inline CVector4 operator+(const CVector4& v0, const CVector4& v1)
 {
-	Vector4 result;
+	CVector4 result;
 	result.Add(v0, v1);
 	return result;
 }
@@ -938,9 +938,9 @@ static inline Vector4 operator+(const Vector4& v0, const Vector4& v1)
 /// ベクトルとスカラーの乗算。
 /// </summary>
 
-static inline Vector4 operator*(const Vector4& v, float s)
+static inline CVector4 operator*(const CVector4& v, float s)
 {
-	Vector4 result;
+	CVector4 result;
 	result = v;
 	result.Scale(s);
 	return result;
@@ -949,9 +949,9 @@ static inline Vector4 operator*(const Vector4& v, float s)
 /// <summary>
 /// ベクトル同士の減算。
 /// </summary>
-static inline Vector4 operator-(const Vector4& v0, const Vector4& v1)
+static inline CVector4 operator-(const CVector4& v0, const CVector4& v1)
 {
-	Vector4 result;
+	CVector4 result;
 	result.Subtract(v0, v1);
 	return result;
 }
@@ -960,7 +960,7 @@ static inline Vector4 operator-(const Vector4& v0, const Vector4& v1)
 /// <summary>
 /// 内積を計算。
 /// </summary>
-static inline float Dot(const Vector4& v0, const Vector4& v1)
+static inline float Dot(const CVector4& v0, const CVector4& v1)
 {
 	return v0.Dot(v1);
 }
@@ -969,11 +969,11 @@ static inline float Dot(const Vector4& v0, const Vector4& v1)
 /// <summary>
 /// クォータニオン同士の乗算。
 /// </summary>
-static inline Quaternion operator*(const Quaternion& q1, const Quaternion q2)
+static inline CQuaternion operator*(const CQuaternion& q1, const CQuaternion q2)
 {
-	Quaternion qRet;
+	CQuaternion qRet;
 	qRet.Multiply(q2, q1);
 	return qRet;
 }
 
-const Quaternion g_quatIdentity = { 0.0f,  0.0f, 0.0f, 1.0f };
+const CQuaternion g_quatIdentity = { 0.0f,  0.0f, 0.0f, 1.0f };

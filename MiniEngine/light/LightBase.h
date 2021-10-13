@@ -6,7 +6,7 @@ namespace nsMyGame {
 
 	namespace nsLight {
 
-		class CLightBase : public IGameObject
+		class CLightBase : public CIGameObject
 		{
 			bool Start();
 		public:

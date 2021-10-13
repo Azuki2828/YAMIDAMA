@@ -13,7 +13,7 @@ public:
 	/// </summary>
 	/// <param name="model"></param>
 	/// <param name="worldMatrix"></param>
-	void CreateFromModel( const Model& model, const Matrix& worldMatrix );
+	void CreateFromModel( const CModel& model, const CMatrix& worldMatrix );
 	/// <summary>
 	/// BulletPhysicsのコライダーの形状を取得。
 	/// </summary>
@@ -23,7 +23,7 @@ public:
 		return m_meshShape.get();
 	}
 private:
-	typedef std::vector<Vector3>		VertexBuffer;		//頂点バッファ。
+	typedef std::vector<CVector3>		VertexBuffer;		//頂点バッファ。
 	typedef std::vector<unsigned int>	IndexBuffer;		//インデックスバッファ。
 	typedef std::unique_ptr<VertexBuffer>	VertexBufferPtr;
 	typedef std::unique_ptr<IndexBuffer>	IndexBufferPtr;

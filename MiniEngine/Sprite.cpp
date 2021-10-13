@@ -5,15 +5,15 @@
 
 	namespace {
 		struct SSimpleVertex {
-			Vector4 pos;
-			Vector2 tex;
+			CVector4 pos;
+			CVector2 tex;
 		};
 	}
-	const Vector2	Sprite::DEFAULT_PIVOT = { 0.5f, 0.5f };
-	Sprite::~Sprite()
+	const CVector2	CSprite::DEFAULT_PIVOT = { 0.5f, 0.5f };
+	CSprite::~CSprite()
 	{
 	}
-	void Sprite::InitTextures(const SpriteInitData& initData)
+	void CSprite::InitTextures(const SpriteInitData& initData)
 	{
 		//スプライトで使用するテクスチャを準備する。
 		if (initData.m_ddsFilePath[0] != nullptr) {
@@ -42,7 +42,7 @@
 			std::abort();
 		}
 	}
-	void Sprite::InitShader(const SpriteInitData& initData)
+	void CSprite::InitShader(const SpriteInitData& initData)
 	{
 		if (initData.m_fxFilePath == nullptr) {
 			MessageBoxA(nullptr, "fxファイルが指定されていません。", "エラー", MB_OK);
@@ -54,7 +54,7 @@
 		m_vs.LoadVS(fxFilePath, initData.m_vsEntryPointFunc);
 		m_ps.LoadPS(fxFilePath, initData.m_psEntryPoinFunc);
 	}
-	void Sprite::InitDescriptorHeap(const SpriteInitData& initData)
+	void CSprite::InitDescriptorHeap(const SpriteInitData& initData)
 	{
 		if (m_textureExternal[0] != nullptr) {
 			//外部のテクスチャが指定されている。
@@ -81,7 +81,7 @@
 		}
 		m_descriptorHeap.Commit();
 	}
-	void Sprite::InitVertexBufferAndIndexBuffer(const SpriteInitData& initData)
+	void CSprite::InitVertexBufferAndIndexBuffer(const SpriteInitData& initData)
 	{
 		float halfW = m_size.x * 0.5f;
 		float halfH = m_size.y * 0.5f;
@@ -89,20 +89,20 @@
 		SSimpleVertex vertices[] =
 		{
 			{
-				Vector4(-halfW, -halfH, 0.0f, 1.0f),
-				Vector2(0.0f, 1.0f),
+				CVector4(-halfW, -halfH, 0.0f, 1.0f),
+				CVector2(0.0f, 1.0f),
 			},
 			{
-				Vector4(halfW, -halfH, 0.0f, 1.0f),
-				Vector2(1.0f, 1.0f),
+				CVector4(halfW, -halfH, 0.0f, 1.0f),
+				CVector2(1.0f, 1.0f),
 			},
 			{
-				Vector4(-halfW, halfH, 0.0f, 1.0f),
-				Vector2(0.0f, 0.0f)
+				CVector4(-halfW, halfH, 0.0f, 1.0f),
+				CVector2(0.0f, 0.0f)
 			},
 			{
-				Vector4(halfW, halfH, 0.0f, 1.0f),
-				Vector2(1.0f, 0.0f)
+				CVector4(halfW, halfH, 0.0f, 1.0f),
+				CVector2(1.0f, 0.0f)
 			}
 
 		};
@@ -114,7 +114,7 @@
 		m_indexBuffer.Init(sizeof(indices), sizeof(indices[0]));
 		m_indexBuffer.Copy(indices);
 	}
-	void Sprite::InitPipelineState(const SpriteInitData& initData)
+	void CSprite::InitPipelineState(const SpriteInitData& initData)
 	{
 		// 頂点レイアウトを定義する。
 		D3D12_INPUT_ELEMENT_DESC inputElementDescs[] =
@@ -161,7 +161,7 @@
 		psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
 		m_pipelineState.Init(psoDesc);
 	}
-	void Sprite::InitConstantBuffer(const SpriteInitData& initData)
+	void CSprite::InitConstantBuffer(const SpriteInitData& initData)
 	{
 		//定数バッファの初期化。
 		m_constantBufferGPU.Init(sizeof(m_constantBufferCPU), nullptr);
@@ -174,7 +174,7 @@
 			);
 		}
 	}
-	void Sprite::Init(const SpriteInitData& initData)
+	void CSprite::Init(const SpriteInitData& initData)
 	{
 		m_size.x = static_cast<float>(initData.m_width);
 		m_size.y = static_cast<float>(initData.m_height);
@@ -202,7 +202,7 @@
 
 		m_isInited = true;
 	}
-	void Sprite::Update(const Vector3& pos, const Quaternion& rot, const Vector3& scale, const Vector2& pivot)
+	void CSprite::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& scale, const CVector2& pivot)
 	{
 		if (m_isInited == false) {
 			//未初期化
@@ -210,21 +210,21 @@
 		}
 		//ピボットを考慮に入れた平行移動行列を作成。
 		//ピボットは真ん中が0.0, 0.0、左上が-1.0f, -1.0、右下が1.0、1.0になるようにする。
-		Vector2 localPivot = pivot;
+		CVector2 localPivot = pivot;
 		localPivot.x -= 0.5f;
 		localPivot.y -= 0.5f;
 		localPivot.x *= -2.0f;
 		localPivot.y *= -2.0f;
 		//画像のハーフサイズを求める。
-		Vector2 halfSize = m_size;
+		CVector2 halfSize = m_size;
 		halfSize.x *= 0.5f;
 		halfSize.y *= 0.5f;
-		Matrix mPivotTrans;
+		CMatrix mPivotTrans;
 
 		mPivotTrans.MakeTranslation(
 			{ halfSize.x * localPivot.x, halfSize.y * localPivot.y, 0.0f }
 		);
-		Matrix mTrans, mRot, mScale;
+		CMatrix mTrans, mRot, mScale;
 		mTrans.MakeTranslation(pos);
 		mRot.MakeRotationFromQuaternion(rot);
 		mScale.MakeScaling(scale);
@@ -232,7 +232,7 @@
 		m_world = m_world * mRot;
 		m_world = m_world * mTrans;
 	}
-	void Sprite::Draw(RenderContext& renderContext)
+	void CSprite::Draw(CRenderContext& renderContext)
 	{
 		if (m_isInited == false) {
 			//未初期化。
@@ -241,8 +241,8 @@
 		//現在のビューポートから平行投影行列を計算する。
         D3D12_VIEWPORT viewport = renderContext.GetViewport();
         //todo カメラ行列は定数に使用。どうせ変えないし・・・。
-        Matrix viewMatrix = g_camera2D->GetViewMatrix();
-        Matrix projMatrix;
+        CMatrix viewMatrix = g_camera2D->GetViewMatrix();
+        CMatrix projMatrix;
         projMatrix.MakeOrthoProjectionMatrix(viewport.Width, viewport.Height, 0.1f, 1.0f);
 
 		m_constantBufferCPU.mvp = m_world * viewMatrix * projMatrix;

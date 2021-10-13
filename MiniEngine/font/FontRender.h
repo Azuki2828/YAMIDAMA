@@ -6,7 +6,7 @@ namespace nsMyGame {
 
 	namespace nsFont {
 
-		class CFontRender : public IGameObject
+		class CFontRender : public CIGameObject
 		{
 		public:
 			/**
@@ -14,11 +14,11 @@ namespace nsMyGame {
 			*/
 			struct FontValue {
 				wchar_t text[c_maxTextSize];	//テキスト
-				Vector2 position = Vector2::Zero;	//座標
-				Vector4 color = Vector4::White;		//色
+				CVector2 position = CVector2::Zero;	//座標
+				CVector4 color = CVector4::White;		//色
 				float rotation = 0.0f;		//回転
 				float scale = 1.0f;		//拡大率
-				Vector2 pivot = Vector2::Half;		//ピボット
+				CVector2 pivot = CVector2::Half;		//ピボット
 			};
 
 			/**
@@ -34,7 +34,7 @@ namespace nsMyGame {
 			 * @brief 座標を設定する関数
 			 * @param pos 座標
 			*/
-			void SetPosition(const Vector2& pos) {
+			void SetPosition(const CVector2& pos) {
 				m_fontValue.position = pos;
 			}
 
@@ -50,7 +50,7 @@ namespace nsMyGame {
 			 * @brief フォントの色を設定する関数
 			 * @param col 色
 			*/
-			void SetColor(const Vector4& col) {
+			void SetColor(const CVector4& col) {
 				m_fontValue.color = col;
 			}
 
@@ -58,7 +58,7 @@ namespace nsMyGame {
 			 * @brief ピボットを設定する関数
 			 * @param piv ピボット
 			*/
-			void SetPivot(const Vector2& piv) {
+			void SetPivot(const CVector2& piv) {
 				m_fontValue.pivot = piv;
 			}
 
@@ -73,11 +73,11 @@ namespace nsMyGame {
 			*/
 			void Init(
 				const wchar_t* text,
-				const Vector2& position = Vector2::Zero,
-				const Vector4& color = Vector4::Black,
+				const CVector2& position = CVector2::Zero,
+				const CVector4& color = CVector4::Black,
 				const float rotation = 0.0f,
 				const float scale = 1.0f,
-				const Vector2& pivot = { 0.5f,0.5f }
+				const CVector2& pivot = { 0.5f,0.5f }
 			);
 
 			/**
@@ -86,7 +86,7 @@ namespace nsMyGame {
 			 * @param shadowOffset 枠の影の太さ
 			 * @param shadowColor 枠の影の色
 			*/
-			void SetShadowParam(bool isDrawShadow, float shadowOffset, const Vector4& shadowColor)
+			void SetShadowParam(bool isDrawShadow, float shadowOffset, const CVector4& shadowColor)
 			{
 				m_font.SetShadowParam(isDrawShadow, shadowOffset, shadowColor);
 			}
@@ -95,10 +95,10 @@ namespace nsMyGame {
 			 * @brief 描画関数
 			 * @param rc レンダーコンテキスト
 			*/
-			void Render(RenderContext& rc)override final;
+			void Render(CRenderContext& rc)override final;
 
 		private:
-			Font m_font;			//フォント
+			CFont m_font;			//フォント
 			FontValue m_fontValue;	//フォントのデータ
 		};
 	}

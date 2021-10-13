@@ -7,7 +7,7 @@
 #include "tkFile/TkmFile.h"
 #include "StructuredBuffer.h"
 
-class RenderContext;
+class CRenderContext;
 class Skeleton;
 class Material;
 class IShaderResource;
@@ -41,7 +41,7 @@ public:
 	/// <param name="vsSkinEntryPointFunc">スキンありマテリアル用の頂点シェーダーのエントリーポイントの関数名</param>
 	/// <param name="psEntryPointFunc">ピクセルシェーダーのエントリーポイントの関数名</param>
 	void InitFromTkmFile(
-		const TkmFile& tkmFile,
+		const CTkmFile& tkmFile,
 		const wchar_t* fxFilePath,
 		const char* vsEntryPointFunc,
 		const char* vsSkinEntryPointFunc,
@@ -58,7 +58,7 @@ public:
 	/// <param name="mView">ビュー行列</param>
 	/// <param name="mProj">プロジェクション行列</param>
 	/// <param name="light">ライト</param>
-	void Draw(RenderContext& rc, const Matrix& mWorld, const Matrix& mView, const Matrix& mProj);
+	void Draw(CRenderContext& rc, const CMatrix& mWorld, const CMatrix& mView, const CMatrix& mProj);
 	/// <summary>
 	/// スケルトンを関連付ける。
 	/// </summary>
@@ -95,7 +95,7 @@ private:
 	/// <param name="vsSkinEntryPointFunc">スキンありマテリアル用の頂点シェーダーのエントリーポイントの関数名</param>
 	/// <param name="psEntryPointFunc">ピクセルシェーダーのエントリーポイントの関数名</param>
 	void CreateMeshFromTkmMesh(
-		const TkmFile::SMesh& mesh, 
+		const CTkmFile::SMesh& mesh, 
 		int meshNo,
 		const wchar_t* fxFilePath,
 		const char* vsEntryPointFunc,
@@ -113,9 +113,9 @@ private:
 	/// この構造体を変更したら、SimpleModel.fxのCBも変更するように。
 	/// </remarks>
 	struct SConstantBuffer {
-		Matrix mWorld;		//ワールド行列。
-		Matrix mView;		//ビュー行列。
-		Matrix mProj;		//プロジェクション行列。
+		CMatrix mWorld;		//ワールド行列。
+		CMatrix mView;		//ビュー行列。
+		CMatrix mProj;		//プロジェクション行列。
 	};
 	ConstantBuffer m_commonConstantBuffer;					//メッシュ共通の定数バッファ。
 	ConstantBuffer m_expandConstantBuffer;					//ユーザー拡張用の定数バッファ

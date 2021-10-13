@@ -8,13 +8,13 @@ namespace nsMyGame {
 
 	namespace nsFont {
 
-		FontEngine::~FontEngine()
+		CFontEngine::~CFontEngine()
 		{
 			if (m_srvDescriptorHeap != nullptr) {
 				m_srvDescriptorHeap->Release();
 			}
 		}
-		void FontEngine::Init()
+		void CFontEngine::Init()
 		{
 			auto d3dDevice = g_graphicsEngine->GetD3DDevice();
 
@@ -62,7 +62,7 @@ namespace nsMyGame {
 			re.End(g_graphicsEngine->GetCommandQueue());
 		}
 
-		void FontEngine::BeginDraw(RenderContext& rc)
+		void CFontEngine::BeginDraw(CRenderContext& rc)
 		{
 			auto commandList = g_graphicsEngine->GetCommandList();
 			auto d3dDevice = g_graphicsEngine->GetD3DDevice();
@@ -73,18 +73,18 @@ namespace nsMyGame {
 			);
 			commandList->SetDescriptorHeaps(1, &m_srvDescriptorHeap);
 		}
-		void FontEngine::EndDraw(RenderContext& rc)
+		void CFontEngine::EndDraw(CRenderContext& rc)
 		{
 			m_spriteBatch->End();
 		}
 
-		void FontEngine::Draw(
+		void CFontEngine::Draw(
 			const wchar_t* text,
-			const Vector2& position,
-			const Vector4& color,
+			const CVector2& position,
+			const CVector4& color,
 			float rotation,
 			float scale,
-			Vector2 pivot
+			CVector2 pivot
 		)
 		{
 			m_spriteFont->DrawString(

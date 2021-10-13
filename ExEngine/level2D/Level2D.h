@@ -8,9 +8,9 @@ struct CaslData;
 /// 2Dのレベルデータ。
 /// </summary>
 struct Level2DObjectData {
-	Vector3 position = Vector3::Zero;		//座標。
-	Quaternion rotation = Quaternion::Identity;	//回転。
-	Vector3 scale = Vector3::One;			//拡大率。
+	CVector3 position = CVector3::Zero;		//座標。
+	CQuaternion rotation = CQuaternion::Identity;	//回転。
+	CVector3 scale = CVector3::One;			//拡大率。
 	int width = 0;		//横幅。
 	int height = 0;		//縦幅。
 	const char* name;	//名前。
@@ -61,7 +61,7 @@ public:
 	/// マップチップ2Dの描画処理。
 	/// </summary>
 	/// <param name="renderContext">レンダーコンテキスト。</param>
-	void Draw(RenderContext& renderContext) const;
+	void Draw(CRenderContext& renderContext) const;
 private:
 	/// <summary>
 	/// マップチップ2Dを追加する。

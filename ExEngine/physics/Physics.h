@@ -29,12 +29,12 @@ public:
 	}
 	
 	void Update(float deltaTime);
-	void DebubDrawWorld(RenderContext& rc);
+	void DebubDrawWorld(CRenderContext& rc);
 	void Release();
 	/*!
 	* @brief	d—Í‚ðÝ’èBB
 	*/
-	void SetGravity(Vector3 g)
+	void SetGravity(CVector3 g)
 	{
 		m_dynamicWorld->setGravity(btVector3(g.x, g.y, g.z));
 	}

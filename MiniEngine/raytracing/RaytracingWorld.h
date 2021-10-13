@@ -5,8 +5,8 @@
 #include "TLASBuffer.h"
 #include "BLASBuffer.h"
 
-class Model;
-class RenderContext;
+class CModel;
+class CRenderContext;
 
 namespace raytracing {
 
@@ -20,11 +20,11 @@ namespace raytracing {
 		/// ジオメトリを登録。
 		/// </summary>
 		/// <param name="model">モデル</param>
-		void RegistGeometry(Model& model);
+		void RegistGeometry(CModel& model);
 		/// <summary>
 		/// ジオメトリの登録を確定。
 		/// </summary>
-		void CommitRegistGeometry(RenderContext& rc);
+		void CommitRegistGeometry(CRenderContext& rc);
 		/// <summary>
 		/// レイトレワールドのインスタンスに対してクエリを行う。
 		/// </summary>
@@ -64,8 +64,8 @@ namespace raytracing {
 		/// カメラ
 		/// </summary>
 		struct Camera {
-			Matrix mRot;	//回転行列
-			Vector3 pos;	//視点。
+			CMatrix mRot;	//回転行列
+			CVector3 pos;	//視点。
 			float aspect;	//アスペクト比。
 			float fFar;		//遠平面。
 			float fNear;	//近平面。

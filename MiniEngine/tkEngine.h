@@ -3,7 +3,7 @@
 #include "HID/GamePad.h"
 #include "../MiniEngine/GameTime.h"
 
-class GraphicsEngine;
+class CGraphicsEngine;
 
 class TkEngine {
 public:
@@ -24,7 +24,7 @@ public:
 	/// </summary>
 	void Init(HWND hwnd, UINT frameBufferWidth, UINT frameBufferHeight);
 private:
-	GraphicsEngine* m_graphicsEngine = nullptr;		//グラフィックエンジン。
+	CGraphicsEngine* m_graphicsEngine = nullptr;		//グラフィックエンジン。
 	GamePad m_pad[GamePad::CONNECT_PAD_MAX];		//ゲームパッド。
 	GameTime m_gameTime;							//ゲームタイム。
 	

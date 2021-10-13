@@ -3,9 +3,9 @@
 class ICollider;
 //剛体初期化情報。
 struct RigidBodyInitData {
-	Vector3 pos;					//座標。
-	Quaternion rot;					//回転。
-	Vector3 localInteria;			//慣性テンソル。回転のしやすさ的なもの。
+	CVector3 pos;					//座標。
+	CQuaternion rot;					//回転。
+	CVector3 localInteria;			//慣性テンソル。回転のしやすさ的なもの。
 	ICollider* collider = nullptr;	//コライダー。
 	float mass = 0;					//質量。
 
@@ -35,7 +35,7 @@ public:
 	*@param[out]	pos			座標。
 	*@param[out]	rot			回転。
 	*/
-	void GetPositionAndRotation(Vector3& pos, Quaternion& rot) const
+	void GetPositionAndRotation(CVector3& pos, CQuaternion& rot) const
 	{
 		btTransform trans;
 		m_myMotionState->getWorldTransform(trans);
@@ -49,7 +49,7 @@ public:
 	*@param[in]	pos			座標。
 	*@param[in]	rot			回転。
 	*/
-	void SetPositionAndRotation(const Vector3& pos, const Quaternion& rot)
+	void SetPositionAndRotation(const CVector3& pos, const CQuaternion& rot)
 	{
 		btTransform trans;
 		btVector3 btPos;
@@ -67,7 +67,7 @@ public:
 	*@param[out]	force		力。
 	*@param[out]	relPos		力を加える座標。
 	*/
-	void AddForce(const Vector3& force, const Vector3& relPos)
+	void AddForce(const CVector3& force, const CVector3& relPos)
 	{
 		btVector3 btForce;
 		btVector3 btRelPos;
@@ -80,7 +80,7 @@ public:
 	/// 速度を設定。
 	/// </summary>
 	/// <param name="vel"></param>
-	void SetLinearVelocity(const Vector3& vel)
+	void SetLinearVelocity(const CVector3& vel)
 	{
 		btVector3 btVel;
 		btVel.setValue(vel.x, vel.y, vel.z);
@@ -91,10 +91,10 @@ public:
 	/// 現在の速度を取得。
 	/// </summary>
 	/// <returns></returns>
-	Vector3 GetLinearVelocity() const
+	CVector3 GetLinearVelocity() const
 	{
 		auto& btVel = m_rigidBody->getLinearVelocity();
-		Vector3 vel;
+		CVector3 vel;
 		vel.Set(btVel.x(), btVel.y(), btVel.z());
 		return vel;
 	}
@@ -113,10 +113,10 @@ public:
 	/// <param name="linearFactor"></param>
 	void SetLinearFactor(float x, float y, float z)
 	{
-		Vector3 v = { x, y, z };
+		CVector3 v = { x, y, z };
 		SetLinearFactor(v);
 	}
-	void SetLinearFactor(Vector3& linearFactor)
+	void SetLinearFactor(CVector3& linearFactor)
 	{
 		btVector3 v;
 		v.setValue(linearFactor.x, linearFactor.y, linearFactor.z);
@@ -126,7 +126,7 @@ public:
 	/// 角速度を設定する
 	/// </summary>
 	/// <param name="vel"></param>
-	void SetAngularVelocity(Vector3 vel)
+	void SetAngularVelocity(CVector3 vel)
 	{
 		btVector3 v;
 		v.setValue(vel.x, vel.y, vel.z);
@@ -137,7 +137,7 @@ public:
 	/// 回転可能な軸を設定する。
 	/// </summary>
 	/// <param name="angluarFactor"></param>
-	void SetAngularFactor(Vector3 angluarFactor)
+	void SetAngularFactor(CVector3 angluarFactor)
 	{
 		btVector3 v;
 		v.setValue(angluarFactor.x, angluarFactor.y, angluarFactor.z);

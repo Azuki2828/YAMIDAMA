@@ -25,7 +25,7 @@ namespace nsMyGame {
 			 * @brief 描画関数。
 			 * @param rc レンダーコンテキスト
 			*/
-			void OnRender(RenderContext& rc);
+			void OnRender(CRenderContext& rc);
 
 			/**
 			 * @brief FXAA後のテクスチャを取得する関数。
@@ -46,9 +46,9 @@ namespace nsMyGame {
 			}
 
 		private:
-			RenderTarget m_fxaaRT;		//FXAA用のレンダリングターゲット
+			CRenderTarget m_fxaaRT;		//FXAA用のレンダリングターゲット
 			SFXAABuffer m_buffer;		//FXAA用の構造体バッファ
-			Sprite m_finalSprite;		//最終スプライト
+			CSprite m_finalSprite;		//最終スプライト
 		};
 	}
 }

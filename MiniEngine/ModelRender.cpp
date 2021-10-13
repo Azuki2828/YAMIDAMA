@@ -24,7 +24,7 @@ namespace nsMyGame {
 		m_modelInitData.m_expandConstantBufferSize = sizeof(m_sModelData);
 
 		//レジスタのt10にシャドウマップを設定。
-		m_modelInitData.m_expandShaderResoruceView = &RenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
+		m_modelInitData.m_expandShaderResoruceView = &CRenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
 
 		//スケルトンを設定。
 		if (m_skeleton.IsInited()) {
@@ -108,17 +108,17 @@ namespace nsMyGame {
 		);
 	}
 
-	void CModelRender::Render(RenderContext& rc) {
+	void CModelRender::Render(CRenderContext& rc) {
 
 		//描画モードに応じて描画するモデルを変える。
 		switch (rc.GetRenderMode()) {
-		case RenderContext::EnRender_Mode::enRenderMode_Normal:
+		case CRenderContext::EnRender_Mode::enRenderMode_Normal:
 			//モデルを描画。
 			m_model.Draw(rc);
 			break;
-		case RenderContext::EnRender_Mode::enRenderMode_Shadow:
+		case CRenderContext::EnRender_Mode::enRenderMode_Shadow:
 			//シャドウモデルを描画。
-			m_shadowModel.Draw(rc, *Camera::GetLightCamera());
+			m_shadowModel.Draw(rc, *CCamera::GetLightCamera());
 			break;
 		}
 	}

@@ -2,7 +2,7 @@
 
 namespace nsMyGame {
 
-	class CBackGround : public IGameObject
+	class CBackGround : public CIGameObject
 	{
 	public:
 		bool Start()override final;
@@ -12,9 +12,9 @@ namespace nsMyGame {
 		CModelRender* m_modelRender = nullptr;
 		CModelRender* m_wall = nullptr;
 
-		Vector3 m_pos = Vector3::Zero;
-		Quaternion m_rot = Quaternion::Identity;
-		Vector3 m_sca = Vector3::One;
+		CVector3 m_pos = CVector3::Zero;
+		CQuaternion m_rot = CQuaternion::Identity;
+		CVector3 m_sca = CVector3::One;
 	};
 }
 

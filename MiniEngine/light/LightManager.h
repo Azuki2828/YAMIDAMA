@@ -8,9 +8,9 @@ namespace nsMyGame {
 		struct LigData {
 			DirectionLigData directionLigData[c_maxDirectionLightNum];		//ディレクションライトのデータ
 			PointLigData pointLigData[c_maxPointLightNum];					//ポイントライトのデータ
-			Vector3 eyePos = Vector3::Zero;								//視点の座標
+			CVector3 eyePos = CVector3::Zero;								//視点の座標
 			int pointLightNum = 0;										//ポイントライトの総数
-			Matrix m_viewProj;											//プロジェクション行列
+			CMatrix m_viewProj;											//プロジェクション行列
 		};
 
 		//ライト管理クラス

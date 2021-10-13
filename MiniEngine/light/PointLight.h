@@ -7,11 +7,11 @@ namespace nsMyGame {
 
 		//ポイントライトのデータ
 		struct PointLigData {
-			Vector3 pos = Vector3::Zero;		//座標
+			CVector3 pos = CVector3::Zero;		//座標
 			float pad1;							//パディング
-			Vector4 color = Vector4::White;		//カラー
-			Vector2 attn;						// 減衰パラメータ。xに影響範囲、yには影響率に累乗するパラメータ
-			Vector2 pad2;						//パディング
+			CVector4 color = CVector4::White;		//カラー
+			CVector2 attn;						// 減衰パラメータ。xに影響範囲、yには影響率に累乗するパラメータ
+			CVector2 pad2;						//パディング
 		};
 
 		//点光源クラス
@@ -28,7 +28,7 @@ namespace nsMyGame {
 			 * @brief 座標を設定する関数。
 			 * @param pos 座標
 			*/
-			void SetPosition(const Vector3& pos) {
+			void SetPosition(const CVector3& pos) {
 				m_poiLigData.pos = pos;
 			}
 
@@ -36,7 +36,7 @@ namespace nsMyGame {
 			 * @brief 座標を取得する関数。
 			 * @return 座標
 			*/
-			const Vector3 GetPosition()const {
+			const CVector3 GetPosition()const {
 
 				return m_poiLigData.pos;
 			}
@@ -45,7 +45,7 @@ namespace nsMyGame {
 			 * @brief カラーを設定する関数。
 			 * @param color カラー
 			*/
-			void SetColor(const Vector3& color) {
+			void SetColor(const CVector3& color) {
 
 				m_poiLigData.color.x = color.x;
 				m_poiLigData.color.y = color.y;
@@ -67,7 +67,7 @@ namespace nsMyGame {
 			 * @brief カラーを取得する関数。
 			 * @return カラー
 			*/
-			const Vector4& GetColor()const {
+			const CVector4& GetColor()const {
 
 				return m_poiLigData.color;
 			}

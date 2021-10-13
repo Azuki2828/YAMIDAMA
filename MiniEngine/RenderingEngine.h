@@ -56,52 +56,52 @@ namespace nsMyGame {
 		 * @brief シャドウマップを描画する関数。
 		 * @param rc レンダーコンテキスト。
 		*/
-		void DrawShadowMap(RenderContext& rc);
+		void DrawShadowMap(CRenderContext& rc);
 
 
 		/**
 		 * @brief スプライトを描画する関数。
 		 * @param rc レンダーコンテキスト
 		*/
-		void RenderSprite(RenderContext& rc);
+		void RenderSprite(CRenderContext& rc);
 
 		/**
 		 * @brief フォントを描画する関数。
 		 * @param rc レンダーコンテキスト。
 		*/
-		void DrawFont(RenderContext& rc);
+		void DrawFont(CRenderContext& rc);
 
 		/**
 		 * @brief ディファードレンダリングを実行する関数。
 		 * @param rc レンダーコンテキスト。
 		*/
-		void ExecuteDeferredRendering(RenderContext& rc);
+		void ExecuteDeferredRendering(CRenderContext& rc);
 
 		/**
 		 * @brief ディファードライティングを実行する関数。
 		 * @param rc レンダーコンテキスト。
 		*/
-		void ExecuteDeferredLighting(RenderContext& rc);
+		void ExecuteDeferredLighting(CRenderContext& rc);
 
 		/**
 		 * @brief フレームバッファ用に、メインレンダリングターゲットの内容をコピーする関数。
 		 * @param rc レンダーコンテキスト。
 		*/
-		void SnapShotMainRenderTarget(RenderContext& rc);
+		void SnapShotMainRenderTarget(CRenderContext& rc);
 
 
 		/**
 		 * @brief フレームバッファにスプライトをコピーする関数。
 		 * @param rc レンダーコンテキスト。
 		*/
-		void CopyToFrameBuffer(RenderContext& rc);
+		void CopyToFrameBuffer(CRenderContext& rc);
 
 	private:
 		static CRenderingEngine* m_renderingEngine;	//レンダリングエンジンのインスタンス
-		RenderTarget m_snapShotMainRT;				//メインレンダリングターゲットのスナップショットを取るためのレンダリングターゲット
+		CRenderTarget m_snapShotMainRT;				//メインレンダリングターゲットのスナップショットを取るためのレンダリングターゲット
 		nsPostEffect::CPostEffect m_postEffect;		//ポストエフェクト
-		Sprite m_copyToMainRenderTargetSprite;		//メインレンダリングターゲットのスプライト
-		Sprite m_deferredRenderingSprite;			//ディファードライティング用のスプライト
+		CSprite m_copyToMainRenderTargetSprite;		//メインレンダリングターゲットのスプライト
+		CSprite m_deferredRenderingSprite;			//ディファードライティング用のスプライト
 	};
 }
 

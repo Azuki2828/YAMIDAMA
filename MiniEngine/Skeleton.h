@@ -17,8 +17,8 @@ public:
 	/// <param name="boneId">ボーン番号</param>
 	Bone(
 		const wchar_t* boneName,
-		const Matrix& bindPose,
-		const Matrix& invBindPose,
+		const CMatrix& bindPose,
+		const CMatrix& invBindPose,
 		int parentBoneNo,
 		int boneId
 	) :
@@ -33,42 +33,42 @@ public:
 	/// <summary>
 	/// ローカル行列(親の座標系での行列)を設定。
 	/// </summary>
-	void SetLocalMatrix(const Matrix& m)
+	void SetLocalMatrix(const CMatrix& m)
 	{
 		m_localMatrix = m;
 	}
 	/// <summary>
 	/// ローカル行列(親の座標系での行列)を取得。
 	/// </summary>
-	const Matrix& GetLocalMatrix() const
+	const CMatrix& GetLocalMatrix() const
 	{
 		return m_localMatrix;
 	}
 	/// <summary>
 	/// ワールド行列を設定。
 	/// </summary>
-	void SetWorldMatrix(const Matrix& m)
+	void SetWorldMatrix(const CMatrix& m)
 	{
 		m_worldMatrix = m;
 	}
 	/// <summary>
 	/// ワールド行列を取得。
 	/// </summary>
-	const Matrix& GetWorldMatrix() const
+	const CMatrix& GetWorldMatrix() const
 	{
 		return m_worldMatrix;
 	}
 	/// <summary>
 	/// バインドポーズの行列を取得。
 	/// </summary>
-	const Matrix& GetBindPoseMatrix() const
+	const CMatrix& GetBindPoseMatrix() const
 	{
 		return m_bindPose;
 	}
 	/// <summary>
 	/// バインドポーズの逆行列を取得。
 	/// </summary>
-	const Matrix& GetInvBindPoseMatrix() const
+	const CMatrix& GetInvBindPoseMatrix() const
 	{
 		return m_invBindPose;
 	}
@@ -103,7 +103,7 @@ public:
 	{
 		return m_children;
 	}
-	const Matrix& GetOffsetLocalMatrix() const
+	const CMatrix& GetOffsetLocalMatrix() const
 	{
 		return m_offsetLocalMatrix;
 	}
@@ -120,21 +120,21 @@ public:
 	*@param[out]	rot			回転量の格納先。
 	*@param[out]	scale		拡大率の格納先。
 	*/
-	void CalcWorldTRS(Vector3& trans, Quaternion& rot, Vector3& scale);
+	void CalcWorldTRS(CVector3& trans, CQuaternion& rot, CVector3& scale);
 		
 private:
 	
 	std::wstring	m_boneName;
 	int				m_parentBoneNo = -1;	//親のボーン番号。
 	int				m_boneId = -1;			//ボーン番号。
-	Matrix			m_bindPose;				//バインドポーズ。
-	Matrix			m_invBindPose;			//バインドポーズの逆行列。
-	Matrix			m_localMatrix;			//ローカル行列。
-	Matrix			m_worldMatrix;			//ワールド行列。
-	Matrix			m_offsetLocalMatrix;
-	Vector3			m_positoin;				//このボーンのワールド空間での位置。最後にCalcWorldTRSを実行したときの結果が格納されている。
-	Vector3			m_scale;				//このボーンの拡大率。最後にCalcWorldTRSを実行したときの結果が格納されている。
-	Quaternion		m_rotation;				//このボーンの回転。最後にCalcWorldTRSを実行したときの結果が格納されている。
+	CMatrix			m_bindPose;				//バインドポーズ。
+	CMatrix			m_invBindPose;			//バインドポーズの逆行列。
+	CMatrix			m_localMatrix;			//ローカル行列。
+	CMatrix			m_worldMatrix;			//ワールド行列。
+	CMatrix			m_offsetLocalMatrix;
+	CVector3			m_positoin;				//このボーンのワールド空間での位置。最後にCalcWorldTRSを実行したときの結果が格納されている。
+	CVector3			m_scale;				//このボーンの拡大率。最後にCalcWorldTRSを実行したときの結果が格納されている。
+	CQuaternion		m_rotation;				//このボーンの回転。最後にCalcWorldTRSを実行したときの結果が格納されている。
 	std::list<Bone*>	m_children;			//子供のリスト。
 };
 
@@ -153,7 +153,7 @@ public:
 	/// </summary>
 	/// <param name="boneNo">ボーン番号</param>
 	/// <param name="m">行列</param>
-	void SetBoneLocalMatrix(int boneNo, const Matrix& m)
+	void SetBoneLocalMatrix(int boneNo, const CMatrix& m)
 	{
 		if (boneNo > (int)m_bones.size() - 1) {
 			MessageBoxA(nullptr, "boneNo is over m_bones.size() ", "error", MB_OK);
@@ -218,7 +218,7 @@ public:
 	/// ボーン行列の先頭アドレスを取得。
 	/// </summary>
 	/// <returns></returns>
-	Matrix* GetBoneMatricesTopAddress() const
+	CMatrix* GetBoneMatricesTopAddress() const
 	{
 		return m_boneMatrixs.get();
 	}
@@ -236,7 +236,7 @@ public:
 	/// 更新。
 	/// </summary>
 	/// <param name="mWorld"></param>
-	void Update(const Matrix& mWorld);
+	void Update(const CMatrix& mWorld);
 	
 	/// <summary>
 	/// ボーンのワールド行列の更新関数。
@@ -246,14 +246,14 @@ public:
 	/// </remarks>
 	/// <param name="bone">更新するボーン。</param>
 	/// <param name="parentMatrix">親のボーンのワールド行列。</param>
-	static 	void UpdateBoneWorldMatrix(Bone& bone, const Matrix& parentMatrix);
+	static 	void UpdateBoneWorldMatrix(Bone& bone, const CMatrix& parentMatrix);
 
 private:
-	TksFile m_tksFile;										//TKSファイル。
+	CTksFile m_tksFile;										//TKSファイル。
 	static const int BONE_MAX = 512;				//ボーンの最大数。
 	using BonePtr = std::unique_ptr<Bone>;
 	std::vector<BonePtr>	m_bones;				//ボーンの配列。
-	std::unique_ptr<Matrix[]>	m_boneMatrixs;	//ボーン行列。
+	std::unique_ptr<CMatrix[]>	m_boneMatrixs;	//ボーン行列。
 	bool m_isInited = false;								//初期化済み？
 	bool m_isPlayAnimation = false;					//アニメーションが流し込まれている？
 };

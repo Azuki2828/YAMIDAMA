@@ -63,7 +63,7 @@ void Level2D::Update() const
 	}
 }
 
-void Level2D::Draw(RenderContext& renderContext) const
+void Level2D::Draw(CRenderContext& renderContext) const
 {
 	for (auto& mapChip : m_mapChip2DPtrList)
 	{

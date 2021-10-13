@@ -59,7 +59,7 @@ namespace raytracing {
 
 	}
 
-	void Engine::Dispatch(RenderContext& rc)
+	void Engine::Dispatch(CRenderContext& rc)
 	{
 		//ƒJƒŠƒJƒŠ
 		Camera cam;
@@ -131,7 +131,7 @@ namespace raytracing {
 
 	}
 
-	void Engine::CommitRegistGeometry(RenderContext& rc)
+	void Engine::CommitRegistGeometry(CRenderContext& rc)
 	{
 		g_graphicsEngine->BeginRender();
 		m_world.CommitRegistGeometry(rc);

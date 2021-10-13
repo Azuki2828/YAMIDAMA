@@ -1,5 +1,5 @@
 #pragma once
-class CEnemy : public IGameObject
+class CEnemy : public CIGameObject
 {
 private:
 	/**
@@ -30,7 +30,7 @@ public:
 	void CallTest() {
 		MessageBox(nullptr, L"Success Connect to Class Function!!", L"’Ê’m", MB_OK);
 	}
-	void Render(RenderContext& rc);
+	void Render(CRenderContext& rc);
 private:
 	enState m_state = enState::enState_Idle;
 	pybind11::module m_enemyPyModule;

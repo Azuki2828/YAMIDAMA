@@ -3,7 +3,7 @@
 class ConstantBuffer;
 class Texture;
 class DescriptorHeap;
-class RenderTarget;
+class CRenderTarget;
 
 namespace raytracing{
 	class PSO;
@@ -11,7 +11,7 @@ namespace raytracing{
 /// <summary>
 /// レンダリングコンテキスト。
 /// </summary>
-class RenderContext {
+class CRenderContext {
 public:
 
 	//描画モード
@@ -208,7 +208,7 @@ public:
 	/// </remarks>
 	/// <param name="numRT">レンダリングターゲットの数</param>
 	/// <param name="renderTarget">レンダリングターゲットの配列。</param>
-	void SetRenderTargets(UINT numRT, RenderTarget* renderTargets[]);
+	void SetRenderTargets(UINT numRT, CRenderTarget* renderTargets[]);
 	/// <summary>
 	/// レンダリングターゲットを設定する。
 	/// </summary>
@@ -225,9 +225,9 @@ public:
 	/// ユーザー側で適切なビューポートを指定する必要があります。
 	/// </remarks>
 	/// <param name="renderTarget">レンダリングターゲット</param>
-	void SetRenderTarget(RenderTarget& renderTarget) 
+	void SetRenderTarget(CRenderTarget& renderTarget) 
 	{
-		RenderTarget* rtArray[] = { &renderTarget };
+		CRenderTarget* rtArray[] = { &renderTarget };
 		SetRenderTargets(1, rtArray);
 	}
 
@@ -238,7 +238,7 @@ public:
 	/// この関数を利用するとレンダリングターゲットと同じ幅と高さのビューポートが設定されます。
 	/// </remarks>
 	/// <param name="renderTarget">レンダリングターゲット</param>
-	void SetRenderTargetAndViewport(RenderTarget& renderTarget);
+	void SetRenderTargetAndViewport(CRenderTarget& renderTarget);
 	/// <summary>
 	/// 複数枚のレンダリングターゲットとビューポートを同時に設定する。
 	/// </summary>
@@ -247,7 +247,7 @@ public:
 	/// </remarks>
 	/// <param name="numRT">設定するレンダリングターゲットの枚数</param>
 	/// <param name="renderTargets">レンダリングターゲットの配列。</param>
-	void SetRenderTargetsAndViewport(UINT numRT, RenderTarget* renderTargets[]);
+	void SetRenderTargetsAndViewport(UINT numRT, CRenderTarget* renderTargets[]);
 	/// <summary>
 	/// 複数枚のレンダリングターゲットをクリア。
 	/// </summary>
@@ -258,7 +258,7 @@ public:
 	/// <param name="renderTargets">レンダリングターゲットの数</param>
 	void ClearRenderTargetViews(
 		int numRt, 
-		RenderTarget* renderTargets[]
+		CRenderTarget* renderTargets[]
 	);
 	/// <summary>
 	/// レンダリングターゲットのクリア。
@@ -273,9 +273,9 @@ public:
 	/// レンダリングターゲットのクリア。
 	/// </summary>
 	/// <param name="renderTarget"></param>
-	void ClearRenderTargetView(RenderTarget& renderTarget)
+	void ClearRenderTargetView(CRenderTarget& renderTarget)
 	{
-		RenderTarget* rtArray[] = { &renderTarget };
+		CRenderTarget* rtArray[] = { &renderTarget };
 		ClearRenderTargetViews(1, rtArray);
 	}
 	/// <summary>
@@ -301,8 +301,8 @@ public:
 	/// 使用したい場合は、この関数を使って描き込み完了待ちを行う必要があります。
 	/// </remarks>
 	/// <param name="renderTarget">レンダリングターゲット</param>
-	void WaitUntilFinishDrawingToRenderTargets(int numRt, RenderTarget* renderTargets[]);
-	void WaitUntilFinishDrawingToRenderTarget(RenderTarget& renderTarget);
+	void WaitUntilFinishDrawingToRenderTargets(int numRt, CRenderTarget* renderTargets[]);
+	void WaitUntilFinishDrawingToRenderTarget(CRenderTarget& renderTarget);
 	void WaitUntilFinishDrawingToRenderTarget( ID3D12Resource* renderTarget )
 	{
 		CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
@@ -318,8 +318,8 @@ public:
 	/// レンダリングターゲットとして設定したい場合は、
 	/// 本関数を使って使用可能になるまで待機する必要があります。
 	/// </remarks>
-	void WaitUntilToPossibleSetRenderTargets(int numRt, RenderTarget* renderTargets[]);
-	void WaitUntilToPossibleSetRenderTarget(RenderTarget& renderTarget);
+	void WaitUntilToPossibleSetRenderTargets(int numRt, CRenderTarget* renderTargets[]);
+	void WaitUntilToPossibleSetRenderTarget(CRenderTarget& renderTarget);
 	void WaitUntilToPossibleSetRenderTarget( ID3D12Resource* renderTarget)
 	{
 		auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(renderTarget, D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);

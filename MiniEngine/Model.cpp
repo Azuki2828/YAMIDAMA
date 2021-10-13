@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "Material.h"
 
-void Model::Init(const ModelInitData& initData)
+void CModel::Init(const ModelInitData& initData)
 {
 	MY_ASSERT(
 		initData.m_fxFilePath, 
@@ -44,21 +44,21 @@ void Model::Init(const ModelInitData& initData)
 	
 }
 
-void Model::UpdateWorldMatrix(Vector3 pos, Quaternion rot, Vector3 scale)
+void CModel::UpdateWorldMatrix(CVector3 pos, CQuaternion rot, CVector3 scale)
 {
-	Matrix mBias;
+	CMatrix mBias;
 	if (m_modelUpAxis == enModelUpAxisZ) {
 		//Z-up
-		mBias.MakeRotationX(Math::PI * -0.5f);
+		mBias.MakeRotationX(CMath::PI * -0.5f);
 	}
-	Matrix mTrans, mRot, mScale;
+	CMatrix mTrans, mRot, mScale;
 	mTrans.MakeTranslation(pos);
 	mRot.MakeRotationFromQuaternion(rot);
 	mScale.MakeScaling(scale);
 	m_world = mBias * mScale * mRot * mTrans;
 }
 
-void Model::ChangeAlbedoMap(const char* materialName, Texture& albedoMap)
+void CModel::ChangeAlbedoMap(const char* materialName, Texture& albedoMap)
 {
 	m_meshParts.QueryMeshs([&](const SMesh& mesh) {
 		//todo マテリアル名をtkmファイルに出力したなかった・・・。
@@ -71,7 +71,7 @@ void Model::ChangeAlbedoMap(const char* materialName, Texture& albedoMap)
 	m_meshParts.CreateDescriptorHeaps();
 	
 }
-void Model::Draw(RenderContext& rc)
+void CModel::Draw(CRenderContext& rc)
 {
 	m_meshParts.Draw(
 		rc, 
@@ -81,7 +81,7 @@ void Model::Draw(RenderContext& rc)
 	);
 }
 
-void Model::Draw(RenderContext& rc, Camera& camera)
+void CModel::Draw(CRenderContext& rc, CCamera& camera)
 {
 	m_meshParts.Draw(
 		rc,
