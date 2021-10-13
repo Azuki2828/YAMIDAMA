@@ -6,7 +6,7 @@ namespace nsMyGame {
 
 	namespace nsPostEffect {
 
-		void PostEffect::Init() {
+		void CPostEffect::Init() {
 
 			//ブルームの初期化。
 			m_bloom.Init();
@@ -15,12 +15,12 @@ namespace nsMyGame {
 			m_fxaa.Init();
 		}
 
-		void PostEffect::Render(RenderContext& rc) {
-
-			//ブルームの描画。
+		void CPostEffect::Render(RenderContext& rc) {
+			
+			//ブルーム。
 			m_bloom.Render(rc);
 
-			//FXAAの描画。
+			//FXAA。
 			m_fxaa.Render(rc);
 		}
 	}

@@ -3,7 +3,7 @@
 
 namespace nsMyGame {
 	//レンダリングエンジンクラス
-	class RenderingEngine
+	class CRenderingEngine
 	{
 	public:
 		/**
@@ -11,14 +11,14 @@ namespace nsMyGame {
 		*/
 		static void CreateRenderingEngine() {
 
-			m_renderingEngine = new RenderingEngine;
+			m_renderingEngine = new CRenderingEngine;
 		}
 
 		/**
 		 * @brief レンダリングエンジンを取得する関数。
 		 * @return レンダリングエンジン
 		*/
-		static RenderingEngine* GetInstance() {
+		static CRenderingEngine* GetInstance() {
 
 			return m_renderingEngine;
 		}
@@ -58,6 +58,13 @@ namespace nsMyGame {
 		*/
 		void DrawShadowMap(RenderContext& rc);
 
+
+		/**
+		 * @brief スプライトを描画する関数。
+		 * @param rc レンダーコンテキスト
+		*/
+		void RenderSprite(RenderContext& rc);
+
 		/**
 		 * @brief フォントを描画する関数。
 		 * @param rc レンダーコンテキスト。
@@ -90,9 +97,9 @@ namespace nsMyGame {
 		void CopyToFrameBuffer(RenderContext& rc);
 
 	private:
-		static RenderingEngine* m_renderingEngine;	//レンダリングエンジンのインスタンス
+		static CRenderingEngine* m_renderingEngine;	//レンダリングエンジンのインスタンス
 		RenderTarget m_snapShotMainRT;				//メインレンダリングターゲットのスナップショットを取るためのレンダリングターゲット
-		nsPostEffect::PostEffect m_postEffect;		//ポストエフェクト
+		nsPostEffect::CPostEffect m_postEffect;		//ポストエフェクト
 		Sprite m_copyToMainRenderTargetSprite;		//メインレンダリングターゲットのスプライト
 		Sprite m_deferredRenderingSprite;			//ディファードライティング用のスプライト
 	};

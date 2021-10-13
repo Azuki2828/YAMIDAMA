@@ -13,14 +13,14 @@ namespace nsMyGame {
 		};
 
 		//平行光源クラス
-		class DirectionLight : public LightBase
+		class CDirectionLight : public CLightBase
 		{
 			/**
 			 * @brief オーバーライドされた開始処理関数。
 			 * @return 成功した？
 			*/
 			bool StartSub();
-			~DirectionLight();
+			~CDirectionLight();
 		public:
 			/**
 			 * @brief ライトの方向を設定する関数。

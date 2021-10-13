@@ -107,15 +107,32 @@ private:
 	/// </summary>
 	/// <param name="initData"></param>
 	void InitConstantBuffer(const SpriteInitData& initData);
+
+public:
+	void SetPosition(const Vector3& pos) {
+		m_position = pos;
+	}
+	void SetRotation(const Quaternion& rot) {
+		m_rotation = rot;
+	}
+	void SetScale(const Vector3& sca) {
+		m_scale = sca;
+	}
+	void SetMulColor(const Vector4& mulCol) {
+
+		m_mulColor = mulCol;
+	}
 private:
 	IndexBuffer m_indexBuffer;			//インデックスバッファ。
 	VertexBuffer m_vertexBuffer;		//頂点バッファ。
 	int m_numTexture = 0;				//テクスチャの枚数。
 	Texture m_textures[MAX_TEXTURE];	//テクスチャ。
 	Texture* m_textureExternal[MAX_TEXTURE] = {nullptr};	//外部から指定されたテクスチャ
-	Vector3 m_position ;				//座標。
+	Vector3 m_position;				//座標。
+	Vector3 m_scale;				//拡大率。
 	Vector2 m_size;						//サイズ。
 	Quaternion m_rotation ;			//回転。
+	Vector4 m_mulColor = { 1.0f,1.0f,1.0f,1.0f };		//乗算カラー。
 	Matrix m_world;					//ワールド行列。
 
 	struct LocalConstantBuffer {

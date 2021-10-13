@@ -269,6 +269,9 @@
     <ClCompile Include="..\..\MiniEngine\postEffect\PostEffectComponentBase.cpp">
       <Filter>MiniEngine\postEffect</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\SpriteRender.cpp">
+      <Filter>MiniEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -510,6 +513,9 @@
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\postEffect\PostEffectComponentBase.h">
       <Filter>MiniEngine\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\SpriteRender.h">
+      <Filter>MiniEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

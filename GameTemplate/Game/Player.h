@@ -13,7 +13,7 @@ namespace nsMyGame {
 			enAnimNum
 
 		};
-		class Player : public IGameObject
+		class CPlayer : public IGameObject
 		{
 			//プレイヤーの状態
 			enum class EnPlayerState {
@@ -75,7 +75,7 @@ namespace nsMyGame {
 			 * @brief モデルレンダーのインスタンスを取得する関数。
 			 * @return モデルレンダーのインスタンス
 			*/
-			ModelRender* GetModelRender() {
+			CModelRender* GetModelRender() {
 
 				return m_modelRender;
 			}
@@ -132,14 +132,14 @@ namespace nsMyGame {
 			EnColor m_colorState = en1;
 			int m_count = 0;
 			EnPlayerState m_playerState = EnPlayerState::enState_Normal;
-			ModelRender* m_modelRender = nullptr;
+			CModelRender* m_modelRender = nullptr;
 			AnimationClip m_animationClip[enAnimNum];
 
 			Vector3 m_pos = { 0.0f,0.0f,0.0f };
 			pybind11::module m_playerPyModule;
 
-			nsFont::FontRender* m_fontRender = nullptr;
-			nsFont::FontRender* m_fontRender2 = nullptr;
+			nsFont::CFontRender* m_fontRender = nullptr;
+			nsFont::CFontRender* m_fontRender2 = nullptr;
 		};
 	}
 }

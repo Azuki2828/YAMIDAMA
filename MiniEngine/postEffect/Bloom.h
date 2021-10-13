@@ -9,7 +9,7 @@ namespace nsMyGame {
 
 		//ブルームクラス
 
-		class Bloom : public PostEffectComponentBase
+		class CBloom : public CPostEffectComponentBase
 		{
 		public:
 			/**
@@ -56,10 +56,10 @@ namespace nsMyGame {
 			void ExecuteGaussianBlur(RenderContext& rc);
 
 		private:
-			RenderTarget m_luminanceRT;			//輝度抽出用のレンダリングターゲット
-			GaussianBlur m_gaussianBlur[4];		//ガウシアンブラークラスのインスタンス
-			Sprite m_luminanceSprite;			//輝度抽出用のスプライト
-			Sprite m_bloomFinalSprite;			//ブルームの最終スプライト
+			RenderTarget m_luminanceRT;							//輝度抽出用のレンダリングターゲット
+			CGaussianBlur m_gaussianBlur[c_gaussianBlurNum];		//ガウシアンブラークラスのインスタンス
+			Sprite m_luminanceSprite;							//輝度抽出用のスプライト
+			Sprite m_bloomFinalSprite;							//ブルームの最終スプライト
 		};
 	}
 }

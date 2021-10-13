@@ -5,9 +5,9 @@ namespace nsMyGame {
 
 	namespace nsLight {
 
-		LightManager* LightManager::m_lightManager = nullptr;
+		CLightManager* CLightManager::m_lightManager = nullptr;
 
-		void LightManager::AddLight(LightBase* light) {
+		void CLightManager::AddLight(CLightBase* light) {
 
 			//もし規定されている数に達していたら置けない
 			if (m_directionLights.size() >= c_maxDirectionLightNum) {
@@ -19,7 +19,7 @@ namespace nsMyGame {
 			const std::type_info& typeInfo = typeid(*light);
 
 			//ディレクションライトだったら
-			if (typeInfo == typeid(DirectionLight)) {
+			if (typeInfo == typeid(CDirectionLight)) {
 
 				//登録済みか調べる。
 				auto findIt = std::find(m_directionLights.begin(), m_directionLights.end(), light->GetLigData());
@@ -47,7 +47,7 @@ namespace nsMyGame {
 				}
 			}
 			//ポイントライトだったら
-			else if (typeInfo == typeid(PointLight)) {
+			else if (typeInfo == typeid(CPointLight)) {
 
 				//登録済みか調べる。
 				auto findIt = std::find(m_pointLights.begin(), m_pointLights.end(), light->GetLigData());
@@ -74,13 +74,13 @@ namespace nsMyGame {
 			}
 		}
 
-		void LightManager::RemoveLight(LightBase* light)
+		void CLightManager::RemoveLight(CLightBase* light)
 		{
 			//クラスの名前を調べる
 			const std::type_info& typeInfo = typeid(*light);
 
 			//ディレクションライトだったら
-			if (typeInfo == typeid(DirectionLight)) {
+			if (typeInfo == typeid(CDirectionLight)) {
 
 				//ライトを削除
 				m_directionLights.erase(
@@ -101,7 +101,7 @@ namespace nsMyGame {
 				}
 			}
 			//ポイントライトだったら
-			else if (typeInfo == typeid(PointLight)) {
+			else if (typeInfo == typeid(CPointLight)) {
 
 				//ライトを削除
 				m_pointLights.erase(
@@ -119,13 +119,13 @@ namespace nsMyGame {
 				m_ligData.pointLightNum--;
 			}
 		}
-		void LightManager::RemoveLightAll()
+		void CLightManager::RemoveLightAll()
 		{
 			//ライトをすべて削除する。
 			m_directionLights.clear();
 			m_pointLights.clear();
 		}
-		void LightManager::Update() {
+		void CLightManager::Update() {
 
 			//カメラの座標を更新
 			m_lightManager->m_ligData.eyePos = g_camera3D->GetPosition();

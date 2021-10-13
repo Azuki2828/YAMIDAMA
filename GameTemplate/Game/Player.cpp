@@ -5,7 +5,7 @@ namespace nsMyGame {
 
 	namespace nsPlayer {
 
-		Player* g_pCurrentPlayer = nullptr;
+		CPlayer* g_pCurrentPlayer = nullptr;
 
 		void Normal() {
 			g_pCurrentPlayer->GetModelRender()->PlayAnimation(enAnim_Idle);
@@ -67,20 +67,20 @@ namespace nsMyGame {
 
 
 
+		
 
 
 
+		bool CPlayer::Start() {
 
-		bool Player::Start() {
-
-			m_modelRender = NewGO<ModelRender>(0);
+			m_modelRender = NewGO<CModelRender>(0);
 			m_modelRender->SetFilePathTkm("Assets/modelData/knight.tkm");
 			m_modelRender->SetFilePathTks("Assets/modelData/knight.tks");
-			m_modelRender->SetFilePathTkm("Assets/unityChanBeer.tkm");
-			m_modelRender->SetFilePathTks("Assets/unityChanBeer.tks");
-			m_animationClip[enAnim_Walk].Load("Assets/animData/walk.tka");
-			m_animationClip[enAnim_Idle].Load("Assets/animData/idle.tka");
-			m_animationClip[enAnim_Death].Load("Assets/animData/KneelDown.tka");
+			//m_modelRender->SetFilePathTkm("Assets/unityChanBeer.tkm");
+			//m_modelRender->SetFilePathTks("Assets/unityChanBeer.tks");
+			m_animationClip[enAnim_Walk].Load("Assets/animData/playerWalk.tka");
+			m_animationClip[enAnim_Idle].Load("Assets/animData/playerWalk.tka");
+			m_animationClip[enAnim_Death].Load("Assets/animData/playerWalk.tka");
 			m_animationClip[enAnim_Walk].SetLoopFlag(true);
 			m_animationClip[enAnim_Idle].SetLoopFlag(true);
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
@@ -88,22 +88,22 @@ namespace nsMyGame {
 			m_modelRender->SetAnimFlg(true);
 			m_modelRender->SetShadowCasterFlag(true);
 			m_modelRender->SetShadowReceiverFlag(true);
-			m_modelRender->SetModelUpAxis(EnModelUpAxis::enModelUpAxisY);
+			//m_modelRender->SetModelUpAxis(EnModelUpAxis::enModelUpAxisY);
 			m_modelRender->Init();
 
-			m_fontRender = NewGO<nsFont::FontRender>(0);
+			m_fontRender = NewGO<nsFont::CFontRender>(0);
 			m_fontRender->Init(L"酔い度：", { -550.0f,310.0f });	//場所
 			m_fontRender->SetColor({ 1.0f,0.0f,0.0f,1.0f });			//赤色
 			m_fontRender->SetShadowParam(true, 1.0f, Vector4::Black);
 
-			m_fontRender2 = NewGO<nsFont::FontRender>(0);
+			m_fontRender2 = NewGO<nsFont::CFontRender>(0);
 			m_fontRender2->Init(L"A：飲む", { 450.0f,310.0f });	//場所
 			m_fontRender2->SetColor({ 1.0f,0.0f,0.0f,1.0f });			//赤色
 			m_fontRender2->SetShadowParam(true, 1.0f, Vector4::Black);
 			return true;
 		}
 
-		void Player::StateUpdate() {
+		void CPlayer::StateUpdate() {
 
 			//現在のインスタンスを代入。
 			g_pCurrentPlayer = this;
@@ -133,7 +133,7 @@ namespace nsMyGame {
 		}
 
 
-		void Player::Update() {
+		void CPlayer::Update() {
 
 			//ステートによって読み込むPythonスクリプトを切り替える。
 			StateUpdate();
@@ -150,7 +150,7 @@ namespace nsMyGame {
 
 
 
-		void Player::LightCameraUpdate() {
+		void CPlayer::LightCameraUpdate() {
 
 			//ライトカメラの情報を更新
 			Vector3 m_lightCameraTar = m_pos;
@@ -177,7 +177,7 @@ namespace nsMyGame {
 			Camera::GetLightCamera()->Update();
 		}
 
-		void Player::Move() {
+		void CPlayer::Move() {
 
 			if (g_pad[0]->IsPress(enButtonRight)) {
 				m_pos.x -= 2.0f;
@@ -195,7 +195,7 @@ namespace nsMyGame {
 			m_modelRender->SetPosition(m_pos);
 		}
 
-		void Player::FontUpdate() {
+		void CPlayer::FontUpdate() {
 
 			wchar_t time[64];
 			swprintf_s(time, L"酔い度：%d", m_yoiParam);

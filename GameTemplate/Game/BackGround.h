@@ -2,14 +2,15 @@
 
 namespace nsMyGame {
 
-	class BackGround : public IGameObject
+	class CBackGround : public IGameObject
 	{
 	public:
 		bool Start()override final;
 		void Update()override final;
 
 	private:
-		ModelRender* m_modelRender = nullptr;
+		CModelRender* m_modelRender = nullptr;
+		CModelRender* m_wall = nullptr;
 
 		Vector3 m_pos = Vector3::Zero;
 		Quaternion m_rot = Quaternion::Identity;

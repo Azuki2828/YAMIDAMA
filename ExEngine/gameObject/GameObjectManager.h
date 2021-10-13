@@ -60,6 +60,12 @@ public:
 	/// </summary>
 	/// <param name="rc"></param>
 	void ExecuteRender(RenderContext& rc);
+
+	/// <summary>
+	/// 描画処理を実行。
+	/// </summary>
+	/// <param name="rc"></param>
+	void Execute2DRender(RenderContext& rc);
 	
 	
 	/*!

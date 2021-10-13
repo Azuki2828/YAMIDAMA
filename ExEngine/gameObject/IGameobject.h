@@ -43,6 +43,10 @@ public:
 	{
 		(void)renderContext;
 	}
+	virtual void Render2D(RenderContext& renderContext)
+	{
+		(void)renderContext;
+	}
 	
 public:
 	/*!
@@ -117,6 +121,13 @@ public:
 	{
 		if (m_isActive && m_isStart && !m_isDead ) {
 			Render(renderContext);
+		}
+	}
+
+	void Render2DWrapper(RenderContext& renderContext)
+	{
+		if (m_isActive && m_isStart && !m_isDead) {
+			Render2D(renderContext);
 		}
 	}
 	

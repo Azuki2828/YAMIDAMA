@@ -15,13 +15,13 @@ namespace nsMyGame {
 		};
 
 		//点光源クラス
-		class PointLight : public LightBase
+		class CPointLight : public CLightBase
 		{
 			/**
 			 * @brief 開始処理関数。
 			*/
 			bool StartSub();
-			~PointLight();
+			~CPointLight();
 		public:
 
 			/**

@@ -2,7 +2,7 @@
 #include "MainCamera.h"
 #include "Player.h"
 
-bool MainCamera::Start() {
+bool CMainCamera::Start() {
 
 	g_camera3D->SetPosition(m_pos);
 	g_camera3D->SetTarget(m_tar);
@@ -10,7 +10,7 @@ bool MainCamera::Start() {
 	return true;
 }
 
-void MainCamera::Update() {
+void CMainCamera::Update() {
 
 	//m_player = FindGO<Player>("player");
 	//if (m_player != nullptr) {

@@ -104,6 +104,10 @@ void GamePad::Update()
 		//ê⁄ë±Ç≥ÇÍÇƒÇ¢ÇÈÅB
 		m_state.bConnected = true;
 		for (const VirtualPadToXPad& vPadToXPad : vPadToXPadTable) {
+
+			if (vPadToXPad.xButton == 0) {
+				continue;
+			}
 			if (m_state.state.Gamepad.wButtons & vPadToXPad.xButton) {
 				m_trigger[vPadToXPad.vButton] = 1 ^ m_press[vPadToXPad.vButton];
 				m_press[vPadToXPad.vButton] = 1;

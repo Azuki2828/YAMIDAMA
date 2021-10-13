@@ -8,7 +8,7 @@ namespace nsMyGame {
 
 		//ポストエフェクトクラス
 
-		class PostEffect
+		class CPostEffect
 		{
 		public:
 			/**
@@ -22,8 +22,8 @@ namespace nsMyGame {
 			*/
 			void Render(RenderContext& rc);
 		private:
-			Bloom m_bloom;		//ブルーム
-			FXAA m_fxaa;		//FXAA
+			CBloom m_bloom;		//ブルーム
+			CFXAA m_fxaa;		//FXAA
 		};
 	}
 }

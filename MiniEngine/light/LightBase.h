@@ -6,11 +6,11 @@ namespace nsMyGame {
 
 	namespace nsLight {
 
-		class LightBase : public IGameObject
+		class CLightBase : public IGameObject
 		{
 			bool Start();
 		public:
-			~LightBase();
+			~CLightBase();
 			virtual bool StartSub() = 0;
 			//ライトのデータを取得する関数。
 			virtual void* GetLigData() = 0;

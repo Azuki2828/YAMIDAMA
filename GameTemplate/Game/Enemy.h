@@ -1,5 +1,5 @@
 #pragma once
-class Enemy : public IGameObject
+class CEnemy : public IGameObject
 {
 private:
 	/**

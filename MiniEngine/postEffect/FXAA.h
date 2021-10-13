@@ -7,7 +7,7 @@ namespace nsMyGame {
 
 		//FXAAƒNƒ‰ƒX
 
-		class FXAA : public PostEffectComponentBase
+		class CFXAA : public CPostEffectComponentBase
 		{
 		private:
 			//FXAA—pBuffer

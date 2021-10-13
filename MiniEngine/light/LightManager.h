@@ -14,7 +14,7 @@ namespace nsMyGame {
 		};
 
 		//ライト管理クラス
-		class LightManager
+		class CLightManager
 		{
 		public:
 			/**
@@ -22,14 +22,14 @@ namespace nsMyGame {
 			*/
 			static void CreateInstance() {
 
-				m_lightManager = new LightManager;
+				m_lightManager = new CLightManager;
 			}
 
 			/**
 			 * @brief ライトマネージャーのインスタンスを取得する関数。
 			 * @return インスタンス
 			*/
-			static LightManager* GetInstance() {
+			static CLightManager* GetInstance() {
 
 				return m_lightManager;
 			}
@@ -38,13 +38,13 @@ namespace nsMyGame {
 			 * @brief ライトを追加する関数。
 			 * @param light ライトのインスタンス
 			*/
-			void AddLight(LightBase* light);
+			void AddLight(CLightBase* light);
 
 			/**
 			 * @brief ライトを削除する関数。
 			 * @param light ライトのインスタンス
 			*/
-			void RemoveLight(LightBase* light);
+			void RemoveLight(CLightBase* light);
 
 			/**
 			 * @brief 登録されているライトを全て削除する関数。
@@ -62,7 +62,7 @@ namespace nsMyGame {
 			void Update();
 		private:
 			LigData m_ligData;									//ライトのデータ
-			static LightManager* m_lightManager;				//ライトマネージャーのインスタンス
+			static CLightManager* m_lightManager;				//ライトマネージャーのインスタンス
 			std::list<DirectionLigData*> m_directionLights;		//ディレクションライトのデータ
 			std::list<PointLigData*> m_pointLights;				//ポイントライトのデータ
 		};

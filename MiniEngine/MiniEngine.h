@@ -72,6 +72,7 @@
 
 #include "LightCamera.h"
 
+#include "SpriteRender.h"
 #include "ModelRender.h"
 #include "RenderingEngine.h"
 

@@ -5,7 +5,7 @@ namespace nsMyGame {
 
 	namespace nsPostEffect {
 
-		void Bloom::OnInit() {
+		void CBloom::OnInit() {
 
 			//輝度抽出用のレンダリングターゲットを作成。
 			m_luminanceRT.Create(
@@ -24,7 +24,7 @@ namespace nsMyGame {
 			InitGaussianBlurSprite();
 		}
 
-		void Bloom::OnRender(RenderContext& rc) {
+		void CBloom::OnRender(RenderContext& rc) {
 
 			//輝度抽出
 			ExecuteDrawLuminanceSprite(rc);
@@ -33,20 +33,20 @@ namespace nsMyGame {
 			ExecuteGaussianBlur(rc);
 		}
 
-		void Bloom::InitLuminanceSprite() {
+		void CBloom::InitLuminanceSprite() {
 
 			//輝度抽出用のスプライトを初期化
 			//初期化情報を作成する
 			SpriteInitData luminanceSpriteInitData;
 
 			//輝度抽出用のシェーダーのファイルパスを指定する。
-			luminanceSpriteInitData.m_fxFilePath = "Assets/shader/PostEffect.fx";
+			luminanceSpriteInitData.m_fxFilePath = c_fxFilePathBloom;
 
 			//頂点シェーダーのエントリーポイントを指定する。
-			luminanceSpriteInitData.m_vsEntryPointFunc = "VSMain";
+			luminanceSpriteInitData.m_vsEntryPointFunc = c_vsEntryPointFuncBloom;
 
 			//ピクセルシェーダーのエントリーポイントを指定する。
-			luminanceSpriteInitData.m_psEntryPoinFunc = "PSSamplingLuminance";
+			luminanceSpriteInitData.m_psEntryPoinFunc = c_psEntryPointFuncSamplingLuminance;
 
 			//スプライトの幅と高さは輝度抽出用のレンダリングターゲットと同じ。
 			luminanceSpriteInitData.m_width = m_luminanceRT.GetWidth();
@@ -62,7 +62,7 @@ namespace nsMyGame {
 			m_luminanceSprite.Init(luminanceSpriteInitData);
 		}
 
-		void Bloom::InitGaussianBlurSprite() {
+		void CBloom::InitGaussianBlurSprite() {
 
 			//ガウシアンブラークラスのインスタンスを初期化。
 			m_gaussianBlur[0].Init(&m_luminanceRT.GetRenderTargetTexture());
@@ -84,10 +84,10 @@ namespace nsMyGame {
 			finalSpriteInitData.m_height = RenderTarget::GetRenderTarget(enMainRT)->GetHeight();
 
 			//ガウシアンブラー用のシェーダーのファイルパスを指定する
-			finalSpriteInitData.m_fxFilePath = "Assets/shader/PostEffect.fx";
+			finalSpriteInitData.m_fxFilePath = c_fxFilePathBloom;
 
 			//ピクセルシェーダーのエントリーポイントを指定する
-			finalSpriteInitData.m_psEntryPoinFunc = "PSBloomFinal";
+			finalSpriteInitData.m_psEntryPoinFunc = c_psEntryPointFuncBloomFinal;
 
 			//アルファブレンディングモードは加算合成を選択する。
 			finalSpriteInitData.m_alphaBlendMode = AlphaBlendMode_Add;
@@ -99,7 +99,7 @@ namespace nsMyGame {
 			m_bloomFinalSprite.Init(finalSpriteInitData);
 		}
 
-		void Bloom::ExecuteDrawLuminanceSprite(RenderContext& rc) {
+		void CBloom::ExecuteDrawLuminanceSprite(RenderContext& rc) {
 
 			// 輝度抽出用のレンダリングターゲットに変更
 			rc.WaitUntilToPossibleSetRenderTarget(m_luminanceRT);
@@ -117,7 +117,7 @@ namespace nsMyGame {
 			rc.WaitUntilFinishDrawingToRenderTarget(m_luminanceRT);
 		}
 
-		void Bloom::ExecuteGaussianBlur(RenderContext& rc) {
+		void CBloom::ExecuteGaussianBlur(RenderContext& rc) {
 
 			//ガウシアンブラーを4回実行する
 			for (int i = 0; i < c_gaussianBlurNum; i++) {

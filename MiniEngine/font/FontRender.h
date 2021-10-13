@@ -6,7 +6,7 @@ namespace nsMyGame {
 
 	namespace nsFont {
 
-		class FontRender : public IGameObject
+		class CFontRender : public IGameObject
 		{
 		public:
 			/**

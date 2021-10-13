@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Enemy.h"
 
-Enemy* g_pCurrentEnemy = nullptr;
+CEnemy* g_pCurrentEnemy = nullptr;
 
 void IdleFunc(){
 	MessageBox(nullptr, L"Idle...", L"通知", MB_OK);
@@ -30,11 +30,11 @@ void GuardFunc() {
 //}
 
 
-bool Enemy::Start()
+bool CEnemy::Start()
 {
 	return true;
 }
-void Enemy::Update()
+void CEnemy::Update()
 {
 	// 現在更新処理を実行中のエネミーのアドレスを代入
 	g_pCurrentEnemy = this;
@@ -55,7 +55,7 @@ void Enemy::Update()
 	auto updateFunc = m_enemyPyModule.attr("Update");
 	//updateFunc();
 }
-void Enemy::Render(RenderContext& rc)
+void CEnemy::Render(RenderContext& rc)
 {
 
 }

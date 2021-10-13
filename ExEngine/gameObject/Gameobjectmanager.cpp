@@ -56,3 +56,13 @@ void GameObjectManager::ExecuteRender(RenderContext& rc)
 		}
 	}
 }
+
+void GameObjectManager::Execute2DRender(RenderContext& rc)
+{
+	//レンダラーを変更するならここを改造していくと良い。
+	for (auto& goList : m_gameObjectListArray) {
+		for (auto& go : goList) {
+			go->Render2DWrapper(rc);
+		}
+	}
+}

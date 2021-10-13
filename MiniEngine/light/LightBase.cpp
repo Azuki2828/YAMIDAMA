@@ -5,17 +5,17 @@ namespace nsMyGame {
 
 	namespace nsLight {
 
-		bool LightBase::Start() {
+		bool CLightBase::Start() {
 
 			//ライトマネージャーにライトを追加する。
-			LightManager::GetInstance()->AddLight(this);
+			CLightManager::GetInstance()->AddLight(this);
 			return StartSub();
 		}
 
-		LightBase::~LightBase() {
+		CLightBase::~CLightBase() {
 
 			//ライトマネージャーからライトを削除する。
-			LightManager::GetInstance()->RemoveLight(this);
+			CLightManager::GetInstance()->RemoveLight(this);
 		}
 	}
 }

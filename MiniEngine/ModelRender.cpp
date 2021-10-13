@@ -7,7 +7,7 @@ namespace nsMyGame {
 	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";
 	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
 
-	void ModelRender::Init() {
+	void CModelRender::Init() {
 
 		//tkmファイルとtksファイルのパスを設定。
 		SetFilePathTkmAndTks();
@@ -41,7 +41,7 @@ namespace nsMyGame {
 		m_animation.Init(m_skeleton, m_animationClip, m_animNum);
 	}
 
-	void ModelRender::CreateShadowModel() {
+	void CModelRender::CreateShadowModel() {
 
 		//シャドウモデルのデータを初期化。
 		ModelInitData ShadowModelInitData;
@@ -66,7 +66,7 @@ namespace nsMyGame {
 		);
 	}
 
-	void ModelRender::SetFilePathTkmAndTks() {
+	void CModelRender::SetFilePathTkmAndTks() {
 
 		//tkmファイルのロード。
 		if (m_filePathTkm != nullptr) {
@@ -83,7 +83,7 @@ namespace nsMyGame {
 		}
 	}
 
-	void ModelRender::Update() {
+	void CModelRender::Update() {
 
 		//スケルトンを更新。
 		m_skeleton.Update(m_model.GetWorldMatrix());
@@ -108,7 +108,7 @@ namespace nsMyGame {
 		);
 	}
 
-	void ModelRender::Render(RenderContext& rc) {
+	void CModelRender::Render(RenderContext& rc) {
 
 		//描画モードに応じて描画するモデルを変える。
 		switch (rc.GetRenderMode()) {

@@ -1,8 +1,8 @@
 #pragma once
 
-class Player;
+class CPlayer;
 
-class MainCamera : public IGameObject
+class CMainCamera : public IGameObject
 {
 public:
 	bool Start()override final;
@@ -15,6 +15,6 @@ private:
 	Vector3 m_tar = {0.0f,50.0f,0.0f};
 	Vector3 toPos = { 0.0f,0.0f,200.0f };
 
-	Player* m_player = nullptr;
+	CPlayer* m_player = nullptr;
 };
 

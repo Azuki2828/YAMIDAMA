@@ -5,7 +5,7 @@ namespace nsMyGame {
 
 	namespace nsPostEffect {
 
-		void GaussianBlur::Init(Texture* originalTexture)
+		void CGaussianBlur::Init(Texture* originalTexture)
 		{
 			m_originalTexture = originalTexture;
 
@@ -16,37 +16,19 @@ namespace nsMyGame {
 		}
 
 
-		void GaussianBlur::ExecuteOnGPU(RenderContext& rc, float blurPower)
+		void CGaussianBlur::ExecuteOnGPU(RenderContext& rc, float blurPower)
 		{
 			//重みテーブルを更新する。
 			UpdateWeightsTable(blurPower);
 
 			//横ブラーを実行。
-			//レンダリングターゲットとして利用できるようになるまでwaitを入れる。
-			rc.WaitUntilToPossibleSetRenderTarget(m_xBlurRenderTarget);
-			//レンダリングターゲットを設定。
-			rc.SetRenderTargetAndViewport(m_xBlurRenderTarget);
-			//レンダリングターゲットをクリア。
-			rc.ClearRenderTargetView(m_xBlurRenderTarget);
-			//ドロー。
-			m_xBlurSprite.Draw(rc);
-			//レンダリングターゲットへの書き込み終了待ち。
-			rc.WaitUntilFinishDrawingToRenderTarget(m_xBlurRenderTarget);
+			ExecuteBesideBlur(rc);
 
 			//縦ブラーを実行。
-			//レンダリングターゲットとして利用できるようになるまでwaitを入れる。
-			rc.WaitUntilToPossibleSetRenderTarget(m_yBlurRenderTarget);
-			//レンダリングターゲットを設定。
-			rc.SetRenderTargetAndViewport(m_yBlurRenderTarget);
-			//レンダリングターゲットをクリア。
-			rc.ClearRenderTargetView(m_yBlurRenderTarget);
-			//ドロー。
-			m_yBlurSprite.Draw(rc);
-			//レンダリングターゲットへの書き込み終了待ち。
-			rc.WaitUntilFinishDrawingToRenderTarget(m_yBlurRenderTarget);
+			ExecuteVerticalBlur(rc);
 		}
 
-		void GaussianBlur::InitRenderTargets()
+		void CGaussianBlur::InitRenderTargets()
 		{
 			//Xブラー用のレンダリングターゲットを作成する。
 			m_xBlurRenderTarget.Create(
@@ -69,14 +51,14 @@ namespace nsMyGame {
 			);
 		}
 
-		void GaussianBlur::InitSprites()
+		void CGaussianBlur::InitSprites()
 		{
 			//横ブラー用のスプライトを初期化する。
 			{
 				SpriteInitData xBlurSpriteInitData;
 				xBlurSpriteInitData.m_fxFilePath = c_fxFilePathGaussianBlur;
-				xBlurSpriteInitData.m_vsEntryPointFunc = "VSXBlur";
-				xBlurSpriteInitData.m_psEntryPoinFunc = "PSBlur";
+				xBlurSpriteInitData.m_vsEntryPointFunc = c_vsEntryPointFuncXBlur;
+				xBlurSpriteInitData.m_psEntryPoinFunc = c_psEntryPointFuncBlur;
 				//スプライトの解像度はm_xBlurRenderTargetと同じ。
 				xBlurSpriteInitData.m_width = m_xBlurRenderTarget.GetWidth();
 				xBlurSpriteInitData.m_height = m_xBlurRenderTarget.GetHeight();
@@ -95,8 +77,8 @@ namespace nsMyGame {
 			{
 				SpriteInitData yBlurSpriteInitData;
 				yBlurSpriteInitData.m_fxFilePath = c_fxFilePathGaussianBlur;
-				yBlurSpriteInitData.m_vsEntryPointFunc = "VSYBlur";
-				yBlurSpriteInitData.m_psEntryPoinFunc = "PSBlur";
+				yBlurSpriteInitData.m_vsEntryPointFunc = c_vsEntryPointFuncYBlur;
+				yBlurSpriteInitData.m_psEntryPoinFunc = c_psEntryPointFuncBlur;
 				//スプライトの解像度はm_yBlurRenderTargetと同じ。
 				yBlurSpriteInitData.m_width = m_yBlurRenderTarget.GetWidth();
 				yBlurSpriteInitData.m_height = m_yBlurRenderTarget.GetHeight();
@@ -112,18 +94,46 @@ namespace nsMyGame {
 				m_yBlurSprite.Init(yBlurSpriteInitData);
 			}
 		}
-		void GaussianBlur::UpdateWeightsTable(float blurPower)
+		void CGaussianBlur::UpdateWeightsTable(float blurPower)
 		{
 			float total = 0;
-			for (int i = 0; i < NUM_WEIGHTS; i++) {
+			for (int i = 0; i < c_gaussianBlurNumWeight; i++) {
 				m_weights[i] = expf(-0.5f * (float)(i * i) / blurPower);
 				total += 2.0f * m_weights[i];
 
 			}
 			// 規格化
-			for (int i = 0; i < NUM_WEIGHTS; i++) {
+			for (int i = 0; i < c_gaussianBlurNumWeight; i++) {
 				m_weights[i] /= total;
 			}
+		}
+
+		void CGaussianBlur::ExecuteVerticalBlur(RenderContext& rc) {
+
+			//レンダリングターゲットとして利用できるようになるまでwaitを入れる。
+			rc.WaitUntilToPossibleSetRenderTarget(m_yBlurRenderTarget);
+			//レンダリングターゲットを設定。
+			rc.SetRenderTargetAndViewport(m_yBlurRenderTarget);
+			//レンダリングターゲットをクリア。
+			rc.ClearRenderTargetView(m_yBlurRenderTarget);
+			//ドロー。
+			m_yBlurSprite.Draw(rc);
+			//レンダリングターゲットへの書き込み終了待ち。
+			rc.WaitUntilFinishDrawingToRenderTarget(m_yBlurRenderTarget);
+		}
+
+		void CGaussianBlur::ExecuteBesideBlur(RenderContext& rc) {
+
+			//レンダリングターゲットとして利用できるようになるまでwaitを入れる。
+			rc.WaitUntilToPossibleSetRenderTarget(m_xBlurRenderTarget);
+			//レンダリングターゲットを設定。
+			rc.SetRenderTargetAndViewport(m_xBlurRenderTarget);
+			//レンダリングターゲットをクリア。
+			rc.ClearRenderTargetView(m_xBlurRenderTarget);
+			//ドロー。
+			m_xBlurSprite.Draw(rc);
+			//レンダリングターゲットへの書き込み終了待ち。
+			rc.WaitUntilFinishDrawingToRenderTarget(m_xBlurRenderTarget);
 		}
 	}
 }

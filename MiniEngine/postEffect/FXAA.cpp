@@ -5,7 +5,7 @@ namespace nsMyGame {
 
     namespace nsPostEffect {
 
-        void FXAA::OnInit() {
+        void CFXAA::OnInit() {
 
             //FXAA用のレンダリングターゲットを作成する。
             m_fxaaRT.Create(
@@ -26,9 +26,9 @@ namespace nsMyGame {
             spriteInitData.m_height = RenderTarget::GetRenderTarget(enMainRT)->GetHeight();
 
             //FXAA用のシェーダーを使用する。
-            spriteInitData.m_fxFilePath = "Assets/shader/fxaa.fx";
-            spriteInitData.m_vsEntryPointFunc = "VSMain";
-            spriteInitData.m_psEntryPoinFunc = "PSMain";
+            spriteInitData.m_fxFilePath = c_fxFilePathFXAA;
+            spriteInitData.m_vsEntryPointFunc = c_vsEntryPointFuncFXAA;
+            spriteInitData.m_psEntryPoinFunc = c_psEntryPointFuncFXAA;
 
             //アルファブレンディングモードは指定しない。
             spriteInitData.m_alphaBlendMode = AlphaBlendMode_None;
@@ -42,7 +42,7 @@ namespace nsMyGame {
             m_finalSprite.Init(spriteInitData);
         }
 
-        void FXAA::OnRender(RenderContext& rc) {
+        void CFXAA::OnRender(RenderContext& rc) {
 
             // レンダリングターゲットとして利用できるまで待つ
             rc.WaitUntilToPossibleSetRenderTarget(m_fxaaRT);

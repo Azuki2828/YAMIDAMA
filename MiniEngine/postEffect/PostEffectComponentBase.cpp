@@ -5,7 +5,7 @@ namespace nsMyGame {
 
 	namespace nsPostEffect {
 
-		void PostEffectComponentBase::Init() {
+		void CPostEffectComponentBase::Init() {
 
 			//派生クラスの初期化。
 			OnInit();
@@ -24,7 +24,7 @@ namespace nsMyGame {
 			}
 		}
 
-		void PostEffectComponentBase::Render(RenderContext& rc) {
+		void CPostEffectComponentBase::Render(RenderContext& rc) {
 
 			//派生クラスの描画関数呼び出し。
 			OnRender(rc);

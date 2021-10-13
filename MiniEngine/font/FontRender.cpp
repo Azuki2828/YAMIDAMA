@@ -6,7 +6,7 @@ namespace nsMyGame {
 
 	namespace nsFont {
 
-		void FontRender::Init(
+		void CFontRender::Init(
 			const wchar_t* text,
 			const Vector2& position,
 			const Vector4& color,
@@ -23,7 +23,7 @@ namespace nsMyGame {
 			m_fontValue.pivot = pivot;
 		}
 
-		void FontRender::Render(RenderContext& rc) {
+		void CFontRender::Render(RenderContext& rc) {
 
 
 			//描画モードがフォント用の時だけ描画する。

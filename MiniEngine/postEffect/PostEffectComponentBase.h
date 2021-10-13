@@ -4,7 +4,7 @@ namespace nsMyGame {
 
 	namespace nsPostEffect {
 
-		class PostEffectComponentBase
+		class CPostEffectComponentBase
 		{
 		public:
 			/**

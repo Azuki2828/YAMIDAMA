@@ -3,7 +3,7 @@
 namespace nsMyGame {
 
 	//モデル管理クラス
-	class ModelRender : public IGameObject
+	class CModelRender : public IGameObject
 	{
 		//コンスタントバッファに転送するデータ
 		struct SModelData {

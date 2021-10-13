@@ -8,7 +8,7 @@ namespace nsMyGame {
 		
 		//ガウシアンブラークラス
 		
-		class GaussianBlur {
+		class CGaussianBlur {
 		public:
 			/**
 			 * @brief 初期化関数。
@@ -50,6 +50,16 @@ namespace nsMyGame {
 			 * @param blurPower 重み
 			*/
 			void UpdateWeightsTable(float blurPower);
+
+			/**
+			 * @brief 縦ブラーを実行。
+			*/
+			void ExecuteVerticalBlur(RenderContext& rc);
+
+			/**
+			 * @brief 横ブラーを実行。
+			*/
+			void ExecuteBesideBlur(RenderContext& rc);
 
 		private:
 			float m_weights[c_gaussianBlurNumWeight];			//重みテーブル

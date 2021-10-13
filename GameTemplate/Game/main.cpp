@@ -62,11 +62,11 @@ namespace nsMyGame {
 		//ゲームオブジェクトマネージャーのインスタンスを作成する。
 		GameObjectManager::CreateInstance();
 		PhysicsWorld::CreateInstance();
-		nsLight::LightManager::CreateInstance();
+		nsLight::CLightManager::CreateInstance();
 		Camera::CreateLightCamera();
-		RenderingEngine::CreateRenderingEngine();
+		CRenderingEngine::CreateRenderingEngine();
 
-		RenderingEngine::GetInstance()->Init();
+		CRenderingEngine::GetInstance()->Init();
 
 		//////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで
@@ -75,22 +75,26 @@ namespace nsMyGame {
 
 		// とりあえずテストで敵を追加。
 		//NewGO<Enemy>(0, nullptr);
-		NewGO<nsPlayer::Player>(0, "player");
-		NewGO<BackGround>(0);
-		NewGO<MainCamera>(0);
+		NewGO<nsPlayer::CPlayer>(0, "player");
+		NewGO<CBackGround>(0);
+		NewGO<CMainCamera>(0);
+		CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);
+		m_spriteRender->Init("Assets/image/beer.dds", 1280.0f, 720.0f);
+		m_spriteRender->SetPosition({ -400.0f,-200.0f,0.0f });
+		m_spriteRender->SetScale({ 0.2f,0.2f,0.2f });
+		m_spriteRender->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });
 
-		nsLight::DirectionLight* dirLight = NewGO<nsLight::DirectionLight>(0);
+		nsLight::CDirectionLight* dirLight = NewGO<nsLight::CDirectionLight>(0);
 		dirLight->SetLigDirection({ 0.0f,-1.0f,-1.0f });
 		dirLight->SetLigColor({ 5.0f,5.0f,5.0f });
-		//dirLight->SetLigColor({30.0f,30.0f,30.0f});
 
-		nsLight::PointLight* poiLight = NewGO<nsLight::PointLight>(0);
+		nsLight::CPointLight* poiLight = NewGO<nsLight::CPointLight>(0);
 		poiLight->SetPosition({ 100.0f,100.0f,0.0f });
 		poiLight->SetColor({ 5.0f,0.0f,0.0f });
 		poiLight->SetRange(200.0f);
 		poiLight->SetAffectPowParam(3.0f);
 
-		nsLight::PointLight* poiLight2 = NewGO<nsLight::PointLight>(0);
+		nsLight::CPointLight* poiLight2 = NewGO<nsLight::CPointLight>(0);
 		poiLight2->SetPosition({ -50.0f,100.0f,0.0f });
 		poiLight2->SetColor({ 0.0f,0.0f,5.0f });
 		poiLight2->SetRange(200.0f);
@@ -110,9 +114,9 @@ namespace nsMyGame {
 			//sprite[1].Update(pos[1], Quaternion::Identity, Vector3::One);
 
 			GameObjectManager::GetInstance()->ExecuteUpdate();
-			nsLight::LightManager::GetInstance()->Update();
+			nsLight::CLightManager::GetInstance()->Update();
 
-			RenderingEngine::GetInstance()->Render();
+			CRenderingEngine::GetInstance()->Render();
 			//////////////////////////////////////
 			//絵を描くコードを書くのはここまで！！！
 			//////////////////////////////////////

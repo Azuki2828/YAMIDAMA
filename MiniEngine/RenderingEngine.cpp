@@ -4,10 +4,10 @@
 namespace nsMyGame {
 
 	//レンダリングエンジンのインスタンス
-	RenderingEngine* RenderingEngine::m_renderingEngine = nullptr;
+	CRenderingEngine* CRenderingEngine::m_renderingEngine = nullptr;
 
 
-	void RenderingEngine::Init() {
+	void CRenderingEngine::Init() {
 
 		//レンダリングターゲットを作成。
 		CreateRenderTarget();
@@ -22,7 +22,7 @@ namespace nsMyGame {
 		InitCopyToMainRenderTargetSprite();
 	}
 
-	void RenderingEngine::Render() {
+	void CRenderingEngine::Render() {
 
 		//レンダーコンテキストを取得。
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
@@ -45,11 +45,14 @@ namespace nsMyGame {
 		//フォントを描画。
 		DrawFont(renderContext);
 
+		//スプライトを描画。
+		RenderSprite(renderContext);
+
 		//フレームバッファを描画。
 		CopyToFrameBuffer(renderContext);
 	}
 
-	void RenderingEngine::CreateRenderTarget() {
+	void CRenderingEngine::CreateRenderTarget() {
 
 		//レンダリングターゲットを作成。
 		RenderTarget::CreateMainRenderTarget();
@@ -60,7 +63,7 @@ namespace nsMyGame {
 		CreateSnapShotMainRT();
 	}
 
-	void RenderingEngine::InitDeferredRenderingSprite() {
+	void CRenderingEngine::InitDeferredRenderingSprite() {
 
 		//ディファードレンダリングに必要なデータを設定する。
 		SpriteInitData spriteInitData;
@@ -71,8 +74,8 @@ namespace nsMyGame {
 		spriteInitData.m_width = c_renderTargetW1280H720.x;
 		spriteInitData.m_height = c_renderTargetW1280H720.y;
 		spriteInitData.m_fxFilePath = c_fxFilePath_DeferredLighting;
-		spriteInitData.m_expandConstantBuffer = nsLight::LightManager::GetInstance()->GetLigData();
-		spriteInitData.m_expandConstantBufferSize = sizeof(*nsLight::LightManager::GetInstance()->GetLigData());
+		spriteInitData.m_expandConstantBuffer = nsLight::CLightManager::GetInstance()->GetLigData();
+		spriteInitData.m_expandConstantBufferSize = sizeof(*nsLight::CLightManager::GetInstance()->GetLigData());
 		spriteInitData.m_expandShaderResoruceView = &RenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
 
 		// 初期化オブジェクトを使って、スプライトを初期化する
@@ -80,7 +83,7 @@ namespace nsMyGame {
 	}
 
 
-	void RenderingEngine::CreateSnapShotMainRT() {
+	void CRenderingEngine::CreateSnapShotMainRT() {
 
 		//メインレンダリングターゲットの内容をコピーするレンダリングターゲットを作成。
 		m_snapShotMainRT.Create(
@@ -92,7 +95,7 @@ namespace nsMyGame {
 			DXGI_FORMAT_UNKNOWN
 		);
 	}
-	void RenderingEngine::InitCopyToMainRenderTargetSprite() {
+	void CRenderingEngine::InitCopyToMainRenderTargetSprite() {
 
 		SpriteInitData copyToMainRenderTargetSpriteInitData;
 
@@ -106,7 +109,7 @@ namespace nsMyGame {
 		m_copyToMainRenderTargetSprite.Init(copyToMainRenderTargetSpriteInitData);
 	}
 
-	void RenderingEngine::DrawShadowMap(RenderContext& rc) {
+	void CRenderingEngine::DrawShadowMap(RenderContext& rc) {
 
 		//描画モードをシャドウマップ用に設定する。
 		rc.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Shadow);
@@ -127,7 +130,22 @@ namespace nsMyGame {
 		rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enShadowMap));
 	}
 
-	void RenderingEngine::DrawFont(RenderContext& rc) {
+	void CRenderingEngine::RenderSprite(RenderContext& rc) {
+
+		//レンダリングターゲットを設定。
+		rc.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+
+		//ビューポートを設定。
+		rc.SetRenderTargetAndViewport(*RenderTarget::GetRenderTarget(enMainRT));
+
+		//シャドウモデルを描画。
+		GameObjectManager::GetInstance()->Execute2DRender(rc);
+
+		//描き込み終了待ち。
+		rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
+	}
+
+	void CRenderingEngine::DrawFont(RenderContext& rc) {
 
 		//レンダーモードをフォント用にする。
 		rc.SetRenderMode(RenderContext::EnRender_Mode::enRenderMode_Font);
@@ -145,7 +163,7 @@ namespace nsMyGame {
 		rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
 	}
 
-	void RenderingEngine::ExecuteDeferredRendering(RenderContext& rc) {
+	void CRenderingEngine::ExecuteDeferredRendering(RenderContext& rc) {
 
 		//レンダリングターゲットを作成。
 		RenderTarget* rts[] = {
@@ -182,7 +200,7 @@ namespace nsMyGame {
 		rc.WaitUntilFinishDrawingToRenderTargets(ARRAYSIZE(rts), rts);
 	}
 
-	void RenderingEngine::ExecuteDeferredLighting(RenderContext& rc) {
+	void CRenderingEngine::ExecuteDeferredLighting(RenderContext& rc) {
 
 		//レンダリングターゲットを設定。
 		rc.WaitUntilToPossibleSetRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
@@ -197,7 +215,7 @@ namespace nsMyGame {
 		rc.WaitUntilFinishDrawingToRenderTarget(*RenderTarget::GetRenderTarget(enMainRT));
 	}
 
-	void RenderingEngine::SnapShotMainRenderTarget(RenderContext& rc) {
+	void CRenderingEngine::SnapShotMainRenderTarget(RenderContext& rc) {
 
 		//レンダリングターゲットを設定。
 		rc.WaitUntilToPossibleSetRenderTarget(m_snapShotMainRT);
@@ -212,7 +230,7 @@ namespace nsMyGame {
 		rc.WaitUntilFinishDrawingToRenderTarget(m_snapShotMainRT);
 	}
 
-	void RenderingEngine::CopyToFrameBuffer(RenderContext& rc) {
+	void CRenderingEngine::CopyToFrameBuffer(RenderContext& rc) {
 
 		//メインレンダリングターゲットの絵をフレームバッファーにコピー
 		rc.SetRenderTarget(

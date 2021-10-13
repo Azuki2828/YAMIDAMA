@@ -5,12 +5,12 @@ namespace nsMyGame {
 
 	namespace nsLight {
 
-		bool PointLight::StartSub() {
+		bool CPointLight::StartSub() {
 
 			return true;
 		}
 
-		PointLight::~PointLight() {
+		CPointLight::~CPointLight() {
 
 		}
 	}

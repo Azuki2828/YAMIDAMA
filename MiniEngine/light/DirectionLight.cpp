@@ -5,12 +5,12 @@ namespace nsMyGame {
 
 	namespace nsLight {
 
-		bool DirectionLight::StartSub() {
+		bool CDirectionLight::StartSub() {
 
 			return true;
 		}
 
-		DirectionLight::~DirectionLight() {
+		CDirectionLight::~CDirectionLight() {
 
 		}
 	}
