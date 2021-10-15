@@ -3,6 +3,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
 
+#include "level/Level.h"
 #include "physics/RigidBody.h"
 #include "physics/Physics.h"
 #include "physics/MeshCollider.h"

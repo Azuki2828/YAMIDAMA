@@ -15,6 +15,7 @@ namespace nsMyGame {
 		CVector3 m_pos = CVector3::Zero;
 		CQuaternion m_rot = CQuaternion::Identity;
 		CVector3 m_sca = CVector3::One;
+		Level m_level;
 	};
 }
 

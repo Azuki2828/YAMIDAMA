@@ -50,6 +50,7 @@ struct SPSOut {
 	float4 albedoAndShadowReceiver : SV_TARGET0;
 	float4 normalAndDepth : SV_TARGET1;
 	float4 worldPos : SV_TARGET2;
+	float4 specular : SV_TARGET3;
 };
 
 ////////////////////////////////////////////////
@@ -132,11 +133,11 @@ SPSOut PSMain(SPSIn psIn)
 	psOut.albedoAndShadowReceiver.xyz = g_albedo.Sample(g_sampler, psIn.uv).xyz;
 	psOut.albedoAndShadowReceiver.w = shadowReceiverFlg;
 
-	float3 localNormal = psIn.normal;
-
-	psOut.normalAndDepth.xyz = localNormal;
+	psOut.normalAndDepth.xyz = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
 	//psOut.normalAndDepth.w = g_depthTexture.Sample(g_sampler, psIn.uv).r;
 	psOut.worldPos.xyz = psIn.worldPos;
+
+	psOut.specular.xyz = g_specularMap.Sample(g_sampler, psIn.uv).xyz;
 
 	return psOut;
 }

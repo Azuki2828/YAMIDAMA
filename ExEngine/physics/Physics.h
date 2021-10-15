@@ -2,9 +2,9 @@
 
 #include <memory>
 
-class PhysicsWorld
+class CPhysicsWorld
 {
-	static PhysicsWorld* m_instance;	//唯一のインスタンス。
+	static CPhysicsWorld* m_instance;	//唯一のインスタンス。
 	std::unique_ptr<btDefaultCollisionConfiguration> 	 m_collisionConfig;
 	std::unique_ptr<btCollisionDispatcher>				 m_collisionDispatcher;	//!<衝突解決処理。
 	std::unique_ptr<btBroadphaseInterface>				 m_overlappingPairCache;	//!<ブロードフェーズ。衝突判定の枝切り。
@@ -17,9 +17,9 @@ class PhysicsWorld
 public:
 	static void CreateInstance()
 	{
-		m_instance = new PhysicsWorld();
+		m_instance = new CPhysicsWorld();
 	}
-	static PhysicsWorld* GetInstance()
+	static CPhysicsWorld* GetInstance()
 	{
 		return m_instance;
 	}
@@ -105,8 +105,8 @@ public:
 	);
 #endif		
 private:
-	PhysicsWorld();
-	~PhysicsWorld();
+	CPhysicsWorld();
+	~CPhysicsWorld();
 	void Init();
 };
 	

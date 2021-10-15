@@ -42,6 +42,7 @@ struct PSInput {
 Texture2D<float4> albedoAndShadowReceiverTexture : register(t0);
 Texture2D<float4> normalAndDepthTexture : register(t1);
 Texture2D<float4> worldPosTexture : register(t2);
+Texture2D<float4> specularTexture : register(t3);
 Texture2D<float4> g_shadowMap : register(t10);	//シャドウマップ。
 
 sampler g_sampler : register(s0);
@@ -234,7 +235,13 @@ float4 PSMain(PSInput psIn) : SV_Target0
 	
 	//金属度
 	float metaric = 0.0f;
-	//float metaric = g_specularMap.Sample(g_sampler, psIn.uv).a;
+	//float metaric = occlusionAndSmoothAndMetaric.Sample(g_sampler, psIn.uv).z;
+
+	//float smooth = occlusionAndSmoothAndMetaric.Sample(g_sampler, psIn.uv).y;
+	//smooth = 1.0f - smooth;
+	
+
+	float3 specular = specularTexture.Sample(g_sampler, psIn.uv).xyz;
 
 	//視点
 	float3 toEye = normalize(eyePos - worldPos);
@@ -252,11 +259,14 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		float3 lambertDiffuse = directionLight[dirLigNo].color * NdotL / PI;
 		
 		float3 dirDiffuse = albedoColor * diffuseFromFresnel * lambertDiffuse;
+		
 
 		float3 dirSpec = CookTorranceSpecular(-directionLight[dirLigNo].dir,
 			toEye, normal, metaric, 1.0f - 0.5f) * directionLight[dirLigNo].color;
 
-		dirSpec *= lerp(float3(1.0f, 1.0f, 1.0f), specColor, 0.5f);
+		
+
+		dirSpec *= lerp(float3(1.0f, 1.0f, 1.0f), specular, 0.5f);
 
 		lig += dirDiffuse * (1.0f - 0.5f) + dirSpec * 0.5f;
 		

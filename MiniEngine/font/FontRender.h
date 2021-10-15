@@ -12,7 +12,7 @@ namespace nsMyGame {
 			/**
 			 * @brief フォントのデータ
 			*/
-			struct FontValue {
+			struct SFontValue {
 				wchar_t text[c_maxTextSize];	//テキスト
 				CVector2 position = CVector2::Zero;	//座標
 				CVector4 color = CVector4::White;		//色
@@ -99,7 +99,7 @@ namespace nsMyGame {
 
 		private:
 			CFont m_font;			//フォント
-			FontValue m_fontValue;	//フォントのデータ
+			SFontValue m_fontValue;	//フォントのデータ
 		};
 	}
 }

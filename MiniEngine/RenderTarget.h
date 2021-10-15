@@ -21,6 +21,7 @@ enum EnGBufferList {
 	enAlbedoAndShadowReceiverFlgMap,
 	enNormalAndDepthMap,
 	enWorldPosMap,
+	enSpecularMap,
 
 	enGBufferNum
 };
@@ -123,6 +124,20 @@ public:
 			c_renderArraySize1,
 			DXGI_FORMAT_R32G32B32A32_FLOAT, // ワールド座標を記録するので、32ビット浮動小数点バッファを利用する
 			DXGI_FORMAT_UNKNOWN
+		);
+	}
+
+	static void CreateSpecularRenderTarget() {
+
+		m_GBuffer[enSpecularMap] = new CRenderTarget;
+
+		m_GBuffer[enSpecularMap]->Create(
+			c_renderTargetW1280H720.x,
+			c_renderTargetW1280H720.y,
+			c_mipLevel1,
+			c_renderArraySize1,
+			DXGI_FORMAT_R16G16B16A16_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
 		);
 	}
 

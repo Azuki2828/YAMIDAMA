@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "system/system.h"
-#include "Enemy.h"
-#include "Player.h"
+#include "enemy/Enemy.h"
+#include "player/Player.h"
 #include "BackGround.h"
 #include "MainCamera.h"
 
@@ -60,8 +60,8 @@ namespace nsMyGame {
 		//////////////////////////////////////
 
 		//ゲームオブジェクトマネージャーのインスタンスを作成する。
-		GameObjectManager::CreateInstance();
-		PhysicsWorld::CreateInstance();
+		CGameObjectManager::CreateInstance();
+		CPhysicsWorld::CreateInstance();
 		nsLight::CLightManager::CreateInstance();
 		CCamera::CreateLightCamera();
 		CRenderingEngine::CreateRenderingEngine();
@@ -75,7 +75,7 @@ namespace nsMyGame {
 
 		// とりあえずテストで敵を追加。
 		//NewGO<Enemy>(0, nullptr);
-		//NewGO<nsPlayer::CPlayer>(0, "player");
+		NewGO<nsPlayer::CPlayer>(0, "player");
 		NewGO<CBackGround>(0);
 		NewGO<CMainCamera>(0);
 		CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);
@@ -85,8 +85,8 @@ namespace nsMyGame {
 		m_spriteRender->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });
 
 		nsLight::CDirectionLight* dirLight = NewGO<nsLight::CDirectionLight>(0);
-		dirLight->SetLigDirection({ 0.0f,-1.0f,-1.0f });
-		dirLight->SetLigColor({ 5.0f,5.0f,5.0f });
+		dirLight->SetLigDirection({ 1.0f,-1.0f,-1.0f });
+		dirLight->SetLigColor({ 0.8f,0.8f,0.8f });
 
 		nsLight::CPointLight* poiLight = NewGO<nsLight::CPointLight>(0);
 		poiLight->SetPosition({ 100.0f,100.0f,0.0f });
@@ -113,7 +113,7 @@ namespace nsMyGame {
 
 			//sprite[1].Update(pos[1], Quaternion::Identity, Vector3::One);
 
-			GameObjectManager::GetInstance()->ExecuteUpdate();
+			CGameObjectManager::GetInstance()->ExecuteUpdate();
 			nsLight::CLightManager::GetInstance()->Update();
 
 			CRenderingEngine::GetInstance()->Render();
@@ -124,7 +124,7 @@ namespace nsMyGame {
 			g_engine->EndFrame();
 		}
 		//ゲームオブジェクトマネージャーを削除。
-		GameObjectManager::DeleteInstance();
+		CGameObjectManager::DeleteInstance();
 
 		// pythonの終了処理。
 		FinalPython(program);

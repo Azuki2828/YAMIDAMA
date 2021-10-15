@@ -263,6 +263,8 @@
     <ClCompile Include="..\..\MiniEngine\GraphicsEngine.cpp" />
     <ClCompile Include="..\..\MiniEngine\HID\GamePad.cpp" />
     <ClCompile Include="..\..\MiniEngine\IndexBuffer.cpp" />
+    <ClCompile Include="..\..\MiniEngine\level\Level.cpp" />
+    <ClCompile Include="..\..\MiniEngine\level\MapChip.cpp" />
     <ClCompile Include="..\..\MiniEngine\light\DirectionLight.cpp" />
     <ClCompile Include="..\..\MiniEngine\light\LightBase.cpp" />
     <ClCompile Include="..\..\MiniEngine\light\LightManager.cpp" />
@@ -300,14 +302,15 @@
     <ClCompile Include="..\..\MiniEngine\Texture.cpp" />
     <ClCompile Include="..\..\MiniEngine\tkEngine.cpp" />
     <ClCompile Include="..\..\MiniEngine\tkFile\TkaFile.cpp" />
+    <ClCompile Include="..\..\MiniEngine\tkFile\TklFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\tkFile\TkmFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\tkFile\TksFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
     <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="enemy\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCamera.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="player\Player.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -348,6 +351,8 @@
     <ClInclude Include="..\..\MiniEngine\GraphicsEngine.h" />
     <ClInclude Include="..\..\MiniEngine\HID\GamePad.h" />
     <ClInclude Include="..\..\MiniEngine\IndexBuffer.h" />
+    <ClInclude Include="..\..\MiniEngine\level\Level.h" />
+    <ClInclude Include="..\..\MiniEngine\level\MapChip.h" />
     <ClInclude Include="..\..\MiniEngine\light\DirectionLight.h" />
     <ClInclude Include="..\..\MiniEngine\light\LightBase.h" />
     <ClInclude Include="..\..\MiniEngine\light\LightManager.h" />
@@ -390,14 +395,15 @@
     <ClInclude Include="..\..\MiniEngine\Texture.h" />
     <ClInclude Include="..\..\MiniEngine\tkEngine.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TkaFile.h" />
+    <ClInclude Include="..\..\MiniEngine\tkFile\TklFile.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TkmFile.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TksFile.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="ConstValue.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="MainCamera.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="player\Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
   </ItemGroup>

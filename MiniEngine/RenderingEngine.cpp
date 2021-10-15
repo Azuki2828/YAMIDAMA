@@ -60,6 +60,7 @@ namespace nsMyGame {
 		CRenderTarget::CreateAlbedoAndShadowReceiverFlagRenderTarget();
 		CRenderTarget::CreateNormalAndDepthRenderTarget();
 		CRenderTarget::CreateWorldPosRenderTarget();
+		CRenderTarget::CreateSpecularRenderTarget();
 		CreateSnapShotMainRT();
 	}
 
@@ -71,6 +72,7 @@ namespace nsMyGame {
 		spriteInitData.m_textures[0] = &CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetRenderTargetTexture();
 		spriteInitData.m_textures[1] = &CRenderTarget::GetGBufferRT(enNormalAndDepthMap)->GetRenderTargetTexture();
 		spriteInitData.m_textures[2] = &CRenderTarget::GetGBufferRT(enWorldPosMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[3] = &CRenderTarget::GetGBufferRT(enSpecularMap)->GetRenderTargetTexture();
 		spriteInitData.m_width = c_renderTargetW1280H720.x;
 		spriteInitData.m_height = c_renderTargetW1280H720.y;
 		spriteInitData.m_fxFilePath = c_fxFilePath_DeferredLighting;
@@ -124,7 +126,7 @@ namespace nsMyGame {
 		rc.ClearRenderTargetView(*CRenderTarget::GetRenderTarget(enShadowMap));
 
 		//シャドウモデルを描画。
-		GameObjectManager::GetInstance()->ExecuteRender(rc);
+		CGameObjectManager::GetInstance()->ExecuteRender(rc);
 
 		//描き込み終了待ち。
 		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enShadowMap));
@@ -139,7 +141,7 @@ namespace nsMyGame {
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
 		//シャドウモデルを描画。
-		GameObjectManager::GetInstance()->Execute2DRender(rc);
+		CGameObjectManager::GetInstance()->Execute2DRender(rc);
 
 		//描き込み終了待ち。
 		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
@@ -157,7 +159,7 @@ namespace nsMyGame {
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
 		//シャドウモデルを描画。
-		GameObjectManager::GetInstance()->ExecuteRender(rc);
+		CGameObjectManager::GetInstance()->ExecuteRender(rc);
 
 		//描き込み終了待ち。
 		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
@@ -169,7 +171,8 @@ namespace nsMyGame {
 		CRenderTarget* rts[] = {
 				CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap),   // 0番目のレンダリングターゲット
 				CRenderTarget::GetGBufferRT(enNormalAndDepthMap),  // 1番目のレンダリングターゲット
-				CRenderTarget::GetGBufferRT(enWorldPosMap) // 2番目のレンダリングターゲット
+				CRenderTarget::GetGBufferRT(enWorldPosMap), // 2番目のレンダリングターゲット
+				CRenderTarget::GetGBufferRT(enSpecularMap) // 3番目のレンダリングターゲット
 		};
 
 		// まず、レンダリングターゲットとして設定できるようになるまで待つ
@@ -194,7 +197,7 @@ namespace nsMyGame {
 
 		//モデルの描画
 		rc.SetRenderMode(CRenderContext::EnRender_Mode::enRenderMode_Normal);
-		GameObjectManager::GetInstance()->ExecuteRender(rc);
+		CGameObjectManager::GetInstance()->ExecuteRender(rc);
 
 		// レンダリングターゲットへの書き込み待ち
 		rc.WaitUntilFinishDrawingToRenderTargets(ARRAYSIZE(rts), rts);

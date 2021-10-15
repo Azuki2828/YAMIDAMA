@@ -20,11 +20,11 @@ void RigidBody::Init(RigidBodyInitData& initData)
 	btRigidBody::btRigidBodyConstructionInfo btRbInfo(initData.mass, m_myMotionState.get(), initData.collider->GetBody(), btLocalInteria);
 	m_rigidBody = std::make_unique<btRigidBody>(btRbInfo);
 	
-	PhysicsWorld::GetInstance()->AddRigidBody(*this);
+	CPhysicsWorld::GetInstance()->AddRigidBody(*this);
 }
 RigidBody::~RigidBody()
 {
 	if (m_rigidBody) {
-		PhysicsWorld::GetInstance()->RemoveRigidBody(*this);
+		CPhysicsWorld::GetInstance()->RemoveRigidBody(*this);
 	}
 }

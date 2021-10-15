@@ -176,7 +176,7 @@ const CVector3& CharacterController::Execute( CVector3& moveSpeed, float deltaTi
 			callback.me = m_rigidBody.GetBody();
 			callback.startPos = posTmp;
 			//衝突検出。
-			PhysicsWorld::GetInstance()->ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+			CPhysicsWorld::GetInstance()->ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 
 			if (callback.isHit) {
 				//当たった。
@@ -266,7 +266,7 @@ const CVector3& CharacterController::Execute( CVector3& moveSpeed, float deltaTi
 		
 		//衝突検出。
 		if(fabsf(endPos.y - callback.startPos.y) > FLT_EPSILON){
-			PhysicsWorld::GetInstance()->ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
+			CPhysicsWorld::GetInstance()->ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 			if (callback.isHit) {
 				//当たった。
 				moveSpeed.y = 0.0f;
@@ -297,6 +297,6 @@ const CVector3& CharacterController::Execute( CVector3& moveSpeed, float deltaTi
 */
 void CharacterController::RemoveRigidBoby()
 {
-	PhysicsWorld::GetInstance()->RemoveRigidBody(m_rigidBody);
+	CPhysicsWorld::GetInstance()->RemoveRigidBody(m_rigidBody);
 }
 

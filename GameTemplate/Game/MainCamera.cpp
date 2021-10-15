@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MainCamera.h"
-#include "Player.h"
+#include "player/Player.h"
 
 bool CMainCamera::Start() {
 
@@ -18,12 +18,18 @@ void CMainCamera::Update() {
 	//	m_tar.y += 50.0f;
 	//}
 
-	//if (g_pad[0]->IsPress(enButtonRight)) {
-	//	m_pos.x -= 2.0f;
-	//}
-	//else if (g_pad[0]->IsPress(enButtonLeft)) {
-	//	m_pos.x += 2.0f;
-	//}
+	if (g_pad[0]->IsPress(enButtonRight)) {
+		m_pos.x -= 2.0f;
+	}
+	if (g_pad[0]->IsPress(enButtonUp)) {
+		m_pos.y += 2.0f;
+	}
+	if (g_pad[0]->IsPress(enButtonDown)) {
+		m_pos.y -= 2.0f;
+	}
+	if (g_pad[0]->IsPress(enButtonLeft)) {
+		m_pos.x += 2.0f;
+	}
 
 	////g_camera3D->SetPosition(m_pos);
 	//m_pos = m_tar + toPos;

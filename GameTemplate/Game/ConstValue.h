@@ -4,6 +4,15 @@
 
 namespace nsMyGame {
 
+
+	constexpr const char* c_entryPointVSMain = "VSMain";
+	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";
+	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
+
+	namespace nsPlayer {
+
+		constexpr const float c_animationInterpolateTime = 0.6f;		//アニメーションの補間時間
+	}
 	namespace nsLight {
 
 		constexpr int c_maxDirectionLightNum = 4;	//ディレクションライトの上限数

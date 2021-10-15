@@ -4,7 +4,7 @@
 
 using namespace std;
 
-PhysicsWorld* PhysicsWorld::m_instance = nullptr;	//唯一のインスタンス。
+CPhysicsWorld* CPhysicsWorld::m_instance = nullptr;	//唯一のインスタンス。
 
 namespace {
 struct MyContactResultCallback : public btCollisionWorld::ContactResultCallback {
@@ -21,7 +21,7 @@ struct MyContactResultCallback : public btCollisionWorld::ContactResultCallback 
 };
 }
 
-PhysicsWorld::PhysicsWorld()
+CPhysicsWorld::CPhysicsWorld()
 {
 	MY_ASSERT(
 		m_instance == nullptr, 
@@ -29,12 +29,12 @@ PhysicsWorld::PhysicsWorld()
 	);
 	Init();
 }
-PhysicsWorld::~PhysicsWorld()
+CPhysicsWorld::~CPhysicsWorld()
 {
 	Release();
 	m_instance = nullptr;
 }
-void PhysicsWorld::Release()
+void CPhysicsWorld::Release()
 {
 	m_dynamicWorld.reset();
 	m_constraintSolver.reset();
@@ -43,7 +43,7 @@ void PhysicsWorld::Release()
 	m_collisionDispatcher.reset();
 	m_collisionConfig.reset();
 }
-void PhysicsWorld::Init()
+void CPhysicsWorld::Init()
 {
 	Release();
 	//物理エンジンを初期化。
@@ -72,7 +72,7 @@ void PhysicsWorld::Init()
 	m_dynamicWorld->setDebugDrawer(&m_debugDraw);
 #endif 
 }
-void PhysicsWorld::Update(float deltaTime)
+void CPhysicsWorld::Update(float deltaTime)
 {
 	m_dynamicWorld->stepSimulation(deltaTime);
 }

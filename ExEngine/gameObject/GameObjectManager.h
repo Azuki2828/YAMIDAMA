@@ -23,17 +23,17 @@
 /// 2　インスタンスの数を一つに制限する機能。
 /// </reramk>
 /// 
-class GameObjectManager {
+class CGameObjectManager {
 private:
-	GameObjectManager();
-	~GameObjectManager();
+	CGameObjectManager();
+	~CGameObjectManager();
 public: //静的メンバ関数
 	/// <summary>
 	/// インスタンスの作成。
 	/// </summary>
 	static void CreateInstance()
 	{
-		m_instance = new GameObjectManager;
+		m_instance = new CGameObjectManager;
 	}
 	/// <summary>
 	/// インスタンスの破棄。
@@ -46,7 +46,7 @@ public: //静的メンバ関数
 	/// インスタンスを取得。
 	/// </summary>
 	/// <returns></returns>
-	static GameObjectManager* GetInstance()
+	static CGameObjectManager* GetInstance()
 	{
 		return m_instance;
 	}
@@ -136,7 +136,7 @@ private:
 	enum { GAME_OBJECT_PRIO_MAX = 255 };		//!<ゲームオブジェクトの優先度の最大値。
 	typedef std::list<CIGameObject*>	 GameObjectList;
 	std::array<GameObjectList, GAME_OBJECT_PRIO_MAX>	m_gameObjectListArray;							//!<ゲームオブジェクトの優先度付きリスト。
-	static GameObjectManager* m_instance;		//唯一のインスタンスのアドレスを記録する変数。
+	static CGameObjectManager* m_instance;		//唯一のインスタンスのアドレスを記録する変数。
 };
 
 
@@ -150,7 +150,7 @@ private:
 template<class T>
 static inline T* FindGO(const char* objectName)
 {
-	return GameObjectManager::GetInstance()->FindGameObject<T>(objectName);
+	return CGameObjectManager::GetInstance()->FindGameObject<T>(objectName);
 }
 /*!
 *@brief	ゲームオブジェクトの検索のヘルパー関数。
@@ -162,7 +162,7 @@ static inline T* FindGO(const char* objectName)
 template<class T>
 static inline void QueryGOs(const char* objectName, std::function<bool(T* go)> func)
 {
-	return GameObjectManager::GetInstance()->QueryGameObjects<T>(objectName, func);
+	return CGameObjectManager::GetInstance()->QueryGameObjects<T>(objectName, func);
 }
 /*!
 	*@brief	ゲームオブジェクト生成のヘルパー関数。
@@ -172,7 +172,7 @@ static inline void QueryGOs(const char* objectName, std::function<bool(T* go)> f
 template<class T>
 static inline T* NewGO( int priority, const char* objectName = nullptr)
 {
-	return GameObjectManager::GetInstance()->NewGameObject<T>( priority, objectName);
+	return CGameObjectManager::GetInstance()->NewGameObject<T>( priority, objectName);
 }
 	
 /*!
@@ -182,7 +182,7 @@ static inline T* NewGO( int priority, const char* objectName = nullptr)
 	*/
 static inline void DeleteGO(CIGameObject* go)
 {
-	GameObjectManager::GetInstance()->DeleteGameObject(go);
+	CGameObjectManager::GetInstance()->DeleteGameObject(go);
 }
 
 
