@@ -100,6 +100,14 @@ namespace nsMyGame {
 			m_fontRender2->Init(L"A：飲む", { 450.0f,310.0f });	//場所
 			m_fontRender2->SetColor({ 1.0f,0.0f,0.0f,1.0f });			//赤色
 			m_fontRender2->SetShadowParam(true, 1.0f, CVector4::Black);
+
+
+			//キャラクターコントローラーを初期化。
+			m_charaCon.Init(
+				20.0f,			//半径。
+				100.0f,			//高さ。
+				m_position		//座標。
+			);
 			return true;
 		}
 
@@ -153,7 +161,7 @@ namespace nsMyGame {
 		void CPlayer::LightCameraUpdate() {
 
 			//ライトカメラの情報を更新
-			CVector3 m_lightCameraTar = m_pos;
+			CVector3 m_lightCameraTar = m_position;
 			CVector3 m_lightCameraPos = m_lightCameraTar;
 
 			//ライトカメラの座標を設定
@@ -179,20 +187,42 @@ namespace nsMyGame {
 
 		void CPlayer::Move() {
 
-			/*if (g_pad[0]->IsPress(enButtonRight)) {
-				m_pos.x -= 2.0f;
+			m_moveSpeed.x = 0.0f;
+			m_moveSpeed.z = 0.0f;
+			
+			//このフレームの移動量を求める。
+			//左スティックの入力量を受け取る。
+			float lStick_x = g_pad[0]->GetLStickXF();
+			float lStick_y = g_pad[0]->GetLStickYF();
+			//カメラの前方方向と右方向を取得。
+			CVector3 cameraForward = g_camera3D->GetForward();
+			CVector3 cameraRight = g_camera3D->GetRight();
+			//XZ平面での前方方向、右方向に変換する。
+			cameraForward.y = 0.0f;
+			cameraForward.Normalize();
+			cameraRight.y = 0.0f;
+			cameraRight.Normalize();
+			//XZ成分の移動速度をクリア。
+			m_moveSpeed += cameraForward * lStick_y * 500.0f;	//奥方向への移動速度を加算。
+			m_moveSpeed += cameraRight * lStick_x * 500.0f;		//右方向への移動速度を加算。
+			if (g_pad[0]->IsTrigger(enButtonA) //Aボタンが押されたら
+				//&& m_charaCon.IsOnGround()  //かつ、地面に居たら
+				) {
+				//ジャンプする。
+				m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
 			}
-			if (g_pad[0]->IsPress(enButtonLeft)) {
-				m_pos.x += 2.0f;
-			}
-			if (g_pad[0]->IsPress(enButtonUp)) {
-				m_pos.z -= 2.0f;
-			}
-			if (g_pad[0]->IsPress(enButtonDown)) {
-				m_pos.z += 2.0f;
-			}*/
 
-			m_modelRender->SetPosition(m_pos);
+			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
+			//キャラクターコントローラーを使用して、座標を更新。
+
+			m_position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+			if (m_charaCon.IsOnGround()) {
+				//地面についた。
+				m_moveSpeed.y = 0.0f;
+			}
+
+			//座標を設定。
+			m_modelRender->SetPosition(m_position);
 		}
 
 		void CPlayer::FontUpdate() {

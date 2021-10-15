@@ -2,40 +2,28 @@
 #include "MainCamera.h"
 #include "player/Player.h"
 
-bool CMainCamera::Start() {
+namespace nsMyGame {
 
-	g_camera3D->SetPosition(m_pos);
-	g_camera3D->SetTarget(m_tar);
+	bool CMainCamera::Start() {
 
-	return true;
-}
+		g_camera3D->SetPosition(m_pos);
+		g_camera3D->SetTarget(m_tar);
 
-void CMainCamera::Update() {
-
-	//m_player = FindGO<Player>("player");
-	//if (m_player != nullptr) {
-	//	m_tar = m_player->GetPosition();
-	//	m_tar.y += 50.0f;
-	//}
-
-	if (g_pad[0]->IsPress(enButtonRight)) {
-		m_pos.x -= 2.0f;
-	}
-	if (g_pad[0]->IsPress(enButtonUp)) {
-		m_pos.y += 2.0f;
-	}
-	if (g_pad[0]->IsPress(enButtonDown)) {
-		m_pos.y -= 2.0f;
-	}
-	if (g_pad[0]->IsPress(enButtonLeft)) {
-		m_pos.x += 2.0f;
+		return true;
 	}
 
-	////g_camera3D->SetPosition(m_pos);
-	//m_pos = m_tar + toPos;
+	void CMainCamera::Update() {
 
-	g_camera3D->SetTarget(m_tar);
-	g_camera3D->SetPosition(m_pos);
-	g_camera3D->Update();
+		m_player = FindGO<nsPlayer::CPlayer>("player");
+		if (m_player != nullptr) {
+			m_tar = m_player->GetPosition();
+		}
 
+		m_pos = m_tar + toPos;
+
+		g_camera3D->SetTarget(m_tar);
+		g_camera3D->SetPosition(m_pos);
+		g_camera3D->Update();
+
+	}
 }

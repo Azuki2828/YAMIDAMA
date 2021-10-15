@@ -37,11 +37,11 @@ namespace nsMyGame {
 		m_modelRender->SetScale(objData.scale);
 		m_modelRender->UpdateWorldMatrix();
 
-		//m_physicsStaticObject.CreateFromModel(
-		//	*m_modelRender->GetModel(),
-		//	m_modelRender->GetModel()->GetWorldMatrix()
-		//);
-		//m_physicsStaticObject.SetFriction(10.0f);
+		m_physicsStaticObject.CreateFromModel(
+			*m_modelRender->GetModel(),
+			m_modelRender->GetModel()->GetWorldMatrix()
+		);
+		m_physicsStaticObject.SetFriction(10.0f);
 	}
 
 	MapChip::~MapChip() {

@@ -12,9 +12,9 @@ namespace nsMyGame {
 		m_modelRender->SetScale(m_sca);
 		m_modelRender->SetShadowReceiverFlag(true);
 		m_modelRender->Init();
-		m_modelRender->Update();
+		m_modelRender->Update();*/
 
-		m_wall = NewGO<CModelRender>(0);
+		/*m_wall = NewGO<CModelRender>(0);
 		m_wall->SetFilePathTkm("Assets/modelData/BackGround/wall.tkm");
 		m_wall->SetPosition(m_pos);
 		m_wall->SetRotation(m_rot);
@@ -23,24 +23,22 @@ namespace nsMyGame {
 		m_wall->Init();
 		m_wall->Update();*/
 
-		m_level.Init("Assets/level/wall2.tkl", [&](LevelObjectData& objData) {
+		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
 
 			//CQuaternion rotation = objData.rotation;
 			//rotation.SetRotationDegY(180.0f);
-			CVector3 position = objData.position;
-			position.x *= -1.0f;
 
-			if (objData.EqualObjectName("wally")) {
+			/*if (objData.EqualObjectName("wall")) {
 				
 				m_wall = NewGO<CModelRender>(0);
 				m_wall->SetFilePathTkm("Assets/modelData/BackGround/wall.tkm");
-				m_wall->SetPosition(position);
+				m_wall->SetPosition(objData.position);
 				m_wall->SetRotation(objData.rotation);
 				m_wall->SetScale(objData.scale);
 				m_wall->SetShadowReceiverFlag(true);
 				m_wall->Init();
 				return true;
-			}
+			}*/
 
 			return false;
 			});

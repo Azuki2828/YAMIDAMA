@@ -68,7 +68,7 @@ namespace nsMyGame {
 			*/
 			const CVector3& GetPosition()const {
 
-				return m_pos;
+				return m_position;
 			}
 
 			/**
@@ -135,7 +135,9 @@ namespace nsMyGame {
 			CModelRender* m_modelRender = nullptr;
 			CAnimationClip m_animationClip[enAnimNum];
 
-			CVector3 m_pos = {0.0f,0.0f,0.0f};
+			CVector3 m_position = {0.0f,0.0f,0.0f};
+			CVector3 m_moveSpeed = CVector3::Zero;
+			CharacterController m_charaCon;
 			pybind11::module m_playerPyModule;
 
 			nsFont::CFontRender* m_fontRender = nullptr;

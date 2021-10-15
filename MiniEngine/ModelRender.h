@@ -167,6 +167,12 @@ namespace nsMyGame {
 		void SetModelUpAxis(EnModelUpAxis modelUpAxis) {
 			m_modelInitData.m_modelUpAxis = modelUpAxis;
 		}
+
+		/**
+		 * @brief モデルを取得する関数。
+		 * @return モデル
+		*/
+		CModel* GetModel() { return &m_model; }
 	private:
 		/**
 		 * @brief シャドウモデルを作成する関数。

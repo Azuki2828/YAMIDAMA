@@ -24,17 +24,20 @@ namespace nsMyGame {
 				//3dsMax‚Æ‚ÍŽ²‚ªˆá‚¤‚Ì‚ÅA•â³‚ð“ü‚ê‚éB
 				auto t = objData.position.y;
 				objData.position.y = objData.position.z;
-				objData.position.z = -t;
+				objData.position.z = t;
+
+
 
 				t = objData.rotation.y;
-				objData.rotation.y = objData.rotation.z;
+				objData.rotation.y = -objData.rotation.z;
 				objData.rotation.z = -t;
+				objData.rotation.x *= -1.0f;
+
+
 				objData.name = bone->GetName();
 
-				//objData.scale.x *= -1.0f;
-				//objData.scale.z *= -1.0f;
-
 				std::swap(objData.scale.y, objData.scale.z);
+
 
 				auto isHook = false;
 				if (hookFunc != nullptr) {
