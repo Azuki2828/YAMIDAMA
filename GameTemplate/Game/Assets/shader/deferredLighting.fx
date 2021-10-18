@@ -325,5 +325,6 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		}
 	}
 
+	finalColor.xyz += 0.4f;
 	return finalColor;
 }

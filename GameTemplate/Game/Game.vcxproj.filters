@@ -290,6 +290,21 @@
     <ClCompile Include="..\..\MiniEngine\tkFile\TklFile.cpp">
       <Filter>MiniEngine\tkFile</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\BSP.cpp">
+      <Filter>MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\AABB.cpp">
+      <Filter>MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\SpringCamera.cpp">
+      <Filter>MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\CameraCollisionSolver.cpp">
+      <Filter>MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExEngine\physics\SphereCollider.cpp">
+      <Filter>ExEngine\physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -543,6 +558,21 @@
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\tkFile\TklFile.h">
       <Filter>MiniEngine\tkFile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\BSP.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\AABB.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\SpringCamera.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\CameraCollisionSolver.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExEngine\physics\SphereCollider.h">
+      <Filter>ExEngine\physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

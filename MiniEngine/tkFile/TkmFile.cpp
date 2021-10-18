@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "tkFile/TkmFile.h"
+#include "../BSP.h"
 
 
 //法線スムージング。
@@ -59,29 +60,42 @@ public:
 		//ステップ２　座標と向きが同じ頂点の法線を平均化していく。
 		if(mesh.isFlatShading == 0)
 		{
+			//BSPツリー構造
 			//重複している頂点の法線を平均化
+			BSP bsp;
 			std::vector<SSmoothVertex> smoothVertex;
 			smoothVertex.reserve(mesh.vertexBuffer.size());
 			for (auto& v : mesh.vertexBuffer) {
+				// BSPツリーのリーフを追加
+				bsp.AddLeaf(v.pos, &v.normal);
 				smoothVertex.push_back({ v.normal, &v });
 			}
-			for (auto& va : smoothVertex) {	
-				for (auto& vb : smoothVertex) {
-					
-					if (va.vertex != vb.vertex
-						&& va.vertex->pos.x == vb.vertex->pos.x
-						&& va.vertex->pos.y == vb.vertex->pos.y
-						&& va.vertex->pos.z == vb.vertex->pos.z
-						) {
-						//同じ座標。
-						if (va.vertex->normal.Dot(vb.vertex->normal) > 0.0f) {
-							//同じ向き。
-							va.newNormal += vb.vertex->normal;
-						}
-					}
-				}
-				va.newNormal.Normalize();
-			}
+			//BSPツリーを構築。
+			bsp.Build();
+
+			////重複している頂点の法線を平均化
+			//std::vector<SSmoothVertex> smoothVertex;
+			//smoothVertex.reserve(mesh.vertexBuffer.size());
+			//for (auto& v : mesh.vertexBuffer) {
+			//	smoothVertex.push_back({ v.normal, &v });
+			//}
+			//for (auto& va : smoothVertex) {	
+			//	for (auto& vb : smoothVertex) {
+			//		
+			//		if (va.vertex != vb.vertex
+			//			&& va.vertex->pos.x == vb.vertex->pos.x
+			//			&& va.vertex->pos.y == vb.vertex->pos.y
+			//			&& va.vertex->pos.z == vb.vertex->pos.z
+			//			) {
+			//			//同じ座標。
+			//			if (va.vertex->normal.Dot(vb.vertex->normal) > 0.0f) {
+			//				//同じ向き。
+			//				va.newNormal += vb.vertex->normal;
+			//			}
+			//		}
+			//	}
+			//	va.newNormal.Normalize();
+			//}
 			for (auto& va : smoothVertex) {
 				va.vertex->normal = va.newNormal;
 			}

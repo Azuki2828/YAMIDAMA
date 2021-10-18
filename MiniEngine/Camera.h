@@ -352,7 +352,7 @@ protected:
 	float		m_targetToPositionLen = 1.0f;			//注視点と視点まで距離。
 	CVector3		m_position = {0.0f, 0.0f, 1.0f};		//カメラ位置。
 	CVector3		m_up = g_vec3Up;						//カメラの上方向。
-	CVector3		m_target;								//カメラの中止点。
+	CVector3		m_target;								//カメラの注視点。
 	CMatrix		m_viewMatrix;							//ビュー行列。
 	CMatrix		m_projectionMatrix;						//プロジェクション行列。
 	CMatrix		m_viewProjectionMatrix;					//ビュープロジェクション行列。

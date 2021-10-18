@@ -250,10 +250,14 @@
     <ClCompile Include="..\..\ExEngine\physics\Physics.cpp" />
     <ClCompile Include="..\..\ExEngine\physics\PhysicsStaticObject.cpp" />
     <ClCompile Include="..\..\ExEngine\physics\RigidBody.cpp" />
+    <ClCompile Include="..\..\ExEngine\physics\SphereCollider.cpp" />
+    <ClCompile Include="..\..\MiniEngine\AABB.cpp" />
     <ClCompile Include="..\..\MiniEngine\Animation.cpp" />
     <ClCompile Include="..\..\MiniEngine\AnimationClip.cpp" />
     <ClCompile Include="..\..\MiniEngine\AnimationPlayController.cpp" />
+    <ClCompile Include="..\..\MiniEngine\BSP.cpp" />
     <ClCompile Include="..\..\MiniEngine\Camera.cpp" />
+    <ClCompile Include="..\..\MiniEngine\CameraCollisionSolver.cpp" />
     <ClCompile Include="..\..\MiniEngine\ConstantBuffer.cpp" />
     <ClCompile Include="..\..\MiniEngine\DescriptorHeap.cpp" />
     <ClCompile Include="..\..\MiniEngine\font\Font.cpp" />
@@ -296,6 +300,7 @@
     <ClCompile Include="..\..\MiniEngine\RWStructuredBuffer.cpp" />
     <ClCompile Include="..\..\MiniEngine\Shader.cpp" />
     <ClCompile Include="..\..\MiniEngine\Skeleton.cpp" />
+    <ClCompile Include="..\..\MiniEngine\SpringCamera.cpp" />
     <ClCompile Include="..\..\MiniEngine\Sprite.cpp" />
     <ClCompile Include="..\..\MiniEngine\SpriteRender.cpp" />
     <ClCompile Include="..\..\MiniEngine\StructuredBuffer.cpp" />
@@ -335,10 +340,14 @@
     <ClInclude Include="..\..\ExEngine\physics\Physics.h" />
     <ClInclude Include="..\..\ExEngine\physics\PhysicsStaticObject.h" />
     <ClInclude Include="..\..\ExEngine\physics\RigidBody.h" />
+    <ClInclude Include="..\..\ExEngine\physics\SphereCollider.h" />
+    <ClInclude Include="..\..\MiniEngine\AABB.h" />
     <ClInclude Include="..\..\MiniEngine\Animation.h" />
     <ClInclude Include="..\..\MiniEngine\AnimationClip.h" />
     <ClInclude Include="..\..\MiniEngine\AnimationPlayController.h" />
+    <ClInclude Include="..\..\MiniEngine\BSP.h" />
     <ClInclude Include="..\..\MiniEngine\Camera.h" />
+    <ClInclude Include="..\..\MiniEngine\CameraCollisionSolver.h" />
     <ClInclude Include="..\..\MiniEngine\ConstantBuffer.h" />
     <ClInclude Include="..\..\MiniEngine\debug\MyAssert.h" />
     <ClInclude Include="..\..\MiniEngine\DescriptorHeap.h" />
@@ -389,6 +398,7 @@
     <ClInclude Include="..\..\MiniEngine\RWStructuredBuffer.h" />
     <ClInclude Include="..\..\MiniEngine\Shader.h" />
     <ClInclude Include="..\..\MiniEngine\Skeleton.h" />
+    <ClInclude Include="..\..\MiniEngine\SpringCamera.h" />
     <ClInclude Include="..\..\MiniEngine\Sprite.h" />
     <ClInclude Include="..\..\MiniEngine\SpriteRender.h" />
     <ClInclude Include="..\..\MiniEngine\StructuredBuffer.h" />
