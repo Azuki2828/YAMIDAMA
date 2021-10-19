@@ -50,7 +50,7 @@ struct SPSOut {
 	float4 albedoAndShadowReceiver : SV_TARGET0;
 	float4 normalAndDepth : SV_TARGET1;
 	float4 worldPos : SV_TARGET2;
-	float4 specular : SV_TARGET3;
+	float4 occlusionAndSmoothAndMetaric : SV_TARGET3;
 };
 
 ////////////////////////////////////////////////
@@ -58,7 +58,7 @@ struct SPSOut {
 ////////////////////////////////////////////////
 Texture2D<float4> g_albedo : register(t0);				//アルベドマップ
 Texture2D<float4> g_normalMap : register(t1);   // 法線マップ
-Texture2D<float4> g_specularMap : register(t2); // スペキュラマップ。rgbにスペキュラカラー、aに金属度
+Texture2D<float4> g_occlusionAndSmoothAndMetaricMap : register(t2);
 StructuredBuffer<float4x4> g_boneMatrix : register(t3);	//ボーン行列。
 sampler g_sampler : register(s0);	//サンプラステート。
 
@@ -137,7 +137,7 @@ SPSOut PSMain(SPSIn psIn)
 	//psOut.normalAndDepth.w = g_depthTexture.Sample(g_sampler, psIn.uv).r;
 	psOut.worldPos.xyz = psIn.worldPos;
 
-	psOut.specular.xyz = g_specularMap.Sample(g_sampler, psIn.uv).xyz;
+	psOut.occlusionAndSmoothAndMetaric.xyz = g_occlusionAndSmoothAndMetaricMap.Sample(g_sampler, psIn.uv).xyz;
 
 	return psOut;
 }

@@ -574,5 +574,11 @@
     <ClInclude Include="..\..\ExEngine\physics\SphereCollider.h">
       <Filter>ExEngine\physics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\TResourceBank.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\Noncopyable.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -21,7 +21,7 @@ enum EnGBufferList {
 	enAlbedoAndShadowReceiverFlgMap,
 	enNormalAndDepthMap,
 	enWorldPosMap,
-	enSpecularMap,
+	enocclusionAndSmoothAndMetaricMap,
 
 	enGBufferNum
 };
@@ -129,9 +129,9 @@ public:
 
 	static void CreateSpecularRenderTarget() {
 
-		m_GBuffer[enSpecularMap] = new CRenderTarget;
+		m_GBuffer[enocclusionAndSmoothAndMetaricMap] = new CRenderTarget;
 
-		m_GBuffer[enSpecularMap]->Create(
+		m_GBuffer[enocclusionAndSmoothAndMetaricMap]->Create(
 			c_renderTargetW1280H720.x,
 			c_renderTargetW1280H720.y,
 			c_mipLevel1,

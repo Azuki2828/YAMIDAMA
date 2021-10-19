@@ -374,6 +374,7 @@
     <ClInclude Include="..\..\MiniEngine\MiniEngine.h" />
     <ClInclude Include="..\..\MiniEngine\Model.h" />
     <ClInclude Include="..\..\MiniEngine\ModelRender.h" />
+    <ClInclude Include="..\..\MiniEngine\Noncopyable.h" />
     <ClInclude Include="..\..\MiniEngine\NullTextureMaps.h" />
     <ClInclude Include="..\..\MiniEngine\PipelineState.h" />
     <ClInclude Include="..\..\MiniEngine\postEffect\Bloom.h" />
@@ -408,6 +409,7 @@
     <ClInclude Include="..\..\MiniEngine\tkFile\TklFile.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TkmFile.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TksFile.h" />
+    <ClInclude Include="..\..\MiniEngine\TResourceBank.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="ConstValue.h" />

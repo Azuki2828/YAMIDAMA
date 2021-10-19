@@ -42,7 +42,7 @@ struct PSInput {
 Texture2D<float4> albedoAndShadowReceiverTexture : register(t0);
 Texture2D<float4> normalAndDepthTexture : register(t1);
 Texture2D<float4> worldPosTexture : register(t2);
-Texture2D<float4> specularTexture : register(t3);
+Texture2D<float4> occlusionAndSmoothAndMetaricTexture : register(t3);
 Texture2D<float4> g_shadowMap : register(t10);	//シャドウマップ。
 
 sampler g_sampler : register(s0);
@@ -234,14 +234,11 @@ float4 PSMain(PSInput psIn) : SV_Target0
 	float3 normal = normalAndDepthTexture.Sample(g_sampler, psIn.uv).xyz;
 	
 	//金属度
-	float metaric = 0.0f;
-	//float metaric = occlusionAndSmoothAndMetaric.Sample(g_sampler, psIn.uv).z;
+	//float metaric = 0.0f;
+	float metaric = occlusionAndSmoothAndMetaricTexture.Sample(g_sampler, psIn.uv).z;
 
-	//float smooth = occlusionAndSmoothAndMetaric.Sample(g_sampler, psIn.uv).y;
+	float smooth = occlusionAndSmoothAndMetaricTexture.Sample(g_sampler, psIn.uv).y;
 	//smooth = 1.0f - smooth;
-	
-
-	float3 specular = specularTexture.Sample(g_sampler, psIn.uv).xyz;
 
 	//視点
 	float3 toEye = normalize(eyePos - worldPos);
@@ -252,7 +249,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 	//ディレクションライトの計算。
 	for (int dirLigNo = 0; dirLigNo < /*MAX_DIRECTION_LIGHT*/1; dirLigNo++) {
 
-		float diffuseFromFresnel = CalcDiffuseFromFresnel(normal, -directionLight[dirLigNo].dir, toEye, 1.0f - 0.5f);
+		float diffuseFromFresnel = CalcDiffuseFromFresnel(normal, -directionLight[dirLigNo].dir, toEye, 1.0f - smooth);
 
 		float NdotL = saturate(dot(normal, -directionLight[dirLigNo].dir));
 
@@ -262,13 +259,13 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		
 
 		float3 dirSpec = CookTorranceSpecular(-directionLight[dirLigNo].dir,
-			toEye, normal, metaric, 1.0f - 0.5f) * directionLight[dirLigNo].color;
+			toEye, normal, metaric, 1.0f - smooth) * directionLight[dirLigNo].color;
 
 		
 
-		dirSpec *= lerp(float3(1.0f, 1.0f, 1.0f), specular, 0.5f);
+		dirSpec *= lerp(float3(1.0f, 1.0f, 1.0f), specColor, smooth);
 
-		lig += dirDiffuse * (1.0f - 0.5f) + dirSpec * 0.5f;
+		lig += dirDiffuse * (1.0f - smooth) + dirSpec * smooth;
 		
 	}
 	//ポイントライトの計算。
@@ -290,7 +287,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		poiDiffuse *= affect;
 		poiSpec *= affect;
 
-		lig += poiDiffuse * (1.0f - 0.5f) + poiSpec * 0.5f;
+		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
 	}
 
 	lig += float3(0.3f,0.3f,0.3f);
@@ -325,6 +322,5 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		}
 	}
 
-	finalColor.xyz += 0.4f;
 	return finalColor;
 }
