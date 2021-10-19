@@ -6,9 +6,10 @@ namespace nsMyGame {
 	namespace nsPlayer {
 
 		enum EnAnimationList {
-			enAnim_Walk,
 			enAnim_Idle,
-			enAnim_Death,
+			enAnim_Walk,
+			enAnim_Run,
+			enAnim_Attack,
 
 			enAnimNum
 
@@ -104,6 +105,11 @@ namespace nsMyGame {
 			void Move();
 
 			/**
+			 * @brief 回転処理を行う関数。
+			*/
+			void Turn();
+
+			/**
 			 * @brief フォントを更新する関数。
 			*/
 			void FontUpdate();
@@ -136,6 +142,7 @@ namespace nsMyGame {
 			CAnimationClip m_animationClip[enAnimNum];
 
 			CVector3 m_position = {0.0f,0.0f,0.0f};
+			CQuaternion m_rotation;
 			CVector3 m_moveSpeed = CVector3::Zero;
 			CharacterController m_charaCon;
 			pybind11::module m_playerPyModule;

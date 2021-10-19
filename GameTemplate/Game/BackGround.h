@@ -1,4 +1,5 @@
 #pragma once
+#include "../../ExEngine/physics/PhysicsStaticObject.h"
 
 namespace nsMyGame {
 
@@ -16,6 +17,7 @@ namespace nsMyGame {
 		CQuaternion m_rot = CQuaternion::Identity;
 		CVector3 m_sca = CVector3::One;
 		Level m_level;
+		PhysicsStaticObject m_physicsStaticObject;
 	};
 }
 

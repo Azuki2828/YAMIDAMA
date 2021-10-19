@@ -78,11 +78,11 @@ namespace nsMyGame {
 		NewGO<nsPlayer::CPlayer>(0, "player");
 		NewGO<CBackGround>(0);
 		NewGO<CMainCamera>(0);
-		CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);
+		/*CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);
 		m_spriteRender->Init("Assets/image/beer.dds", 1280.0f, 720.0f);
 		m_spriteRender->SetPosition({ -400.0f,-200.0f,0.0f });
 		m_spriteRender->SetScale({ 0.2f,0.2f,0.2f });
-		m_spriteRender->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });
+		m_spriteRender->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });*/
 
 		nsLight::CDirectionLight* dirLight = NewGO<nsLight::CDirectionLight>(0);
 		dirLight->SetLigDirection({ 1.0f,-1.0f,-1.0f });

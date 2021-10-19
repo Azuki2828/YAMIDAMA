@@ -14,34 +14,24 @@ namespace nsMyGame {
 		m_modelRender->Init();
 		m_modelRender->Update();*/
 
-		/*m_wall = NewGO<CModelRender>(0);
-		m_wall->SetFilePathTkm("Assets/modelData/BackGround/wall.tkm");
+		m_wall = NewGO<CModelRender>(0);
+		m_wall->SetFilePathTkm("Assets/modelData/BackGround/stage01.tkm");
 		m_wall->SetPosition(m_pos);
 		m_wall->SetRotation(m_rot);
 		m_wall->SetScale(m_sca);
 		m_wall->SetShadowReceiverFlag(true);
 		m_wall->Init();
-		m_wall->Update();*/
+		m_physicsStaticObject.CreateFromModel(
+			*m_wall->GetModel(),
+			m_wall->GetModel()->GetWorldMatrix()
+		);
+		m_physicsStaticObject.SetFriction(10.0f);
+		m_wall->Update();
 
-		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
-
-			//CQuaternion rotation = objData.rotation;
-			//rotation.SetRotationDegY(180.0f);
-
-			/*if (objData.EqualObjectName("wall")) {
-				
-				m_wall = NewGO<CModelRender>(0);
-				m_wall->SetFilePathTkm("Assets/modelData/BackGround/wall.tkm");
-				m_wall->SetPosition(objData.position);
-				m_wall->SetRotation(objData.rotation);
-				m_wall->SetScale(objData.scale);
-				m_wall->SetShadowReceiverFlag(true);
-				m_wall->Init();
-				return true;
-			}*/
+		/*m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
 
 			return false;
-			});
+			});*/
 		return true;
 	}
 

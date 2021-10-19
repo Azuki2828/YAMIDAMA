@@ -16,7 +16,7 @@ namespace nsMyGame {
 		}
 
 		void Death() {
-			g_pCurrentPlayer->GetModelRender()->PlayAnimation(enAnim_Death, c_animationInterpolateTime);
+			g_pCurrentPlayer->GetModelRender()->PlayAnimation(enAnim_Attack, c_animationInterpolateTime);
 		}
 
 		int GetYoiParam() {
@@ -74,21 +74,23 @@ namespace nsMyGame {
 		bool CPlayer::Start() {
 
 			m_modelRender = NewGO<CModelRender>(0);
-			m_modelRender->SetFilePathTkm("Assets/modelData/knight.tkm");
-			m_modelRender->SetFilePathTks("Assets/modelData/knight.tks");
-			m_modelRender->SetFilePathTkm("Assets/unityChanBeer.tkm");
-			m_modelRender->SetFilePathTks("Assets/unityChanBeer.tks");
-			m_animationClip[enAnim_Walk].Load("Assets/animData/walk.tka");
-			m_animationClip[enAnim_Idle].Load("Assets/animData/Idle.tka");
-			m_animationClip[enAnim_Death].Load("Assets/animData/KneelDown.tka");
+			m_modelRender->SetFilePathTkm("Assets/modelData/player.tkm");
+			m_modelRender->SetFilePathTks("Assets/modelData/player.tks");
+			//m_modelRender->SetFilePathTkm("Assets/unityChanBeer.tkm");
+			//m_modelRender->SetFilePathTks("Assets/unityChanBeer.tks");
+			m_animationClip[enAnim_Walk].Load("Assets/animData/playerWalk.tka");
+			m_animationClip[enAnim_Idle].Load("Assets/animData/playerIdle.tka");
+			m_animationClip[enAnim_Run].Load("Assets/animData/playerRun.tka");
+			m_animationClip[enAnim_Attack].Load("Assets/animData/playerAttack.tka");
 			m_animationClip[enAnim_Walk].SetLoopFlag(true);
 			m_animationClip[enAnim_Idle].SetLoopFlag(true);
-			m_animationClip[enAnim_Death].SetLoopFlag(false);
+			m_animationClip[enAnim_Run].SetLoopFlag(true);
+			m_animationClip[enAnim_Attack].SetLoopFlag(false);
 			m_modelRender->InitAnimation(m_animationClip, enAnimNum);
 			m_modelRender->SetAnimFlg(true);
 			m_modelRender->SetShadowCasterFlag(true);
 			m_modelRender->SetShadowReceiverFlag(true);
-			m_modelRender->SetModelUpAxis(EnModelUpAxis::enModelUpAxisY);
+			//m_modelRender->SetModelUpAxis(EnModelUpAxis::enModelUpAxisY);
 			m_modelRender->Init();
 
 			m_fontRender = NewGO<nsFont::CFontRender>(0);
@@ -101,11 +103,10 @@ namespace nsMyGame {
 			m_fontRender2->SetColor({ 1.0f,0.0f,0.0f,1.0f });			//赤色
 			m_fontRender2->SetShadowParam(true, 1.0f, CVector4::Black);
 
-
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
 				20.0f,			//半径。
-				100.0f,			//高さ。
+				200.0f,			//高さ。
 				m_position		//座標。
 			);
 			return true;
@@ -138,6 +139,7 @@ namespace nsMyGame {
 			//Pythonスクリプトの中のUpdate()関数を呼び出す。
 			auto updateFunc = m_playerPyModule.attr("Update");
 			updateFunc();
+			Turn();
 		}
 
 
@@ -223,6 +225,27 @@ namespace nsMyGame {
 
 			//座標を設定。
 			m_modelRender->SetPosition(m_position);
+		}
+
+		void CPlayer::Turn()
+		{
+			if (fabsf(m_moveSpeed.x) < 0.001f
+				&& fabsf(m_moveSpeed.z) < 0.001f) {
+				//m_moveSpeed.xとm_moveSpeed.zの絶対値がともに0.001以下ということは
+				//このフレームではキャラは移動していないので旋回する必要はない。
+				return;
+			}
+			//atan2はtanθの値を角度(ラジアン単位)に変換してくれる関数。
+			//m_moveSpeed.x / m_moveSpeed.zの結果はtanθになる。
+			//atan2を使用して、角度を求めている。
+			//これが回転角度になる。
+			float angle = atan2(-m_moveSpeed.x, m_moveSpeed.z);
+			//atanが返してくる角度はラジアン単位なので
+			//SetRotationDegではなくSetRotationを使用する。
+			m_rotation.SetRotationY(-angle);
+
+			//回転を設定する。
+			m_modelRender->SetRotation(m_rotation);
 		}
 
 		void CPlayer::FontUpdate() {
