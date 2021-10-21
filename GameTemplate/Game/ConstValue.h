@@ -4,14 +4,39 @@
 
 namespace nsMyGame {
 
+	//優先度。enPriority_Zerothが最も先に描画される。
+	enum PriorityNum {
+		enPriority_Zeroth,
+		enPriority_First,
+		enPriority_Second,
+		enPriority_Third,
+		enPriority_Fourth,
+		enPriority_Fifth
+	};
 
 	constexpr const char* c_entryPointVSMain = "VSMain";
 	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";
 	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
 
 	namespace nsPlayer {
+		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/player.tkm";		//プレイヤーのtkmファイルパス
+		constexpr const char* c_filePathTksPlayer = "Assets/modelData/player.tks";		//プレイヤーのtksファイルパス
+		const CVector3 c_addLightCameraPos = { 0.0f,300.0f,300.0f };					//プレイヤー用のライトカメラに加算する座標
+		constexpr const float c_animationInterpolateTime = 0.6f;						//アニメーションの補間時間
+		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
+		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
 
-		constexpr const float c_animationInterpolateTime = 0.6f;		//アニメーションの補間時間
+		//プレイヤーのステート
+		enum EnPlayerState {
+			enState_Idle,
+			enState_Walk,
+			enState_Run,
+			enState_Attack,
+			enState_Rolling,
+			enState_ThreeCombo,
+
+			enState_Num
+		};
 	}
 	namespace nsLight {
 
@@ -61,17 +86,7 @@ namespace nsMyGame {
 }
 
 
-/**
- * @brief 優先度。enPriority_Zerothが最も先に描画される。
-*/
-enum PriorityNum{
-	enPriority_Zeroth,
-	enPriority_First,
-	enPriority_Second,
-	enPriority_Third,
-	enPriority_Fourth,
-	enPriority_Fifth
-};
+
 
 /**
  * @brief サウンドリスト

@@ -1,68 +1,37 @@
 #pragma once
-
+#include "PlayerAction.h"
+#include "PlayerAnimation.h"
 
 namespace nsMyGame {
 
-	namespace nsPlayer {
+	namespace nsPlayer {	
 
-		enum EnAnimationList {
-			enAnim_Idle,
-			enAnim_Walk,
-			enAnim_Run,
-			enAnim_Attack,
+		//プレイヤークラス
 
-			enAnimNum
-
-		};
 		class CPlayer : public CIGameObject
 		{
-			//プレイヤーの状態
-			enum class EnPlayerState {
-				enState_Normal,
-				enState_Yoi,
-				enState_Death,
-
-				enStateNum
-			};
-
-			//酔いフォントのカラー状態
-			enum EnColor {
-				en1,
-				en2,
-				en3,
-				en4,
-				en5,
-				en6,
-			};
-
-
-			/**
-			 * @brief モジュールをインポートする関数。
-			 * @param moduleName モジュール名(Pythonファイル名)
-			*/
-			void ImportModule(const char* moduleName) {
-				// モジュールをインポート
-				try {
-					m_playerPyModule = pybind11::module::import(moduleName);
-				}
-				catch (pybind11::error_already_set& e) {
-					MessageBoxA(nullptr, e.what(), "エラー", MB_OK);
-				}
-			}
-
+			
 			/**
 			 * @brief ライトカメラを更新する関数。
 			*/
-		public:
 			void LightCameraUpdate();
+
+			/**
+			 * @brief 最初に一回だけ呼ばれる関数。
+			 * @return 成功した？
+			*/
 			bool Start()override final;
+
+			/**
+			 * @brief 更新関数。
+			*/
 			void Update()override final;
 
 			/**
-			 * @brief ステートを更新する関数。
+			 * @brief プレイヤーの前方向を更新する関数。
 			*/
-			void StateUpdate();
-
+			void UpdateForward();
+		public:
 			/**
 			 * @brief 座標を取得する関数。
 			 * @return
@@ -81,74 +50,14 @@ namespace nsMyGame {
 				return m_modelRender;
 			}
 
-			/**
-			 * @brief 酔いパラメーターを設定する関数。
-			 * @param param  酔いパラメーター
-			*/
-			void SetYoiParam(const int param) {
-
-				m_yoiParam = param;
-			}
-
-			/**
-			 * @brief 酔いパラメーターを取得する関数。
-			 * @return 酔いパラメーター
-			*/
-			int GetYoiParam() {
-
-				return m_yoiParam;
-			}
-
-			/**
-			 * @brief 移動処理を行う関数。
-			*/
-			void Move();
-
-			/**
-			 * @brief 回転処理を行う関数。
-			*/
-			void Turn();
-
-			/**
-			 * @brief フォントを更新する関数。
-			*/
-			void FontUpdate();
-
-			/**
-			 * @brief ステートを変化させる関数。
-			 * @param state
-			*/
-			void SetState(int state) {
-				switch (state) {
-				case 0:
-					m_playerState = EnPlayerState::enState_Normal;
-					break;
-				case 1:
-					m_playerState = EnPlayerState::enState_Yoi;
-					break;
-				case 2:
-					m_playerState = EnPlayerState::enState_Death;
-					break;
-				}
-
-			}
 		private:
-			int m_yoiParam = 0;
-			CVector4 m_color = CVector4::White;
-			EnColor m_colorState = en1;
-			int m_count = 0;
-			EnPlayerState m_playerState = EnPlayerState::enState_Normal;
-			CModelRender* m_modelRender = nullptr;
-			CAnimationClip m_animationClip[enAnimNum];
-
-			CVector3 m_position = {0.0f,0.0f,0.0f};
-			CQuaternion m_rotation;
-			CVector3 m_moveSpeed = CVector3::Zero;
-			CharacterController m_charaCon;
-			pybind11::module m_playerPyModule;
-
-			nsFont::CFontRender* m_fontRender = nullptr;
-			nsFont::CFontRender* m_fontRender2 = nullptr;
+			CModelRender* m_modelRender = nullptr;		//モデル
+			CPlayerAction m_playerAction;				//プレイヤーの行動をまとめたクラス
+			CPlayerAnimation m_playerAnimation;			//プレイヤーアニメーション
+			CVector3 m_position = CVector3::Zero;		//座標
+			CQuaternion m_rotation;						//回転
+			CVector3 m_forward = CVector3::Zero;		//プレイヤーの前方向
+			EnPlayerState m_playerState;				//プレイヤーのステート
 		};
 	}
 }

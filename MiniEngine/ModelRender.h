@@ -50,6 +50,7 @@ namespace nsMyGame {
 		void InitAnimation(CAnimationClip* animClip, int animNum) {
 			m_animationClip = animClip;
 			m_animNum = animNum;
+			SetAnimFlg(true);
 		}
 
 		/**
@@ -173,6 +174,11 @@ namespace nsMyGame {
 		 * @return モデル
 		*/
 		CModel* GetModel() { return &m_model; }
+
+		Skeleton* GetSkeleton() {
+
+			return &m_skeleton;
+		}
 	private:
 		/**
 		 * @brief シャドウモデルを作成する関数。

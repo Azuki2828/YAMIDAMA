@@ -86,7 +86,7 @@ namespace nsMyGame {
 
 		nsLight::CDirectionLight* dirLight = NewGO<nsLight::CDirectionLight>(0);
 		dirLight->SetLigDirection({ 1.0f,-1.0f,-1.0f });
-		dirLight->SetLigColor({ 0.8f,0.8f,0.8f });
+		dirLight->SetLigColor({ 0.3f,0.3f,0.3f });
 
 		nsLight::CPointLight* poiLight = NewGO<nsLight::CPointLight>(0);
 		poiLight->SetPosition({ 100.0f,100.0f,0.0f });

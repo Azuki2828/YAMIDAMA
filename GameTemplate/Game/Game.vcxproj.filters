@@ -305,6 +305,12 @@
     <ClCompile Include="..\..\ExEngine\physics\SphereCollider.cpp">
       <Filter>ExEngine\physics</Filter>
     </ClCompile>
+    <ClCompile Include="player\PlayerAction.cpp">
+      <Filter>ソース ファイル\player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\PlayerAnimation.cpp">
+      <Filter>ソース ファイル\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -579,6 +585,12 @@
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\Noncopyable.h">
       <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="player\PlayerAction.h">
+      <Filter>ソース ファイル\player</Filter>
+    </ClInclude>
+    <ClInclude Include="player\PlayerAnimation.h">
+      <Filter>ソース ファイル\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
