@@ -313,6 +313,8 @@
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
+    <ClCompile Include="enemy\EnemyAction.cpp" />
+    <ClCompile Include="enemy\EnemyAnimation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCamera.cpp" />
     <ClCompile Include="player\Player.cpp" />
@@ -416,6 +418,8 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="ConstValue.h" />
     <ClInclude Include="enemy\Enemy.h" />
+    <ClInclude Include="enemy\EnemyAction.h" />
+    <ClInclude Include="enemy\EnemyAnimation.h" />
     <ClInclude Include="MainCamera.h" />
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="player\PlayerAnimation.h" />

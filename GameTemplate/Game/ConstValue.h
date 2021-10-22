@@ -19,6 +19,7 @@ namespace nsMyGame {
 	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
 
 	namespace nsPlayer {
+
 		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/player.tkm";		//プレイヤーのtkmファイルパス
 		constexpr const char* c_filePathTksPlayer = "Assets/modelData/player.tks";		//プレイヤーのtksファイルパス
 		const CVector3 c_addLightCameraPos = { 0.0f,300.0f,300.0f };					//プレイヤー用のライトカメラに加算する座標
@@ -38,6 +39,18 @@ namespace nsMyGame {
 			enState_Num
 		};
 	}
+
+	namespace nsEnemy {
+
+		/**
+		 * @brief 敵のステート。
+		*/
+		enum EnEnemyState {
+			enState_Idle,
+			enState_Attack
+		};
+	}
+
 	namespace nsLight {
 
 		constexpr int c_maxDirectionLightNum = 4;	//ディレクションライトの上限数

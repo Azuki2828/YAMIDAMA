@@ -1,61 +1,56 @@
 #include "stdafx.h"
 #include "Enemy.h"
 
-CEnemy* g_pCurrentEnemy = nullptr;
+namespace nsMyGame {
 
-void IdleFunc(){
-	MessageBox(nullptr, L"Idle...", L"通知", MB_OK);
-}
+	namespace nsEnemy {
 
-void AttackFunc() {
+		CEnemy* g_pCurrentEnemy = nullptr;
 
-	MessageBox(nullptr, L"Attack!!", L"通知", MB_OK);
-}
+		void IdleFunc() {
+			MessageBox(nullptr, L"Idle...", L"通知", MB_OK);
+		}
 
-void GuardFunc() {
+		void AttackFunc() {
 
-	MessageBox(nullptr, L"Guard!!", L"通知", MB_OK);
-}
+			MessageBox(nullptr, L"Attack!!", L"通知", MB_OK);
+		}
 
+		void GuardFunc() {
 
-//PYBIND11_MODULE(Game, m) {
-//	m.def("IdleFunc", &IdleFunc);
-//	m.def("AttackFunc", &AttackFunc);
-//	m.def("GuardFunc", &GuardFunc);
-//	
-//	/*pybind11::class_<Enemy>(m, "Enemy")
-//		.def(pybind11::init())
-//		.def("CallTest", &Enemy::CallTest)
-//		;*/
-//}
+			MessageBox(nullptr, L"Guard!!", L"通知", MB_OK);
+		}
 
 
-bool CEnemy::Start()
-{
-	return true;
-}
-void CEnemy::Update()
-{
-	// 現在更新処理を実行中のエネミーのアドレスを代入
-	g_pCurrentEnemy = this;
-	switch (m_state) {
-		case enState::enState_Idle:	
-			ImportModule("EnemyIdle");
-			m_state = enState::enState_Attack;
-			break;
-		case enState::enState_Attack:
-			ImportModule("EnemyAttack");
-			m_state = enState::enState_Guard;
-			break;
-		case enState::enState_Guard:
-			ImportModule("EnemyGuard");
-			m_state = enState::enState_Idle;
-			break;
+		PYBIND11_MODULE(Game, m) {
+			m.def("IdleFunc", &IdleFunc);
+			m.def("AttackFunc", &AttackFunc);
+			m.def("GuardFunc", &GuardFunc);
+		}
+
+
+		bool CEnemy::Start()
+		{
+			return true;
+		}
+		void CEnemy::Update()
+		{
+			// 現在更新処理を実行中のエネミーのアドレスを代入
+			g_pCurrentEnemy = this;
+			switch (m_enemyState) {
+			case EnEnemyState::enState_Idle:
+				ImportModule("EnemyIdle");
+				break;
+			case EnEnemyState::enState_Attack:
+				ImportModule("EnemyAttack");
+				break;
+			}
+			auto updateFunc = m_enemyPyModule.attr("Update");
+			updateFunc();
+		}
+		void CEnemy::Render(CRenderContext& rc)
+		{
+
+		}
 	}
-	auto updateFunc = m_enemyPyModule.attr("Update");
-	//updateFunc();
-}
-void CEnemy::Render(CRenderContext& rc)
-{
-
 }

@@ -60,10 +60,12 @@ namespace nsMyGame {
 
 						//ダッシュ状態にする。
 						playerState = enState_Run;
+						m_isDash = true;
 					}
 					else {
 						//歩き状態にする。
 						playerState = enState_Walk;
+						m_isDash = false;
 					}
 				}
 				//移動入力していない
@@ -97,6 +99,11 @@ namespace nsMyGame {
 				//ラストの0.2秒間だけは着地のため、移動しない。
 				if (c_rollingCoolTime - value > 0.2f) {
 					m_rollingSpeed = forward * 150.0f * (-1.5f * pow((value - 1.0f), 2.0f) + 2.0f);
+				}
+
+				//ダッシュ中なら移動距離を増やす。
+				if (IsDash()) {
+					m_rollingSpeed *= 1.5f;
 				}
 			}
 
@@ -140,6 +147,7 @@ namespace nsMyGame {
 
 			//クールタイム中でなく
 			if (!IsCoolTime()) {
+
 				//R1ボタンが押されていたら
 				if (g_pad[0]->IsTrigger(enButtonRB1)) {
 
@@ -151,7 +159,6 @@ namespace nsMyGame {
 
 				}
 
-
 				//Aボタンが押されていたら
 				if (g_pad[0]->IsTrigger(enButtonA)) {
 
@@ -162,10 +169,13 @@ namespace nsMyGame {
 					m_coolTime = c_rollingCoolTime;
 				}
 
+				//Xボタンが押されていたら
 				if (g_pad[0]->IsTrigger(enButtonX)) {
 
+					//3連攻撃状態に。
 					playerState = enState_ThreeCombo;
 
+					//クールタイムを設定。
 					m_coolTime = c_threeComboCoolTime;
 				}
 			}

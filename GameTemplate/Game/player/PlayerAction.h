@@ -48,8 +48,18 @@ namespace nsMyGame {
 
 				return m_coolTime > 0.0f;
 			}
+
+			/**
+			 * @brief ダッシュ中かどうか判定する関数。
+			 * @return ダッシュ中？
+			*/
+			bool IsDash() {
+
+				return m_isDash;
+			}
 		private:
 			bool m_isAttack = false;							//アタック中？
+			bool m_isDash = false;								//ダッシュ中？
 			float m_coolTime = 0.0f;							//クールタイム
 			CVector3 m_position = CVector3::Zero;				//座標
 			CQuaternion m_rotation = CQuaternion::Identity;		//回転
