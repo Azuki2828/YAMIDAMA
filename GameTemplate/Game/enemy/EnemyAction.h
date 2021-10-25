@@ -21,7 +21,7 @@ namespace nsMyGame {
 			 * @param forward 前方向
 			 * @param playerState プレイヤーステート
 			*/
-			void Move(CVector3& position, CVector3& forward, EnEnemyState& playerState);
+			//void Move(CVector3& position, CVector3& forward, EnEnemyState& playerState);
 
 			/**
 			 * @brief 回転処理を行う関数。
@@ -30,15 +30,12 @@ namespace nsMyGame {
 			void Rotate(CQuaternion& rotation);
 
 			/**
-			 * @brief アクションを行う関数。
-			 * @param playerState プレイヤーステート
-			*/
-			void Action(EnEnemyState& playerState);
-
-			/**
 			 * @brief 更新関数。クールタイムの更新などを行う。
 			*/
 			void Update();
+
+
+			
 		private:
 			/**
 			 * @brief クールタイム中かどうか判定する関数。

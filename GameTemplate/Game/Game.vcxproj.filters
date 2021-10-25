@@ -66,6 +66,9 @@
     <Filter Include="MiniEngine\level">
       <UniqueIdentifier>{d32ca704-b477-4774-931d-5d2e23a773f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\enemy\firstWinEnemy">
+      <UniqueIdentifier>{59b66ee6-0e1a-4906-9e62-91bdbed950a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -316,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="enemy\EnemyAnimation.cpp">
       <Filter>ソース ファイル\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemy.cpp">
+      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -603,6 +609,9 @@
     </ClInclude>
     <ClInclude Include="enemy\EnemyAnimation.h">
       <Filter>ソース ファイル\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemy.h">
+      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

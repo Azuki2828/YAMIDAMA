@@ -15,18 +15,16 @@ namespace nsMyGame {
 			);
 		}
 
-		void CEnemyAction::Move(CVector3& position, CVector3& forward, EnEnemyState& enemyState) {
+		/*void CEnemyAction::Move(CVector3& position, CVector3& forward, EnEnemyState& enemyState) {
 
 
-		}
+		}*/
 
 		void CEnemyAction::Rotate(CQuaternion& rotation) {
 
 		}
 
-		void CEnemyAction::Action(EnEnemyState& enemyState) {
-
-		}
+		
 
 		void CEnemyAction::Update() {
 

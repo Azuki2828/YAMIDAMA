@@ -1,9 +1,16 @@
-from Game import IdleFunc
+from Game import ChangeState
+from Game import GetLengthToPlayer
+from Game import Move
+from Game import Rotate
 #from Game import Enemy
+
 
 def Update() :
 
-    IdleFunc()
+    Move()
+    Rotate()
 
-    #enemy = Game.Enemy("Enemy01")
-    #enemy.CallTest()
+    lengthToPlayer = GetLengthToPlayer()
+
+    if(lengthToPlayer < 500.0):
+        ChangeState(1)

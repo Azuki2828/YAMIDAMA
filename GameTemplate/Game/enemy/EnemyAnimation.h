@@ -1,48 +1,44 @@
 #pragma once
+
 namespace nsMyGame {
 
 	namespace nsEnemy {
 
-		//アニメーションのリスト
-		enum EnAnimationList {
-			enAnim_Idle,
-			enAnim_Walk,
-			enAnim_Run,
-			enAnim_Attack,
-			enAnim_Rolling,
-			enAnim_ThreeCombo,
-
-			enAnim_Num
-		};
-
 		class CEnemyAnimation
 		{
-		public:
+		protected:
 			/**
 			 * @brief 初期化関数。
 			*/
-			void Init();
+			virtual void Init() = 0;
 
 			/**
-			 * @brief 更新関数。
+			 * @brief アニメーションを再生する関数。
 			*/
-			void Update(CModelRender& modelRender, const EnEnemyState& enemyState);
-
+			//virtual void PlayAnimation(CModelRender& modelRender, const EnEnemyState& enemyState) = 0;
+		public:
 			/**
 			 * @brief アニメーションクリップを取得する関数。
 			 * @return アニメーションクリップ
 			*/
-			CAnimationClip* GetAnimationClip() {
+			virtual CAnimationClip* GetAnimationClip() {
 
-				return m_animationClip;
+				return m_animClip;
 			}
+
+			/**
+			 * @brief アニメーション数を取得する関数。
+			 * @return アニメーション数 
+			*/
 			int GetAnimationNum()const {
-
-				return enAnim_Num;
+				
+				return m_animNum;
 			}
-		private:
-			CAnimationClip m_animationClip[enAnim_Num];		//アニメーションクリップ
+		public:
+			CAnimationClip* m_animClip;
+			int m_animNum;
 		};
+		
 
 	}
 }

@@ -42,13 +42,10 @@ namespace nsMyGame {
 
 	namespace nsEnemy {
 
-		/**
-		 * @brief 敵のステート。
-		*/
-		enum EnEnemyState {
-			enState_Idle,
-			enState_Attack
-		};
+		constexpr const char* c_filePathTkmEnemy = "Assets/modelData/player.tkm";		//敵のtkmファイルパス
+		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player.tks";		//敵のtksファイルパス
+
+		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
 	}
 
 	namespace nsLight {

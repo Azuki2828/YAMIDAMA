@@ -7,50 +7,115 @@ namespace nsMyGame {
 
 		CEnemy* g_pCurrentEnemy = nullptr;
 
-		void IdleFunc() {
-			MessageBox(nullptr, L"Idle...", L"通知", MB_OK);
+		void ChangeState(int stateNum) {
+
+			g_pCurrentEnemy->ChangeState(stateNum);
 		}
 
-		void AttackFunc() {
+		float GetLengthToPlayer() {
 
-			MessageBox(nullptr, L"Attack!!", L"通知", MB_OK);
+			return g_pCurrentEnemy->GetLengthToPlayer();
 		}
 
-		void GuardFunc() {
+		void Move() {
 
-			MessageBox(nullptr, L"Guard!!", L"通知", MB_OK);
+			g_pCurrentEnemy->Move();
+		}
+
+		void Rotate() {
+
+			g_pCurrentEnemy->Rotate();
+		}
+
+		void SetCoolTime(const float coolTime) {
+
+			g_pCurrentEnemy->SetCoolTime(coolTime);
+		}
+
+		float GetCoolTime() {
+
+			return g_pCurrentEnemy->GetCoolTime();
 		}
 
 
 		PYBIND11_MODULE(Game, m) {
-			m.def("IdleFunc", &IdleFunc);
-			m.def("AttackFunc", &AttackFunc);
-			m.def("GuardFunc", &GuardFunc);
+			m.def("ChangeState", &ChangeState);
+			m.def("GetLengthToPlayer", &GetLengthToPlayer);
+			m.def("Move", &Move);
+			m.def("Rotate", &Rotate);
+			m.def("SetCoolTime", &SetCoolTime);
+			m.def("GetCoolTime", &GetCoolTime);
 		}
 
 
 		bool CEnemy::Start()
 		{
-			return true;
+			m_player = FindGO<nsPlayer::CPlayer>("player");
+
+			//キャラクターコントローラーを初期化。
+			m_charaCon.Init(
+				20.0f,			//半径。
+				200.0f,			//高さ。
+				m_position		//座標。
+			);
+
+			//派生クラスのStartSub()関数の結果を返す。
+			return StartSub();
 		}
+
 		void CEnemy::Update()
 		{
-			// 現在更新処理を実行中のエネミーのアドレスを代入
-			g_pCurrentEnemy = this;
-			switch (m_enemyState) {
-			case EnEnemyState::enState_Idle:
-				ImportModule("EnemyIdle");
-				break;
-			case EnEnemyState::enState_Attack:
-				ImportModule("EnemyAttack");
-				break;
+			//派生クラスのUpdateSnb()関数を呼び出す。
+			UpdateSub();
+
+			UpdateForward();
+
+
+			m_modelRender->SetPosition(m_position);
+			m_modelRender->SetRotation(m_rotation);
+
+			if (m_coolTime > 0.0f) {
+
+				m_coolTime -= g_gameTime->GetFrameDeltaTime();
 			}
-			auto updateFunc = m_enemyPyModule.attr("Update");
-			updateFunc();
+			else {
+				m_coolTime = 0.0f;
+			}
 		}
 		void CEnemy::Render(CRenderContext& rc)
 		{
 
+		}
+
+		void CEnemy::Rotate() {
+
+			//移動ボタンが入力されていなかったら
+			if (fabsf(m_moveSpeed.x) < 0.001f
+				&& fabsf(m_moveSpeed.z) < 0.001f) {
+				//このフレームではキャラは移動していないので旋回する必要はない。
+				return;
+			}
+
+			//回転角度を求める。
+			float angle = atan2(-m_moveSpeed.x, m_moveSpeed.z);
+
+			//回転を設定。
+			m_rotation.SetRotationY(-angle);
+		}
+
+		void CEnemy::UpdateForward() {
+
+			//回転行列を計算。
+			auto mRot = CMatrix::Identity;
+			mRot.MakeRotationFromQuaternion(m_rotation);
+
+			//前方向を設定。
+			m_forward.x = mRot.m[2][0];
+			m_forward.y = mRot.m[2][1];
+			m_forward.z = mRot.m[2][2];
+
+			//正規化。
+			m_forward.Normalize();
 		}
 	}
 }

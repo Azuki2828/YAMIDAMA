@@ -28,6 +28,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EnemyIdle.py" />
+    <Compile Include="EnemyMove.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlayerDeath.py" />
     <Compile Include="PlayerNormal.py">
       <SubType>Code</SubType>

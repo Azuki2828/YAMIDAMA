@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "system/system.h"
-#include "enemy/Enemy.h"
+#include "enemy/firstWinEnemy/FirstWinEnemy.h"
 #include "player/Player.h"
 #include "BackGround.h"
 #include "MainCamera.h"
@@ -74,7 +74,8 @@ namespace nsMyGame {
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 
 		// とりあえずテストで敵を追加。
-		//NewGO<Enemy>(0, nullptr);
+		NewGO<nsEnemy::CFirstWinEnemy>(0, nullptr);
+
 		NewGO<nsPlayer::CPlayer>(0, "player");
 		NewGO<CBackGround>(0);
 		NewGO<CMainCamera>(0);

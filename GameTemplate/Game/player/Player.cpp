@@ -17,7 +17,7 @@ namespace nsMyGame {
 			//行動クラスを初期化。
 			m_playerAction.Init(m_position);
 
-			//アニメーションを初期化。
+			//アニメーションクラスを初期化。
 			m_playerAnimation.Init();
 			
 			//アニメーションを初期化。
@@ -125,6 +125,8 @@ namespace nsMyGame {
 
 			//ライトカメラを更新。
 			CCamera::GetLightCamera()->Update();
+
+			//CCamera::GetLightCamera()->SetUpdateProjMatrixFunc(CCamera::enUpdateProjMatrixFunc_Ortho);
 		}
 	}
 }
