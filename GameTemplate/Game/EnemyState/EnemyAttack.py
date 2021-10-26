@@ -5,8 +5,13 @@ from Game import GetCoolTime
 
 def Update() :
 
+    #移動関数。
     Move()
+
+    #回転関数。
     Rotate()
 
+
+    #クールタイムが0秒になったら待機状態に。
     if(GetCoolTime() == 0.0):
         ChangeState(0)

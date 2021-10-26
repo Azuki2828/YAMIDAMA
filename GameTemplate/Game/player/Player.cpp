@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "../enemy/Enemy.h"
 
 namespace nsMyGame {
 
@@ -32,6 +33,12 @@ namespace nsMyGame {
 			//初期化。
 			m_modelRender->Init();
 
+
+			/*m_attackTriggerBox.CreateBox(
+				m_position,
+				m_rotation,
+				{ 100.0f,200.0f,100.0f }
+			);*/
 
 			return true;
 		}
@@ -75,9 +82,20 @@ namespace nsMyGame {
 
 			//座標を設定。
 			m_modelRender->SetPosition(m_position);
+			CVector3 attackTriggerBoxPos = m_position;
+			attackTriggerBoxPos += m_forward * 100.0f;
+			//m_attackTriggerBox.SetPosition(attackTriggerBoxPos);
 
 			//回転を設定。
 			m_modelRender->SetRotation(m_rotation);
+			//m_attackTriggerBox.SetRotation(m_rotation);
+
+			/*QueryGOs("Enemy", [&](nsEnemy::CEnemy& enemy) {
+
+				
+
+				return false;
+			});*/
 
 			//ライトカメラを更新。
 			LightCameraUpdate();
@@ -126,7 +144,7 @@ namespace nsMyGame {
 			//ライトカメラを更新。
 			CCamera::GetLightCamera()->Update();
 
-			//CCamera::GetLightCamera()->SetUpdateProjMatrixFunc(CCamera::enUpdateProjMatrixFunc_Ortho);
+			CCamera::GetLightCamera()->SetUpdateProjMatrixFunc(CCamera::enUpdateProjMatrixFunc_Ortho);
 		}
 	}
 }

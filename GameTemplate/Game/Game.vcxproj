@@ -244,6 +244,7 @@
     <ClCompile Include="..\..\ExEngine\level2D\CaslFile.cpp" />
     <ClCompile Include="..\..\ExEngine\level2D\Level2D.cpp" />
     <ClCompile Include="..\..\ExEngine\level2D\MapChip2D.cpp" />
+    <ClCompile Include="..\..\ExEngine\physics\BoxCollider.cpp" />
     <ClCompile Include="..\..\ExEngine\physics\CapsuleCollider.cpp" />
     <ClCompile Include="..\..\ExEngine\physics\CharacterController.cpp" />
     <ClCompile Include="..\..\ExEngine\physics\MeshCollider.cpp" />
@@ -251,6 +252,8 @@
     <ClCompile Include="..\..\ExEngine\physics\PhysicsStaticObject.cpp" />
     <ClCompile Include="..\..\ExEngine\physics\RigidBody.cpp" />
     <ClCompile Include="..\..\ExEngine\physics\SphereCollider.cpp" />
+    <ClCompile Include="..\..\ExEngine\physics\tkPhysicsGhostObject.cpp" />
+    <ClCompile Include="..\..\ExEngine\physics\tkPhysicsObjectBase.cpp" />
     <ClCompile Include="..\..\MiniEngine\AABB.cpp" />
     <ClCompile Include="..\..\MiniEngine\Animation.cpp" />
     <ClCompile Include="..\..\MiniEngine\AnimationClip.cpp" />
@@ -338,6 +341,7 @@
     <ClInclude Include="..\..\ExEngine\level2D\CaslFile.h" />
     <ClInclude Include="..\..\ExEngine\level2D\Level2D.h" />
     <ClInclude Include="..\..\ExEngine\level2D\MapChip2D.h" />
+    <ClInclude Include="..\..\ExEngine\physics\BoxCollider.h" />
     <ClInclude Include="..\..\ExEngine\physics\CapsuleCollider.h" />
     <ClInclude Include="..\..\ExEngine\physics\CharacterController.h" />
     <ClInclude Include="..\..\ExEngine\physics\ICollider.h" />
@@ -346,6 +350,8 @@
     <ClInclude Include="..\..\ExEngine\physics\PhysicsStaticObject.h" />
     <ClInclude Include="..\..\ExEngine\physics\RigidBody.h" />
     <ClInclude Include="..\..\ExEngine\physics\SphereCollider.h" />
+    <ClInclude Include="..\..\ExEngine\physics\tkPhysicsGhostObject.h" />
+    <ClInclude Include="..\..\ExEngine\physics\tkPhysicsObjectBase.h" />
     <ClInclude Include="..\..\MiniEngine\AABB.h" />
     <ClInclude Include="..\..\MiniEngine\Animation.h" />
     <ClInclude Include="..\..\MiniEngine\AnimationClip.h" />

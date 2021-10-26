@@ -6,11 +6,23 @@ from Game import SetCoolTime
 
 def Update():
 
+    #移動関数。
     Move()
+
+    #回転関数。
     Rotate()
 
+
+    #プレイヤーとの距離を調べる。
     lengthToPlayer = GetLengthToPlayer()
 
-    if(lengthToPlayer < 50.0):
+
+    #プレイヤーとの距離が120以下なら攻撃態勢に入る。
+    if(lengthToPlayer <= 120.0):
         ChangeState(2)
+
+        #クールタイムを3.0秒に設定。
         SetCoolTime(3.0)
+    #プレイヤーとの距離が500より遠いなら待機状態に。
+    elif(lengthToPlayer > 500.0):
+        ChangeState(0)

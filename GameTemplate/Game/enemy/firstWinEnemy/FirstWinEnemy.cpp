@@ -36,8 +36,6 @@ namespace nsMyGame {
 
 		void CFirstWinEnemy::UpdateSub() {
 
-			
-
 			// 現在更新処理を実行中のエネミーのアドレスを代入
 			g_pCurrentEnemy = this;
 

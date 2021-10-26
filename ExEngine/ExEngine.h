@@ -12,6 +12,8 @@
 #include "physics/CollisionAttr.h"
 #include "physics/CharacterController.h"
 #include "physics/PhysicsStaticObject.h"
+#include "physics/tkPhysicsObjectBase.h"
+#include "physics/tkPhysicsGhostObject.h"
 
 #include "gameObject/GameObjectManager.h"
 #include "gameObject/IGameObject.h"

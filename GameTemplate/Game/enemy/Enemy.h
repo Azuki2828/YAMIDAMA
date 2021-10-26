@@ -104,7 +104,7 @@ namespace nsMyGame {
 
 		protected:
 			CModelRender* m_modelRender = nullptr;			//ÉÇÉfÉã
-			CVector3 m_position = {0.0f,0.0f,500.0f};			//ç¿ïW
+			CVector3 m_position = {1200.0f,500.0f,-1200.0f};			//ç¿ïW
 			CQuaternion m_rotation = CQuaternion::Identity;
 
 			float m_coolTime = 0.0f;

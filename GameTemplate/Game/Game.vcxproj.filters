@@ -323,6 +323,15 @@
     <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemy.cpp">
       <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ExEngine\physics\tkPhysicsObjectBase.cpp">
+      <Filter>ExEngine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExEngine\physics\BoxCollider.cpp">
+      <Filter>ExEngine\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExEngine\physics\tkPhysicsGhostObject.cpp">
+      <Filter>ExEngine\physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -612,6 +621,15 @@
     </ClInclude>
     <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemy.h">
       <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExEngine\physics\tkPhysicsObjectBase.h">
+      <Filter>ExEngine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExEngine\physics\BoxCollider.h">
+      <Filter>ExEngine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExEngine\physics\tkPhysicsGhostObject.h">
+      <Filter>ExEngine\physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

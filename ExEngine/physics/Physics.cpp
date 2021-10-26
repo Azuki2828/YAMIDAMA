@@ -76,8 +76,8 @@ void CPhysicsWorld::Update(float deltaTime)
 {
 	m_dynamicWorld->stepSimulation(deltaTime);
 }
-#if 0
-void PhysicsWorld::DebubDrawWorld(CRenderContext& rc)
+#if 1
+void CPhysicsWorld::DebubDrawWorld(CRenderContext& rc)
 {
 #if BUILD_LEVEL!=BUILD_LEVEL_MASTER
 	m_debugDraw.BeginDraw(rc);
@@ -85,7 +85,7 @@ void PhysicsWorld::DebubDrawWorld(CRenderContext& rc)
 	m_debugDraw.EndDraw();
 #endif
 }
-void PhysicsWorld::ContactTest(
+void CPhysicsWorld::ContactTest(
 	btCollisionObject* colObj,
 	std::function<void(const btCollisionObject& contactCollisionObject)> cb
 ) {
@@ -95,15 +95,15 @@ void PhysicsWorld::ContactTest(
 	m_dynamicWorld->contactTest(colObj, myContactResultCallback);
 }
 
-void PhysicsWorld::ContactTest(
-	CRigidBody& rb,
+void CPhysicsWorld::ContactTest(
+	RigidBody& rb,
 	std::function<void(const btCollisionObject& contactCollisionObject)> cb
 )
 {
 	ContactTest(rb.GetBody(), cb);
 }
-void PhysicsWorld::ContactTest(
-	CCharacterController& charaCon,
+void CPhysicsWorld::ContactTest(
+	CharacterController& charaCon,
 	std::function<void(const btCollisionObject& contactCollisionObject)> cb
 )
 {
