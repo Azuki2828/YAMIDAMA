@@ -37,6 +37,11 @@ namespace nsMyGame {
 			return g_pCurrentEnemy->GetCoolTime();
 		}
 
+		void AnimationUpdate() {
+
+			g_pCurrentEnemy->AnimationUpdate();
+		}
+
 
 		PYBIND11_MODULE(Game, m) {
 			m.def("ChangeState", &ChangeState);
@@ -45,6 +50,7 @@ namespace nsMyGame {
 			m.def("Rotate", &Rotate);
 			m.def("SetCoolTime", &SetCoolTime);
 			m.def("GetCoolTime", &GetCoolTime);
+			m.def("AnimationUpdate", &AnimationUpdate);
 		}
 
 

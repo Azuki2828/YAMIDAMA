@@ -54,8 +54,6 @@ namespace nsMyGame {
 
 			auto updateFunc = m_enemyPyModule.attr("Update");
 			updateFunc();
-
-			AnimationUpdate();
 		}
 
 		void CFirstWinEnemy::InitAnimationClip() {

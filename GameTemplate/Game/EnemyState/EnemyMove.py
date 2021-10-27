@@ -3,6 +3,7 @@ from Game import Rotate
 from Game import ChangeState
 from Game import GetLengthToPlayer
 from Game import SetCoolTime
+from Game import AnimationUpdate
 
 def Update():
 
@@ -26,3 +27,6 @@ def Update():
     #プレイヤーとの距離が500より遠いなら待機状態に。
     elif(lengthToPlayer > 500.0):
         ChangeState(0)
+
+    #アニメーションを更新。
+    AnimationUpdate()

@@ -8,7 +8,6 @@ namespace nsMyGame {
 		class CFirstWinEnemy : public CEnemy
 		{
 		private:
-
 			//ステート
 			enum EnState {
 				enState_Idle,
@@ -29,7 +28,7 @@ namespace nsMyGame {
 
 			void InitAnimationClip();
 
-			void AnimationUpdate();
+			void AnimationUpdate()override final;
 		public:
 			bool StartSub()override final;
 			void UpdateSub()override final;

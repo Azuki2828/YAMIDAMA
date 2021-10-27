@@ -101,6 +101,7 @@ namespace nsMyGame {
 				return m_coolTime;
 			}
 
+			virtual void AnimationUpdate() = 0;
 
 		protected:
 			CModelRender* m_modelRender = nullptr;			//ƒ‚ƒfƒ‹

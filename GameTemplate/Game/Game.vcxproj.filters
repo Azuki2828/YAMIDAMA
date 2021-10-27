@@ -332,6 +332,9 @@
     <ClCompile Include="..\..\ExEngine\physics\tkPhysicsGhostObject.cpp">
       <Filter>ExEngine\physics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ExEngine\physics\DebugWireframe.cpp">
+      <Filter>ExEngine\physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -629,6 +632,9 @@
       <Filter>ExEngine\physics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ExEngine\physics\tkPhysicsGhostObject.h">
+      <Filter>ExEngine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExEngine\physics\DebugWireframe.h">
       <Filter>ExEngine\physics</Filter>
     </ClInclude>
   </ItemGroup>
