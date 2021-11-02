@@ -68,13 +68,16 @@ namespace nsMyGame {
 
 		CRenderingEngine::GetInstance()->Init();
 
+		//ワイヤーフレーム表示をONにする。
+		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
+
 		//////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで
 		//////////////////////////////////////
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 
 		// とりあえずテストで敵を追加。
-		NewGO<nsEnemy::CFirstWinEnemy>(0, nullptr);
+		NewGO<nsEnemy::CFirstWinEnemy>(0, "Enemy");
 
 		NewGO<nsPlayer::CPlayer>(0, "player");
 		NewGO<CBackGround>(0);
@@ -106,6 +109,12 @@ namespace nsMyGame {
 		{
 			//レンダリング開始。
 			g_engine->BeginFrame();
+
+
+			
+
+
+
 
 
 			//////////////////////////////////////

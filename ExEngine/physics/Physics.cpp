@@ -67,6 +67,11 @@ void CPhysicsWorld::Init()
 	);
 
 	m_dynamicWorld->setGravity(btVector3(0, -100, 0));
+
+	//デバッグワイヤーフレームを初期化。
+	m_debugWireFrame.Init();
+	m_dynamicWorld->setDebugDrawer(&m_debugWireFrame);
+
 #if BUILD_LEVEL!=BUILD_LEVEL_MASTER
 	m_debugDraw.Init();
 	m_dynamicWorld->setDebugDrawer(&m_debugDraw);
@@ -79,6 +84,12 @@ void CPhysicsWorld::Update(float deltaTime)
 #if 1
 void CPhysicsWorld::DebubDrawWorld(CRenderContext& rc)
 {
+	if (m_isDrawDebugWireFrame) {
+		m_debugWireFrame.Begin();
+		//実際にdrawLineを呼んでます。
+		m_dynamicWorld->debugDrawWorld();
+		m_debugWireFrame.End(rc);
+	}
 #if BUILD_LEVEL!=BUILD_LEVEL_MASTER
 	m_debugDraw.BeginDraw(rc);
 	m_dynamicWorld->debugDrawWorld();

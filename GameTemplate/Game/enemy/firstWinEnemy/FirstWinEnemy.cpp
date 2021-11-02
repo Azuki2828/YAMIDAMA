@@ -29,6 +29,9 @@ namespace nsMyGame {
 			//影を受ける。
 			m_modelRender->SetShadowReceiverFlag(true);
 		
+			//ステータスを初期化。
+			InitStatus();
+
 			//初期化。
 			m_modelRender->Init();
 			return true;
@@ -38,7 +41,7 @@ namespace nsMyGame {
 
 			// 現在更新処理を実行中のエネミーのアドレスを代入
 			g_pCurrentEnemy = this;
-
+			
 			
 			switch (m_state) {
 			case enState_Idle:
@@ -50,10 +53,22 @@ namespace nsMyGame {
 			case enState_ThreeCombo:
 				ImportModule("EnemyAttack");
 				break;
+			case enState_Damage:
+				ImportModule("EnemyDamage");
+				break;
+			case enState_Death:
+				ImportModule("EnemyDeath");
+				break;
 			}
 
 			auto updateFunc = m_enemyPyModule.attr("Update");
 			updateFunc();
+		}
+
+		void CFirstWinEnemy::InitStatus() {
+
+			m_status.hp = 100;
+			m_status.attack = 10;
 		}
 
 		void CFirstWinEnemy::InitAnimationClip() {
@@ -65,6 +80,10 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Idle].SetLoopFlag(true);
 			m_animationClip[enAnim_ThreeCombo].Load("Assets/animData/threeCombo.tka");
 			m_animationClip[enAnim_ThreeCombo].SetLoopFlag(false);
+			m_animationClip[enAnim_Damage].Load("Assets/animData/damage.tka");
+			m_animationClip[enAnim_Damage].SetLoopFlag(false);
+			m_animationClip[enAnim_Death].Load("Assets/animData/death.tka");
+			m_animationClip[enAnim_Death].SetLoopFlag(false);
 		}
 
 		void CFirstWinEnemy::AnimationUpdate() {
@@ -78,6 +97,12 @@ namespace nsMyGame {
 				break;
 			case enState_ThreeCombo:
 				m_modelRender->PlayAnimation(enAnim_ThreeCombo, 0.4f);
+				break;
+			case enState_Damage:
+				m_modelRender->PlayAnimation(enAnim_Damage, 0.4f);
+				break;
+			case enState_Death:
+				m_modelRender->PlayAnimation(enAnim_Death, 0.4f);
 				break;
 			}
 		}

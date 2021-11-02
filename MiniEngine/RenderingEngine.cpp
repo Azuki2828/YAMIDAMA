@@ -158,7 +158,7 @@ namespace nsMyGame {
 		//ビューポートを設定。
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
-		//シャドウモデルを描画。
+		//フォントを描画。
 		CGameObjectManager::GetInstance()->ExecuteRender(rc);
 
 		//描き込み終了待ち。
@@ -243,5 +243,7 @@ namespace nsMyGame {
 		
 		//最終スプライトを描画。
 		m_copyToMainRenderTargetSprite.Draw(rc);
+		//ワイヤーフレームを描画。
+		CPhysicsWorld::GetInstance()->DebubDrawWorld(rc);
 	}
 }

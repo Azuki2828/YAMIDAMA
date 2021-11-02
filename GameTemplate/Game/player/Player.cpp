@@ -8,6 +8,8 @@ namespace nsMyGame {
 
 		bool CPlayer::Start() {
 
+			m_position = { 0.0f,200.0f,0.0f };
+
 			//IGameObjectに追加。
 			m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
 
@@ -16,7 +18,7 @@ namespace nsMyGame {
 			m_modelRender->SetFilePathTks(c_filePathTksPlayer);
 
 			//行動クラスを初期化。
-			m_playerAction.Init(m_position);
+			m_playerAction.Init(m_position, m_rotation, m_forward);
 
 			//アニメーションクラスを初期化。
 			m_playerAnimation.Init();
@@ -32,13 +34,6 @@ namespace nsMyGame {
 
 			//初期化。
 			m_modelRender->Init();
-
-
-			/*m_attackTriggerBox.CreateBox(
-				m_position,
-				m_rotation,
-				{ 100.0f,200.0f,100.0f }
-			);*/
 
 			return true;
 		}
@@ -62,40 +57,13 @@ namespace nsMyGame {
 			m_playerAnimation.Update(*m_modelRender, m_playerState);
 
 			//状態を更新。
-			m_playerAction.Update();
-
-
-
-
-			////ルートボーンのIDを取得。
-			//int rootBoneID = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:Hips");
-			//
-			////ルートボーンのIDからルートボーンを取得。
-			//Bone* rootBone = m_modelRender->GetSkeleton()->GetBone(rootBoneID);
-			//
-			////ルートボーンのローカル行列を取得。
-			//CMatrix rootBoneLocalMatrix = rootBone->GetLocalMatrix();
-
-
-
-			//rootBoneLocalMatrix.MakeTranslation(m_position);
+			m_playerAction.Update(m_position, m_rotation, m_forward, m_playerState);
 
 			//座標を設定。
 			m_modelRender->SetPosition(m_position);
-			CVector3 attackTriggerBoxPos = m_position;
-			attackTriggerBoxPos += m_forward * 100.0f;
-			//m_attackTriggerBox.SetPosition(attackTriggerBoxPos);
 
 			//回転を設定。
 			m_modelRender->SetRotation(m_rotation);
-			//m_attackTriggerBox.SetRotation(m_rotation);
-
-			/*QueryGOs("Enemy", [&](nsEnemy::CEnemy& enemy) {
-
-				
-
-				return false;
-			});*/
 
 			//ライトカメラを更新。
 			LightCameraUpdate();

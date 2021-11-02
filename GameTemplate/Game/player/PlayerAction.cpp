@@ -5,14 +5,16 @@ namespace nsMyGame {
 
 	namespace nsPlayer {
 
-		void CPlayerAction::Init(const CVector3& position) {
+		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward) {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
 				20.0f,			//半径。
-				200.0f,			//高さ。
+				100.0f,			//高さ。
 				position		//座標。
 			);
+
+			
 		}
 
 		void CPlayerAction::Move(CVector3& position, CVector3& forward, EnPlayerState& playerState) {
@@ -82,13 +84,13 @@ namespace nsMyGame {
 					m_moveSpeed += forward * 50.0f;
 				}
 			}
-			////ジャンプ処理。
-			//if (g_pad[0]->IsTrigger(enButtonA) //Aボタンが押されたら 
-			//	//&& m_charaCon.IsOnGround()  //かつ、地面に居たら
-			//	) {
-			//	//ジャンプする。
-			//	m_moveSpeed.y = 400.0f;	//上方向に速度を設定。
-			//}
+			//ジャンプ処理。
+			if (g_pad[0]->IsTrigger(enButtonY) //Aボタンが押されたら 
+				//&& m_charaCon.IsOnGround()  //かつ、地面に居たら
+				) {
+				//ジャンプする。
+				m_moveSpeed.y = 400.0f;	//上方向に速度を設定。
+			}
 
 			//ローリング中の移動処理。
 			if (playerState == enState_Rolling) {
@@ -179,9 +181,12 @@ namespace nsMyGame {
 					m_coolTime = c_threeComboCoolTime;
 				}
 			}
+			
+			
+			
 		}
 
-		void CPlayerAction::Update() {
+		void CPlayerAction::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward, EnPlayerState& playerState) {
 
 			//クールタイム中なら
 			if (IsCoolTime()) {
@@ -189,6 +194,19 @@ namespace nsMyGame {
 				//クールタイムを更新。
 				m_coolTime -= g_gameTime->GetFrameDeltaTime();
 			}
+
+			if (playerState == enState_Attack) {
+
+				if (m_coolTime > 0.2f && m_coolTime < 0.6f) {
+
+					m_triggerBox.Activate(pos, rot);
+				}
+			}
+			else {
+
+				m_triggerBox.Deactivate();
+			}
+			m_triggerBox.Update(pos, rot, forward);
 		}
 	}
 }

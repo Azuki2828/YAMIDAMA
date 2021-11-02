@@ -13,6 +13,8 @@ namespace nsMyGame {
 				enState_Idle,
 				enState_Walk,
 				enState_ThreeCombo,
+				enState_Damage,
+				enState_Death,
 
 				enState_Num
 			};
@@ -22,9 +24,13 @@ namespace nsMyGame {
 				enAnim_Idle,
 				enAnim_Walk,
 				enAnim_ThreeCombo,
+				enAnim_Damage,
+				enAnim_Death,
 
 				enAnim_Num
 			};
+
+			void InitStatus();
 
 			void InitAnimationClip();
 
@@ -39,6 +45,19 @@ namespace nsMyGame {
 			}
 
 			void Move()override final;
+
+			
+			void SetReceiveDamage(bool receiveDamageFlag)override final {
+
+				m_receiveDamage = receiveDamageFlag;
+
+				//ダメージを与える。
+				if (m_receiveDamage) {
+					m_coolTime = 0.5f;
+					m_status.hp -= 70;
+					m_state = enState_Damage;
+				}
+			}
 		private:
 			EnState m_state = enState_Idle;
 			CAnimationClip m_animationClip[enAnim_Num];

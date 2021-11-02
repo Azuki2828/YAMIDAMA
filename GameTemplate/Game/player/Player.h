@@ -50,7 +50,22 @@ namespace nsMyGame {
 				return m_modelRender;
 			}
 
+			CharacterController* GetCharacterController() {
+
+				return m_playerAction.GetCharacterController();
+			}
+
+			void SetRecieveDamage(bool recieveDamageFlag) {
+
+				m_recieveDamage = recieveDamageFlag;
+			}
+
+			bool GetRecieveDamage() {
+
+				return m_recieveDamage;
+			}
 		private:
+			bool m_recieveDamage = false;
 			CModelRender* m_modelRender = nullptr;		//モデル
 			CPlayerAction m_playerAction;				//プレイヤーの行動をまとめたクラス
 			CPlayerAnimation m_playerAnimation;			//プレイヤーアニメーション

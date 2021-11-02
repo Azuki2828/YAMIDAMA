@@ -325,6 +325,7 @@
     <ClCompile Include="player\Player.cpp" />
     <ClCompile Include="player\PlayerAnimation.cpp" />
     <ClCompile Include="player\PlayerAction.cpp" />
+    <ClCompile Include="player\PlayerTriggerBox.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -434,6 +435,7 @@
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="player\PlayerAnimation.h" />
     <ClInclude Include="player\PlayerAction.h" />
+    <ClInclude Include="player\PlayerTriggerBox.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
   </ItemGroup>

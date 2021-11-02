@@ -335,6 +335,9 @@
     <ClCompile Include="..\..\ExEngine\physics\DebugWireframe.cpp">
       <Filter>ExEngine\physics</Filter>
     </ClCompile>
+    <ClCompile Include="player\PlayerTriggerBox.cpp">
+      <Filter>ソース ファイル\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -636,6 +639,9 @@
     </ClInclude>
     <ClInclude Include="..\..\ExEngine\physics\DebugWireframe.h">
       <Filter>ExEngine\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="player\PlayerTriggerBox.h">
+      <Filter>ソース ファイル\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

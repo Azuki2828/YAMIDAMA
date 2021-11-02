@@ -13,7 +13,7 @@ namespace nsMyGame {
 			 * @brief 初期化関数。キャラコンの設定を行う。
 			 * @param position プレイヤーの座標。
 			*/
-			void Init(const CVector3& position);
+			void Init(const CVector3& position, CharacterController& charaCon);
 
 			/**
 			 * @brief 移動処理を行う関数。
@@ -62,7 +62,7 @@ namespace nsMyGame {
 			CQuaternion m_rotation = CQuaternion::Identity;		//回転
 			CVector3 m_moveSpeed = CVector3::Zero;				//移動速度
 			CVector3 m_rollingSpeed = CVector3::Zero;
-			CharacterController m_charaCon;						//キャラクターコントローラー
+			CharacterController* m_charaCon;						//キャラクターコントローラー
 		};
 	}
 }

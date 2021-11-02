@@ -59,6 +59,11 @@
 		bool IsRegistPhysicsWorld() {
 			return m_isRegistPhysicsWorld;
 		}
+
+		void SetRegistPhysicsWorld(bool registFlg) {
+
+			m_isRegistPhysicsWorld = registFlg;
+		}
 	private:
 		/*!
 		* @brief	ゴースト作成処理の共通処理。

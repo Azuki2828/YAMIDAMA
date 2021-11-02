@@ -179,6 +179,11 @@ namespace nsMyGame {
 
 			return &m_skeleton;
 		}
+
+		bool IsPlayingAnimation() {
+
+			return m_animation.IsPlaying();
+		}
 	private:
 		/**
 		 * @brief シャドウモデルを作成する関数。

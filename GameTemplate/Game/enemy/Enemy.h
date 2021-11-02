@@ -11,14 +11,13 @@ namespace nsMyGame {
 	}
 	namespace nsEnemy {
 
-
 		//エネミークラス
 		class CEnemy : public CIGameObject
 		{
 		protected:
 
-			//敵のステータス
-			struct SEnemyStatus {
+			//ステータス
+			struct SStatus {
 				int hp = 0;			//体力
 				int attack = 0;		//攻撃力
 			};
@@ -39,6 +38,9 @@ namespace nsMyGame {
 
 			void UpdateForward();
 		public:
+
+			~CEnemy();
+
 			/**
 			 * @brief Update()関数の前に一度だけ呼ばれる関数。
 			 * @return 成功した？
@@ -103,19 +105,42 @@ namespace nsMyGame {
 
 			virtual void AnimationUpdate() = 0;
 
+			CharacterController& GetCharacterController() {
+
+				return m_charaCon;
+			}
+
+			void Delete() {
+				DeleteGO(this);
+			}
+
+			bool IsDeath() {
+
+				return m_status.hp <= 0;
+			}
+
+			bool GetReceiveDamage() {
+
+				return m_receiveDamage;
+			}
+
+			virtual void SetReceiveDamage(bool receiveDamageFlag) {
+
+				m_receiveDamage = receiveDamageFlag;
+			}
 		protected:
-			CModelRender* m_modelRender = nullptr;			//モデル
+			bool m_receiveDamage = false;								//ダメージを受けたか？（たとえ0ダメージでも）
+			SStatus m_status;											//ステータス
+			CModelRender* m_modelRender = nullptr;						//モデル
 			CVector3 m_position = {1200.0f,500.0f,-1200.0f};			//座標
-			CQuaternion m_rotation = CQuaternion::Identity;
+			CQuaternion m_rotation = CQuaternion::Identity;				//回転
+			float m_coolTime = 0.0f;									//クールタイム
+			CharacterController m_charaCon;								//キャラクターコントローラー
+			CVector3 m_moveSpeed = CVector3::Zero;						//移動速度
+			CVector3 m_forward = CVector3::Zero;						//前方向
+			pybind11::module m_enemyPyModule;							//Pythonのモジュール
 
-			float m_coolTime = 0.0f;
-
-			CharacterController m_charaCon;
-			CVector3 m_moveSpeed = CVector3::Zero;
-			CVector3 m_forward = CVector3::Zero;
-
-			nsPlayer::CPlayer* m_player = nullptr;
-			pybind11::module m_enemyPyModule;				//Pythonのモジュール
+			nsPlayer::CPlayer* m_player = nullptr;						
 		};
 	}
 }

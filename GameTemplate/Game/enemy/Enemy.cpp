@@ -42,6 +42,16 @@ namespace nsMyGame {
 			g_pCurrentEnemy->AnimationUpdate();
 		}
 
+		bool IsDeath() {
+
+			return g_pCurrentEnemy->IsDeath();
+		}
+
+		void Delete() {
+
+			g_pCurrentEnemy->Delete();
+		}
+
 
 		PYBIND11_MODULE(Game, m) {
 			m.def("ChangeState", &ChangeState);
@@ -51,6 +61,8 @@ namespace nsMyGame {
 			m.def("SetCoolTime", &SetCoolTime);
 			m.def("GetCoolTime", &GetCoolTime);
 			m.def("AnimationUpdate", &AnimationUpdate);
+			m.def("IsDeath", &IsDeath);
+			m.def("Delete", &Delete);
 		}
 
 
@@ -61,7 +73,7 @@ namespace nsMyGame {
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
 				20.0f,			//半径。
-				200.0f,			//高さ。
+				100.0f,			//高さ。
 				m_position		//座標。
 			);
 
@@ -69,9 +81,15 @@ namespace nsMyGame {
 			return StartSub();
 		}
 
+		CEnemy::~CEnemy() {
+			if (m_modelRender != nullptr) {
+				DeleteGO(m_modelRender);
+			}
+		}
+
 		void CEnemy::Update()
 		{
-			//派生クラスのUpdateSnb()関数を呼び出す。
+			//派生クラスのUpdateSub()関数を呼び出す。
 			UpdateSub();
 
 			UpdateForward();

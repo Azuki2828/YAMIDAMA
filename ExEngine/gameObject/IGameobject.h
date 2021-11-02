@@ -18,6 +18,7 @@ public:
 		*/
 	virtual ~CIGameObject()
 	{
+		
 	}
 public:
 
@@ -32,6 +33,7 @@ public:
 	* 適切に初期化を行ってください。
 	*/
 	virtual bool Start() { return true; }
+
 	/*!
 		*@brief	更新
 		*/

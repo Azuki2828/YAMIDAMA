@@ -5,10 +5,12 @@ namespace nsMyGame {
 
 	namespace nsEnemy {
 
-		void CEnemyAction::Init(const CVector3& position) {
+		void CEnemyAction::Init(const CVector3& position, CharacterController& charaCon) {
+
+			m_charaCon = &charaCon;
 
 			//キャラクターコントローラーを初期化。
-			m_charaCon.Init(
+			m_charaCon->Init(
 				20.0f,			//半径。
 				200.0f,			//高さ。
 				position		//座標。

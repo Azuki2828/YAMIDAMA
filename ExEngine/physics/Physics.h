@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "DebugWireframe.h"
 #include "CharacterController.h"
 class CharacterController;
 
@@ -12,6 +13,10 @@ class CPhysicsWorld
 	std::unique_ptr<btBroadphaseInterface>				 m_overlappingPairCache;	//!<ブロードフェーズ。衝突判定の枝切り。
 	std::unique_ptr<btSequentialImpulseConstraintSolver> m_constraintSolver;		//!<コンストレイントソルバー。拘束条件の解決処理。
 	std::unique_ptr<btDiscreteDynamicsWorld>			 m_dynamicWorld;			//!<ワールド。
+
+	DebugWireframe m_debugWireFrame;
+	bool m_isDrawDebugWireFrame = false;
+
 #if BUILD_LEVEL!=BUILD_LEVEL_MASTER
 	CPhysicsDebugDraw									 m_debugDraw;
 #endif
@@ -32,6 +37,23 @@ public:
 	
 	void Update(float deltaTime);
 	void DebubDrawWorld(CRenderContext& rc);
+
+	//当たり判定描画を有効にする。
+	void EnableDrawDebugWireFrame()
+	{
+
+		m_isDrawDebugWireFrame = true;
+
+	}
+
+	//当たり判定描画を無効にする。
+	void DisableDrawDebugWireFrame()
+	{
+
+		m_isDrawDebugWireFrame = false;
+
+	}
+
 	void Release();
 	/*!
 	* @brief	重力を設定。。

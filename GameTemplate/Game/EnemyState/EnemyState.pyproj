@@ -24,6 +24,12 @@
     <Compile Include="EnemyAttack.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EnemyDamage.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EnemyDeath.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="EnemyGuard.py">
       <SubType>Code</SubType>
     </Compile>
