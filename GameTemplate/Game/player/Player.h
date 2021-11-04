@@ -69,6 +69,10 @@ namespace nsMyGame {
 			void SetReceiveDamage(bool recieveDamageFlag) {
 
 				m_receiveDamage = recieveDamageFlag;
+				if (m_receiveDamage) {
+					m_playerAction.ReceiveDamage();
+					m_playerState = enState_Damage;
+				}
 			}
 
 			/**

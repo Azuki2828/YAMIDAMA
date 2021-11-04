@@ -49,6 +49,11 @@ namespace nsMyGame {
 
 				return m_charaCon;
 			}
+
+			void ReceiveDamage() {
+
+				m_coolTime = 0.5f;
+			}
 		private:
 			/**
 			 * @brief クールタイム中かどうか判定する関数。
@@ -77,7 +82,6 @@ namespace nsMyGame {
 
 				m_hitAttack = hitAttackFlag;
 			}
-
 			
 		private:
 			bool m_isAttack = false;							//アタック中？

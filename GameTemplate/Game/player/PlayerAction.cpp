@@ -201,6 +201,10 @@ namespace nsMyGame {
 
 					m_triggerBox.Activate(pos, rot);
 				}
+				else {
+
+					m_triggerBox.Deactivate();
+				}
 			}
 			else {
 

@@ -10,6 +10,9 @@ namespace nsMyGame {
 
 			m_position = { 0.0f,200.0f,0.0f };
 
+			m_status.hp = 100;
+			m_status.attack = 10;
+
 			//IGameObjectÇ…í«â¡ÅB
 			m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
 
