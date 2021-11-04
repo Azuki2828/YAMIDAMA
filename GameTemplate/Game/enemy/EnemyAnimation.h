@@ -30,7 +30,7 @@ namespace nsMyGame {
 			 * @brief アニメーション数を取得する関数。
 			 * @return アニメーション数 
 			*/
-			int GetAnimationNum()const {
+			const int GetAnimationNum()const {
 				
 				return m_animNum;
 			}

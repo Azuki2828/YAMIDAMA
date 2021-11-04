@@ -52,6 +52,15 @@ namespace nsMyGame {
 			g_pCurrentEnemy->Delete();
 		}
 
+		void UpdateTriggerBox() {
+
+			g_pCurrentEnemy->UpdateTriggerBox(
+				g_pCurrentEnemy->GetPosition(),
+				g_pCurrentEnemy->GetRotation(),
+				g_pCurrentEnemy->GetForward()
+			);
+		}
+
 
 		PYBIND11_MODULE(Game, m) {
 			m.def("ChangeState", &ChangeState);
@@ -63,6 +72,7 @@ namespace nsMyGame {
 			m.def("AnimationUpdate", &AnimationUpdate);
 			m.def("IsDeath", &IsDeath);
 			m.def("Delete", &Delete);
+			m.def("UpdateTriggerBox", &UpdateTriggerBox);
 		}
 
 

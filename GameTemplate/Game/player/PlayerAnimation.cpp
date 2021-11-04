@@ -16,6 +16,8 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Run].SetLoopFlag(true);
 			m_animationClip[enAnim_Attack].Load("Assets/animData/attack.tka");
 			m_animationClip[enAnim_Attack].SetLoopFlag(false);
+			m_animationClip[enAnim_Attack].Load("Assets/animData/damage.tka");
+			m_animationClip[enAnim_Attack].SetLoopFlag(false);
 			m_animationClip[enAnim_Rolling].Load("Assets/animData/rolling.tka");
 			m_animationClip[enAnim_Rolling].SetLoopFlag(false);
 			m_animationClip[enAnim_ThreeCombo].Load("Assets/animData/threeCombo.tka");
@@ -38,6 +40,9 @@ namespace nsMyGame {
 				break;
 			case enState_Attack:
 				modelRender.PlayAnimation(enAnim_Attack, 0.4f);
+				break;
+			case enState_Damage:
+				modelRender.PlayAnimation(enAnim_Damage, 0.4f);
 				break;
 			case enState_Rolling:
 				modelRender.PlayAnimation(enAnim_Rolling, 0.4f);

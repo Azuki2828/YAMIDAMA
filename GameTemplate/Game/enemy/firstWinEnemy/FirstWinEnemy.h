@@ -1,5 +1,6 @@
 #pragma once
 #include "../Enemy.h"
+#include "FirstWinEnemyTriggerBox.h"
 
 namespace nsMyGame {
 
@@ -30,23 +31,58 @@ namespace nsMyGame {
 				enAnim_Num
 			};
 
+			/**
+			 * @brief ステータスを初期化する関数。
+			*/
 			void InitStatus();
 
+			/**
+			 * @brief アニメーションクリップを初期化する関数。
+			*/
 			void InitAnimationClip();
 
+			/**
+			 * @brief アニメーションを更新する関数。
+			*/
 			void AnimationUpdate()override final;
 		public:
+			/**
+			 * @brief Update()関数の前に一度だけ呼ばれる関数。
+			 * @return 完了した？
+			*/
 			bool StartSub()override final;
+
+			/**
+			 * @brief 更新関数。
+			*/
 			void UpdateSub()override final;
 
+			/**
+			 * @brief ステートを設定する関数。
+			 * @param stateNum ステート番号
+			*/
 			void ChangeState(int stateNum) {
 
 				m_state = static_cast<EnState>(stateNum);
 			}
 
+			/**
+			 * @brief 移動関数。
+			*/
 			void Move()override final;
 
-			
+			/**
+			 * @brief トリガーボックスを更新する関数。
+			 * @param pos 座標
+			 * @param rot 回転
+			 * @param forward 前方向
+			*/
+			void UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward)override final;
+
+			/**
+			 * @brief ダメージフラグを設定する関数。
+			 * @param receiveDamageFlag ダメージフラグ
+			*/
 			void SetReceiveDamage(bool receiveDamageFlag)override final {
 
 				m_receiveDamage = receiveDamageFlag;
@@ -59,8 +95,9 @@ namespace nsMyGame {
 				}
 			}
 		private:
-			EnState m_state = enState_Idle;
-			CAnimationClip m_animationClip[enAnim_Num];
+			EnState m_state = enState_Idle;					//ステート
+			CAnimationClip m_animationClip[enAnim_Num];		//アニメーションクリップ
+			CFirstWinEnemyTriggerBox m_triggerBox;			//攻撃用のトリガーボックス
 		};
 	}
 }

@@ -7,10 +7,13 @@ namespace nsMyGame {
 	namespace nsPlayer {	
 
 		//プレイヤークラス
-
 		class CPlayer : public CIGameObject
 		{
-			
+			//ステータス
+			struct SStatus {
+				int hp = 0;
+				int attack = 0;
+			};
 			/**
 			 * @brief ライトカメラを更新する関数。
 			*/
@@ -50,22 +53,35 @@ namespace nsMyGame {
 				return m_modelRender;
 			}
 
-			CharacterController* GetCharacterController() {
+			/**
+			 * @brief キャラクターコントローラーを取得する関数。
+			 * @return キャラクターコントローラー
+			*/
+			CharacterController& GetCharacterController() {
 
 				return m_playerAction.GetCharacterController();
 			}
 
-			void SetRecieveDamage(bool recieveDamageFlag) {
+			/**
+			 * @brief ダメージフラグを設定する関数。
+			 * @param recieveDamageFlag ダメージフラグ
+			*/
+			void SetReceiveDamage(bool recieveDamageFlag) {
 
-				m_recieveDamage = recieveDamageFlag;
+				m_receiveDamage = recieveDamageFlag;
 			}
 
-			bool GetRecieveDamage() {
+			/**
+			 * @brief ダメージフラグを取得する関数。
+			 * @return ダメージフラグ
+			*/
+			const bool GetReceiveDamage()const {
 
-				return m_recieveDamage;
+				return m_receiveDamage;
 			}
 		private:
-			bool m_recieveDamage = false;
+			bool m_receiveDamage = false;				//ダメージを受けたか？
+			SStatus m_status;							//ステータス
 			CModelRender* m_modelRender = nullptr;		//モデル
 			CPlayerAction m_playerAction;				//プレイヤーの行動をまとめたクラス
 			CPlayerAnimation m_playerAnimation;			//プレイヤーアニメーション

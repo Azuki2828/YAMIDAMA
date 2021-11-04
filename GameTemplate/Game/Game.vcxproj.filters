@@ -338,6 +338,9 @@
     <ClCompile Include="player\PlayerTriggerBox.cpp">
       <Filter>ソース ファイル\player</Filter>
     </ClCompile>
+    <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyTriggerBox.cpp">
+      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -642,6 +645,9 @@
     </ClInclude>
     <ClInclude Include="player\PlayerTriggerBox.h">
       <Filter>ソース ファイル\player</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyTriggerBox.h">
+      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

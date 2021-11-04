@@ -27,7 +27,7 @@ namespace nsMyGame {
 			 * @brief 回転処理を行う関数。
 			 * @param rotation 回転
 			*/
-			void Rotate(CQuaternion& rotation);
+			void Rotate(const CQuaternion& rotation);
 
 			/**
 			 * @brief 更新関数。クールタイムの更新などを行う。
@@ -41,7 +41,7 @@ namespace nsMyGame {
 			 * @brief クールタイム中かどうか判定する関数。
 			 * @return クールタイム中？
 			*/
-			bool IsCoolTime() {
+			const bool IsCoolTime()const {
 
 				return m_coolTime > 0.0f;
 			}
@@ -50,7 +50,7 @@ namespace nsMyGame {
 			 * @brief ダッシュ中かどうか判定する関数。
 			 * @return ダッシュ中？
 			*/
-			bool IsDash() {
+			const bool IsDash()const {
 
 				return m_isDash;
 			}

@@ -4,6 +4,7 @@ from Game import ChangeState
 from Game import GetLengthToPlayer
 from Game import SetCoolTime
 from Game import AnimationUpdate
+from Game import UpdateTriggerBox
 
 def Update():
 
@@ -30,3 +31,6 @@ def Update():
 
     #アニメーションを更新。
     AnimationUpdate()
+
+    #トリガーボックスを更新。
+    UpdateTriggerBox()

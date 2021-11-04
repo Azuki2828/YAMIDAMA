@@ -22,7 +22,7 @@ namespace nsMyGame {
 
 		}*/
 
-		void CEnemyAction::Rotate(CQuaternion& rotation) {
+		void CEnemyAction::Rotate(const CQuaternion& rotation) {
 
 		}
 

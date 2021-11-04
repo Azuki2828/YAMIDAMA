@@ -137,5 +137,34 @@ namespace nsMyGame {
 				m_moveSpeed.y = 0.0f;
 			}
 		}
+
+		void CFirstWinEnemy::UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
+
+			if (m_state == enState_ThreeCombo) {
+
+				if (m_coolTime > 0.4f && m_coolTime < 0.8f) {
+
+					m_triggerBox.Activate(pos, rot);
+				}
+				else if (m_coolTime > 1.3f && m_coolTime < 1.7f) {
+
+					m_triggerBox.Activate(pos, rot);
+				}
+				else if (m_coolTime > 2.0f && m_coolTime < 2.4f) {
+
+					m_triggerBox.Activate(pos, rot);
+				}
+				else {
+					m_triggerBox.Deactivate();
+				}
+			}
+			else {
+
+				m_triggerBox.Deactivate();
+			}
+
+			//トリガーボックスを更新。
+			m_triggerBox.Update(pos, rot, forward);
+		}
 	}
 }

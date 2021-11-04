@@ -3,6 +3,7 @@ from Game import GetLengthToPlayer
 from Game import Move
 from Game import Rotate
 from Game import AnimationUpdate
+from Game import UpdateTriggerBox
 
 
 def Update() :
@@ -23,4 +24,7 @@ def Update() :
 
     #アニメーションを更新。
     AnimationUpdate()
+
+    #トリガーボックスを更新。
+    UpdateTriggerBox()
     

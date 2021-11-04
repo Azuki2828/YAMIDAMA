@@ -45,16 +45,16 @@ namespace nsMyGame {
 			 * @brief キャラクターコントローラーを取得する関数。
 			 * @return キャラクターコントローラー
 			*/
-			CharacterController* GetCharacterController() {
+			CharacterController& GetCharacterController() {
 
-				return &m_charaCon;
+				return m_charaCon;
 			}
 		private:
 			/**
 			 * @brief クールタイム中かどうか判定する関数。
 			 * @return クールタイム中？
 			*/
-			bool IsCoolTime() {
+			const bool IsCoolTime()const {
 
 				return m_coolTime > 0.0f;
 			}
@@ -63,12 +63,12 @@ namespace nsMyGame {
 			 * @brief ダッシュ中かどうか判定する関数。
 			 * @return ダッシュ中？
 			*/
-			bool IsDash() {
+			const bool IsDash()const {
 
 				return m_isDash;
 			}
 
-			bool GetHitAttackFlag() {
+			const bool GetHitAttackFlag()const {
 
 				return m_hitAttack;
 			}

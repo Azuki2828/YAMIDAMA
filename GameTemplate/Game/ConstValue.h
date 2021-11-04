@@ -37,6 +37,7 @@ namespace nsMyGame {
 			enState_Walk,
 			enState_Run,
 			enState_Attack,
+			enState_Damage,
 			enState_Rolling,
 			enState_ThreeCombo,
 
@@ -50,6 +51,9 @@ namespace nsMyGame {
 		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player.tks";		//敵のtksファイルパス
 
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
+		const CVector3 c_attackTriggerBoxSize = { 150.0f,150.0f,100.0f };				//敵攻撃時のトリガーボックスのサイズ
+		constexpr float c_attackTriggerBoxMul = 80.0f;									//敵攻撃時のトリガーボックスの前方向への乗算値
+		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//敵攻撃時のトリガーボックスのY方向への加算値
 	}
 
 	namespace nsLight {

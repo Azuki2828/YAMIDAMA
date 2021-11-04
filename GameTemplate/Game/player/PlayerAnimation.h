@@ -10,6 +10,7 @@ namespace nsMyGame {
 			enAnim_Walk,
 			enAnim_Run,
 			enAnim_Attack,
+			enAnim_Damage,
 			enAnim_Rolling,
 			enAnim_ThreeCombo,
 
@@ -38,7 +39,7 @@ namespace nsMyGame {
 
 				return m_animationClip;
 			}
-			int GetAnimationNum()const {
+			const int GetAnimationNum()const {
 
 				return enAnim_Num;
 			}

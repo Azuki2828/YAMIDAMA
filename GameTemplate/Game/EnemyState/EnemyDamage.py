@@ -3,6 +3,7 @@ from Game import GetCoolTime
 from Game import AnimationUpdate
 from Game import IsDeath
 from Game import SetCoolTime
+from Game import UpdateTriggerBox
 
 def Update() :
 
@@ -17,3 +18,6 @@ def Update() :
 
     #アニメーションを更新。
     AnimationUpdate()
+
+    #トリガーボックスを更新。
+    UpdateTriggerBox()
