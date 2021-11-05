@@ -31,7 +31,7 @@ namespace nsMyGame {
 		/*m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
 
 			return false;
-			});*/
+		});*/
 		return true;
 	}
 

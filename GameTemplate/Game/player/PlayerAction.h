@@ -54,6 +54,14 @@ namespace nsMyGame {
 
 				m_coolTime = 0.5f;
 			}
+
+			/**
+			 * @brief 攻撃をガードされた時のクールタイムを設定。
+			*/
+			void AttackBreak() {
+
+				m_coolTime = 1.0f;
+			}
 		private:
 			/**
 			 * @brief クールタイム中かどうか判定する関数。

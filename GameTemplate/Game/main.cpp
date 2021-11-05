@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "system/system.h"
-#include "enemy/firstWinEnemy/FirstWinEnemy.h"
+#include "enemy/GoteWinEnemy/GoteWinEnemy.h"
+#include "enemy/FirstWinEnemy/FirstWinEnemy.h"
 #include "player/Player.h"
 #include "BackGround.h"
 #include "MainCamera.h"
@@ -69,7 +70,7 @@ namespace nsMyGame {
 		CRenderingEngine::GetInstance()->Init();
 
 		//ワイヤーフレーム表示をONにする。
-		CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
+		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
 
 		//////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで
@@ -77,7 +78,7 @@ namespace nsMyGame {
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 
 		// とりあえずテストで敵を追加。
-		NewGO<nsEnemy::CFirstWinEnemy>(0, "Enemy");
+		NewGO<nsEnemy::CGoteWinEnemy>(0, "Enemy");
 
 		NewGO<nsPlayer::CPlayer>(0, "player");
 		NewGO<CBackGround>(0);

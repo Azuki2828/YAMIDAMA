@@ -13,8 +13,6 @@ namespace nsMyGame {
 				100.0f,			//高さ。
 				position		//座標。
 			);
-
-			
 		}
 
 		void CPlayerAction::Move(CVector3& position, CVector3& forward, EnPlayerState& playerState) {
@@ -34,8 +32,6 @@ namespace nsMyGame {
 			cameraForward.Normalize();
 			cameraRight.y = 0.0f;
 			cameraRight.Normalize();
-
-			
 
 			//クールタイム中でなく
 			if (!IsCoolTime()) {
@@ -109,8 +105,6 @@ namespace nsMyGame {
 				}
 			}
 
-			
-
 			//重力をかける。
 			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
 
@@ -181,9 +175,6 @@ namespace nsMyGame {
 					m_coolTime = c_threeComboCoolTime;
 				}
 			}
-			
-			
-			
 		}
 
 		void CPlayerAction::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward, EnPlayerState& playerState) {

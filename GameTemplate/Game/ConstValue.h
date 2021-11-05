@@ -37,6 +37,7 @@ namespace nsMyGame {
 			enState_Walk,
 			enState_Run,
 			enState_Attack,
+			enState_AttackBreak,
 			enState_Damage,
 			enState_Rolling,
 			enState_ThreeCombo,

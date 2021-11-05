@@ -10,6 +10,7 @@ namespace nsMyGame {
 			enAnim_Walk,
 			enAnim_Run,
 			enAnim_Attack,
+			enAnim_AttackBreak,
 			enAnim_Damage,
 			enAnim_Rolling,
 			enAnim_ThreeCombo,

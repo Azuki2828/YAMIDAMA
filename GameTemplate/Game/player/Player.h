@@ -4,7 +4,7 @@
 
 namespace nsMyGame {
 
-	namespace nsPlayer {	
+	namespace nsPlayer {
 
 		//プレイヤークラス
 		class CPlayer : public CIGameObject
@@ -66,9 +66,12 @@ namespace nsMyGame {
 			 * @brief ダメージフラグを設定する関数。
 			 * @param recieveDamageFlag ダメージフラグ
 			*/
-			void SetReceiveDamage(bool recieveDamageFlag) {
+			void SetReceiveDamage(const bool recieveDamageFlag) {
 
+				//ダメージフラグを設定。
 				m_receiveDamage = recieveDamageFlag;
+
+				//ダメージを受けたならダメージ状態にする。
 				if (m_receiveDamage) {
 					m_playerAction.ReceiveDamage();
 					m_playerState = enState_Damage;
@@ -82,6 +85,12 @@ namespace nsMyGame {
 			const bool GetReceiveDamage()const {
 
 				return m_receiveDamage;
+			}
+
+			void AttackBreak() {
+
+				m_playerState = enState_AttackBreak;
+				m_playerAction.AttackBreak();
 			}
 		private:
 			bool m_receiveDamage = false;				//ダメージを受けたか？

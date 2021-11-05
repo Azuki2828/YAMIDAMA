@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include "FirstWinEnemyTriggerBox.h"
+#include "GoteWinEnemyTriggerBox.h"
 #include "../../player/Player.h"
 
 namespace nsMyGame {
 
 	namespace nsEnemy {
 
-		void CFirstWinEnemyTriggerBox::Create(const CVector3& pos, const CQuaternion& rot) {
+		void CGoteWinEnemyTriggerBox::Create(const CVector3& pos, const CQuaternion& rot) {
 
 			//攻撃の当たり判定を作成。
 			m_ghostBox.CreateBox(
@@ -14,40 +14,35 @@ namespace nsMyGame {
 				rot,
 				c_attackTriggerBoxSize
 			);
-			
+
 		}
 
-		void CFirstWinEnemyTriggerBox::Activate(const CVector3& pos, const CQuaternion& rot) {
+		void CGoteWinEnemyTriggerBox::Activate(const CVector3& pos, const CQuaternion& rot) {
 
 			if (!m_isActive) {
 
 				//トリガーボックスを作成。
 				Create(pos, rot);
 
-				//プレイヤーを探す。
 				m_player = FindGO<nsPlayer::CPlayer>("player");
 
-				//ダメージフラグをfalseに設定。
 				m_player->SetReceiveDamage(false);
 
-				//トリガーボックスを有効にする。
 				m_isActive = true;
 			}
 		}
 
-		void CFirstWinEnemyTriggerBox::Deactivate() {
+		void CGoteWinEnemyTriggerBox::Deactivate() {
 
 			if (m_isActive) {
 
-				//トリガーボックスを削除。
 				m_ghostBox.Release();
-				//トリガーボックスを無効にする。
 				m_isActive = false;
 			}
 		}
 
 
-		void CFirstWinEnemyTriggerBox::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
+		void CGoteWinEnemyTriggerBox::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
 
 			//アクティブじゃないなら終了。
 			if (!m_isActive) {
