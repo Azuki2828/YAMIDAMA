@@ -7,51 +7,86 @@ namespace nsMyGame {
 
 		CEnemy* g_pCurrentEnemy = nullptr;
 
+		/**
+		 * @brief ステートを変更する関数。
+		 * @param stateNum ステート番号
+		*/
 		void ChangeState(int stateNum) {
 
 			g_pCurrentEnemy->ChangeState(stateNum);
 		}
 
+		/**
+		 * @brief プレイヤーとの距離を測る関数。
+		 * @return プレイヤーとの距離
+		*/
 		float GetLengthToPlayer() {
 
 			return g_pCurrentEnemy->GetLengthToPlayer();
 		}
 
+		/**
+		 * @brief 移動関数。
+		*/
 		void Move() {
 
 			g_pCurrentEnemy->Move();
 		}
 
+		/**
+		 * @brief 回転関数。
+		*/
 		void Rotate() {
 
 			g_pCurrentEnemy->Rotate();
 		}
 
+		/**
+		 * @brief クールタイムを設定する関数。
+		 * @param coolTime クールタイム
+		*/
 		void SetCoolTime(const float coolTime) {
 
 			g_pCurrentEnemy->SetCoolTime(coolTime);
 		}
 
+		/**
+		 * @brief クールタイムを取得する関数。
+		 * @return クールタイム
+		*/
 		float GetCoolTime() {
 
 			return g_pCurrentEnemy->GetCoolTime();
 		}
 
+		/**
+		 * @brief アニメーションを更新する関数。
+		*/
 		void AnimationUpdate() {
 
 			g_pCurrentEnemy->AnimationUpdate();
 		}
 
+		/**
+		 * @brief 死んでいる？
+		 * @return 死んでいるかどうかのフラグ
+		*/
 		bool IsDeath() {
 
 			return g_pCurrentEnemy->IsDeath();
 		}
 
+		/**
+		 * @brief 自身を削除する関数。
+		*/
 		void Delete() {
 
 			g_pCurrentEnemy->Delete();
 		}
 
+		/**
+		 * @brief トリガーボックスを更新する関数。
+		*/
 		void UpdateTriggerBox() {
 
 			g_pCurrentEnemy->UpdateTriggerBox(
@@ -61,7 +96,17 @@ namespace nsMyGame {
 			);
 		}
 
+		void SetGuardTime(const float guardTime) {
 
+			g_pCurrentEnemy->SetGuardTime(guardTime);
+		}
+
+		float GetGuardTime() {
+
+			return g_pCurrentEnemy->GetGuardTime();
+		}
+
+		//Python側に関数を渡す。
 		PYBIND11_MODULE(Game, m) {
 			m.def("ChangeState", &ChangeState);
 			m.def("GetLengthToPlayer", &GetLengthToPlayer);
@@ -73,19 +118,15 @@ namespace nsMyGame {
 			m.def("IsDeath", &IsDeath);
 			m.def("Delete", &Delete);
 			m.def("UpdateTriggerBox", &UpdateTriggerBox);
+			m.def("SetGuardTime", &SetGuardTime);
+			m.def("GetGuardTime", &GetGuardTime);
 		}
 
 
 		bool CEnemy::Start()
 		{
+			//プレイヤーを検索。
 			m_player = FindGO<nsPlayer::CPlayer>("player");
-
-			//キャラクターコントローラーを初期化。
-			m_charaCon.Init(
-				20.0f,			//半径。
-				100.0f,			//高さ。
-				m_position		//座標。
-			);
 
 			//派生クラスのStartSub()関数の結果を返す。
 			return StartSub();
@@ -102,18 +143,32 @@ namespace nsMyGame {
 			//派生クラスのUpdateSub()関数を呼び出す。
 			UpdateSub();
 
+			//前方向を更新。
 			UpdateForward();
 
-
+			//座標を設定。
 			m_modelRender->SetPosition(m_position);
+
+			//回転を設定。
 			m_modelRender->SetRotation(m_rotation);
 
+			//クールタイムを更新。
 			if (m_coolTime > 0.0f) {
 
 				m_coolTime -= g_gameTime->GetFrameDeltaTime();
 			}
 			else {
 				m_coolTime = 0.0f;
+			}
+
+			//ガード時間を更新。
+			if (m_guardTime > 0.0f) {
+
+				m_guardTime -= g_gameTime->GetFrameDeltaTime();
+			}
+			else {
+
+				m_guardTime = 0.0f;
 			}
 		}
 		void CEnemy::Render(CRenderContext& rc)

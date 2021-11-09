@@ -9,6 +9,16 @@ namespace nsMyGame {
 
 		bool CGoteWinEnemy::StartSub() {
 
+			//初期座標を設定。
+			m_position = { 900.0f,500.0f,-1200.0f };
+
+			//キャラクターコントローラーを初期化。
+			m_charaCon.Init(
+				20.0f,			//半径。
+				100.0f,			//高さ。
+				m_position		//座標。
+			);
+
 			//IGameObjectに追加。
 			m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
 
@@ -43,6 +53,7 @@ namespace nsMyGame {
 
 			//ステートに応じて読み込むPythonスクリプトを変える。
 			switch (m_state) {
+
 			case enState_Idle:
 				ImportModule("GoteWinEnemyIdle");
 				break;
@@ -52,6 +63,9 @@ namespace nsMyGame {
 			case enState_Attack:
 				ImportModule("GoteWinEnemyAttack");
 				break;
+			case enState_Guard:
+				ImportModule("GoteWinEnemyGuard");
+				break;
 			case enState_Damage:
 				ImportModule("GoteWinEnemyDamage");
 				break;
@@ -60,7 +74,7 @@ namespace nsMyGame {
 				break;
 			}
 
-			//スクリプトのUpdate()関数を呼び出す。
+			//PythonスクリプトのUpdate()関数を呼び出す。
 			auto updateFunc = m_enemyPyModule.attr("Update");
 			updateFunc();
 		}
@@ -90,6 +104,7 @@ namespace nsMyGame {
 
 		void CGoteWinEnemy::AnimationUpdate() {
 
+			//各ステートに対応したアニメーションを再生する。
 			switch (m_state) {
 			case enState_Idle:
 				m_modelRender->PlayAnimation(enAnim_Idle, 0.4f);
@@ -120,19 +135,16 @@ namespace nsMyGame {
 
 			//プレイヤーの座標を取得する。
 			CVector3 toPlayerVec = m_player->GetPosition() - m_position;
+
 			//正規化。
 			toPlayerVec.Normalize();
 
+			//歩き状態ならプレイヤーに一定速度で近づく。
 			if (m_state == enState_Walk) {
 
 				m_moveSpeed += toPlayerVec * 150.0f;
 			}
-			else if (m_state == enState_Attack) {
 
-				if (c_threeComboCoolTime - m_coolTime < 2.4f) {
-					m_moveSpeed += toPlayerVec * 50.0f;
-				}
-			}
 			//重力をかける。
 			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
 
@@ -149,6 +161,7 @@ namespace nsMyGame {
 
 		void CGoteWinEnemy::UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
 
+			//攻撃状態なら
 			if (m_state == enState_Attack) {
 
 				//斬るタイミングでトリガーボックスを有効にする。

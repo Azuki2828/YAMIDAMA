@@ -9,6 +9,16 @@ namespace nsMyGame {
 
 		bool CFirstWinEnemy::StartSub() {
 		
+			//初期座標を設定。
+			m_position = { 1500.0f,500.0f,-1200.0f };
+
+			//キャラクターコントローラーを初期化。
+			m_charaCon.Init(
+				20.0f,			//半径。
+				100.0f,			//高さ。
+				m_position		//座標。
+			);
+
 			//IGameObjectに追加。
 			m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
 		
@@ -42,7 +52,7 @@ namespace nsMyGame {
 			// 現在更新処理を実行中のエネミーのアドレスを代入
 			g_pCurrentEnemy = this;
 			
-			
+			//ステートに応じて読み込むPythonスクリプトを変える。
 			switch (m_state) {
 			case enState_Idle:
 				ImportModule("EnemyIdle");
@@ -61,6 +71,7 @@ namespace nsMyGame {
 				break;
 			}
 
+			//PythonスクリプトのUpdate()関数を呼び出す。
 			auto updateFunc = m_enemyPyModule.attr("Update");
 			updateFunc();
 		}
@@ -88,6 +99,7 @@ namespace nsMyGame {
 
 		void CFirstWinEnemy::AnimationUpdate() {
 
+			//各ステートに対応したアニメーションを再生する。
 			switch (m_state) {
 			case enState_Idle:
 				m_modelRender->PlayAnimation(enAnim_Idle, 0.4f);
@@ -109,25 +121,33 @@ namespace nsMyGame {
 
 		void CFirstWinEnemy::Move() {
 
+			//x方向とz方向の移動速度を初期化。
 			m_moveSpeed.x = 0.0f;
 			m_moveSpeed.z = 0.0f;
 
+			//プレイヤーの座標を取得する。
 			CVector3 toPlayerVec = m_player->GetPosition() - m_position;
+			//正規化。
 			toPlayerVec.Normalize();
 
+			//歩き状態ならプレイヤーに一定速度で近づく。
 			if (m_state == enState_Walk) {
 
 				m_moveSpeed += toPlayerVec * 150.0f;
 			}
+
+			//3連続攻撃状態なら一定速度でプレイヤーに近づく。
 			else if (m_state == enState_ThreeCombo) {
 
 				if (c_threeComboCoolTime - m_coolTime < 2.4f) {
 					m_moveSpeed += toPlayerVec * 50.0f;
 				}
 			}
+
 			//重力をかける。
 			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
 
+			//座標を設定。
 			m_position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
 
 			//地面についているか判定。
@@ -140,8 +160,10 @@ namespace nsMyGame {
 
 		void CFirstWinEnemy::UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
 
+			//3連続攻撃状態なら
 			if (m_state == enState_ThreeCombo) {
 
+				//斬るタイミングでトリガーボックスを有効にする。
 				if (m_coolTime > 0.4f && m_coolTime < 0.8f) {
 
 					m_triggerBox.Activate(pos, rot);
@@ -154,10 +176,12 @@ namespace nsMyGame {
 
 					m_triggerBox.Activate(pos, rot);
 				}
+				//それ以外は無効にする。
 				else {
 					m_triggerBox.Deactivate();
 				}
 			}
+			//攻撃時以外は無効にする。
 			else {
 
 				m_triggerBox.Deactivate();

@@ -83,7 +83,7 @@ namespace nsMyGame {
 			 * @brief ダメージフラグを設定する関数。
 			 * @param receiveDamageFlag ダメージフラグ
 			*/
-			void SetReceiveDamage(bool receiveDamageFlag)override final {
+			void SetReceiveDamage(const bool receiveDamageFlag)override final {
 
 				m_receiveDamage = receiveDamageFlag;
 

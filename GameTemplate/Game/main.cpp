@@ -76,8 +76,9 @@ namespace nsMyGame {
 		// 初期化を行うコードを書くのはここまで
 		//////////////////////////////////////
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
-
+		
 		// とりあえずテストで敵を追加。
+		NewGO<nsEnemy::CFirstWinEnemy>(0, "Enemy");
 		NewGO<nsEnemy::CGoteWinEnemy>(0, "Enemy");
 
 		NewGO<nsPlayer::CPlayer>(0, "player");

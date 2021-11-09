@@ -1,3 +1,4 @@
+import random
 from Game import Move
 from Game import Rotate
 from Game import ChangeState
@@ -5,6 +6,7 @@ from Game import GetLengthToPlayer
 from Game import SetCoolTime
 from Game import AnimationUpdate
 from Game import UpdateTriggerBox
+from Game import SetGuardTime
 
 def Update():
 
@@ -19,6 +21,7 @@ def Update():
 
     #プレイヤーとの距離が300以下ならガード態勢に入る。
     if(lengthToPlayer <= 300.0):
+        SetGuardTime(random.uniform(4.0, 6.0))
         ChangeState(3)
 
     #プレイヤーとの距離が500より遠いなら待機状態に。

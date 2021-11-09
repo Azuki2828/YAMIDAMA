@@ -86,18 +86,31 @@ namespace nsMyGame {
 			 * @brief ダメージフラグを設定する関数。
 			 * @param receiveDamageFlag ダメージフラグ
 			*/
-			void SetReceiveDamage(bool receiveDamageFlag)override final {
+			void SetReceiveDamage(const bool receiveDamageFlag)override final {
 
+				//ダメージフラグを設定。
+				m_receiveDamage = receiveDamageFlag;
+
+				if (!m_receiveDamage) {
+					//falseなら早期リターン。
+					return;
+				}
+
+				//ガード状態なら
 				if (m_state == enState_Guard) {
 
+					//プレイヤーを弾く。
 					m_player = FindGO<nsPlayer::CPlayer>("player");
 					m_player->AttackBreak();
 
+					//攻撃状態に設定。
+					m_state = enState_Attack;
+					m_coolTime = 1.2f;
+					return;
 				}
-				m_receiveDamage = receiveDamageFlag;
-
-				//ダメージを与える。
+				//ガード状態じゃないなら
 				if (m_receiveDamage) {
+					//ダメージを負う。
 					m_coolTime = 0.5f;
 					m_status.hp -= 70;
 					m_state = enState_Damage;

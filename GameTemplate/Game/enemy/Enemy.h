@@ -172,13 +172,13 @@ namespace nsMyGame {
 
 		public:
 			/**
-			 * @brief 派生クラス用のStart()関数。
+			 * @brief 各種敵固有のStart()関数。
 			 * @return 成功した？
 			*/
 			virtual bool StartSub() = 0;
 
 			/**
-			 * @brief 派生クラス用のUpdate()関数。
+			 * @brief 各種敵固有のUpdate()関数。
 			*/
 			virtual void UpdateSub() = 0;
 
@@ -215,17 +215,33 @@ namespace nsMyGame {
 			 * @brief ダメージフラグを設定する関数。
 			 * @param receiveDamageFlag ダメージフラグ
 			*/
-			virtual void SetReceiveDamage(bool receiveDamageFlag) {
+			virtual void SetReceiveDamage(const bool receiveDamageFlag) = 0;
 
-				m_receiveDamage = receiveDamageFlag;
+			/**
+			 * @brief ガード時間を設定する関数。
+			 * @param guardTime ガード時間
+			*/
+			void SetGuardTime(const float guardTime) {
+
+				m_guardTime = guardTime;
+			}
+
+			/**
+			 * @brief ガード時間を取得する関数。
+			 * @return ガード時間
+			*/
+			float GetGuardTime()const {
+
+				return m_guardTime;
 			}
 		protected:
 			bool m_receiveDamage = false;								//ダメージを受けたか？（たとえ0ダメージでも）
 			SStatus m_status;											//ステータス
 			CModelRender* m_modelRender = nullptr;						//モデル
-			CVector3 m_position = {1200.0f,500.0f,-1200.0f};			//座標
+			CVector3 m_position = CVector3::Zero;						//座標
 			CQuaternion m_rotation = CQuaternion::Identity;				//回転
 			float m_coolTime = 0.0f;									//クールタイム
+			float m_guardTime = 0.0f;									//ガード時間
 			CharacterController m_charaCon;								//キャラクターコントローラー
 			CVector3 m_moveSpeed = CVector3::Zero;						//移動速度
 			CVector3 m_forward = CVector3::Zero;						//前方向
