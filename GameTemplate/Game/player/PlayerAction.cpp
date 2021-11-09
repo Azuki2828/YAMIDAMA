@@ -33,8 +33,8 @@ namespace nsMyGame {
 			cameraRight.y = 0.0f;
 			cameraRight.Normalize();
 
-			//クールタイム中でなく
-			if (!IsCoolTime()) {
+			//クールタイム中でなく、ガード中でなかったら
+			if (!IsCoolTime() && !IsGuard()) {
 				//このフレームの移動量を求める。
 				//左スティックの入力量を受け取る。
 				float lStick_x = g_pad[0]->GetLStickXF();
@@ -144,7 +144,7 @@ namespace nsMyGame {
 			//クールタイム中でなく
 			if (!IsCoolTime()) {
 
-				//R1ボタンが押されていたら
+				//R1ボタンが押されたら
 				if (g_pad[0]->IsTrigger(enButtonRB1)) {
 
 					//弱攻撃状態に。
@@ -152,10 +152,22 @@ namespace nsMyGame {
 
 					//クールタイムを設定。
 					m_coolTime = 1.2f;
-
 				}
 
-				//Aボタンが押されていたら
+				//L1ボタンが押されていたら
+				if (g_pad[0]->IsPress(enButtonLB1)) {
+
+					//ガード状態に。
+					playerState = enState_Guard;
+					m_isGuard = true;
+				}
+				else {
+
+					//ガード状態を解除。
+					m_isGuard = false;
+				}
+
+				//Aボタンが押されたら
 				if (g_pad[0]->IsTrigger(enButtonA)) {
 
 					//ローリング状態に。
@@ -165,7 +177,7 @@ namespace nsMyGame {
 					m_coolTime = c_rollingCoolTime;
 				}
 
-				//Xボタンが押されていたら
+				//Xボタンが押されたら
 				if (g_pad[0]->IsTrigger(enButtonX)) {
 
 					//3連攻撃状態に。
@@ -186,21 +198,27 @@ namespace nsMyGame {
 				m_coolTime -= g_gameTime->GetFrameDeltaTime();
 			}
 
+			//攻撃状態なら
 			if (playerState == enState_Attack) {
 
+				//斬るタイミングでトリガーボックスを有効にする。
 				if (m_coolTime > 0.2f && m_coolTime < 0.6f) {
 
 					m_triggerBox.Activate(pos, rot);
 				}
+				//それ以外は無効にする。
 				else {
-
+					
 					m_triggerBox.Deactivate();
 				}
 			}
+			//攻撃時以外は無効にする。
 			else {
 
 				m_triggerBox.Deactivate();
 			}
+
+			//トリガーボックスを更新。
 			m_triggerBox.Update(pos, rot, forward);
 		}
 	}

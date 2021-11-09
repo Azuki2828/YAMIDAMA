@@ -62,6 +62,15 @@ namespace nsMyGame {
 
 				m_coolTime = 1.0f;
 			}
+
+			/**
+			 * @brief ガード中？
+			 * @return ガードしているかどうかのフラグ
+			*/
+			const bool IsGuard()const {
+
+				return m_isGuard;
+			}
 		private:
 			/**
 			 * @brief クールタイム中かどうか判定する関数。
@@ -90,16 +99,17 @@ namespace nsMyGame {
 
 				m_hitAttack = hitAttackFlag;
 			}
-			
+
 		private:
 			bool m_isAttack = false;							//アタック中？
 			bool m_hitAttack = false;							//攻撃が当たった？
 			bool m_isDash = false;								//ダッシュ中？
+			bool m_isGuard = false;								//ガード中？
 			float m_coolTime = 0.0f;							//クールタイム
 			CVector3 m_position = CVector3::Zero;				//座標
 			CQuaternion m_rotation = CQuaternion::Identity;		//回転
 			CVector3 m_moveSpeed = CVector3::Zero;				//移動速度
-			CVector3 m_rollingSpeed = CVector3::Zero;
+			CVector3 m_rollingSpeed = CVector3::Zero;			//回転速度
 			CharacterController m_charaCon;						//キャラクターコントローラー
 			CPlayerTriggerBox m_triggerBox;						//攻撃時に使用するトリガーボックス
 		};

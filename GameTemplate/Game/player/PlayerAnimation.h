@@ -14,6 +14,7 @@ namespace nsMyGame {
 			enAnim_Damage,
 			enAnim_Rolling,
 			enAnim_ThreeCombo,
+			enAnim_Guard,
 
 			enAnim_Num
 
@@ -44,6 +45,7 @@ namespace nsMyGame {
 
 				return enAnim_Num;
 			}
+
 		private:
 			CAnimationClip m_animationClip[enAnim_Num];		//アニメーションクリップ
 		};

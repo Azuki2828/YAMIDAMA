@@ -24,6 +24,8 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Rolling].SetLoopFlag(false);
 			m_animationClip[enAnim_ThreeCombo].Load("Assets/animData/threeCombo.tka");
 			m_animationClip[enAnim_ThreeCombo].SetLoopFlag(false);
+			m_animationClip[enAnim_Guard].Load("Assets/animData/guard.tka");
+			m_animationClip[enAnim_Guard].SetLoopFlag(false);
 		}
 
 		void CPlayerAnimation::Update(CModelRender& modelRender, const EnPlayerState& playerState) {
@@ -54,6 +56,9 @@ namespace nsMyGame {
 				break;
 			case enState_ThreeCombo:
 				modelRender.PlayAnimation(enAnim_ThreeCombo, 0.4f);
+				break;
+			case enState_Guard:
+				modelRender.PlayAnimation(enAnim_Guard, 0.2f);
 				break;
 			}
 		}

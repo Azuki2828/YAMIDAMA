@@ -92,15 +92,24 @@ namespace nsMyGame {
 				m_playerState = enState_AttackBreak;
 				m_playerAction.AttackBreak();
 			}
+
+			/**
+			 * @brief ガード中？
+			 * @return ガードしているかどうかのフラグ
+			*/
+			bool IsGuard() {
+
+				return m_playerAction.IsGuard();
+			}
 		private:
 			bool m_receiveDamage = false;				//ダメージを受けたか？
 			SStatus m_status;							//ステータス
 			CModelRender* m_modelRender = nullptr;		//モデル
-			CPlayerAction m_playerAction;				//プレイヤーの行動をまとめたクラス
-			CPlayerAnimation m_playerAnimation;			//プレイヤーアニメーション
+			CPlayerAction m_playerAction;				//プレイヤーアクションクラス
+			CPlayerAnimation m_playerAnimation;			//プレイヤーアニメーションクラス
 			CVector3 m_position = CVector3::Zero;		//座標
 			CQuaternion m_rotation;						//回転
-			CVector3 m_forward = CVector3::Zero;		//プレイヤーの前方向
+			CVector3 m_forward = CVector3::Zero;		//前方向
 			EnPlayerState m_playerState;				//プレイヤーのステート
 		};
 	}
