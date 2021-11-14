@@ -106,6 +106,12 @@ namespace nsMyGame {
 			return g_pCurrentEnemy->GetGuardTime();
 		}
 
+		bool IsGuarded() {
+
+			bool a = g_pCurrentEnemy->IsGuarded();
+			return a;
+		}
+
 		//Python‘¤‚ÉŠÖ”‚ğ“n‚·B
 		PYBIND11_MODULE(Game, m) {
 			m.def("ChangeState", &ChangeState);
@@ -120,6 +126,7 @@ namespace nsMyGame {
 			m.def("UpdateTriggerBox", &UpdateTriggerBox);
 			m.def("SetGuardTime", &SetGuardTime);
 			m.def("GetGuardTime", &GetGuardTime);
+			m.def("IsGuarded", &IsGuarded);
 		}
 
 

@@ -7,6 +7,7 @@ namespace nsMyGame {
 	{
 		//コンスタントバッファに転送するデータ
 		struct SModelData {
+
 			int shadowReceiverFlg = 0;		//シャドウレシーバーフラグ
 		};
 	public:
@@ -166,6 +167,7 @@ namespace nsMyGame {
 		 * @param modelUpAxis 上にしたい軸
 		*/
 		void SetModelUpAxis(EnModelUpAxis modelUpAxis) {
+
 			m_modelInitData.m_modelUpAxis = modelUpAxis;
 		}
 
@@ -175,14 +177,31 @@ namespace nsMyGame {
 		*/
 		CModel* GetModel() { return &m_model; }
 
+		/**
+		 * @brief スケルトンを取得する関数。
+		 * @return スケルトン
+		*/
 		Skeleton* GetSkeleton() {
 
 			return &m_skeleton;
 		}
 
+		/**
+		 * @brief アニメーションが再生中かどうか？
+		 * @return アニメーション再生中？
+		*/
 		bool IsPlayingAnimation() {
 
 			return m_animation.IsPlaying();
+		}
+
+		/**
+		 * @brief アニメーションの再生速度を設定する関数。
+		 * @param animSpeed アニメーションの再生速度
+		*/
+		void SetAnimationSpeed(const float animSpeed) {
+
+			m_animationSpeed = animSpeed;
 		}
 	private:
 		/**
@@ -198,20 +217,21 @@ namespace nsMyGame {
 		const char* m_filePathTkm = nullptr;		//tkmファイルパス
 		const char* m_filePathTks = nullptr;		//tksファイルパス
 
-		bool m_shadowCasterFlag = false;			//シャドウキャスターフラグ。
+		bool m_shadowCasterFlag = false;			//シャドウキャスターフラグ
 
-		CVector3 m_pos = CVector3::Zero;				//座標
+		CVector3 m_pos = CVector3::Zero;			//座標
 		CQuaternion m_rot = CQuaternion::Identity;	//回転率
 		CVector3 m_sca = CVector3::One;				//拡大率
 
 		CModel m_model;								//モデル
-		CModel m_shadowModel;						//シャドウ作成用のモデル。
+		CModel m_shadowModel;						//シャドウ作成用のモデル
 		SModelData m_sModelData;					//コンスタントバッファに転送するデータ
 		ModelInitData m_modelInitData;				//モデルデータ
 		Skeleton m_skeleton;						//スケルトン
 
 		bool m_animFlg = false;						//アニメーション再生フラグ
 		int m_animNum = 0;							//アニメーション数
+		float m_animationSpeed = 1.0f;				//アニメーションの再生速度
 		Animation m_animation;						//アニメーション
 		CAnimationClip* m_animationClip = nullptr;	//アニメーションクリップ
 	};

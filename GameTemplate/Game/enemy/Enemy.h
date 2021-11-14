@@ -234,6 +234,8 @@ namespace nsMyGame {
 
 				return m_guardTime;
 			}
+
+			virtual bool IsGuarded() = 0;
 		protected:
 			bool m_receiveDamage = false;								//ダメージを受けたか？（たとえ0ダメージでも）
 			SStatus m_status;											//ステータス

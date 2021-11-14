@@ -15,7 +15,7 @@ namespace nsMyGame {
 		m_modelRender->Update();*/
 
 		m_wall = NewGO<CModelRender>(0);
-		m_wall->SetFilePathTkm("Assets/modelData/BackGround/stage01.tkm");
+		m_wall->SetFilePathTkm("Assets/modelData/BackGround/testStage.tkm");
 		m_wall->SetPosition(m_pos);
 		m_wall->SetRotation(m_rot);
 		m_wall->SetScale(m_sca);

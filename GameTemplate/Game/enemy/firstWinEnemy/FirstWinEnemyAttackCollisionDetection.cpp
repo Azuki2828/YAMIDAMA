@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include "FirstWinEnemyTriggerBox.h"
+#include "FirstWinEnemyAttackCollisionDetection.h"
 #include "../../player/Player.h"
 
 namespace nsMyGame {
 
 	namespace nsEnemy {
 
-		void CFirstWinEnemyTriggerBox::Create(const CVector3& pos, const CQuaternion& rot) {
+		void CFirstWinEnemyAttackCollisionDetection::Create(const CVector3& pos, const CQuaternion& rot) {
 
 			//攻撃の当たり判定を作成。
 			m_ghostBox.CreateBox(
@@ -17,7 +17,7 @@ namespace nsMyGame {
 			
 		}
 
-		void CFirstWinEnemyTriggerBox::Activate(const CVector3& pos, const CQuaternion& rot) {
+		void CFirstWinEnemyAttackCollisionDetection::Activate(const CVector3& pos, const CQuaternion& rot) {
 
 			if (!m_isActive) {
 
@@ -35,7 +35,7 @@ namespace nsMyGame {
 			}
 		}
 
-		void CFirstWinEnemyTriggerBox::Deactivate() {
+		void CFirstWinEnemyAttackCollisionDetection::Deactivate() {
 
 			if (m_isActive) {
 
@@ -43,11 +43,12 @@ namespace nsMyGame {
 				m_ghostBox.Release();
 				//トリガーボックスを無効にする。
 				m_isActive = false;
+				m_isGuarded = false;
 			}
 		}
 
 
-		void CFirstWinEnemyTriggerBox::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
+		void CFirstWinEnemyAttackCollisionDetection::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
 
 			//アクティブじゃないなら終了。
 			if (!m_isActive) {
@@ -69,8 +70,16 @@ namespace nsMyGame {
 				//まだプレイヤーが今回の攻撃を受けていない状態でトリガーボックスと接触した。
 				if (!m_player->GetReceiveDamage() && m_ghostBox.IsSelf(contactObject)) {
 
-					//プレイヤーにダメージを与える。
-					m_player->SetReceiveDamage(true);
+					if (m_player->IsGuard()) {
+
+						m_isGuarded = true;
+						return;
+					}
+					else {
+
+						//プレイヤーにダメージを与える。
+						m_player->SetReceiveDamage(true);
+					}
 				}
 			});
 		}

@@ -69,6 +69,9 @@ namespace nsMyGame {
 			case enState_Death:
 				ImportModule("EnemyDeath");
 				break;
+			case enState_AttackBreak:
+				ImportModule("EnemyAttackBreak");
+				break;
 			}
 
 			//PythonスクリプトのUpdate()関数を呼び出す。
@@ -95,6 +98,8 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Damage].SetLoopFlag(false);
 			m_animationClip[enAnim_Death].Load("Assets/animData/death.tka");
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
+			m_animationClip[enAnim_AttackBreak].Load("Assets/animData/attackBreak.tka");
+			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);
 		}
 
 		void CFirstWinEnemy::AnimationUpdate() {
@@ -115,6 +120,9 @@ namespace nsMyGame {
 				break;
 			case enState_Death:
 				m_modelRender->PlayAnimation(enAnim_Death, 0.4f);
+				break;
+			case enState_AttackBreak:
+				m_modelRender->PlayAnimation(enAnim_AttackBreak, 0.4f);
 				break;
 			}
 		}

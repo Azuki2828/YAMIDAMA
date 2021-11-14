@@ -9,9 +9,9 @@ namespace nsMyGame {
 
 	namespace nsEnemy {
 
-
+		
 		//先手必勝の敵の攻撃処理に使うトリガーボックスのクラス
-		class CGoteWinEnemyTriggerBox
+		class CFirstWinEnemyAttackCollisionDetection
 		{
 		private:
 			/**
@@ -42,12 +42,19 @@ namespace nsMyGame {
 			*/
 			void Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward);
 
-		private:
-			bool m_isActive = false;			//トリガーボックスが有効かどうか？
+			/**
+			 * @brief 攻撃がガードされた？
+			 * @return 攻撃がガードされたかどうかのフラグ
+			*/
+			bool IsGuarded() {
 
-			CVector3 m_position;				//座標
-			CQuaternion m_rotation;				//回転
-			CVector3 m_forward;					//前方向
+				return m_isGuarded;
+			}
+
+		private:
+			bool m_isActive = false;			//トリガーボックスが有効？
+			bool m_isGuarded = false;			//攻撃がガードされた？
+
 			CPhysicsGhostObject m_ghostBox;		//トリガーボックス
 
 			nsPlayer::CPlayer* m_player = nullptr;

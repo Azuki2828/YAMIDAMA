@@ -1,6 +1,6 @@
 #pragma once
 #include "../Enemy.h"
-#include "FirstWinEnemyTriggerBox.h"
+#include "FirstWinEnemyAttackCollisionDetection.h"
 
 namespace nsMyGame {
 
@@ -16,6 +16,7 @@ namespace nsMyGame {
 				enState_ThreeCombo,
 				enState_Damage,
 				enState_Death,
+				enState_AttackBreak,
 
 				enState_Num
 			};
@@ -27,6 +28,7 @@ namespace nsMyGame {
 				enAnim_ThreeCombo,
 				enAnim_Damage,
 				enAnim_Death,
+				enAnim_AttackBreak,
 
 				enAnim_Num
 			};
@@ -94,10 +96,19 @@ namespace nsMyGame {
 					m_state = enState_Damage;
 				}
 			}
+
+			/**
+			 * @brief ガードされた？
+			 * @return
+			*/
+			bool IsGuarded()override final {
+
+				return m_triggerBox.IsGuarded();
+			}
 		private:
 			EnState m_state = enState_Idle;					//ステート
 			CAnimationClip m_animationClip[enAnim_Num];		//アニメーションクリップ
-			CFirstWinEnemyTriggerBox m_triggerBox;			//攻撃用のトリガーボックス
+			CFirstWinEnemyAttackCollisionDetection m_triggerBox;			//攻撃用のトリガーボックス
 		};
 	}
 }

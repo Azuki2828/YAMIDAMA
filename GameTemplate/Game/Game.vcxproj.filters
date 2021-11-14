@@ -341,13 +341,13 @@
     <ClCompile Include="player\PlayerTriggerBox.cpp">
       <Filter>ソース ファイル\player</Filter>
     </ClCompile>
-    <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyTriggerBox.cpp">
+    <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.cpp">
       <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
     </ClCompile>
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemy.cpp">
       <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
     </ClCompile>
-    <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyTriggerBox.cpp">
+    <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.cpp">
       <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -655,13 +655,13 @@
     <ClInclude Include="player\PlayerTriggerBox.h">
       <Filter>ソース ファイル\player</Filter>
     </ClInclude>
-    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyTriggerBox.h">
+    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.h">
       <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
     </ClInclude>
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemy.h">
       <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
     </ClInclude>
-    <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyTriggerBox.h">
+    <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.h">
       <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
     </ClInclude>
   </ItemGroup>

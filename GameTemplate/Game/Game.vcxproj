@@ -320,9 +320,9 @@
     <ClCompile Include="enemy\EnemyAction.cpp" />
     <ClCompile Include="enemy\EnemyAnimation.cpp" />
     <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemy.cpp" />
-    <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyTriggerBox.cpp" />
+    <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.cpp" />
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemy.cpp" />
-    <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyTriggerBox.cpp" />
+    <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCamera.cpp" />
     <ClCompile Include="player\Player.cpp" />
@@ -434,9 +434,9 @@
     <ClInclude Include="enemy\EnemyAction.h" />
     <ClInclude Include="enemy\EnemyAnimation.h" />
     <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemy.h" />
-    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyTriggerBox.h" />
+    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.h" />
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemy.h" />
-    <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyTriggerBox.h" />
+    <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.h" />
     <ClInclude Include="MainCamera.h" />
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="player\PlayerAnimation.h" />
