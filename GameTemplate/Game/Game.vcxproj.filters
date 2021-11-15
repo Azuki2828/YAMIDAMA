@@ -72,6 +72,9 @@
     <Filter Include="ソース ファイル\enemy\goteWinEnemy">
       <UniqueIdentifier>{88c5f746-6910-46e7-b725-470b090725b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ExEngine\effect">
+      <UniqueIdentifier>{66e8d4dc-3fd0-47e0-89ec-e79d1f11ee52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
