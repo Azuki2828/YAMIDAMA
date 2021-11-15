@@ -139,7 +139,7 @@ namespace nsMyGame {
 			rotation.SetRotationY(-angle);
 		}
 
-		void CPlayerAction::Action(EnPlayerState& playerState) {
+		void CPlayerAction::Action(EnPlayerState& playerState, const bool selectFlag) {
 
 			//クールタイム中でなく
 			if (!IsCoolTime()) {
@@ -167,8 +167,8 @@ namespace nsMyGame {
 					m_isGuard = false;
 				}
 
-				//Aボタンが押されたら
-				if (g_pad[0]->IsTrigger(enButtonA)) {
+				//何も選んでいない状態でAボタンが押されたら
+				if (g_pad[0]->IsTrigger(enButtonA) && !selectFlag) {
 
 					//ローリング状態に。
 					playerState = enState_Rolling;

@@ -21,9 +21,9 @@ namespace nsMyGame {
 	constexpr const char* c_classNamePlayer = "player";
 
 	constexpr const char* c_filePathTkmDoor = "Assets/modelData/backGround/door.tkm";	//ドアのtkmファイルパス
-	constexpr float c_distanceForOpenDoor = 100.0f;										//ドアを開けるのに必要な距離
+	constexpr float c_distanceForOpenDoor = 300.0f;										//ドアを開けるのに必要な距離
 	constexpr int c_openDoorRotValue = 90;												//ドアを開けたときの回転角度
-	constexpr int c_openDoorRotNum = 5;													//ドアを開けたときに何度ずつ回転させるか
+	constexpr int c_openDoorRotNum = 1;													//ドアを開けたときに何度ずつ回転させるか
 
 
 	namespace nsPlayer {

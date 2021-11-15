@@ -1,5 +1,5 @@
 #pragma once
-#include "../../ExEngine/physics/PhysicsStaticObject.h"
+#include "Door.h"
 
 namespace nsMyGame {
 
@@ -20,6 +20,7 @@ namespace nsMyGame {
 	private:
 		CModelRender* m_modelRender = nullptr;			//モデル
 		CModelRender* m_wall = nullptr;					//壁モデル
+		std::vector<CDoor*> m_door;						//ドアクラスのインスタンス
 
 		CVector3 m_pos = CVector3::Zero;				//座標
 		CQuaternion m_rot = CQuaternion::Identity;		//回転

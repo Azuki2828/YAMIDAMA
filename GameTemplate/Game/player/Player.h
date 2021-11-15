@@ -118,8 +118,27 @@ namespace nsMyGame {
 
 				m_hasKeyNum--;
 			}
+
+			/**
+			 * @brief 何かを選んでいるかどうかのフラグを設定する関数。
+			 * @param selectFlag 何かを選んでいるかどうかのフラグ
+			*/
+			void SetSelectFlag(const bool selectFlag) {
+
+				m_isSelect = selectFlag;
+			}
+
+			/**
+			 * @brief 何かを選んでいる状態？
+			 * @return 何かを選んでいるかどうかのフラグ
+			*/
+			const bool IsSelect()const {
+
+				return m_isSelect;
+			}
 		private:
 			bool m_receiveDamage = false;				//ダメージを受けたか？
+			bool m_isSelect = false;					//何かを選んでいる状態？（近くの何かに反応している？）
 			int m_hasKeyNum = 0;						//鍵の所持数
 			SStatus m_status;							//ステータス
 			CModelRender* m_modelRender = nullptr;		//モデル

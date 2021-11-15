@@ -54,7 +54,7 @@ namespace nsMyGame {
 			UpdateForward();
 
 			//アクション処理。
-			m_playerAction.Action(m_playerState);
+			m_playerAction.Action(m_playerState, m_isSelect);
 
 			//アニメーション処理。
 			m_playerAnimation.Update(*m_modelRender, m_playerState);

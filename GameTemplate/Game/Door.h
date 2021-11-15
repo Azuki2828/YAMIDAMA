@@ -53,9 +53,33 @@ namespace nsMyGame {
 
 			return m_isLocked;
 		}
+
+		/**
+		 * @brief ドアが開いている？
+		 * @return ドアが開いているかどうかのフラグ
+		*/
+		const bool IsOpened()const {
+
+			return m_isOpened;
+		}
+
+		/**
+		 * @brief ドアを開けられたら開ける処理を行う関数。
+		 * @param rotNum ドアを回転させるための回数
+		*/
+		void JudgeAndExecuteOpenDoor(unsigned int& rotNum);
+
+		/**
+		 * @brief ドアの回転を更新する関数。
+		 * @param rotNum ドアを回転させるための回数
+		 * @param rotValue ドアの回転の値
+		*/
+		void UpdateRotation(unsigned int& rotNum, float& rotValue);
 	private:
 		bool m_isLocked = false;							//鍵がかかっている？
+		bool m_isOpened = false;							//開いている？
 		CModelRender* m_modelRender = nullptr;				//モデル
+		PhysicsStaticObject m_physicsStaticObject;			//物理オブジェクト
 		CVector3 m_position = CVector3::Zero;				//座標
 		CQuaternion m_rotation = CQuaternion::Identity;		//回転
 		CVector3 m_scale = CVector3::One;					//拡大

@@ -33,8 +33,9 @@ namespace nsMyGame {
 			/**
 			 * @brief アクションを行う関数。
 			 * @param playerState プレイヤーステート
+			 * @param selectFlag 何かを選んでいるかどうかのフラグ
 			*/
-			void Action(EnPlayerState& playerState);
+			void Action(EnPlayerState& playerState, const bool selectFlag);
 
 			/**
 			 * @brief 更新関数。クールタイムの更新などを行う。

@@ -35,7 +35,16 @@ public:
 	{
 		m_rigidBody.SetFriction(friction);
 	}
+
+	/**
+	 * @brief 剛体を取得する関数。
+	 * @return 剛体
+	*/
+	RigidBody& GetRigidBody() {
+
+		return m_rigidBody;
+	}
 private:
-	MeshCollider m_meshCollider;		//メッシュコライダー。
-	RigidBody m_rigidBody;				//剛体。
+	MeshCollider m_meshCollider;		//メッシュコライダー
+	RigidBody m_rigidBody;				//剛体
 };
