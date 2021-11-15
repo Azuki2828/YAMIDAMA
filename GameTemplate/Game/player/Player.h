@@ -101,8 +101,26 @@ namespace nsMyGame {
 
 				return m_playerAction.IsGuard();
 			}
+
+			/**
+			 * @brief 鍵を所持している？
+			 * @return 鍵の所持数が０より大きいかどうかの判定
+			*/
+			const bool HasKey()const {
+
+				return m_hasKeyNum > 0;
+			}
+
+			/**
+			 * @brief 鍵を消費する関数。
+			*/
+			void ConsumeKey() {
+
+				m_hasKeyNum--;
+			}
 		private:
 			bool m_receiveDamage = false;				//ダメージを受けたか？
+			int m_hasKeyNum = 0;						//鍵の所持数
 			SStatus m_status;							//ステータス
 			CModelRender* m_modelRender = nullptr;		//モデル
 			CPlayerAction m_playerAction;				//プレイヤーアクションクラス

@@ -353,6 +353,9 @@
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.cpp">
       <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -666,6 +669,9 @@
     </ClInclude>
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.h">
       <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
