@@ -18,6 +18,7 @@ namespace nsMyGame {
 				enState_Guard,
 				enState_Damage,
 				enState_Death,
+				enState_AttackBreak,
 
 				enState_Num
 			};
@@ -30,6 +31,7 @@ namespace nsMyGame {
 				enAnim_Guard,
 				enAnim_Damage,
 				enAnim_Death,
+				enAnim_AttackBreak,
 
 				enAnim_Num
 			};
@@ -122,7 +124,6 @@ namespace nsMyGame {
 			 * @return 
 			*/
 			bool IsGuarded()override final {
-
 
 				return m_triggerBox.IsGuarded();
 			}

@@ -39,6 +39,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GoteWinEnemyAttack.py" />
+    <Compile Include="GoteWinEnemyAttackBreak.py" />
     <Compile Include="GoteWinEnemyDeath.py" />
     <Compile Include="GoteWinEnemyGuard.py" />
     <Compile Include="GoteWinEnemyIdle.py" />

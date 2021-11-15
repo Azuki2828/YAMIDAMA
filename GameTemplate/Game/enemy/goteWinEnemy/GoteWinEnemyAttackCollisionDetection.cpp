@@ -38,6 +38,7 @@ namespace nsMyGame {
 				//トリガーボックスを削除。
 				m_triggerBox.Release();
 				m_isActive = false;
+				m_isGuarded = false;
 			}
 		}
 
@@ -67,14 +68,13 @@ namespace nsMyGame {
 					if (m_player->IsGuard()) {
 
 						m_isGuarded = true;
+						return;
 					}
 					else {
 					
-						m_isGuarded = false;
+						//プレイヤーにダメージを与える。
+						m_player->SetReceiveDamage(true);
 					}
-
-					//プレイヤーにダメージを与える。
-					m_player->SetReceiveDamage(true);
 				}
 			});
 		}
