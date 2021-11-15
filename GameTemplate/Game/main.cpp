@@ -79,8 +79,9 @@ namespace nsMyGame {
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		
 		// とりあえずテストで敵を追加。
-		NewGO<nsEnemy::CFirstWinEnemy>(0, "Enemy");
-		NewGO<nsEnemy::CGoteWinEnemy>(0, "Enemy");
+		//auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(0, "Enemy");
+		//fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
+		//NewGO<nsEnemy::CGoteWinEnemy>(0, "Enemy");
 
 		NewGO<nsPlayer::CPlayer>(0, "player");
 		NewGO<CBackGround>(0);

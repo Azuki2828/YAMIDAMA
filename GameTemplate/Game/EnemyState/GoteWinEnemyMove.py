@@ -21,7 +21,7 @@ def Update():
 
     #プレイヤーとの距離が300以下ならガード態勢に入る。
     if(lengthToPlayer <= 300.0):
-        SetGuardTime(random.uniform(4.0, 6.0))
+        SetGuardTime(random.uniform(2.0, 4.0))
         ChangeState(3)
 
     #プレイヤーとの距離が500より遠いなら待機状態に。

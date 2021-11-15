@@ -7,6 +7,8 @@ namespace nsMyGame {
 	bool CBackGround::Start() {
 
 		static int doorNum = 0;
+		static int fEnemyNum = 0;
+		static int gEnemyNum = 0;
 		/*m_modelRender = NewGO<CModelRender>(0);
 		m_modelRender->SetFilePathTkm("Assets/modelData/bg/bg.tkm");
 		m_modelRender->SetPosition(m_pos);
@@ -50,6 +52,24 @@ namespace nsMyGame {
 				m_door[doorNum]->SetScale(objData.scale);
 				m_door[doorNum]->SetObj(true);
 				doorNum++;
+				return true;
+			}
+
+			if (objData.EqualObjectName("FEnemy")) {
+
+				m_fWEnemy.push_back(NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, "Enemy"));
+				m_fWEnemy[fEnemyNum]->SetPosition(objData.position);
+				m_fWEnemy[fEnemyNum]->SetRotation(objData.rotation);
+				fEnemyNum++;
+				return true;
+			}
+
+			if (objData.EqualObjectName("GEnemy")) {
+
+				m_gWEnemy.push_back(NewGO<nsEnemy::CGoteWinEnemy>(enPriority_Zeroth, "Enemy"));
+				m_gWEnemy[gEnemyNum]->SetPosition(objData.position);
+				m_gWEnemy[gEnemyNum]->SetRotation(objData.rotation);
+				gEnemyNum++;
 				return true;
 			}
 			return false;

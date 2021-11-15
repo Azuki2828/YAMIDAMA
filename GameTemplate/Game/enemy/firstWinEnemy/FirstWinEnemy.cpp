@@ -10,14 +10,7 @@ namespace nsMyGame {
 		bool CFirstWinEnemy::StartSub() {
 		
 			//初期座標を設定。
-			m_position = { 1500.0f,500.0f,-1200.0f };
-
-			//キャラクターコントローラーを初期化。
-			m_charaCon.Init(
-				20.0f,			//半径。
-				100.0f,			//高さ。
-				m_position		//座標。
-			);
+			//m_position = { 1500.0f,500.0f,-1200.0f };
 
 			//IGameObjectに追加。
 			m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
@@ -25,7 +18,12 @@ namespace nsMyGame {
 			//tkmファイルとtksファイルを設定。
 			m_modelRender->SetFilePathTkm(c_filePathTkmEnemy);
 			m_modelRender->SetFilePathTks(c_filePathTksEnemy);
-		
+
+			//座標を設定。
+			m_modelRender->SetPosition(m_position);
+
+			//回転を設定。
+			m_modelRender->SetRotation(m_rotation);
 		
 			//アニメーションクリップを初期化。
 			InitAnimationClip();
@@ -44,6 +42,13 @@ namespace nsMyGame {
 
 			//初期化。
 			m_modelRender->Init();
+
+			//キャラクターコントローラーを初期化。
+			m_charaCon.Init(
+				20.0f,			//半径。
+				100.0f,			//高さ。
+				m_position		//座標。
+			);
 			return true;
 		}
 

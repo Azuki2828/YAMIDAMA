@@ -10,7 +10,7 @@ namespace nsMyGame {
 		bool CGoteWinEnemy::StartSub() {
 
 			//初期座標を設定。
-			m_position = { 900.0f,500.0f,-1200.0f };
+			//m_position = { 900.0f,500.0f,-1200.0f };
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(

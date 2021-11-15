@@ -1,5 +1,7 @@
 #pragma once
 #include "Door.h"
+#include "enemy/firstWinEnemy/FirstWinEnemy.h"
+#include "enemy/goteWinEnemy/GoteWinEnemy.h"
 
 namespace nsMyGame {
 
@@ -21,6 +23,8 @@ namespace nsMyGame {
 		CModelRender* m_modelRender = nullptr;			//モデル
 		CModelRender* m_wall = nullptr;					//壁モデル
 		std::vector<CDoor*> m_door;						//ドアクラスのインスタンス
+		std::vector<nsEnemy::CFirstWinEnemy*> m_fWEnemy;					//先手必勝の敵のインスタンス
+		std::vector<nsEnemy::CGoteWinEnemy*> m_gWEnemy;						//後手必勝の敵のインスタンス
 
 		CVector3 m_pos = CVector3::Zero;				//座標
 		CQuaternion m_rot = CQuaternion::Identity;		//回転

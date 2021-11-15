@@ -101,6 +101,15 @@ namespace nsMyGame {
 			}
 
 			/**
+			 * @brief ‰ñ“]‚ğİ’è‚·‚éŠÖ”B
+			 * @param rot ‰ñ“]
+			*/
+			void SetRotation(const CQuaternion& rot) {
+
+				m_rotation = rot;
+			}
+
+			/**
 			 * @brief ‰ñ“]‚ğæ“¾‚·‚éŠÖ”B
 			 * @return ‰ñ“]
 			*/
