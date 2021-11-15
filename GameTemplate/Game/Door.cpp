@@ -33,23 +33,26 @@ namespace nsMyGame{
 			m_modelRender->GetModel()->GetWorldMatrix()
 		);
 
+		//静的物理オブジェクトを更新。
+		m_physicsStaticObject.GetRigidBody().SetPositionAndRotation(m_position, m_rotation);
+
 		return true;
 	}
 
 	void CDoor::Update() {
 
-		//ドアを回転させるための回数を初期化。
-		static unsigned int doorRotNum = 0;
-
-		//ドアの回転の値を初期化。
-		static float doorRotValue = 0.0f;
+		//オブジェクトなら更新しない。
+		if (m_isObj) {
+			return;
+		}
 
 		//ドアを開ける判定をして開けられたら開ける。
-		JudgeAndExecuteOpenDoor(doorRotNum);
+		JudgeAndExecuteOpenDoor(m_doorRotNum);
 
 		//ドアの回転を更新。
-		UpdateRotation(doorRotNum, doorRotValue);
+		UpdateRotation(m_doorRotNum);
 
+		//静的物理オブジェクトを更新。
 		m_physicsStaticObject.GetRigidBody().SetPositionAndRotation(m_position, m_rotation);
 	}
 
@@ -64,12 +67,13 @@ namespace nsMyGame{
 		//プレイヤーに伸びるベクトルを計算。
 		CVector3 vecToPlayer = playerPos - m_position;
 
-		//もしプレイヤーとの距離が一定以下かつまだ開いてなく、Aボタンが入力されたら
+		//プレイヤーとの距離が一定以下かつまだ開いてない
 		if (vecToPlayer.Length() <= c_distanceForOpenDoor && !IsOpened()) {
 
 			//プレイヤーが何かを選んでいる状態にする。
 			player->SetSelectFlag(true);
 
+			//Aボタンが入力された
 			if (g_pad[0]->IsTrigger(enButtonA)) {
 
 				//鍵がかかっている？
@@ -115,16 +119,13 @@ namespace nsMyGame{
 		}
 	}
 
-	void CDoor::UpdateRotation(unsigned int& rotNum, float& rotValue) {
+	void CDoor::UpdateRotation(unsigned int& rotNum) {
 
 		//ドアを回転させるための回数が0より大きいなら
 		if (rotNum > 0) {
 
-			//回転を更新。
-			rotValue += static_cast<float>(c_openDoorRotNum);
-
 			//回転を設定。
-			m_rotation.SetRotationDegY(rotValue);
+			m_rotation.AddRotationY(CMath::DegToRad(c_openDoorRotNum));
 
 			//モデルに回転を設定。
 			m_modelRender->SetRotation(m_rotation);

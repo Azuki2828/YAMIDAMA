@@ -44,6 +44,15 @@ namespace nsMyGame {
 			m_scale = scale;
 		}
 
+		/**
+		 * @brief ただのオブジェクト？
+		 * @return ただのオブジェクトかどうか
+		*/
+	    void SetObj(const bool objFlag) {
+
+			m_isObj = objFlag;
+		}
+
 	private:
 		/**
 		 * @brief 鍵がかかっている？
@@ -74,10 +83,15 @@ namespace nsMyGame {
 		 * @param rotNum ドアを回転させるための回数
 		 * @param rotValue ドアの回転の値
 		*/
-		void UpdateRotation(unsigned int& rotNum, float& rotValue);
+		void UpdateRotation(unsigned int& rotNum);
 	private:
 		bool m_isLocked = false;							//鍵がかかっている？
 		bool m_isOpened = false;							//開いている？
+		bool m_isObj = false;								//ただのオブジェクト？
+
+		unsigned int m_doorRotNum = 0;						//ドアを回転させるための回数
+		float m_doorRotValue = 0.0f;						//ドアの回転の値
+
 		CModelRender* m_modelRender = nullptr;				//モデル
 		PhysicsStaticObject m_physicsStaticObject;			//物理オブジェクト
 		CVector3 m_position = CVector3::Zero;				//座標

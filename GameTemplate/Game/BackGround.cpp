@@ -41,6 +41,17 @@ namespace nsMyGame {
 				doorNum++;
 				return true;
 			}
+
+			if (objData.EqualObjectName("doorObj")) {
+
+				m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
+				m_door[doorNum]->SetPosition(objData.position);
+				m_door[doorNum]->SetRotation(objData.rotation);
+				m_door[doorNum]->SetScale(objData.scale);
+				m_door[doorNum]->SetObj(true);
+				doorNum++;
+				return true;
+			}
 			return false;
 		});
 		return true;
