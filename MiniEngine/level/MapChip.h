@@ -34,6 +34,7 @@ namespace nsMyGame {
 		std::vector< DescriptorHeap > m_descriptorHeap;		//ディスクリプタヒープ。
 
 		CModelRender* m_modelRender = nullptr;
+		CModelRender* m_collisionModelRender = nullptr;
 		PhysicsStaticObject m_physicsStaticObject;
 	};
 }

@@ -14,38 +14,83 @@ namespace nsMyGame {
 		char objName[256];
 		wcstombs(objName, objData.name, 256);
 
+		char* p;
+		p = strstr(objName, "Coll");
 
-		m_modelRender = NewGO<CModelRender>(0);
-		//m_skinModelRender->SetFileNametks("Assets/modelData/Player_N.tks");
-		//m_skinModelRender->Init(true, false);
+		if (p == nullptr) {
 
-
-		char filePathtkm[256];
-		sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
-		m_modelRender->SetFilePathTkm(static_cast<const char*>(filePathtkm));
-
-		//char filePathtks[256];
-		//sprintf(filePathtks, "Assets/modelData/backGround/%s.tks", objName);
-		//m_modelRender->SetFilePathTks(static_cast<const char*>(filePathtks));
-
-		m_modelRender->SetShadowReceiverFlag(true);
-		m_modelRender->Init();
+			m_modelRender = NewGO<CModelRender>(0);
+			//m_skinModelRender->SetFileNametks("Assets/modelData/Player_N.tks");
+			//m_skinModelRender->Init(true, false);
 
 
-		m_modelRender->SetPosition(objData.position);
-		m_modelRender->SetRotation(objData.rotation);
-		m_modelRender->SetScale(objData.scale);
-		m_modelRender->UpdateWorldMatrix();
+			char filePathtkm[256];
+			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
+			m_modelRender->SetFilePathTkm(static_cast<const char*>(filePathtkm));
 
-		m_physicsStaticObject.CreateFromModel(
-			*m_modelRender->GetModel(),
-			m_modelRender->GetModel()->GetWorldMatrix()
-		);
-		m_physicsStaticObject.SetFriction(10.0f);
+			m_modelRender->SetShadowReceiverFlag(true);
+			m_modelRender->Init();
+
+
+			m_modelRender->SetPosition(objData.position);
+			m_modelRender->SetRotation(objData.rotation);
+			m_modelRender->SetScale(objData.scale);
+			m_modelRender->UpdateWorldMatrix();
+
+			m_physicsStaticObject.CreateFromModel(
+				*m_modelRender->GetModel(),
+				m_modelRender->GetModel()->GetWorldMatrix()
+			);
+			m_physicsStaticObject.SetFriction(10.0f);
+		}
+		else {
+			m_modelRender = NewGO<CModelRender>(0);
+
+
+			char filePathtkm[256];
+			strcpy(objName, (p+4));
+			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
+			m_modelRender->SetFilePathTkm(static_cast<const char*>(filePathtkm));
+
+			m_modelRender->Init();
+
+
+			m_modelRender->SetPosition(objData.position);
+			m_modelRender->SetRotation(objData.rotation);
+			m_modelRender->SetScale(objData.scale);
+			m_modelRender->UpdateWorldMatrix();
+
+
+			char filePathtkm2[256];
+			sprintf(filePathtkm2, "Assets/modelData/backGround/Coll%s.tkm", p);
+			m_collisionModelRender = NewGO<CModelRender>(0);
+			m_collisionModelRender->SetFilePathTkm(static_cast<const char*>(filePathtkm2));
+
+			m_collisionModelRender->Init();
+
+
+			m_collisionModelRender->SetPosition(objData.position);
+			m_collisionModelRender->SetRotation(objData.rotation);
+			m_collisionModelRender->SetScale(objData.scale);
+			m_collisionModelRender->UpdateWorldMatrix();
+
+			m_collisionModelRender->SetCollisionModelFlag(true);
+
+			m_physicsStaticObject.CreateFromModel(
+				*m_collisionModelRender->GetModel(),
+				m_collisionModelRender->GetModel()->GetWorldMatrix()
+			);
+			m_physicsStaticObject.SetFriction(10.0f);
+		}
 	}
 
 	MapChip::~MapChip() {
-		DeleteGO(m_modelRender);
+		if (m_modelRender != nullptr) {
+			DeleteGO(m_modelRender);
+		}
+		if (m_collisionModelRender != nullptr) {
+			DeleteGO(m_collisionModelRender);
+		}
 	}
 
 	void MapChip::Draw(CRenderContext& rc) {

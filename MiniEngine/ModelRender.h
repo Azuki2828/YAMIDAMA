@@ -203,6 +203,20 @@ namespace nsMyGame {
 
 			m_animationSpeed = animSpeed;
 		}
+
+		/**
+		 * @brief コリジョンモデルかどうかのフラグを設定する関数。
+		 * @param collisionModelFlag コリジョンモデルかどうかのフラグ
+		*/
+		void SetCollisionModelFlag(const bool collisionModelFlag) {
+
+			m_isCollisionModel = collisionModelFlag;
+		}
+
+		const bool IsCollisionModel()const {
+
+			return m_isCollisionModel;
+		}
 	private:
 		/**
 		 * @brief シャドウモデルを作成する関数。
@@ -218,6 +232,7 @@ namespace nsMyGame {
 		const char* m_filePathTks = nullptr;		//tksファイルパス
 
 		bool m_shadowCasterFlag = false;			//シャドウキャスターフラグ
+		bool m_isCollisionModel = false;
 
 		CVector3 m_pos = CVector3::Zero;			//座標
 		CQuaternion m_rot = CQuaternion::Identity;	//回転率

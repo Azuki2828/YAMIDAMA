@@ -37,7 +37,7 @@ namespace nsMyGame {
 		public:
 			/**
 			 * @brief À•W‚ğæ“¾‚·‚éŠÖ”B
-			 * @return
+			 * @return À•W
 			*/
 			const CVector3& GetPosition()const {
 

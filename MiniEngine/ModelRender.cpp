@@ -110,7 +110,9 @@ namespace nsMyGame {
 		switch (rc.GetRenderMode()) {
 		case CRenderContext::EnRender_Mode::enRenderMode_Normal:
 			//モデルを描画。
-			m_model.Draw(rc);
+			if (!IsCollisionModel()) {
+				m_model.Draw(rc);
+			}
 			break;
 		case CRenderContext::EnRender_Mode::enRenderMode_Shadow:
 			//シャドウモデルを描画。
