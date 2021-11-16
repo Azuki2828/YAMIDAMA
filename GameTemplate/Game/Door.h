@@ -27,6 +27,15 @@ namespace nsMyGame {
 		}
 
 		/**
+		 * @brief 座標を取得する関数。
+		 * @return 座標
+		*/
+		const CVector3& GetPosition()const {
+
+			return m_position;
+		}
+
+		/**
 		 * @brief 回転を設定する関数。
 		 * @param rot 回転
 		*/
@@ -53,6 +62,14 @@ namespace nsMyGame {
 			m_isObj = objFlag;
 		}
 
+		/**
+		 * @brief ドアが開いている？
+		 * @return ドアが開いているかどうかのフラグ
+		*/
+		const bool IsOpened()const {
+
+			return m_isOpened;
+		}
 	private:
 		/**
 		 * @brief 鍵がかかっている？
@@ -61,15 +78,6 @@ namespace nsMyGame {
 		const bool IsLocked()const {
 
 			return m_isLocked;
-		}
-
-		/**
-		 * @brief ドアが開いている？
-		 * @return ドアが開いているかどうかのフラグ
-		*/
-		const bool IsOpened()const {
-
-			return m_isOpened;
 		}
 
 		/**

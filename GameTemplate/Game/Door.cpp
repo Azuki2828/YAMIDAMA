@@ -41,7 +41,7 @@ namespace nsMyGame{
 
 	void CDoor::Update() {
 
-		//オブジェクトなら更新しない。
+		//開かないドアなら更新しない。
 		if (m_isObj) {
 			return;
 		}
@@ -49,11 +49,15 @@ namespace nsMyGame{
 		//ドアを開ける判定をして開けられたら開ける。
 		JudgeAndExecuteOpenDoor(m_doorRotNum);
 
-		//ドアの回転を更新。
+		//座標を更新。
+		m_modelRender->SetPosition(m_position);
+
+		//回転を更新。
 		UpdateRotation(m_doorRotNum);
 
 		//静的物理オブジェクトを更新。
 		m_physicsStaticObject.GetRigidBody().SetPositionAndRotation(m_position, m_rotation);
+
 	}
 
 	void CDoor::JudgeAndExecuteOpenDoor(unsigned int& rotNum) {
@@ -69,9 +73,6 @@ namespace nsMyGame{
 
 		//プレイヤーとの距離が一定以下かつまだ開いてない
 		if (vecToPlayer.Length() <= c_distanceForOpenDoor && !IsOpened()) {
-
-			//プレイヤーが何かを選んでいる状態にする。
-			player->SetSelectFlag(true);
 
 			//Aボタンが入力された
 			if (g_pad[0]->IsTrigger(enButtonA)) {
@@ -112,11 +113,6 @@ namespace nsMyGame{
 				}
 			}
 		}
-		else {
-
-			//プレイヤーが何も選んでいない状態にする。
-			player->SetSelectFlag(false);
-		}
 	}
 
 	void CDoor::UpdateRotation(unsigned int& rotNum) {
@@ -127,7 +123,7 @@ namespace nsMyGame{
 			//回転を設定。
 			m_rotation.AddRotationY(CMath::DegToRad(c_openDoorRotNum));
 
-			//モデルに回転を設定。
+			//モデルの回転を更新。
 			m_modelRender->SetRotation(m_rotation);
 
 			//回数を減らす。

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BackGround.h"
+#include "player/Player.h"
 
 
 namespace nsMyGame {
@@ -79,5 +80,42 @@ namespace nsMyGame {
 
 	void CBackGround::Update() {
 
+		/*----------プレイヤーの選択状態を更新するための処理----------*/
+
+		//プレイヤーを検索。
+		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+
+		//プレイヤーの座標を取得。
+		CVector3 playerPos = player->GetPosition();
+		
+		//規定値より100.0f大きい数を初期値とする。
+		float vecToPlayerLength = c_distanceForOpenDoor + 100.0f;
+
+		//ステージ上のドアを参照。
+		for (const auto& door : m_door) {
+
+			//プレイヤーに伸びるベクトルを計算。
+			CVector3 vecToPlayer = playerPos - door->GetPosition();
+
+			//プレイヤーとの最短距離を更新。
+			if (vecToPlayer.Length() < vecToPlayerLength) {
+
+				vecToPlayerLength = vecToPlayer.Length();
+
+				//最短距離を更新したドアとプレイヤーの距離が一定以下かつ、そのドアが開いていないならプレイヤーを選択状態にする。
+				if (vecToPlayerLength <= c_distanceForOpenDoor && !door->IsOpened()) {
+
+					player->SetSelectFlag(true);
+					break;
+				}
+			}
+			//それ以外は、プレイヤーは何も選択していない状態。
+			else {
+
+				player->SetSelectFlag(false);
+			}
+		}
+
+		/*------------------------------------------------------------*/
 	}
 }
