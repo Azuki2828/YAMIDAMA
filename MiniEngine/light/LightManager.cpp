@@ -132,19 +132,19 @@ namespace nsMyGame {
 			//ライトカメラからプロジェクション行列を取得。
 			m_lightManager->m_ligData.m_viewProj = CCamera::GetLightCamera()->GetViewProjectionMatrix();
 
+			int a = 0;
 			for (auto itr = m_directionLights.begin(); itr != m_directionLights.end(); ++itr) {
 
-				int a = 0;
 				m_ligData.directionLigData[a] = *(*itr);
 				a++;
 			}
 
-			//for (auto itr = m_pointLights.begin(); itr != m_pointLights.end(); itr++) {
-			//
-			//	int a = 0;
-			//	m_ligData.pointLigData[a] = *(*itr);
-			//	a++;
-			//}
+			a = 0;
+			for (auto itr = m_pointLights.begin(); itr != m_pointLights.end(); itr++) {
+			
+				m_ligData.pointLigData[a] = *(*itr);
+				a++;
+			}
 		}
 	}
 }

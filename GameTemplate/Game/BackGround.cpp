@@ -5,22 +5,15 @@
 
 namespace nsMyGame {
 
+	nsLight::CDirectionLight* CBackGround::m_dirLight = nullptr;
 	bool CBackGround::Start() {
 
 		static int doorNum = 0;
 		static int fEnemyNum = 0;
 		static int gEnemyNum = 0;
-
-		/*m_modelRender = NewGO<CModelRender>(0);
-		m_modelRender->SetFilePathTkm("Assets/modelData/bg/bg.tkm");
-		m_modelRender->SetPosition(m_pos);
-		m_modelRender->SetRotation(m_rot);
-		m_modelRender->SetScale(m_sca);
-		m_modelRender->SetShadowReceiverFlag(true);
-		m_modelRender->Init();
-		m_modelRender->Update();*/
-
-		m_wall = NewGO<CModelRender>(0);
+		static int pointLightNum = 0;
+		CreateDirLight();
+		/*m_wall = NewGO<CModelRender>(0);
 		m_wall->SetFilePathTkm("Assets/modelData/BackGround/testStage.tkm");
 		m_wall->SetPosition(m_pos);
 		m_wall->SetRotation(m_rot);
@@ -32,9 +25,21 @@ namespace nsMyGame {
 			m_wall->GetModel()->GetWorldMatrix()
 		);
 		m_physicsStaticObject.SetFriction(10.0f);
-		m_wall->Update();
+		m_wall->Update();*/
 
-		/*m_level.Init("Assets/level/stage_2.tkl", [&](LevelObjectData& objData) {
+		//プレイヤーを検索。
+		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+
+		//プレイヤーを中心とするポイントライトを作成。
+		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+		m_pointLight[pointLightNum]->SetPosition(player->GetPosition());
+		m_pointLight[pointLightNum]->SetColor({ 1.0f,1.0f,1.0f });
+		m_pointLight[pointLightNum]->SetRange(150.0f);
+		m_pointLight[pointLightNum]->SetAffectPowParam(1.5f);
+		pointLightNum++;
+
+		//ステージをロード。
+		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
 
 			if (objData.EqualObjectName("door")) {
 				
@@ -59,7 +64,7 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("FEnemy")) {
 
-				m_fWEnemy.push_back(NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, "Enemy"));
+				m_fWEnemy.push_back(NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
 				m_fWEnemy[fEnemyNum]->SetPosition(objData.position);
 				m_fWEnemy[fEnemyNum]->SetRotation(objData.rotation);
 				fEnemyNum++;
@@ -68,14 +73,25 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("GEnemy")) {
 
-				m_gWEnemy.push_back(NewGO<nsEnemy::CGoteWinEnemy>(enPriority_Zeroth, "Enemy"));
+				m_gWEnemy.push_back(NewGO<nsEnemy::CGoteWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
 				m_gWEnemy[gEnemyNum]->SetPosition(objData.position);
 				m_gWEnemy[gEnemyNum]->SetRotation(objData.rotation);
 				gEnemyNum++;
 				return true;
 			}
+
+			if (objData.EqualObjectName("pointLight")) {
+
+				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+				m_pointLight[pointLightNum]->SetPosition(objData.position);
+				m_pointLight[pointLightNum]->SetColor({ 5.0f,0.0f,0.0f });
+				m_pointLight[pointLightNum]->SetRange(300.0f);
+				m_pointLight[pointLightNum]->SetAffectPowParam(2.0f);
+				pointLightNum++;
+				return true;
+			}
 			return false;
-		});*/
+		});
 		return true;
 	}
 
@@ -103,9 +119,10 @@ namespace nsMyGame {
 
 				vecToPlayerLength = vecToPlayer.Length();
 
-				//最短距離を更新したドアとプレイヤーの距離が一定以下かつ、そのドアが開いていないならプレイヤーを選択状態にする。
+				//最短距離を更新したドアとプレイヤーの距離が一定以下かつ、そのドアが開いていないなら
 				if (vecToPlayerLength <= c_distanceForOpenDoor && !door->IsOpened()) {
 
+					//プレイヤーを選択状態にする。
 					player->SetSelectFlag(true);
 					break;
 				}
@@ -118,5 +135,10 @@ namespace nsMyGame {
 		}
 
 		/*------------------------------------------------------------*/
+
+		//プレイヤー中心のポイントライトの座標を更新。
+		CVector3 playerLightPosition = player->GetPosition();
+		playerLightPosition.y += 100.0f;
+		m_pointLight[0]->SetPosition(playerLightPosition);
 	}
 }

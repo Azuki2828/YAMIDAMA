@@ -12,6 +12,9 @@ namespace nsMyGame {
 		static void CreateRenderingEngine() {
 
 			m_renderingEngine = new CRenderingEngine;
+
+			//レンダリングエンジンの初期化。
+			m_renderingEngine->Init();
 		}
 
 		/**

@@ -133,8 +133,11 @@ SPSOut PSMain(SPSIn psIn)
 	psOut.albedoAndShadowReceiver.xyz = g_albedo.Sample(g_sampler, psIn.uv).xyz;
 	psOut.albedoAndShadowReceiver.w = shadowReceiverFlg;
 
+	//-1.0f～1.0fの範囲。
 	psOut.normalAndDepth.xyz = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
-	//psOut.normalAndDepth.w = g_depthTexture.Sample(g_sampler, psIn.uv).r;
+	psOut.normalAndDepth.xyz = (psOut.normalAndDepth.xyz - 0.5f) * 2.0f;
+
+	psOut.normalAndDepth.xyz = psIn.tangent * psOut.normalAndDepth.x + psIn.biNormal * psOut.normalAndDepth.y + psIn.normal * psOut.normalAndDepth.z;
 	psOut.worldPos.xyz = psIn.worldPos;
 
 	psOut.occlusionAndSmoothAndMetaric.xyz = g_occlusionAndSmoothAndMetaricMap.Sample(g_sampler, psIn.uv).xyz;

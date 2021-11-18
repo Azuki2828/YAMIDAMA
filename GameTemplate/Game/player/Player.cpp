@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "../enemy/Enemy.h"
+#include "../BackGround.h"
 
 namespace nsMyGame {
 
@@ -89,12 +90,15 @@ namespace nsMyGame {
 
 		void CPlayer::LightCameraUpdate() {
 
+			auto backGround = FindGO<CBackGround>("backGround");
+
 			//ライトカメラの情報を更新。
 			CVector3 m_lightCameraTar = m_position;
-			CVector3 m_lightCameraPos = m_lightCameraTar;
+			auto ligDirection = backGround->GetDirectionLight()->GetLigDirection();
+			CVector3 m_lightCameraPos = m_lightCameraTar - *ligDirection * 300.0f;
 
 			//ライトカメラの座標を設定。
-			m_lightCameraPos += c_addLightCameraPos;
+			//m_lightCameraPos += c_addLightCameraPos;
 
 			//ライトカメラの情報を設定。
 			CCamera::GetLightCamera()->SetPosition(m_lightCameraPos);

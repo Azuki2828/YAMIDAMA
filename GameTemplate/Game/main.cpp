@@ -52,23 +52,21 @@ namespace nsMyGame {
 		//ゲームの初期化。
 		InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("Game"));
 
-		wchar_t* program;
 
 		// python初期化。
+		wchar_t* program;
 		InitPython(program);
 
 		//////////////////////////////////////
 		// ここから初期化を行うコードを記述する。
 		//////////////////////////////////////
 
-		//ゲームオブジェクトマネージャーのインスタンスを作成する。
-		CGameObjectManager::CreateInstance();
-		CPhysicsWorld::CreateInstance();
-		nsLight::CLightManager::CreateInstance();
-		CCamera::CreateLightCamera();
-		CRenderingEngine::CreateRenderingEngine();
-
-		CRenderingEngine::GetInstance()->Init();
+		//様々なインスタンスを作成する。
+		CGameObjectManager::CreateInstance();		//ゲームオブジェクト管理クラス
+		CPhysicsWorld::CreateInstance();			//物理ワールド
+		nsLight::CLightManager::CreateInstance();	//ライト管理クラス
+		CCamera::CreateLightCamera();				//ライトカメラ
+		CRenderingEngine::CreateRenderingEngine();	//レンダリングエンジン
 
 		//ワイヤーフレーム表示をONにする。
 		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
@@ -82,21 +80,18 @@ namespace nsMyGame {
 		auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(0, c_classNameEnemy);
 		fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
 		//NewGO<nsEnemy::CGoteWinEnemy>(0, "Enemy");
-
-		NewGO<nsPlayer::CPlayer>(0, "player");
-		NewGO<CBackGround>(0);
+		
+		NewGO<nsPlayer::CPlayer>(0, c_classNamePlayer);
+		NewGO<CBackGround>(0,"backGround");
 		NewGO<CMainCamera>(0);
 		/*CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);
 		m_spriteRender->Init("Assets/image/beer.dds", 1280.0f, 720.0f);
 		m_spriteRender->SetPosition({ -400.0f,-200.0f,0.0f });
 		m_spriteRender->SetScale({ 0.2f,0.2f,0.2f });
 		m_spriteRender->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });*/
+		
 
-		nsLight::CDirectionLight* dirLight = NewGO<nsLight::CDirectionLight>(0);
-		dirLight->SetLigDirection({ 1.0f,-1.0f,-1.0f });
-		dirLight->SetLigColor({ 0.3f,0.3f,0.3f });
-
-		nsLight::CPointLight* poiLight = NewGO<nsLight::CPointLight>(0);
+		/*nsLight::CPointLight* poiLight = NewGO<nsLight::CPointLight>(0);
 		poiLight->SetPosition({ 100.0f,100.0f,0.0f });
 		poiLight->SetColor({ 5.0f,0.0f,0.0f });
 		poiLight->SetRange(200.0f);
@@ -106,7 +101,7 @@ namespace nsMyGame {
 		poiLight2->SetPosition({ -50.0f,100.0f,0.0f });
 		poiLight2->SetColor({ 0.0f,0.0f,5.0f });
 		poiLight2->SetRange(200.0f);
-		poiLight2->SetAffectPowParam(3.0f);
+		poiLight2->SetAffectPowParam(3.0f);*/
 
 		// ここからゲームループ。
 		while (DispatchWindowMessage())
@@ -118,18 +113,22 @@ namespace nsMyGame {
 			//ここから絵を描くコードを記述する。
 			//////////////////////////////////////
 
-			//sprite[1].Update(pos[1], Quaternion::Identity, Vector3::One);
-
+			//ゲームオブジェクトを更新。
 			CGameObjectManager::GetInstance()->ExecuteUpdate();
+
+			//ライトを更新。
 			nsLight::CLightManager::GetInstance()->Update();
 
+			//描画。
 			CRenderingEngine::GetInstance()->Render();
 			//////////////////////////////////////
 			//絵を描くコードを書くのはここまで！！！
 			//////////////////////////////////////
 
+			//レンダリング終了。
 			g_engine->EndFrame();
 		}
+
 		//ゲームオブジェクトマネージャーを削除。
 		CGameObjectManager::DeleteInstance();
 

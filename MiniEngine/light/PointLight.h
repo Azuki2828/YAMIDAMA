@@ -9,8 +9,8 @@ namespace nsMyGame {
 		struct PointLigData {
 			CVector3 pos = CVector3::Zero;		//座標
 			float pad1;							//パディング
-			CVector4 color = CVector4::White;		//カラー
-			CVector2 attn;						// 減衰パラメータ。xに影響範囲、yには影響率に累乗するパラメータ
+			CVector4 color = CVector4::White;	//カラー
+			CVector2 attn;						//減衰パラメータ。xに影響範囲、yには影響率に累乗するパラメータ
 			CVector2 pad2;						//パディング
 		};
 
@@ -76,7 +76,7 @@ namespace nsMyGame {
 			 * @brief 影響範囲を設定する関数。
 			 * @param range 影響範囲
 			*/
-			void SetRange(float range) {
+			void SetRange(const float range) {
 
 				m_poiLigData.attn.x = range;
 			}

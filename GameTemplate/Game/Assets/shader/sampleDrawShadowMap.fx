@@ -138,6 +138,6 @@ SPSIn VSSkinMain(SVSIn vsIn)
 float4 PSMain(SPSIn psIn) : SV_Target0
 {
 	//戻り値にはz座標を入れる。
-	return float4(psIn.pos.z,psIn.pos.z,psIn.pos.z,1.0f);
+	return float4(psIn.pos.z, psIn.pos.z, psIn.pos.z, 1.0f);
 	//return float4(0.0f,0.0f,0.0f,1.0f);
 }

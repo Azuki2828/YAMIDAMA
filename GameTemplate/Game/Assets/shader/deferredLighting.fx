@@ -245,10 +245,43 @@ float4 PSMain(PSInput psIn) : SV_Target0
 
 	//ライト
 	float3 lig = float3(0.0f, 0.0f, 0.0f);
+	
+	// 影が落ちている？
+	float ligFactor[MAX_DIRECTION_LIGHT] = {
+		1.0f,
+		1.0f,
+		1.0f,
+		1.0f
+	};
+	if (shadowReceiverFlg) {
+
+		float4 posInLVP = mul(mLVP, float4(worldPos, 1.0f));
+
+		//ライトビューの座標系を.wで割ることで正規化スクリーン座標系に変換できる。(重要)
+		float2 shadowMapUV = posInLVP.xy / posInLVP.w;
+
+		//ライトビュースクリーン空間からUV空間に座標変換。
+		shadowMapUV *= float2(0.5f, -0.5f);
+		shadowMapUV += 0.5f;
+
+		// ライトビュースクリーン空間でのZ値を計算する。
+		float zInLVP = posInLVP.z / posInLVP.w;
+
+		if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
+			&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
+			&& zInLVP > 0.0f && zInLVP < 1.0f
+			) {
+			//シャドウマップに描き込まれているZ値と比較する。
+			float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
+			if (zInLVP > zInShadowMap + 0.0001f) {
+				ligFactor[0] = 0.0f;
+			}
+		}
+	}
 
 	//ディレクションライトの計算。
-	for (int dirLigNo = 0; dirLigNo < /*MAX_DIRECTION_LIGHT*/1; dirLigNo++) {
-
+	for (int dirLigNo = 0; dirLigNo < MAX_DIRECTION_LIGHT; dirLigNo++) {
+	
 		float diffuseFromFresnel = CalcDiffuseFromFresnel(normal, -directionLight[dirLigNo].dir, toEye, 1.0f - smooth);
 
 		float NdotL = saturate(dot(normal, -directionLight[dirLigNo].dir));
@@ -265,7 +298,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 
 		dirSpec *= lerp(float3(1.0f, 1.0f, 1.0f), specColor, smooth);
 
-		lig += dirDiffuse * (1.0f - smooth) + dirSpec * smooth;
+		lig += (dirDiffuse * (1.0f - smooth) + dirSpec * smooth) * ligFactor[dirLigNo];
 		
 	}
 	//ポイントライトの計算。
@@ -290,37 +323,12 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
 	}
 
-	lig += float3(0.3f,0.3f,0.3f);
+	lig += float3(0.1f,0.1f,0.1f);
 	
 	float4 finalColor = float4(albedoColor, 1.0f);
 	finalColor.xyz *= lig;
 
 
-	if (shadowReceiverFlg) {
-		
-		float4 posInLVP = mul(mLVP, float4(worldPos, 1.0f));
-
-		//ライトビューの座標系を.wで割ることで正規化スクリーン座標系に変換できる。(重要)
-		float2 shadowMapUV = posInLVP.xy / posInLVP.w;
-
-		//ライトビュースクリーン空間からUV空間に座標変換。
-		shadowMapUV *= float2(0.5f, -0.5f);
-		shadowMapUV += 0.5f;
-
-		// ライトビュースクリーン空間でのZ値を計算する。
-		float zInLVP = posInLVP.z / posInLVP.w;
-
-		if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
-			&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
-			&& zInLVP > 0.0f && zInLVP < 1.0f
-			) {
-			//シャドウマップに描き込まれているZ値と比較する。
-			float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
-			if (zInLVP > zInShadowMap + 0.0001f) {
-				finalColor.xyz *= 0.5f;
-			}
-		}
-	}
 
 	return finalColor;
 }
