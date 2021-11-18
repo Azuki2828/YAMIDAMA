@@ -15,6 +15,7 @@ namespace nsMyGame {
 			enAnim_Rolling,
 			enAnim_ThreeCombo,
 			enAnim_Guard,
+			enAnim_GuardSuccess,
 
 			enAnim_Num
 

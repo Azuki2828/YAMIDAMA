@@ -22,7 +22,7 @@ namespace nsMyGame {
 
 	void CMainCamera::Update() {
 
-		m_player = FindGO<nsPlayer::CPlayer>("player");
+		m_player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 		//カメラを更新。
 		//注視点を計算する。
 		CVector3 target = m_player->GetPosition();

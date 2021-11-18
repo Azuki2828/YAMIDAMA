@@ -25,7 +25,7 @@ namespace nsMyGame {
 
 				//名前がEnemyのオブジェクトをCEnemyクラスにキャスト。
 				//敵がまだ今回の攻撃を受けていないように設定。
-				QueryGOs<nsEnemy::CEnemy>("Enemy", [this](nsEnemy::CEnemy* enemy) {
+				QueryGOs<nsEnemy::CEnemy>(c_classNameEnemy, [this](nsEnemy::CEnemy* enemy) {
 
 					enemy->SetReceiveDamage(false);
 					return true;
@@ -58,7 +58,7 @@ namespace nsMyGame {
 				m_ghostBox.SetRotation(rot);
 
 				//名前がEnemyのオブジェクトをCEnemyクラスにキャスト。
-				QueryGOs<nsEnemy::CEnemy>("Enemy", [this](nsEnemy::CEnemy* enemy) {
+				QueryGOs<nsEnemy::CEnemy>(c_classNameEnemy, [this](nsEnemy::CEnemy* enemy) {
 
 					//剛体との当たり判定を調べる。
 					CPhysicsWorld::GetInstance()->ContactTest(enemy->GetCharacterController(), [&](const btCollisionObject& contactObject) {

@@ -79,8 +79,8 @@ namespace nsMyGame {
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		
 		// とりあえずテストで敵を追加。
-		//auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(0, "Enemy");
-		//fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
+		auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(0, c_classNameEnemy);
+		fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
 		//NewGO<nsEnemy::CGoteWinEnemy>(0, "Enemy");
 
 		NewGO<nsPlayer::CPlayer>(0, "player");
@@ -113,13 +113,6 @@ namespace nsMyGame {
 		{
 			//レンダリング開始。
 			g_engine->BeginFrame();
-
-
-			
-
-
-
-
 
 			//////////////////////////////////////
 			//ここから絵を描くコードを記述する。

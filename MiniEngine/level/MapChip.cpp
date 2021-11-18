@@ -52,6 +52,7 @@ namespace nsMyGame {
 			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
 			m_modelRender->SetFilePathTkm(static_cast<const char*>(filePathtkm));
 
+			m_modelRender->SetShadowReceiverFlag(true);
 			m_modelRender->Init();
 
 

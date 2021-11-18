@@ -62,7 +62,7 @@ namespace nsMyGame {
 			void ExecuteBesideBlur(CRenderContext& rc);
 
 		private:
-			float m_weights[c_gaussianBlurNumWeight];			//重みテーブル
+			float m_weights[c_gaussianBlurNumWeight] = { 0.0f };			//重みテーブル
 			Texture* m_originalTexture = nullptr;	//オリジナルテクスチャ
 			CRenderTarget m_xBlurRenderTarget;		//横ボケ画像を描画するレンダリングターゲット
 			CRenderTarget m_yBlurRenderTarget;		//縦ボケ画像を描画するレンダリングターゲット

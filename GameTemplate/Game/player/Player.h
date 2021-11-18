@@ -75,7 +75,13 @@ namespace nsMyGame {
 				if (m_playerState == enState_Rolling) {
 					return;
 				}
+				//ガードしたならガード成功状態に。
+				else if (m_playerState == enState_Guard) {
 
+					m_playerState = enState_GuardSuccess;
+					m_playerAction.GuardSuccess();
+					return;
+				}
 				//ダメージを受けたならダメージ状態にする。
 				if (m_receiveDamage) {
 					m_playerAction.ReceiveDamage();

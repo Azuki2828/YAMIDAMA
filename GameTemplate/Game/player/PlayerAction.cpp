@@ -33,14 +33,12 @@ namespace nsMyGame {
 			cameraRight.y = 0.0f;
 			cameraRight.Normalize();
 
-			//クールタイム中でなく、ガード中でなかったら
-			if (!IsCoolTime() && !IsGuard()) {
+			//クールタイム中でなく、ガード中、ガード成功時でなかったら
+			if (!IsCoolTime() && !IsGuard() && !IsGuardSccessCoolTime()) {
 				//このフレームの移動量を求める。
 				//左スティックの入力量を受け取る。
 				float lStick_x = g_pad[0]->GetLStickXF();
 				float lStick_y = g_pad[0]->GetLStickYF();
-
-				
 
 				//XZ成分の移動速度をクリア。
 				m_moveSpeed += cameraForward * lStick_y * 200.0f;	//奥方向への移動速度を加算。
@@ -74,12 +72,20 @@ namespace nsMyGame {
 
 			}
 
+			//３連続攻撃中なら
 			if ((playerState == enState_ThreeCombo)) {
 
 				if (c_threeComboCoolTime - m_coolTime < 2.4f) {
 					m_moveSpeed += forward * 50.0f;
 				}
 			}
+
+			//ガード成功時のノックバック
+			if (IsGuardSccessCoolTime()) {
+
+				m_moveSpeed -= forward * 150.0f;
+			}
+
 			//ジャンプ処理。
 			if (g_pad[0]->IsTrigger(enButtonY) //Aボタンが押されたら 
 				//&& m_charaCon.IsOnGround()  //かつ、地面に居たら
@@ -126,14 +132,34 @@ namespace nsMyGame {
 
 		void CPlayerAction::Rotate(CQuaternion& rotation) {
 
+			//入力量を調べる。
+			float lStick_x = g_pad[0]->GetLStickXF();
+			float lStick_y = g_pad[0]->GetLStickYF();
+
 			//移動ボタンが入力されていなかったら
-			if (fabsf(m_moveSpeed.x) < 0.001f
-				&& fabsf(m_moveSpeed.z) < 0.001f) {
+			if (fabsf(lStick_x) < 0.001f
+				&& fabsf(lStick_y) < 0.001f) {
 				//このフレームではキャラは移動していないので旋回する必要はない。
 				return;
 			}
+
+			//カメラの前方方向と右方向を取得。
+			CVector3 cameraForward = g_camera3D->GetForward();
+			CVector3 cameraRight = g_camera3D->GetRight();
+
+			//XZ平面での前方方向、右方向に変換する。
+			cameraForward.y = 0.0f;
+			cameraForward.Normalize();
+			cameraRight.y = 0.0f;
+			cameraRight.Normalize();
+
+			//XZ成分の移動速度をクリア。
+			CVector3 rotSource = CVector3::Zero;
+			rotSource += cameraForward * lStick_y;		//奥方向を計算。
+			rotSource += cameraRight * lStick_x;		//右方向を計算。
+
 			//回転角度を求める。
-			float angle = atan2(-m_moveSpeed.x, m_moveSpeed.z);
+			float angle = atan2(-rotSource.x, rotSource.z);
 
 			//回転を設定。
 			rotation.SetRotationY(-angle);
@@ -155,7 +181,7 @@ namespace nsMyGame {
 				}
 
 				//L1ボタンが押されていたら
-				if (g_pad[0]->IsPress(enButtonLB1)) {
+				if (g_pad[0]->IsPress(enButtonLB1) && !IsGuardSccessCoolTime()) {
 
 					//ガード状態に。
 					playerState = enState_Guard;
@@ -196,6 +222,13 @@ namespace nsMyGame {
 
 				//クールタイムを更新。
 				m_coolTime -= g_gameTime->GetFrameDeltaTime();
+			}
+
+			//ガード中のクールタイム中なら
+			if (IsGuardSccessCoolTime()) {
+
+				//ガード中のクールタイムを更新。
+				m_guardSccessCoolTime -= g_gameTime->GetFrameDeltaTime();
 			}
 
 			//攻撃状態なら

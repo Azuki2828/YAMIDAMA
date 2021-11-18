@@ -57,6 +57,13 @@ namespace nsMyGame {
 			}
 
 			/**
+			 * @brief ガード成功時のクールタイムを設定。
+			*/
+			void GuardSuccess() {
+
+				m_guardSccessCoolTime = 0.3f;
+			}
+			/**
 			 * @brief 攻撃をガードされた時のクールタイムを設定。
 			*/
 			void AttackBreak() {
@@ -80,6 +87,15 @@ namespace nsMyGame {
 			const bool IsCoolTime()const {
 
 				return m_coolTime > 0.0f;
+			}
+
+			/**
+			 * @brief ガード中成功時のクールタイム中かどうか判定する関数。
+			 * @return ガード中成功時のクールタイム中？
+			*/
+			const bool IsGuardSccessCoolTime()const {
+
+				return m_guardSccessCoolTime > 0.0f;
 			}
 
 			/**
@@ -107,6 +123,7 @@ namespace nsMyGame {
 			bool m_isDash = false;								//ダッシュ中？
 			bool m_isGuard = false;								//ガード中？
 			float m_coolTime = 0.0f;							//クールタイム
+			float m_guardSccessCoolTime = 0.0f;					//ガード成功時のクールタイム
 			CVector3 m_position = CVector3::Zero;				//座標
 			CQuaternion m_rotation = CQuaternion::Identity;		//回転
 			CVector3 m_moveSpeed = CVector3::Zero;				//移動速度

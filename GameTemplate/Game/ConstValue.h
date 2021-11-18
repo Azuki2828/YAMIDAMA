@@ -19,6 +19,7 @@ namespace nsMyGame {
 	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
 
 	constexpr const char* c_classNamePlayer = "player";
+	constexpr const char* c_classNameEnemy = "enemy";
 
 	constexpr const char* c_filePathTkmDoor = "Assets/modelData/backGround/door.tkm";	//ドアのtkmファイルパス
 	constexpr float c_distanceForOpenDoor = 300.0f;										//ドアを開けるのに必要な距離
@@ -50,6 +51,7 @@ namespace nsMyGame {
 			enState_Rolling,
 			enState_ThreeCombo,
 			enState_Guard,
+			enState_GuardSuccess,
 
 			enState_Num
 		};

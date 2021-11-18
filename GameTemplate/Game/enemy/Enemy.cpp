@@ -133,7 +133,7 @@ namespace nsMyGame {
 		bool CEnemy::Start()
 		{
 			//プレイヤーを検索。
-			m_player = FindGO<nsPlayer::CPlayer>("player");
+			m_player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
 			//派生クラスのStartSub()関数の結果を返す。
 			return StartSub();

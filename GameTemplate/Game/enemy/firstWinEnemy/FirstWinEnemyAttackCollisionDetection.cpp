@@ -25,7 +25,7 @@ namespace nsMyGame {
 				Create(pos, rot);
 
 				//プレイヤーを探す。
-				m_player = FindGO<nsPlayer::CPlayer>("player");
+				m_player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
 				//ダメージフラグをfalseに設定。
 				m_player->SetReceiveDamage(false);
@@ -75,11 +75,10 @@ namespace nsMyGame {
 						m_isGuarded = true;
 						return;
 					}
-					else {
 
-						//プレイヤーにダメージを与える。
-						m_player->SetReceiveDamage(true);
-					}
+					//プレイヤーにダメージを与える。
+					m_player->SetReceiveDamage(true);
+					Deactivate();
 				}
 			});
 		}

@@ -23,7 +23,7 @@ namespace nsMyGame {
 				//トリガーボックスを作成。
 				Create(pos, rot);
 
-				m_player = FindGO<nsPlayer::CPlayer>("player");
+				m_player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
 				m_player->SetReceiveDamage(false);
 

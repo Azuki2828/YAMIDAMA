@@ -102,7 +102,7 @@ namespace nsMyGame {
 				if (m_state == enState_Guard) {
 
 					//プレイヤーを弾く。
-					m_player = FindGO<nsPlayer::CPlayer>("player");
+					m_player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 					m_player->AttackBreak();
 
 					//攻撃状態に設定。
