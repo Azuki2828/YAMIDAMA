@@ -5,7 +5,8 @@
 
 namespace nsMyGame {
 
-	nsLight::CDirectionLight* CBackGround::m_dirLight = nullptr;
+	nsLight::CDirectionLight* CBackGround::m_dirLight[2] = { nullptr };
+
 	bool CBackGround::Start() {
 
 		static int doorNum = 0;
@@ -140,5 +141,8 @@ namespace nsMyGame {
 		CVector3 playerLightPosition = player->GetPosition();
 		playerLightPosition.y += 100.0f;
 		m_pointLight[0]->SetPosition(playerLightPosition);
+
+		//カメラの前方向に向けて放たれるディレクションライトの向きを更新。
+		m_dirLight[1]->SetLigDirection(g_camera3D->GetForward());
 	}
 }

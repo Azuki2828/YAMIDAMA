@@ -21,16 +21,23 @@ namespace nsMyGame {
 
 		static void CreateDirLight() {
 
-			m_dirLight = new nsLight::CDirectionLight;
+			m_dirLight[0] = new nsLight::CDirectionLight;
 
-			m_dirLight = NewGO<nsLight::CDirectionLight>(enPriority_Zeroth);
-			m_dirLight->SetLigDirection({ 1.0f,-1.0f,-1.0f });
-			m_dirLight->SetLigColor({ 2.8f,2.8f,2.8f });
+			m_dirLight[0] = NewGO<nsLight::CDirectionLight>(enPriority_Zeroth);
+			m_dirLight[0]->SetLigDirection({ 1.0f,-1.0f,-1.0f });
+			m_dirLight[0]->SetLigColor({ 2.8f,2.8f,2.8f });
+
+		
+			m_dirLight[1] = new nsLight::CDirectionLight;
+
+			m_dirLight[1] = NewGO<nsLight::CDirectionLight>(enPriority_Zeroth);
+			m_dirLight[1]->SetLigDirection(g_camera3D->GetForward());
+			m_dirLight[1]->SetLigColor({ 1.0f,1.0f,1.0f });
 		}
 
-		static nsLight::CDirectionLight* GetDirectionLight() {
+		static nsLight::CDirectionLight* GetSunDirectionLight() {
 
-			return m_dirLight;
+			return m_dirLight[0];
 		}
 	private:
 		CModelRender* m_modelRender = nullptr;			//モデル
@@ -39,7 +46,7 @@ namespace nsMyGame {
 		std::vector<nsEnemy::CFirstWinEnemy*> m_fWEnemy;					//先手必勝の敵のインスタンス
 		std::vector<nsEnemy::CGoteWinEnemy*> m_gWEnemy;						//後手必勝の敵のインスタンス
 		std::vector<nsLight::CPointLight*> m_pointLight;					//ポイントライトのインスタンス
-		static nsLight::CDirectionLight* m_dirLight;	//ディレクションライト
+		static nsLight::CDirectionLight* m_dirLight[2];	//ディレクションライト
 		CVector3 m_pos = CVector3::Zero;				//座標
 		CQuaternion m_rot = CQuaternion::Identity;		//回転
 		CVector3 m_sca = CVector3::One;					//拡大

@@ -94,7 +94,7 @@ namespace nsMyGame {
 
 			//ライトカメラの情報を更新。
 			CVector3 m_lightCameraTar = m_position;
-			auto ligDirection = backGround->GetDirectionLight()->GetLigDirection();
+			auto ligDirection = backGround->GetSunDirectionLight()->GetLigDirection();
 			CVector3 m_lightCameraPos = m_lightCameraTar - *ligDirection * 300.0f;
 
 			//ライトカメラの座標を設定。
