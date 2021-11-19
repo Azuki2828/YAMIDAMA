@@ -95,12 +95,12 @@ public:
 	/// <returns></returns>
 	const CTkmFile& GetTkmFile() const
 	{
-		return m_tkmFile;
+		return *m_tkmFile;
 	}
 private:
 
 	CMatrix m_world;														//ワールド行列。
-	CTkmFile m_tkmFile;													//tkmファイル。
+	CTkmFile* m_tkmFile;													//tkmファイル。
 	Skeleton m_skeleton;												//スケルトン。
 	MeshParts m_meshParts;											//メッシュパーツ。
 	EnModelUpAxis m_modelUpAxis = enModelUpAxisY;		//モデルの上方向。
