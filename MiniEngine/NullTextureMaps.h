@@ -37,6 +37,10 @@ public:
 	{
 		return m_normalMapSize;
 	}
+	const char* GetNormalMapFilePath() const
+	{
+		return m_normalMapFilePath;
+	}
 	/// <summary>
 	/// スペキュラマップを取得。
 	/// </summary>
@@ -44,6 +48,10 @@ public:
 	const std::unique_ptr<char[]>& GetSpecularMap() const
 	{
 		return m_zeroValueMap;
+	}
+	const char* GetSpecularMapFilePath() const
+	{
+		return m_specMapFilePath;
 	}
 	/// <summary>
 	/// スペキュラマップのサイズを取得。
@@ -69,6 +77,10 @@ public:
 	{
 		return m_albedoMapSize;
 	}
+	const char* GetAlbedoMapFilePath() const
+	{
+		return m_albedoMapFilePath;
+	}
 	/// <summary>
 	/// リフレクションマップを取得。
 	/// </summary>
@@ -84,6 +96,10 @@ public:
 	unsigned int GetReflectionMapSize() const
 	{
 		return m_zeroValueMapSize;
+	}
+	const char* GetReflectionMapFilePath() const
+	{
+		return m_zeroValueMapFilePath;
 	}
 	/// <summary>
 	/// 屈折マップを取得。
@@ -101,11 +117,21 @@ public:
 	{
 		return m_zeroValueMapSize;
 	}
+	const char* GetRefractionMapFilePath() const
+	{
+		return m_zeroValueMapFilePath;
+	}
 private:
 	std::unique_ptr<char[]> m_albedoMap;	//アルベドマップ。
 	unsigned int m_albedoMapSize = 0;		//アルベドマップのサイズ。
 	std::unique_ptr<char[]>	m_normalMap;	//法線マップ。
 	unsigned int m_normalMapSize = 0;		//法線マップのサイズ。
+	std::unique_ptr<char[]>	m_specMap;		//スペキュラマップ。
+	unsigned int m_specMapSize = 0;			//スペキュラマップのサイズ。
 	std::unique_ptr<char[]> m_zeroValueMap;	//0の値を格納しているマップ。
 	unsigned int m_zeroValueMapSize = 0;	//0の値を格納しているマップのサイズ。
+	const char* m_albedoMapFilePath;
+	const char* m_normalMapFilePath;
+	const char* m_specMapFilePath;
+	const char* m_zeroValueMapFilePath;
 };
