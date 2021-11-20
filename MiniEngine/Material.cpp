@@ -194,6 +194,7 @@ void Material::InitShaders(
 {
 	char objNameBase[256];
 	wcstombs(objNameBase, fxFilePath, 256);
+
 	//スキンなしモデル用のシェーダーをロードする。
 	m_vsNonSkinModel = g_engine->GetShaderFromBank(objNameBase, vsEntryPointFunc);
 	if (m_vsNonSkinModel == nullptr) {

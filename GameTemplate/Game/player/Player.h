@@ -70,6 +70,9 @@ namespace nsMyGame {
 
 				//ダメージフラグを設定。
 				m_receiveDamage = recieveDamageFlag;
+				if (!m_receiveDamage) {
+					return;
+				}
 
 				//ローリング状態ならダメージを食らわない。
 				if (m_playerState == enState_Rolling) {

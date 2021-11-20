@@ -13,6 +13,9 @@ namespace nsMyGame{
 		m_modelRender->SetFilePathTkm(c_filePathTkmDoor);
 
 		//シャドウキャスターフラグを設定。
+		m_modelRender->SetShadowCasterFlag(true);
+
+		//シャドウキャスターフラグを設定。
 		m_modelRender->SetShadowReceiverFlag(true);
 
 		//座標を設定。

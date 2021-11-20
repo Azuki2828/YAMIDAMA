@@ -73,7 +73,6 @@ namespace nsMyGame {
 					if (m_player->IsGuard()) {
 
 						m_isGuarded = true;
-						return;
 					}
 
 					//プレイヤーにダメージを与える。
