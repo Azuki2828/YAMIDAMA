@@ -1,5 +1,6 @@
 #pragma once
 #include "../MiniEngine/postEffect/PostEffect.h"
+#include "LightCulling.h"
 
 namespace nsMyGame {
 	//レンダリングエンジンクラス
@@ -101,6 +102,7 @@ namespace nsMyGame {
 
 	private:
 		static CRenderingEngine* m_renderingEngine;	//レンダリングエンジンのインスタンス
+		CLightCulling m_lightCulling;				//ライトカリング
 		CRenderTarget m_snapShotMainRT;				//メインレンダリングターゲットのスナップショットを取るためのレンダリングターゲット
 		nsPostEffect::CPostEffect m_postEffect;		//ポストエフェクト
 		CSprite m_copyToMainRenderTargetSprite;		//メインレンダリングターゲットのスプライト

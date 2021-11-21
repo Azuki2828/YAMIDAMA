@@ -74,6 +74,13 @@
 				*initData.m_expandShaderResoruceView
 			);
 		}
+		if (initData.m_expandShaderResoruceView2 != nullptr) {
+			//拡張シェーダーリソースビュー。
+			m_descriptorHeap.RegistShaderResource(
+				EXPAND_SRV_REG__START_NO2,
+				*initData.m_expandShaderResoruceView2
+			);
+		}
 		m_descriptorHeap.RegistConstantBuffer(0, m_constantBufferGPU);
 		if (m_userExpandConstantBufferCPU != nullptr) {
 			//ユーザー拡張の定数バッファはb1に関連付けする。

@@ -3,8 +3,17 @@
  */
 
 static const int MAX_DIRECTION_LIGHT = 4;
-static const int MAX_POINT_LIGHT = 100;
+static const int MAX_POINT_LIGHT = 1000;
 static const float PI = 3.1415926f;         // π
+static const int TILE_WIDTH = 16;      // タイルの幅
+static const int TILE_HEIGHT = 16;     // タイルの高さ
+static const int FRAME_BUFFER_W = 1280;
+static const int FRAME_BUFFER_H = 720;
+static const int NUM_TILE = (FRAME_BUFFER_W / TILE_WIDTH) * (FRAME_BUFFER_H / TILE_HEIGHT); // タイルの数
+
+// 一度に実行されるスレッド数
+#define TILE_WIDTH 16
+#define TILE_HEIGHT 16
 
 struct DirectionLight {
 	float3 dir;
@@ -28,6 +37,7 @@ cbuffer DefferdLightingCb : register(b1) {
 cbuffer cb : register(b0) {
 	float4x4 mvp;		//���[���h�r���[�v���W�F�N�V�����s��B
 	float4 mulColor;	//��Z�J���[�B
+	float4 screenParam;
 };
 struct VSInput {
 	float4 pos : POSITION;
@@ -40,10 +50,11 @@ struct PSInput {
 };
 
 Texture2D<float4> albedoAndShadowReceiverTexture : register(t0);
-Texture2D<float4> normalAndDepthTexture : register(t1);
+Texture2D<float4> normalTexture : register(t1);
 Texture2D<float4> worldPosTexture : register(t2);
 Texture2D<float4> occlusionAndSmoothAndMetaricTexture : register(t3);
 Texture2D<float4> g_shadowMap : register(t10);	//シャドウマップ。
+StructuredBuffer<uint> pointLightListInTile : register(t11);// タイルごとのポイントライトのインデックスのリスト
 
 sampler g_sampler : register(s0);
 
@@ -219,6 +230,13 @@ PSInput VSMain(VSInput In)
 /// </summary>
 float4 PSMain(PSInput psIn) : SV_Target0
 {
+	// step-16 このピクセルが含まれているタイルの番号を計算する
+	uint numCellX = (screenParam.z + TILE_WIDTH - 1) / TILE_WIDTH;
+	uint tileIndex = floor(psIn.pos.x / TILE_WIDTH) + floor(psIn.pos.y / TILE_WIDTH) * numCellX;
+	// step-17 含まれるタイルの影響の開始位置と終了位置を計算する
+	uint lightStart = tileIndex * pointLightNum;
+	uint lightEnd = lightStart + pointLightNum;
+
 	//アルベドカラー
 	float3 albedoColor = albedoAndShadowReceiverTexture.Sample(g_sampler, psIn.uv).xyz;
 
@@ -231,7 +249,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 
 	float3 worldPos = worldPosTexture.Sample(g_sampler, psIn.uv).xyz;
 
-	float3 normal = normalAndDepthTexture.Sample(g_sampler, psIn.uv).xyz;
+	float3 normal = normalTexture.Sample(g_sampler, psIn.uv).xyz;
 	
 	//金属度
 	//float metaric = 0.0f;
@@ -322,6 +340,36 @@ float4 PSMain(PSInput psIn) : SV_Target0
 
 		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
 	}
+
+	/*for (
+		uint lightListIndex = lightStart;
+		lightListIndex < lightEnd;
+		lightListIndex++
+		)
+	{
+		uint ligNo = pointLightListInTile[lightListIndex];
+		if (ligNo == 0xffffffff) {
+			break;
+		}
+
+		float3 ligDir = worldPos - pointLight[ligNo].pos;
+		ligDir = normalize(ligDir);
+
+		float3 poiDiffuse = CalcLambertDiffuse(ligDir, pointLight[ligNo].color, normal);
+
+		float3 poiSpec = CalcPhongSpecular(ligDir, pointLight[ligNo].color, worldPos, normal);
+
+		float3 distance = length(worldPos - pointLight[ligNo].pos);
+
+		float affect = max(0.0f, 1.0f - 1.0f / pointLight[ligNo].attn.x * distance);
+
+		affect = pow(affect, pointLight[ligNo].attn.y);
+
+		poiDiffuse *= affect;
+		poiSpec *= affect;
+
+		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
+	}*/
 
 	lig += float3(0.1f,0.1f,0.1f);
 	

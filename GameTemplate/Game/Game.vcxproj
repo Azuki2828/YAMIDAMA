@@ -273,6 +273,7 @@
     <ClCompile Include="..\..\MiniEngine\IndexBuffer.cpp" />
     <ClCompile Include="..\..\MiniEngine\level\Level.cpp" />
     <ClCompile Include="..\..\MiniEngine\level\MapChip.cpp" />
+    <ClCompile Include="..\..\MiniEngine\LightCulling.cpp" />
     <ClCompile Include="..\..\MiniEngine\light\DirectionLight.cpp" />
     <ClCompile Include="..\..\MiniEngine\light\LightBase.cpp" />
     <ClCompile Include="..\..\MiniEngine\light\LightManager.cpp" />
@@ -380,6 +381,7 @@
     <ClInclude Include="..\..\MiniEngine\IndexBuffer.h" />
     <ClInclude Include="..\..\MiniEngine\level\Level.h" />
     <ClInclude Include="..\..\MiniEngine\level\MapChip.h" />
+    <ClInclude Include="..\..\MiniEngine\LightCulling.h" />
     <ClInclude Include="..\..\MiniEngine\light\DirectionLight.h" />
     <ClInclude Include="..\..\MiniEngine\light\LightBase.h" />
     <ClInclude Include="..\..\MiniEngine\light\LightManager.h" />

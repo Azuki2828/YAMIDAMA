@@ -26,6 +26,10 @@ namespace nsMyGame {
 	constexpr int c_openDoorRotValue = 90;												//ドアを開けたときの回転角度
 	constexpr int c_openDoorRotNum = 1;													//ドアを開けたときに何度ずつ回転させるか
 
+	constexpr UINT c_frameBufferWidth = 1280;
+	constexpr UINT c_frameBufferHeight = 720;
+	constexpr int c_tileWidth = 16;
+	constexpr int c_tileHeight = 16;
 
 	namespace nsPlayer {
 
@@ -71,7 +75,8 @@ namespace nsMyGame {
 	namespace nsLight {
 
 		constexpr int c_maxDirectionLightNum = 4;	//ディレクションライトの上限数
-		constexpr int c_maxPointLightNum = 100;		//ポイントライトの上限数
+		constexpr int c_maxPointLightNum = 1000;	//ポイントライトの上限数
+		constexpr int c_tileNum = 3600;				//タイルの数。
 	}
 
 

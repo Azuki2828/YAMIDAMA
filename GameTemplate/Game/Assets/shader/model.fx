@@ -48,9 +48,10 @@ struct SPSIn{
 
 struct SPSOut {
 	float4 albedoAndShadowReceiver : SV_TARGET0;
-	float4 normalAndDepth : SV_TARGET1;
+	float4 normal : SV_TARGET1;
 	float4 worldPos : SV_TARGET2;
-	float4 occlusionAndSmoothAndMetaric : SV_TARGET3;
+	float4 depth : SV_TARGET3;
+	float4 occlusionAndSmoothAndMetaric : SV_TARGET4;
 };
 
 ////////////////////////////////////////////////
@@ -134,11 +135,13 @@ SPSOut PSMain(SPSIn psIn)
 	psOut.albedoAndShadowReceiver.w = shadowReceiverFlg;
 
 	//-1.0f～1.0fの範囲。
-	psOut.normalAndDepth.xyz = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
-	psOut.normalAndDepth.xyz = (psOut.normalAndDepth.xyz - 0.5f) * 2.0f;
+	psOut.normal.xyz = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
+	psOut.normal.xyz = (psOut.normal.xyz - 0.5f) * 2.0f;
 
-	psOut.normalAndDepth.xyz = psIn.tangent * psOut.normalAndDepth.x + psIn.biNormal * psOut.normalAndDepth.y + psIn.normal * psOut.normalAndDepth.z;
+	psOut.normal.xyz = psIn.tangent * psOut.normal.x + psIn.biNormal * psOut.normal.y + psIn.normal * psOut.normal.z;
 	psOut.worldPos.xyz = psIn.worldPos;
+
+	psOut.depth = psIn.pos.z;
 
 	psOut.occlusionAndSmoothAndMetaric.xyz = g_occlusionAndSmoothAndMetaricMap.Sample(g_sampler, psIn.uv).xyz;
 

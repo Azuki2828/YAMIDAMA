@@ -77,7 +77,6 @@ namespace nsMyGame {
 
 					//プレイヤーにダメージを与える。
 					m_player->SetReceiveDamage(true);
-					Deactivate();
 				}
 			});
 		}

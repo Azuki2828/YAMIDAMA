@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <random>
 #include "BackGround.h"
 #include "player/Player.h"
 
@@ -31,6 +32,9 @@ namespace nsMyGame {
 		//プレイヤーを検索。
 		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
+		std::random_device seed_gen;
+		std::mt19937 random(seed_gen());
+		
 		//プレイヤーを中心とするポイントライトを作成。
 		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
 		m_pointLight[pointLightNum]->SetPosition(player->GetPosition());
@@ -41,6 +45,13 @@ namespace nsMyGame {
 
 		//ステージをロード。
 		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
+
+			//m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+			//m_pointLight[pointLightNum]->SetPosition(objData.position);
+			//m_pointLight[pointLightNum]->SetColor({ static_cast<float>(random() % 255) / 255.0f,static_cast<float>(random() % 255) / 255.0f,static_cast<float>(random() % 255) / 255.0f });
+			//m_pointLight[pointLightNum]->SetRange(300.0f);
+			//m_pointLight[pointLightNum]->SetAffectPowParam(2.0f);
+			//pointLightNum++;
 
 			if (objData.EqualObjectName("door")) {
 				

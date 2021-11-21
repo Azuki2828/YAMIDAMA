@@ -15,6 +15,9 @@ namespace nsMyGame {
 		//ポストエフェクトを初期化。
 		m_postEffect.Init();
 
+		//ライトカリングの初期化。
+		m_lightCulling.Init();
+
 		//ディファードライティング用のスプライトを初期化。
 		InitDeferredRenderingSprite();
 
@@ -33,8 +36,17 @@ namespace nsMyGame {
 		//ディファードレンダリング。
 		ExecuteDeferredRendering(renderContext);
 
+		//ライトカリング。
+		m_lightCulling.Execute(renderContext);
+
 		//ディファードライティング。
 		ExecuteDeferredLighting(renderContext);
+
+		//リソースステートを遷移。
+		//renderContext.TransitionResourceState(
+		//	m_lightCulling.GetPointLightNoListInTileUAV().GetD3DResoruce(),
+		//	D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		//	D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 
 		//メインレンダリングターゲットの絵をスナップショット。
 		SnapShotMainRenderTarget(renderContext);
@@ -58,9 +70,10 @@ namespace nsMyGame {
 		CRenderTarget::CreateMainRenderTarget();
 		CRenderTarget::CreateShadowMap();
 		CRenderTarget::CreateAlbedoAndShadowReceiverFlagRenderTarget();
-		CRenderTarget::CreateNormalAndDepthRenderTarget();
+		CRenderTarget::CreateNormalMapRenderTarget();
 		CRenderTarget::CreateWorldPosRenderTarget();
 		CRenderTarget::CreateSpecularRenderTarget();
+		CRenderTarget::CreateDepthRenderTarget();
 		CreateSnapShotMainRT();
 	}
 
@@ -70,15 +83,17 @@ namespace nsMyGame {
 		SpriteInitData spriteInitData;
 
 		spriteInitData.m_textures[0] = &CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetRenderTargetTexture();
-		spriteInitData.m_textures[1] = &CRenderTarget::GetGBufferRT(enNormalAndDepthMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[1] = &CRenderTarget::GetGBufferRT(enNormalMap)->GetRenderTargetTexture();
 		spriteInitData.m_textures[2] = &CRenderTarget::GetGBufferRT(enWorldPosMap)->GetRenderTargetTexture();
-		spriteInitData.m_textures[3] = &CRenderTarget::GetGBufferRT(enocclusionAndSmoothAndMetaricMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[3] = &CRenderTarget::GetGBufferRT(enDepthMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[4] = &CRenderTarget::GetGBufferRT(enocclusionAndSmoothAndMetaricMap)->GetRenderTargetTexture();
 		spriteInitData.m_width = c_renderTargetW1280H720.x;
 		spriteInitData.m_height = c_renderTargetW1280H720.y;
 		spriteInitData.m_fxFilePath = c_fxFilePath_DeferredLighting;
 		spriteInitData.m_expandConstantBuffer = nsLight::CLightManager::GetInstance()->GetLigData();
 		spriteInitData.m_expandConstantBufferSize = sizeof(*nsLight::CLightManager::GetInstance()->GetLigData());
 		spriteInitData.m_expandShaderResoruceView = &CRenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
+		spriteInitData.m_expandShaderResoruceView2 = &m_lightCulling.GetPointLightNoListInTileUAV();
 
 		// 初期化オブジェクトを使って、スプライトを初期化する
 		m_deferredRenderingSprite.Init(spriteInitData);
@@ -170,9 +185,10 @@ namespace nsMyGame {
 		//レンダリングターゲットを作成。
 		CRenderTarget* rts[] = {
 				CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap),   // 0番目のレンダリングターゲット
-				CRenderTarget::GetGBufferRT(enNormalAndDepthMap),  // 1番目のレンダリングターゲット
+				CRenderTarget::GetGBufferRT(enNormalMap),  // 1番目のレンダリングターゲット
 				CRenderTarget::GetGBufferRT(enWorldPosMap), // 2番目のレンダリングターゲット
-				CRenderTarget::GetGBufferRT(enocclusionAndSmoothAndMetaricMap) // 3番目のレンダリングターゲット
+				CRenderTarget::GetGBufferRT(enDepthMap), // 3番目のレンダリングターゲット
+				CRenderTarget::GetGBufferRT(enocclusionAndSmoothAndMetaricMap) // 4番目のレンダリングターゲット
 		};
 
 		// まず、レンダリングターゲットとして設定できるようになるまで待つ

@@ -19,8 +19,9 @@ enum EnRenderTargetList {
 //GBufferのリスト
 enum EnGBufferList {
 	enAlbedoAndShadowReceiverFlgMap,
-	enNormalAndDepthMap,
+	enNormalMap,
 	enWorldPosMap,
+	enDepthMap,
 	enocclusionAndSmoothAndMetaricMap,
 
 	enGBufferNum
@@ -96,11 +97,11 @@ public:
 	/**
 	 * @brief 法線と深度値を保管するGBufferを作成する関数。
 	*/
-	static void CreateNormalAndDepthRenderTarget() {
+	static void CreateNormalMapRenderTarget() {
 
-		m_GBuffer[enNormalAndDepthMap] = new CRenderTarget;
+		m_GBuffer[enNormalMap] = new CRenderTarget;
 
-		m_GBuffer[enNormalAndDepthMap]->Create(
+		m_GBuffer[enNormalMap]->Create(
 			c_renderTargetW1280H720.x,
 			c_renderTargetW1280H720.y,
 			c_mipLevel1,
@@ -123,6 +124,23 @@ public:
 			c_mipLevel1,
 			c_renderArraySize1,
 			DXGI_FORMAT_R32G32B32A32_FLOAT, // ワールド座標を記録するので、32ビット浮動小数点バッファを利用する
+			DXGI_FORMAT_UNKNOWN
+		);
+	}
+
+	/**
+	 * @brief 深度値を保管するGBufferを作成する関数。
+	*/
+	static void CreateDepthRenderTarget() {
+
+		m_GBuffer[enDepthMap] = new CRenderTarget;
+
+		m_GBuffer[enDepthMap]->Create(
+			c_renderTargetW1280H720.x,
+			c_renderTargetW1280H720.y,
+			c_mipLevel1,
+			c_renderArraySize1,
+			DXGI_FORMAT_R32_FLOAT,
 			DXGI_FORMAT_UNKNOWN
 		);
 	}

@@ -9,17 +9,17 @@ namespace nsMyGame {
 
 		void CLightManager::AddLight(CLightBase* light) {
 
-			//もし規定されている数に達していたら置けない
-			if (m_directionLights.size() >= c_maxDirectionLightNum) {
-				MessageBoxA(nullptr, "これ以上ディレクションライトは置けません", "エラー", MB_OK);
-				return;
-			}
-
 			//クラスの名前を調べる
 			const std::type_info& typeInfo = typeid(*light);
 
 			//ディレクションライトだったら
 			if (typeInfo == typeid(CDirectionLight)) {
+
+				//もし規定されている数に達していたら置けない
+				if (m_directionLights.size() >= c_maxDirectionLightNum) {
+					MessageBoxA(nullptr, "これ以上ディレクションライトは置けません", "エラー", MB_OK);
+					return;
+				}
 
 				//登録済みか調べる。
 				auto findIt = std::find(m_directionLights.begin(), m_directionLights.end(), light->GetLigData());
@@ -48,6 +48,12 @@ namespace nsMyGame {
 			}
 			//ポイントライトだったら
 			else if (typeInfo == typeid(CPointLight)) {
+
+				//もし規定されている数に達していたら置けない
+				if (m_pointLights.size() >= c_maxPointLightNum) {
+					MessageBoxA(nullptr, "これ以上ディレクションライトは置けません", "エラー", MB_OK);
+					return;
+				}
 
 				//登録済みか調べる。
 				auto findIt = std::find(m_pointLights.begin(), m_pointLights.end(), light->GetLigData());
