@@ -33,7 +33,7 @@ namespace nsMyGame {
 		//シャドウマップを描画。
 		DrawShadowMap(renderContext);
 
-		//ディファードレンダリング。
+		//ディファードレンダリング(G-Buffer作成)。
 		ExecuteDeferredRendering(renderContext);
 
 		//ライトカリング。
@@ -155,7 +155,7 @@ namespace nsMyGame {
 		//ビューポートを設定。
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
-		//シャドウモデルを描画。
+		//2Dモデルを描画。
 		CGameObjectManager::GetInstance()->Execute2DRender(rc);
 
 		//描き込み終了待ち。

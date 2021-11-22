@@ -22,6 +22,7 @@ struct DirectionLight {
 
 struct PointLight {
 	float3 pos;
+	float3 positionInView;
 	float4 color;
 	float2 attn;
 };
@@ -320,7 +321,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		
 	}
 	//ポイントライトの計算。
-	for (int poiLigNo = 0; poiLigNo < pointLightNum; poiLigNo++) {
+	/*for (int poiLigNo = 0; poiLigNo < pointLightNum; poiLigNo++) {
 
 		float3 ligDir = worldPos - pointLight[poiLigNo].pos;
 		ligDir = normalize(ligDir);
@@ -339,9 +340,9 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		poiSpec *= affect;
 
 		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
-	}
+	}*/
 
-	/*for (
+	for (
 		uint lightListIndex = lightStart;
 		lightListIndex < lightEnd;
 		lightListIndex++
@@ -369,7 +370,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		poiSpec *= affect;
 
 		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
-	}*/
+	}
 
 	lig += float3(0.1f,0.1f,0.1f);
 	

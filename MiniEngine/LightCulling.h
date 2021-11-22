@@ -25,6 +25,10 @@ namespace nsMyGame {
 		*/
 		void Execute(CRenderContext& rc);
 
+		/**
+		 * @brief タイルごとのポイントライトの番号のリストを出力するUAVを取得する関数。
+		 * @return タイルごとのポイントライトの番号のリストを出力するUAV
+		*/
 		RWStructuredBuffer& GetPointLightNoListInTileUAV() {
 
 			return m_pointLightNoListInTileUAV;

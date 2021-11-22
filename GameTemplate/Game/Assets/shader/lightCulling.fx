@@ -10,19 +10,17 @@
 #define TILE_SIZE (TILE_WIDTH * TILE_HEIGHT)
 
 // ディレクションライト
-struct DirectionLight
-{
-    float3 color;       // ライトのカラー
-    float3 direction;   // ライトの方向
+struct DirectionLight {
+    float3 dir;
+    float4 color;
 };
 
 // ポイントライト
-struct PointLight
-{
-    float3 position;        // 座標
-    float3 positionInView;  // カメラ空間での座標
-    float3 color;           // カラー
-    float range;            // 範囲
+struct PointLight {
+	float3 pos;
+    float3 positionInView;
+	float4 color;
+	float2 attn;
 };
 
 static const int NUM_DIRECTION_LIGHT = 4;   // ディレクションライトの数
@@ -37,14 +35,12 @@ cbuffer cbCameraParam : register(b0)
     float4 screenParam : packoffset(c12);   // スクリーンパラメーター（near, far, screenWidth, screenHeight）
 };
 
-cbuffer Light : register(b1)
-{
+cbuffer Light : register(b1) {
     DirectionLight directionLight[NUM_DIRECTION_LIGHT];
     PointLight pointLight[MAX_POINT_LIGHT];
-    float4x4 mViewProjInv;  // ビュープロジェクション行列の逆行列
-    float3 eyePos;          // 視点
-    float specPow;          // スペキュラの絞り
-    int numPointLight;      // ポイントライトの数
+    float3 eyePos;
+    int pointLightNum;
+    float4x4 mLVP;
 };
 
 // 入力
@@ -154,7 +150,7 @@ void CSMain(
 
     for (
         uint lightIndex = groupIndex;       //自分のスレッド番号
-        lightIndex < numPointLight;         //ポイントライトの数
+        lightIndex < pointLightNum;         //ポイントライトの数
         lightIndex += TILE_SIZE     //変数名が良くないが、正しくはスレッド数。20個のスレッドがあったとしたら、０番目の人は0番目のライトの次に0+20番目のライトとタイルの衝突判定を調べる。
         ) 
     {
@@ -165,7 +161,7 @@ void CSMain(
             float4 lp = float4(light.positionInView, 1.0f);
             float d = dot(frustumPlanes[i], lp);
 
-            inFrustum = inFrustum && (d >= -light.range);
+            inFrustum = inFrustum && (d >= -light.attn.x);
         }
 
         if (inFrustum) {
@@ -181,12 +177,12 @@ void CSMain(
     // step-14 ライトインデックスを出力バッファーに出力（大きな一つの配列にポイントライトの）
     uint numCellX = (screenParam.z + TILE_WIDTH - 1) / TILE_WIDTH;
     uint tileIndex = floor(frameUV.x / TILE_WIDTH) + floor(frameUV.y / TILE_WIDTH) * numCellX;      //何番のタイルを調べているか。
-    uint lightStart = numPointLight * tileIndex;        //配列のどの部分からスタートするか。
+    uint lightStart = pointLightNum * tileIndex;        //配列のどの部分からスタートするか。
     for (uint lightIndex = groupIndex; lightIndex < sTileNumLights; lightIndex += TILE_SIZE) {
         rwLightIndices[lightStart + lightIndex] = sTileLightIndices[lightIndex];
     }
     // step-15 最後に番兵を設定する
-    if ((groupIndex == 0) && sTileNumLights < numPointLight) {
+    if ((groupIndex == 0) && sTileNumLights < pointLightNum) {
         rwLightIndices[lightStart + sTileNumLights] = 0xffffffff;
     }
 }

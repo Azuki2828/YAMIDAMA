@@ -50,7 +50,7 @@ struct SPSOut {
 	float4 albedoAndShadowReceiver : SV_TARGET0;
 	float4 normal : SV_TARGET1;
 	float4 worldPos : SV_TARGET2;
-	float4 depth : SV_TARGET3;
+	float depth : SV_TARGET3;
 	float4 occlusionAndSmoothAndMetaric : SV_TARGET4;
 };
 

@@ -5,7 +5,7 @@ namespace nsMyGame {
 
 	void CLightCulling::Init() {
 
-		// ルートシグネチャの初期化
+		// ルートシグネチャの初期化。
 		m_rootSignature.Init(D3D12_FILTER_MIN_MAG_MIP_LINEAR,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
 			D3D12_TEXTURE_ADDRESS_MODE_WRAP,
@@ -18,7 +18,7 @@ namespace nsMyGame {
 		//パイプラインステートを初期化。
 		InitPipelineState(m_rootSignature, m_lightCullingPipelineState, m_csLightCulling);
 
-		//タイルごとのポイントライトの番号のリストを出力するUAVを初期化
+		//タイルごとのポイントライトの番号のリストを出力するUAVを初期化。
 		m_pointLightNoListInTileUAV.Init(
 			sizeof(int),
 			nsLight::c_maxPointLightNum * nsLight::c_tileNum,
@@ -36,8 +36,12 @@ namespace nsMyGame {
 
 	void CLightCulling::Execute(CRenderContext& rc) {
 
+		InitLightCullingCameraData();
+		m_cameraParamCB.CopyToVRAM(&m_lightCullingCameraData);
+
 		//ライトカリングのコンピュートシェーダーをディスパッチ
 		rc.SetComputeRootSignature(m_rootSignature);
+		auto ligData = *nsLight::CLightManager::GetInstance()->GetLigData();
 		m_lightCB.CopyToVRAM(*nsLight::CLightManager::GetInstance()->GetLigData());
 		rc.SetComputeDescriptorHeap(m_lightCullingDescriptorHeap);
 		rc.SetPipelineState(m_lightCullingPipelineState);
@@ -69,33 +73,37 @@ namespace nsMyGame {
 
 	void CLightCulling::InitLightCullingCameraData() {
 
+		//カメラの情報を初期化。
 		m_lightCullingCameraData.mProj = g_camera3D->GetProjectionMatrix();
 		m_lightCullingCameraData.mProjInv.Inverse(g_camera3D->GetProjectionMatrix());
 		m_lightCullingCameraData.mCameraRot = g_camera3D->GetCameraRotation();
 		m_lightCullingCameraData.screenParam.x = g_camera3D->GetNear();
 		m_lightCullingCameraData.screenParam.y = g_camera3D->GetFar();
-		m_lightCullingCameraData.screenParam.z = FRAME_BUFFER_W;
-		m_lightCullingCameraData.screenParam.w = FRAME_BUFFER_H;
+		m_lightCullingCameraData.screenParam.z = c_frameBufferWidth;
+		m_lightCullingCameraData.screenParam.w = c_frameBufferHeight;
 	}
 
 	void CLightCulling::InitLightCullingDescriptorHeap() {
 
+		//各情報をディスクリプタヒープに登録。
 		m_lightCullingDescriptorHeap.RegistShaderResource(
-			0,
-			CRenderTarget::GetGBufferRT(enDepthMap)->GetRenderTargetTexture()
+			0,																	//t0
+			CRenderTarget::GetGBufferRT(enDepthMap)->GetRenderTargetTexture()	//深度値テクスチャ
 		);
 		m_lightCullingDescriptorHeap.RegistUnorderAccessResource(
-			0,
-			m_pointLightNoListInTileUAV
+			0,																	//u0
+			m_pointLightNoListInTileUAV											//タイルごとのポイントライトの番号のリストを出力するUAV
 		);
 		m_lightCullingDescriptorHeap.RegistConstantBuffer(
-			0,
-			m_cameraParamCB
+			0,																	//b0
+			m_cameraParamCB														//カメラの情報
 		);
 		m_lightCullingDescriptorHeap.RegistConstantBuffer(
-			1,
-			m_lightCB
+			1,																	//b1
+			m_lightCB															//ライトの情報
 		);
+
+		//登録。
 		m_lightCullingDescriptorHeap.Commit();
 	}
 }

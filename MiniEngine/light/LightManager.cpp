@@ -145,10 +145,13 @@ namespace nsMyGame {
 				a++;
 			}
 
+			CMatrix mView = g_camera3D->GetViewMatrix();
 			a = 0;
 			for (auto itr = m_pointLights.begin(); itr != m_pointLights.end(); itr++) {
 			
 				m_ligData.pointLigData[a] = *(*itr);
+				m_ligData.pointLigData[a].positionInView = m_ligData.pointLigData[a].pos;
+				mView.Apply(m_ligData.pointLigData[a].positionInView);
 				a++;
 			}
 		}

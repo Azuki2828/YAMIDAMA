@@ -46,12 +46,12 @@ namespace nsMyGame {
 		//ステージをロード。
 		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
 
-			//m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-			//m_pointLight[pointLightNum]->SetPosition(objData.position);
-			//m_pointLight[pointLightNum]->SetColor({ static_cast<float>(random() % 255) / 255.0f,static_cast<float>(random() % 255) / 255.0f,static_cast<float>(random() % 255) / 255.0f });
-			//m_pointLight[pointLightNum]->SetRange(300.0f);
-			//m_pointLight[pointLightNum]->SetAffectPowParam(2.0f);
-			//pointLightNum++;
+			m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+			m_pointLight[pointLightNum]->SetPosition(objData.position);
+			m_pointLight[pointLightNum]->SetColor({ static_cast<float>(random() % 255) / 255.0f,static_cast<float>(random() % 255) / 255.0f,static_cast<float>(random() % 255) / 255.0f });
+			m_pointLight[pointLightNum]->SetRange(300.0f);
+			m_pointLight[pointLightNum]->SetAffectPowParam(2.0f);
+			pointLightNum++;
 
 			if (objData.EqualObjectName("door")) {
 				
