@@ -147,7 +147,6 @@ float4 PSMain( PSInput In ) : SV_Target0
 
     //ガンマ補正。
     color.xyz =  pow(max( color.xyz, 0.0001f ), 1.0f/2.2f);
-    
 
     return color;
 }

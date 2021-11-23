@@ -26,7 +26,7 @@ namespace nsMyGame {
 		);
 
 		//ポイントライトの情報を送るための定数バッファを作成。
-		InitLightCullingCameraData();
+		UpdateLightCullingCameraData();
 		m_cameraParamCB.Init(sizeof(m_lightCullingCameraData), &m_lightCullingCameraData);
 		m_lightCB.Init(sizeof(*nsLight::CLightManager::GetInstance()->GetLigData()), nsLight::CLightManager::GetInstance()->GetLigData());
 
@@ -36,9 +36,9 @@ namespace nsMyGame {
 
 	void CLightCulling::Execute(CRenderContext& rc) {
 
-		InitLightCullingCameraData();
-		m_cameraParamCB.CopyToVRAM(&m_lightCullingCameraData);
-
+		//カメラの情報を更新。
+		UpdateLightCullingCameraData();
+		
 		//ライトカリングのコンピュートシェーダーをディスパッチ
 		rc.SetComputeRootSignature(m_rootSignature);
 		auto ligData = *nsLight::CLightManager::GetInstance()->GetLigData();
@@ -71,7 +71,7 @@ namespace nsMyGame {
 		pipelineState.Init(psoDesc);
 	}
 
-	void CLightCulling::InitLightCullingCameraData() {
+	void CLightCulling::UpdateLightCullingCameraData() {
 
 		//カメラの情報を初期化。
 		m_lightCullingCameraData.mProj = g_camera3D->GetProjectionMatrix();
@@ -81,6 +81,8 @@ namespace nsMyGame {
 		m_lightCullingCameraData.screenParam.y = g_camera3D->GetFar();
 		m_lightCullingCameraData.screenParam.z = c_frameBufferWidth;
 		m_lightCullingCameraData.screenParam.w = c_frameBufferHeight;
+
+		m_cameraParamCB.CopyToVRAM(&m_lightCullingCameraData);
 	}
 
 	void CLightCulling::InitLightCullingDescriptorHeap() {

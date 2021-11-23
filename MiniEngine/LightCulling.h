@@ -42,7 +42,7 @@ namespace nsMyGame {
 		/**
 		 * @brief ライトカリングに使用するカメラのデータを初期化する関数。
 		*/
-		void InitLightCullingCameraData();
+		void UpdateLightCullingCameraData();
 
 		/**
 		 * @brief ライトカリング用のディスクリプタヒープを初期化する関数。
