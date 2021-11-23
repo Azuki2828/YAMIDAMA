@@ -3,7 +3,7 @@
 */
 
 #pragma once
-
+#include "EffectEngine.h"
 /*!
 * @brief	エフェクト。
 */

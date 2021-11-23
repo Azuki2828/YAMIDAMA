@@ -45,7 +45,7 @@ namespace nsMyGame {
 		/**
 		 * @brief ディファードライティングで使用するスプライトを初期化する関数。
 		*/
-		void InitDeferredRenderingSprite();
+		void InitDeferredLightingSprite();
 
 		/**
 		 * @brief メインレンダリングターゲットのコピーを取るためのレンダーターゲットを作成する関数。
@@ -58,7 +58,7 @@ namespace nsMyGame {
 
 		/**
 		 * @brief シャドウマップを描画する関数。
-		 * @param rc レンダーコンテキスト。
+		 * @param rc レンダーコンテキスト
 		*/
 		void DrawShadowMap(CRenderContext& rc);
 
@@ -71,32 +71,38 @@ namespace nsMyGame {
 
 		/**
 		 * @brief フォントを描画する関数。
-		 * @param rc レンダーコンテキスト。
+		 * @param rc レンダーコンテキスト
 		*/
 		void DrawFont(CRenderContext& rc);
 
 		/**
-		 * @brief ディファードレンダリングを実行する関数。
-		 * @param rc レンダーコンテキスト。
+		 * @brief エフェクトを描画する関数。
+		 * @param rc レンダーコンテキスト
 		*/
-		void ExecuteDeferredRendering(CRenderContext& rc);
+		void DrawEffect(CRenderContext& rc);
+
+		/**
+		 * @brief G-Bufferを作成する関数。
+		 * @param rc レンダーコンテキスト
+		*/
+		void CreateGBuffer(CRenderContext& rc);
 
 		/**
 		 * @brief ディファードライティングを実行する関数。
-		 * @param rc レンダーコンテキスト。
+		 * @param rc レンダーコンテキスト
 		*/
 		void ExecuteDeferredLighting(CRenderContext& rc);
 
 		/**
 		 * @brief フレームバッファ用に、メインレンダリングターゲットの内容をコピーする関数。
-		 * @param rc レンダーコンテキスト。
+		 * @param rc レンダーコンテキスト
 		*/
 		void SnapShotMainRenderTarget(CRenderContext& rc);
 
 
 		/**
 		 * @brief フレームバッファにスプライトをコピーする関数。
-		 * @param rc レンダーコンテキスト。
+		 * @param rc レンダーコンテキスト
 		*/
 		void CopyToFrameBuffer(CRenderContext& rc);
 
@@ -106,7 +112,7 @@ namespace nsMyGame {
 		CRenderTarget m_snapShotMainRT;				//メインレンダリングターゲットのスナップショットを取るためのレンダリングターゲット
 		nsPostEffect::CPostEffect m_postEffect;		//ポストエフェクト
 		CSprite m_copyToMainRenderTargetSprite;		//メインレンダリングターゲットのスプライト
-		CSprite m_deferredRenderingSprite;			//ディファードライティング用のスプライト
+		CSprite m_deferredLightingSprite;			//ディファードライティング用のスプライト
 	};
 }
 

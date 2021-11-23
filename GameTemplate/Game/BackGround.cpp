@@ -43,6 +43,8 @@ namespace nsMyGame {
 		m_pointLight[pointLightNum]->SetAffectPowParam(1.5f);
 		pointLightNum++;
 
+		
+
 		//ステージをロード。
 		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
 

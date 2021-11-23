@@ -1,5 +1,4 @@
 #include "stdafx.h"
-
 #include "EffectEngine.h"
 
 EffectEngine* EffectEngine::m_instance = nullptr;	//唯一のインスタンス。

@@ -19,7 +19,7 @@ namespace nsMyGame {
 		m_lightCulling.Init();
 
 		//ディファードライティング用のスプライトを初期化。
-		InitDeferredRenderingSprite();
+		InitDeferredLightingSprite();
 
 		//メインレンダリングターゲットのスプライトを初期化。
 		InitCopyToMainRenderTargetSprite();
@@ -33,26 +33,23 @@ namespace nsMyGame {
 		//シャドウマップを描画。
 		DrawShadowMap(renderContext);
 
-		//ディファードレンダリング(G-Buffer作成)。
-		ExecuteDeferredRendering(renderContext);
+		//G-Bufferを作成。
+		CreateGBuffer(renderContext);
 
 		//ライトカリング。
 		m_lightCulling.Execute(renderContext);
 
-		//ディファードライティング。
+		//ディファードライティング(TBDR)。
 		ExecuteDeferredLighting(renderContext);
-
-		//リソースステートを遷移。
-		//renderContext.TransitionResourceState(
-		//	m_lightCulling.GetPointLightNoListInTileUAV().GetD3DResoruce(),
-		//	D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-		//	D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 
 		//メインレンダリングターゲットの絵をスナップショット。
 		SnapShotMainRenderTarget(renderContext);
 
 		//ポストエフェクト。
 		m_postEffect.Render(renderContext);
+
+		//エフェクトモデルを描画。
+		DrawEffect(renderContext);
 
 		//フォントを描画。
 		DrawFont(renderContext);
@@ -77,7 +74,7 @@ namespace nsMyGame {
 		CreateSnapShotMainRT();
 	}
 
-	void CRenderingEngine::InitDeferredRenderingSprite() {
+	void CRenderingEngine::InitDeferredLightingSprite() {
 
 		//ディファードレンダリングに必要なデータを設定する。
 		SpriteInitData spriteInitData;
@@ -96,7 +93,7 @@ namespace nsMyGame {
 		spriteInitData.m_expandShaderResoruceView2 = &m_lightCulling.GetPointLightNoListInTileUAV();
 
 		// 初期化オブジェクトを使って、スプライトを初期化する
-		m_deferredRenderingSprite.Init(spriteInitData);
+		m_deferredLightingSprite.Init(spriteInitData);
 	}
 
 
@@ -180,7 +177,22 @@ namespace nsMyGame {
 		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 	}
 
-	void CRenderingEngine::ExecuteDeferredRendering(CRenderContext& rc) {
+	void CRenderingEngine::DrawEffect(CRenderContext& rc) {
+
+		//レンダリングターゲットを設定。
+		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
+
+		//ビューポートを設定。
+		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
+
+		//エフェクトを描画。
+		EffectEngine::GetInstance()->Draw();
+
+		//描き込み終了待ち。
+		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
+	}
+
+	void CRenderingEngine::CreateGBuffer(CRenderContext& rc) {
 
 		//レンダリングターゲットを作成。
 		CRenderTarget* rts[] = {
@@ -228,7 +240,7 @@ namespace nsMyGame {
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
 		//ディファードライティング。
-		m_deferredRenderingSprite.Draw(rc);
+		m_deferredLightingSprite.Draw(rc);
 
 		//描き込み終了待ち。
 		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));

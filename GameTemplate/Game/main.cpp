@@ -71,6 +71,7 @@ namespace nsMyGame {
 		nsLight::CLightManager::CreateInstance();	//ライト管理クラス
 		CCamera::CreateLightCamera();				//ライトカメラ
 		CRenderingEngine::CreateRenderingEngine();	//レンダリングエンジン
+		EffectEngine::CreateInstance();				//エフェクトエンジン
 
 		//ワイヤーフレーム表示をONにする。
 		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
@@ -93,7 +94,6 @@ namespace nsMyGame {
 		m_spriteRender->SetPosition({ -400.0f,-200.0f,0.0f });
 		m_spriteRender->SetScale({ 0.2f,0.2f,0.2f });
 		m_spriteRender->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });*/
-		
 
 		/*nsLight::CPointLight* poiLight = NewGO<nsLight::CPointLight>(0);
 		poiLight->SetPosition({ 100.0f,100.0f,0.0f });
@@ -119,6 +119,7 @@ namespace nsMyGame {
 
 			//ゲームオブジェクトを更新。
 			CGameObjectManager::GetInstance()->ExecuteUpdate();
+			EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
 
 			//ライトを更新。
 			nsLight::CLightManager::GetInstance()->Update();
