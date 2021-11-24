@@ -94,7 +94,7 @@ namespace nsMyGame {
 			if (g_pad[0]->IsTrigger(enButtonY)) {
 				Effect* m_death = NewGO<Effect>(enPriority_Zeroth);
 				m_death->Init(u"Assets/effect/laser.efk");
-				m_death->SetScale({ 1000.0f,1000.0f,1000.0f });
+				m_death->SetScale({ 10.0f,10.0f,10.0f });
 				m_death->SetPosition(m_position);
 				m_death->Play();
 			}

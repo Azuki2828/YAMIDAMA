@@ -217,6 +217,7 @@ public:
 	{
 		m_commandList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
 	}
+
 	/// <summary>
 	/// レンダリングターゲットをスロット0に設定する。
 	/// </summary>

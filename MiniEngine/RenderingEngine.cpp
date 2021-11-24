@@ -6,7 +6,6 @@ namespace nsMyGame {
 	//レンダリングエンジンのインスタンス
 	CRenderingEngine* CRenderingEngine::m_renderingEngine = nullptr;
 
-
 	void CRenderingEngine::Init() {
 
 		//レンダリングターゲットを作成。
@@ -53,6 +52,9 @@ namespace nsMyGame {
 
 		//フォントを描画。
 		DrawFont(renderContext);
+
+		//ワイヤーフレームを描画。
+		DrawWireFrame(renderContext);
 
 		//スプライトを描画。
 		RenderSprite(renderContext);
@@ -128,10 +130,10 @@ namespace nsMyGame {
 		//描画モードをシャドウマップ用に設定する。
 		rc.SetRenderMode(CRenderContext::EnRender_Mode::enRenderMode_Shadow);
 
-		//レンダリングターゲットを設定。
+		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enShadowMap));
 
-		//ビューポートを設定。
+		//レンダーターゲットとビューポートを設定。
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enShadowMap));
 
 		//レンダーターゲットをクリア。
@@ -146,10 +148,10 @@ namespace nsMyGame {
 
 	void CRenderingEngine::RenderSprite(CRenderContext& rc) {
 
-		//レンダリングターゲットを設定。
+		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 
-		//ビューポートを設定。
+		//レンダーターゲットとビューポートを設定。
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
 		//2Dモデルを描画。
@@ -164,10 +166,10 @@ namespace nsMyGame {
 		//レンダーモードをフォント用にする。
 		rc.SetRenderMode(CRenderContext::EnRender_Mode::enRenderMode_Font);
 
-		//レンダリングターゲットを設定。
+		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 
-		//ビューポートを設定。
+		//レンダーターゲットとビューポートを設定。
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
 		//フォントを描画。
@@ -179,11 +181,24 @@ namespace nsMyGame {
 
 	void CRenderingEngine::DrawEffect(CRenderContext& rc) {
 
-		//レンダリングターゲットを設定。
+		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
+		
+		//レンダーターゲットとビューポートを設定。
+		rc.SetRenderTarget(
+			CRenderTarget::GetRenderTarget(enMainRT)->GetRTVCpuDescriptorHandle(),
+			CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetDSVCpuDescriptorHandle()
+		);
 
 		//ビューポートを設定。
-		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
+		D3D12_VIEWPORT viewport;
+		viewport.TopLeftX = 0;
+		viewport.TopLeftY = 0;
+		viewport.Width = static_cast<float>(CRenderTarget::GetRenderTarget(enMainRT)->GetWidth());
+		viewport.Height = static_cast<float>(CRenderTarget::GetRenderTarget(enMainRT)->GetHeight());
+		viewport.MinDepth = D3D12_MIN_DEPTH;
+		viewport.MaxDepth = D3D12_MAX_DEPTH;
+		rc.SetViewportAndScissor(viewport);
 
 		//エフェクトを描画。
 		EffectEngine::GetInstance()->Draw();
@@ -192,6 +207,20 @@ namespace nsMyGame {
 		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 	}
 
+	void CRenderingEngine::DrawWireFrame(CRenderContext& rc) {
+
+		//レンダリングターゲットとして設定できるようになるまで待機。
+		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
+
+		//レンダーターゲットとビューポートを設定。
+		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
+
+		//ワイヤーフレームを描画。
+		CPhysicsWorld::GetInstance()->DebubDrawWorld(rc);
+
+		//描き込み終了待ち。
+		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
+	}
 	void CRenderingEngine::CreateGBuffer(CRenderContext& rc) {
 
 		//レンダリングターゲットを作成。
@@ -203,10 +232,10 @@ namespace nsMyGame {
 				CRenderTarget::GetGBufferRT(enocclusionAndSmoothAndMetaricMap) // 4番目のレンダリングターゲット
 		};
 
-		// まず、レンダリングターゲットとして設定できるようになるまで待つ
+		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTargets(ARRAYSIZE(rts), rts);
 
-		// レンダリングターゲットを設定
+		//レンダーターゲットを設定。
 		rc.SetRenderTargets(ARRAYSIZE(rts), rts);
 
 		//ビューポートを設定。
@@ -233,10 +262,10 @@ namespace nsMyGame {
 
 	void CRenderingEngine::ExecuteDeferredLighting(CRenderContext& rc) {
 
-		//レンダリングターゲットを設定。
+		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 
-		//ビューポートを設定。
+		//レンダーターゲットとビューポートを設定。
 		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
 
 		//ディファードライティング。
@@ -248,10 +277,10 @@ namespace nsMyGame {
 
 	void CRenderingEngine::SnapShotMainRenderTarget(CRenderContext& rc) {
 
-		//レンダリングターゲットを設定。
+		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTarget(m_snapShotMainRT);
 
-		//ビューポートを設定。
+		//レンダーターゲットとビューポートを設定。
 		rc.SetRenderTargetAndViewport(m_snapShotMainRT);
 
 		//メインレンダリングターゲットの絵をスナップショット。
@@ -271,7 +300,5 @@ namespace nsMyGame {
 		
 		//最終スプライトを描画。
 		m_copyToMainRenderTargetSprite.Draw(rc);
-		//ワイヤーフレームを描画。
-		CPhysicsWorld::GetInstance()->DebubDrawWorld(rc);
 	}
 }

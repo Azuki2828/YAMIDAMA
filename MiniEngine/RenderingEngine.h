@@ -82,6 +82,12 @@ namespace nsMyGame {
 		void DrawEffect(CRenderContext& rc);
 
 		/**
+		 * @brief ワイヤーフレームを描画。
+		 * @param rc レンダーコンテキスト
+		*/
+		void DrawWireFrame(CRenderContext& rc);
+
+		/**
 		 * @brief G-Bufferを作成する関数。
 		 * @param rc レンダーコンテキスト
 		*/

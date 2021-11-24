@@ -93,7 +93,7 @@ void EffectEngine::Update(float deltaTime)
 void EffectEngine::Draw()
 {
 	// Begin to rendering effects
-			// エフェクトの描画開始処理を行う。
+	// エフェクトの描画開始処理を行う。
 	m_renderer->BeginRendering();
 
 	// Render effects
