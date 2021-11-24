@@ -14,6 +14,7 @@ namespace nsMyGame {
 				int hp = 0;
 				int attack = 0;
 			};
+
 			/**
 			 * @brief ライトカメラを更新する関数。
 			*/

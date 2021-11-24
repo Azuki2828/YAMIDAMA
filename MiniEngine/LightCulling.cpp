@@ -61,7 +61,7 @@ namespace nsMyGame {
 
 	void CLightCulling::InitPipelineState(RootSignature& rs, PipelineState& pipelineState, Shader& cs)
 	{
-		// パイプラインステートを作成
+		// パイプラインステートを作成。
 		D3D12_COMPUTE_PIPELINE_STATE_DESC  psoDesc = { 0 };
 		psoDesc.pRootSignature = rs.Get();
 		psoDesc.CS = CD3DX12_SHADER_BYTECODE(cs.GetCompiledBlob());

@@ -112,28 +112,29 @@ void CSMain(
     uint3 dispatchThreadId : SV_DispatchThreadID,
     uint3 groupThreadId    : SV_GroupThreadID)
 {
-    // step-7 タイル内でのインデックスを求める
+    //タイル内でのインデックスを求める
     uint groupIndex = groupThreadId.y * TILE_WIDTH + groupThreadId.x;
 
 
-    // step-8 共有メモリを初期化する。
+    //共有メモリを初期化する。
     //一番最初の人が代表して共有メモリを初期化する。
     if (groupIndex == 0) {
         sTileNumLights = 0;
         sMinZ = 0x7F7FFFFF;//floatの最大値
         sMaxZ = 0;
     }
-    // step-9 このスレッドが担当するピクセルのカメラ空間での座標を計算する
+
+    //このスレッドが担当するピクセルのカメラ空間での座標を計算する
     uint2 frameUV = dispatchThreadId.xy;
 
     float3 posInView = ComputePositionInCamera(frameUV);
 
-    // step-10 全てのスレッドがここに到達するまで同期を取る。
+    //全てのスレッドがここに到達するまで同期を取る。
     //並列処理の弊害で、未初期化の共有メモリに書き込む恐れがあるため。
     GroupMemoryBarrierWithGroupSync();
 
 
-    // step-11 タイルの最大・最小深度を求める
+    //タイルの最大・最小深度を求める
     //排他的に処理を行わないと、不具合が生じる。
     //最大値、最小値（共有メモリ）の更新は、だれかが更新中なら待機する。終わったら自分が更新する。
     InterlockedMin(sMinZ, asuint(posInView.z));
@@ -142,16 +143,16 @@ void CSMain(
     //同期。
     GroupMemoryBarrierWithGroupSync();
 
-    // step-12 タイルの視錘台を構成する6つの平面を求める
+    //タイルの視錘台を構成する6つの平面を求める
     //平面の法線を求めている。
     float4 frustumPlanes[6];
     GetTileFrustumPlane(frustumPlanes, groupId);
-    // step-13 タイルとポイントライトの衝突判定を行う
 
+    //タイルとポイントライトの衝突判定を行う
     for (
         uint lightIndex = groupIndex;       //自分のスレッド番号
         lightIndex < pointLightNum;         //ポイントライトの数
-        lightIndex += TILE_SIZE     //変数名が良くないが、正しくはスレッド数。20個のスレッドがあったとしたら、０番目の人は0番目のライトの次に0+20番目のライトとタイルの衝突判定を調べる。
+        lightIndex += TILE_SIZE             //変数名が良くないが、正しくはスレッド数。20個のスレッドがあったとしたら、０番目の人は0番目のライトの次に0+20番目のライトとタイルの衝突判定を調べる。
         ) 
     {
         PointLight light = pointLight[lightIndex];
@@ -174,14 +175,15 @@ void CSMain(
     //同期。
     GroupMemoryBarrierWithGroupSync();
 
-    // step-14 ライトインデックスを出力バッファーに出力（大きな一つの配列にポイントライトの）
+    //ライトインデックスを出力バッファーに出力（大きな一つの配列にポイントライトの）
     uint numCellX = (screenParam.z + TILE_WIDTH - 1) / TILE_WIDTH;
     uint tileIndex = floor(frameUV.x / TILE_WIDTH) + floor(frameUV.y / TILE_WIDTH) * numCellX;      //何番のタイルを調べているか。
     uint lightStart = pointLightNum * tileIndex;        //配列のどの部分からスタートするか。
     for (uint lightIndex = groupIndex; lightIndex < sTileNumLights; lightIndex += TILE_SIZE) {
         rwLightIndices[lightStart + lightIndex] = sTileLightIndices[lightIndex];
     }
-    // step-15 最後に番兵を設定する
+
+    //最後に番兵を設定する
     if ((groupIndex == 0) && sTileNumLights < pointLightNum) {
         rwLightIndices[lightStart + sTileNumLights] = 0xffffffff;
     }

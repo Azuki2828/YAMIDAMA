@@ -2,42 +2,43 @@
  * @brief	シンプルなモデルシェーダー。
  */
 
-static const int MAX_DIRECTION_LIGHT = 4;
-static const int MAX_POINT_LIGHT = 1000;
-static const float PI = 3.1415926f;         // π
-static const int TILE_WIDTH = 16;      // タイルの幅
-static const int TILE_HEIGHT = 16;     // タイルの高さ
-static const int FRAME_BUFFER_W = 1280;
-static const int FRAME_BUFFER_H = 720;
+static const int MAX_DIRECTION_LIGHT = 4;	//ディレクションライトの最大数
+static const int MAX_POINT_LIGHT = 1000;	//ポイントライトの最大数
+static const float PI = 3.1415926f;         //π
+static const int TILE_WIDTH = 16;			// タイルの幅
+static const int TILE_HEIGHT = 16;			// タイルの高さ
+static const int FRAME_BUFFER_W = 1280;		//フレームバッファの幅
+static const int FRAME_BUFFER_H = 720;		//フレームバッファの高さ
 static const int NUM_TILE = (FRAME_BUFFER_W / TILE_WIDTH) * (FRAME_BUFFER_H / TILE_HEIGHT); // タイルの数
 
 // 一度に実行されるスレッド数
 #define TILE_WIDTH 16
 #define TILE_HEIGHT 16
 
+//ディレクションライト
 struct DirectionLight {
-	float3 dir;
-	float4 color;
+	float3 dir;				//方向
+	float4 color;			//カラー
 };
 
 struct PointLight {
-	float3 pos;
-	float3 positionInView;
-	float4 color;
-	float2 attn;
+	float3 pos;				//座標
+	float3 positionInView;	//カメラ空間での座標
+	float4 color;			//カラー
+	float2 attn;			//減衰パラメータ。xに影響範囲、yに影響率に累乗するパラメータ
 };
 
 cbuffer DefferdLightingCb : register(b1) {
-	DirectionLight directionLight[MAX_DIRECTION_LIGHT];
-	PointLight pointLight[MAX_POINT_LIGHT];
-	float3 eyePos;
-	int pointLightNum;
-	float4x4 mLVP;
+	DirectionLight directionLight[MAX_DIRECTION_LIGHT];		//ディレクションライトの配列
+	PointLight pointLight[MAX_POINT_LIGHT];					//ポイントライトの配列
+	float3 eyePos;											//視点
+	int pointLightNum;										//ポイントライトの数
+	float4x4 mLVP;											//プロジェクション行列
 };
 
 cbuffer cb : register(b0) {
-	float4x4 mvp;		//���[���h�r���[�v���W�F�N�V�����s��B
-	float4 mulColor;	//��Z�J���[�B
+	float4x4 mvp;
+	float4 mulColor;
 	float4 screenParam;
 };
 struct VSInput {
@@ -50,29 +51,18 @@ struct PSInput {
 	float2 uv  : TEXCOORD0;
 };
 
-Texture2D<float4> albedoAndShadowReceiverTexture : register(t0);
-Texture2D<float4> normalTexture : register(t1);
-Texture2D<float4> worldPosTexture : register(t2);
-Texture2D<float4> occlusionAndSmoothAndMetaricTexture : register(t3);
-Texture2D<float4> g_shadowMap : register(t10);	//シャドウマップ。
-StructuredBuffer<uint> pointLightListInTile : register(t11);// タイルごとのポイントライトのインデックスのリスト
+Texture2D<float4> albedoAndShadowReceiverTexture : register(t0);		//rgbにテクスチャカラー。aにシャドウレシーバーフラグ
+Texture2D<float4> normalTexture : register(t1);							//rgbに法線
+Texture2D<float4> worldPosTexture : register(t2);						//rgbにワールド座標
+Texture2D<float4> occlusionAndSmoothAndMetaricTexture : register(t3);	//rにオクルージョン。bに滑らかさ。bに金属度
+Texture2D<float4> g_shadowMap : register(t10);							//シャドウマップ
+StructuredBuffer<uint> pointLightListInTile : register(t11);			// タイルごとのポイントライトのインデックスのリスト
 
 sampler g_sampler : register(s0);
 
 ////////////////////////////////////////////////
 // 関数定義。
 ////////////////////////////////////////////////
-
-float3 GetNormal(float3 normal, float3 tangent, float3 biNormal, float2 uv)
-{
-	float3 binSpaceNormal = normal;
-	//float3 binSpaceNormal = normalAndDepthTexture.SampleLevel(g_sampler, uv, 0.0f).xyz;
-	binSpaceNormal = (binSpaceNormal * 2.0f) - 1.0f;
-
-	float3 newNormal = tangent * binSpaceNormal.x + biNormal * binSpaceNormal.y + normal * binSpaceNormal.z;
-
-	return newNormal;
-}
 
 /// ランバート拡散反射光を計算する。
 float3 CalcLambertDiffuse(float3 lightDirection, float3 lightColor, float3 normal)
@@ -215,7 +205,6 @@ float SimplexNoise(float3 x)
 			lerp(hash(n + 170.0), hash(n + 171.0), f.x), f.y), f.z);
 }
 
-
 /// <summary>
 /// 頂点シェーダーのコア関数。
 /// </summary>
@@ -226,40 +215,42 @@ PSInput VSMain(VSInput In)
 	psIn.uv = In.uv;
 	return psIn;
 }
+
 /// <summary>
 /// ピクセルシェーダーのエントリー関数。
 /// </summary>
 float4 PSMain(PSInput psIn) : SV_Target0
 {
-	// step-16 このピクセルが含まれているタイルの番号を計算する
+	//このピクセルが含まれているタイルの番号を計算する。
 	uint numCellX = (screenParam.z + TILE_WIDTH - 1) / TILE_WIDTH;
 	uint tileIndex = floor(psIn.pos.x / TILE_WIDTH) + floor(psIn.pos.y / TILE_WIDTH) * numCellX;
-	// step-17 含まれるタイルの影響の開始位置と終了位置を計算する
+
+	//含まれるタイルの影響の開始位置と終了位置を計算する。
 	uint lightStart = tileIndex * pointLightNum;
 	uint lightEnd = lightStart + pointLightNum;
 
-	//アルベドカラー
+	//アルベドカラー。
 	float3 albedoColor = albedoAndShadowReceiverTexture.Sample(g_sampler, psIn.uv).xyz;
 
-	//return float4(albedoColor, 1.0f);
+	//シャドウレシーバーフラグ。
 	int shadowReceiverFlg = albedoAndShadowReceiverTexture.Sample(g_sampler, psIn.uv).w;
 
-	// スペキュラカラー(鏡面反射光)
+	// スペキュラカラー(鏡面反射光)はアルベドカラーを使用。
 	float3 specColor = albedoColor;
-	//float3 specColor = g_specularMap.SampleLevel(g_sampler, psIn.uv, 0).rgb;
 
+	//ワールド座標。
 	float3 worldPos = worldPosTexture.Sample(g_sampler, psIn.uv).xyz;
 
+	//法線。
 	float3 normal = normalTexture.Sample(g_sampler, psIn.uv).xyz;
 	
-	//金属度
-	//float metaric = 0.0f;
+	//金属度。
 	float metaric = occlusionAndSmoothAndMetaricTexture.Sample(g_sampler, psIn.uv).z;
 
+	//滑らかさ。
 	float smooth = occlusionAndSmoothAndMetaricTexture.Sample(g_sampler, psIn.uv).y;
-	//smooth = 1.0f - smooth;
 
-	//視点
+	//視点。
 	float3 toEye = normalize(eyePos - worldPos);
 
 	//ライト
@@ -272,8 +263,11 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		1.0f,
 		1.0f
 	};
+
+	//シャドウレシーバー？
 	if (shadowReceiverFlg) {
 
+		//ライトビューの座標系に変換。
 		float4 posInLVP = mul(mLVP, float4(worldPos, 1.0f));
 
 		//ライトビューの座標系を.wで割ることで正規化スクリーン座標系に変換できる。(重要)
@@ -286,6 +280,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		// ライトビュースクリーン空間でのZ値を計算する。
 		float zInLVP = posInLVP.z / posInLVP.w;
 
+		//範囲内？
 		if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
 			&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
 			&& zInLVP > 0.0f && zInLVP < 1.0f
@@ -293,6 +288,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 			//シャドウマップに描き込まれているZ値と比較する。
 			float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
 			if (zInLVP > zInShadowMap + 0.0001f) {
+				//主要のディレクションライトの影響を受けないようにする。
 				ligFactor[0] = 0.0f;
 			}
 		}
@@ -301,83 +297,78 @@ float4 PSMain(PSInput psIn) : SV_Target0
 	//ディレクションライトの計算。
 	for (int dirLigNo = 0; dirLigNo < MAX_DIRECTION_LIGHT; dirLigNo++) {
 	
+		//フレネル反射を計算。
 		float diffuseFromFresnel = CalcDiffuseFromFresnel(normal, -directionLight[dirLigNo].dir, toEye, 1.0f - smooth);
 
+		//内積を計算。
 		float NdotL = saturate(dot(normal, -directionLight[dirLigNo].dir));
 
+		//ランバート拡散反射を計算。
 		float3 lambertDiffuse = directionLight[dirLigNo].color * NdotL / PI;
 		
+		//拡散反射を計算。
 		float3 dirDiffuse = albedoColor * diffuseFromFresnel * lambertDiffuse;
-		
 
+		//鏡面反射を計算。
 		float3 dirSpec = CookTorranceSpecular(-directionLight[dirLigNo].dir,
 			toEye, normal, metaric, 1.0f - smooth) * directionLight[dirLigNo].color;
 
-		
-
+		//スペキュラ反射を計算。
 		dirSpec *= lerp(float3(1.0f, 1.0f, 1.0f), specColor, smooth);
 
+		//ディレクションライトの影響を加算する。
 		lig += (dirDiffuse * (1.0f - smooth) + dirSpec * smooth) * ligFactor[dirLigNo];
 		
 	}
 	//ポイントライトの計算。
-	/*for (int poiLigNo = 0; poiLigNo < pointLightNum; poiLigNo++) {
-
-		float3 ligDir = worldPos - pointLight[poiLigNo].pos;
-		ligDir = normalize(ligDir);
-
-		float3 poiDiffuse = CalcLambertDiffuse(ligDir, pointLight[poiLigNo].color, normal);
-		
-		float3 poiSpec = CalcPhongSpecular(ligDir, pointLight[poiLigNo].color, worldPos, normal);
-		
-		float3 distance = length(worldPos - pointLight[poiLigNo].pos);
-
-		float affect = max(0.0f, 1.0f - 1.0f / pointLight[poiLigNo].attn.x * distance);
-
-		affect = pow(affect, pointLight[poiLigNo].attn.y);
-
-		poiDiffuse *= affect;
-		poiSpec *= affect;
-
-		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
-	}*/
-
 	for (
 		uint lightListIndex = lightStart;
 		lightListIndex < lightEnd;
 		lightListIndex++
 		)
 	{
+		//リストから番号を取得する。
 		uint ligNo = pointLightListInTile[lightListIndex];
+
+		//無かったら終了。
 		if (ligNo == 0xffffffff) {
 			break;
 		}
 
+		//方向を求める。
 		float3 ligDir = worldPos - pointLight[ligNo].pos;
 		ligDir = normalize(ligDir);
 
+		//拡散反射を計算。
 		float3 poiDiffuse = CalcLambertDiffuse(ligDir, pointLight[ligNo].color, normal);
 
+		//鏡面反射を計算。
 		float3 poiSpec = CalcPhongSpecular(ligDir, pointLight[ligNo].color, worldPos, normal);
 
+		//距離を計算。
 		float3 distance = length(worldPos - pointLight[ligNo].pos);
 
+		//影響率を計算。
 		float affect = max(0.0f, 1.0f - 1.0f / pointLight[ligNo].attn.x * distance);
-
 		affect = pow(affect, pointLight[ligNo].attn.y);
 
+		//拡散反射、鏡面反射に影響率を乗算。
 		poiDiffuse *= affect;
 		poiSpec *= affect;
 
+		//ポイントライトの影響を加算する。
 		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
 	}
 
+	//環境光を加算。
 	lig += float3(0.1f,0.1f,0.1f);
 	
+	//最終カラーを初期化。
 	float4 finalColor = float4(albedoColor, 1.0f);
+
+	//今までのライト計算を乗算。
 	finalColor.xyz *= lig;
 
-
-
+	//最終カラーを出力。
 	return finalColor;
 }
