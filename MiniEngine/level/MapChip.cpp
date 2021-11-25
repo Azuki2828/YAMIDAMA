@@ -44,8 +44,8 @@ namespace nsMyGame {
 			m_physicsStaticObject.SetFriction(10.0f);
 		}
 		else {
-			m_modelRender = NewGO<CModelRender>(0);
 
+			m_modelRender = NewGO<CModelRender>(0);
 
 			char filePathtkm[256];
 			strcpy(objName, (p+4));

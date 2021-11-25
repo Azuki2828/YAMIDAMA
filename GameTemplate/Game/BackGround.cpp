@@ -14,46 +14,24 @@ namespace nsMyGame {
 		static int fEnemyNum = 0;
 		static int gEnemyNum = 0;
 		static int pointLightNum = 0;
+		static int fireEffectNum = 0;
 		CreateDirLight();
-		/*m_wall = NewGO<CModelRender>(0);
-		m_wall->SetFilePathTkm("Assets/modelData/BackGround/testStage.tkm");
-		m_wall->SetPosition(m_pos);
-		m_wall->SetRotation(m_rot);
-		m_wall->SetScale(m_sca);
-		m_wall->SetShadowReceiverFlag(true);
-		m_wall->Init();
-		m_physicsStaticObject.CreateFromModel(
-			*m_wall->GetModel(),
-			m_wall->GetModel()->GetWorldMatrix()
-		);
-		m_physicsStaticObject.SetFriction(10.0f);
-		m_wall->Update();*/
 
 		//プレイヤーを検索。
 		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
-
-		std::random_device seed_gen;
-		std::mt19937 random(seed_gen());
 		
 		//プレイヤーを中心とするポイントライトを作成。
 		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
 		m_pointLight[pointLightNum]->SetPosition(player->GetPosition());
 		m_pointLight[pointLightNum]->SetColor({ 1.0f,1.0f,1.0f });
-		m_pointLight[pointLightNum]->SetRange(150.0f);
-		m_pointLight[pointLightNum]->SetAffectPowParam(1.5f);
+		m_pointLight[pointLightNum]->SetRange(300.0f);
+		m_pointLight[pointLightNum]->SetAffectPowParam(2.5f);
 		pointLightNum++;
 
 		
 
 		//ステージをロード。
 		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
-
-			m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-			m_pointLight[pointLightNum]->SetPosition(objData.position);
-			m_pointLight[pointLightNum]->SetColor({ static_cast<float>(random() % 255) / 255.0f,static_cast<float>(random() % 255) / 255.0f,static_cast<float>(random() % 255) / 255.0f });
-			m_pointLight[pointLightNum]->SetRange(300.0f);
-			m_pointLight[pointLightNum]->SetAffectPowParam(2.0f);
-			pointLightNum++;
 
 			if (objData.EqualObjectName("door")) {
 				
@@ -96,13 +74,69 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("pointLight")) {
 
-				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-				m_pointLight[pointLightNum]->SetPosition(objData.position);
-				m_pointLight[pointLightNum]->SetColor({ 5.0f,0.0f,0.0f });
-				m_pointLight[pointLightNum]->SetRange(300.0f);
-				m_pointLight[pointLightNum]->SetAffectPowParam(2.0f);
-				pointLightNum++;
+				//m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+				//m_pointLight[pointLightNum]->SetPosition(objData.position);
+				//m_pointLight[pointLightNum]->SetColor({ 5.0f,0.0f,0.0f });
+				//m_pointLight[pointLightNum]->SetRange(300.0f);
+				//m_pointLight[pointLightNum]->SetAffectPowParam(2.0f);
+				//pointLightNum++;
 				return true;
+			}
+
+			if (objData.EqualObjectName("torch")) {
+
+				//燃えるエフェクトの座標と回転を調整。
+				CVector3 effectPos = objData.position;
+				effectPos.z += 35.0f;
+				effectPos.y += 5.0f;
+				CQuaternion effectRot = objData.rotation;
+				effectRot.AddRotationY(CMath::DegToRad(90.0f));
+				effectPos = effectPos - objData.position;
+				effectRot.Apply(effectPos);
+				effectPos = objData.position + effectPos;
+
+				//エフェクトを初期化。
+				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
+				m_fireEffect[fireEffectNum]->Init(u"Assets/effect/fire.efk");
+				m_fireEffect[fireEffectNum]->SetScale({ 10.0f,10.0f,10.0f });
+				m_fireEffect[fireEffectNum]->SetPosition(effectPos);
+				m_fireEffect[fireEffectNum]->SetRotation(effectRot);
+
+				//炎エフェクトに対応するポイントライトを作成。
+				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+				m_pointLight[pointLightNum]->SetPosition(effectPos);
+				m_pointLight[pointLightNum]->SetColor({ 10.0f,5.0f,5.0f });
+				m_pointLight[pointLightNum]->SetRange(600.0f);
+				m_pointLight[pointLightNum]->SetAffectPowParam(5.5f);
+				pointLightNum++;
+
+				//再生。
+				m_fireEffect[fireEffectNum]->Play();
+				fireEffectNum++;
+			}
+			if (objData.EqualObjectName("torchBowl")) {
+
+				//燃えるエフェクトの座標と回転を調整。
+				CVector3 effectPos = objData.position;
+				effectPos.y += 145.0f;
+
+				//エフェクトを初期化。
+				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
+				m_fireEffect[fireEffectNum]->Init(u"Assets/effect/fire.efk");
+				m_fireEffect[fireEffectNum]->SetScale({ 10.0f,10.0f,10.0f });
+				m_fireEffect[fireEffectNum]->SetPosition(effectPos);
+
+				//炎エフェクトに対応するポイントライトを作成。
+				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+				m_pointLight[pointLightNum]->SetPosition(effectPos);
+				m_pointLight[pointLightNum]->SetColor({ 2.0f,1.0f,1.0f });
+				m_pointLight[pointLightNum]->SetRange(300.0f);
+				m_pointLight[pointLightNum]->SetAffectPowParam(1.5f);
+				pointLightNum++;
+
+				//再生。
+				m_fireEffect[fireEffectNum]->Play();
+				fireEffectNum++;
 			}
 			return false;
 		});
@@ -152,10 +186,22 @@ namespace nsMyGame {
 
 		//プレイヤー中心のポイントライトの座標を更新。
 		CVector3 playerLightPosition = player->GetPosition();
-		playerLightPosition.y += 100.0f;
+		playerLightPosition.y += 130.0f;
 		m_pointLight[0]->SetPosition(playerLightPosition);
 
 		//カメラの前方向に向けて放たれるディレクションライトの向きを更新。
 		m_dirLight[1]->SetLigDirection(g_camera3D->GetForward());
+
+		m_fireTime += GameTime().GameTimeFunc().GetFrameDeltaTime();
+
+		//1.0秒ごとにエフェクトを再生。
+		if (m_fireTime >= 1.0f) {
+
+			for (const auto& fireEffect : m_fireEffect) {
+
+				fireEffect->Play();
+			}
+			m_fireTime = 0.0f;
+		}
 	}
 }

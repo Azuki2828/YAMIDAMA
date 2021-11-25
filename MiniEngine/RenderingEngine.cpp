@@ -29,7 +29,7 @@ namespace nsMyGame {
 		//レンダーコンテキストを取得。
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 
-		//シャドウマップを描画。
+		//シャドウマップを作成。
 		DrawShadowMap(renderContext);
 
 		//G-Bufferを作成。
@@ -53,13 +53,13 @@ namespace nsMyGame {
 		//フォントを描画。
 		DrawFont(renderContext);
 
-		//ワイヤーフレームを描画。
-		DrawWireFrame(renderContext);
-
 		//スプライトを描画。
 		RenderSprite(renderContext);
 
-		//フレームバッファを描画。
+		//ワイヤーフレームを描画。
+		DrawWireFrame(renderContext);
+
+		//フレームバッファに描画。
 		CopyToFrameBuffer(renderContext);
 	}
 
@@ -98,7 +98,6 @@ namespace nsMyGame {
 		m_deferredLightingSprite.Init(spriteInitData);
 	}
 
-
 	void CRenderingEngine::CreateSnapShotMainRT() {
 
 		//メインレンダリングターゲットの内容をコピーするレンダリングターゲットを作成。
@@ -111,6 +110,7 @@ namespace nsMyGame {
 			DXGI_FORMAT_UNKNOWN
 		);
 	}
+
 	void CRenderingEngine::InitCopyToMainRenderTargetSprite() {
 
 		SpriteInitData copyToMainRenderTargetSpriteInitData;
@@ -221,6 +221,7 @@ namespace nsMyGame {
 		//描き込み終了待ち。
 		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 	}
+
 	void CRenderingEngine::CreateGBuffer(CRenderContext& rc) {
 
 		//レンダリングターゲットを作成。

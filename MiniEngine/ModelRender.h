@@ -159,7 +159,7 @@ namespace nsMyGame {
 		*/
 		void SetShadowReceiverFlag(bool flg) {
 
-			m_sModelData.shadowReceiverFlg = flg;
+			m_modelData.shadowReceiverFlg = flg;
 		}
 
 		/**
@@ -240,7 +240,7 @@ namespace nsMyGame {
 
 		CModel m_model;								//モデル
 		CModel m_shadowModel;						//シャドウ作成用のモデル
-		SModelData m_sModelData;					//コンスタントバッファに転送するデータ
+		SModelData m_modelData;					//コンスタントバッファに転送するデータ
 		ModelInitData m_modelInitData;				//モデルデータ
 		Skeleton m_skeleton;						//スケルトン
 

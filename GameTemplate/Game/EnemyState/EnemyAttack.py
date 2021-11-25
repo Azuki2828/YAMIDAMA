@@ -20,8 +20,6 @@ def Update() :
     #回転関数。
     Rotate()
 
-
-
     #クールタイムが0秒になったら待機状態に。
     if(GetCoolTime() == 0.0):
         ChangeState(0)

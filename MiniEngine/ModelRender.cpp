@@ -16,8 +16,8 @@ namespace nsMyGame {
 		m_modelInitData.m_fxFilePath = c_fxFilePath_Model;
 
 		//コンスタントバッファにモデルデータを入れる。
-		m_modelInitData.m_expandConstantBuffer = &m_sModelData;
-		m_modelInitData.m_expandConstantBufferSize = sizeof(m_sModelData);
+		m_modelInitData.m_expandConstantBuffer = &m_modelData;
+		m_modelInitData.m_expandConstantBufferSize = sizeof(m_modelData);
 
 		//レジスタのt10にシャドウマップを設定。
 		m_modelInitData.m_expandShaderResoruceView = &CRenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();

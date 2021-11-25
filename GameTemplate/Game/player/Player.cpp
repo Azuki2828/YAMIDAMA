@@ -90,23 +90,12 @@ namespace nsMyGame {
 
 		void CPlayer::LightCameraUpdate() {
 
-
-			if (g_pad[0]->IsTrigger(enButtonY)) {
-				Effect* m_death = NewGO<Effect>(enPriority_Zeroth);
-				m_death->Init(u"Assets/effect/laser.efk");
-				m_death->SetScale({ 10.0f,10.0f,10.0f });
-				m_death->SetPosition(m_position);
-				m_death->Play();
-			}
 			auto backGround = FindGO<CBackGround>("backGround");
 
 			//ライトカメラの情報を更新。
 			CVector3 m_lightCameraTar = m_position;
 			auto ligDirection = backGround->GetSunDirectionLight()->GetLigDirection();
 			CVector3 m_lightCameraPos = m_lightCameraTar - *ligDirection * 300.0f;
-
-			//ライトカメラの座標を設定。
-			//m_lightCameraPos += c_addLightCameraPos;
 
 			//ライトカメラの情報を設定。
 			CCamera::GetLightCamera()->SetPosition(m_lightCameraPos);

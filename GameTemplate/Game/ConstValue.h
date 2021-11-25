@@ -35,7 +35,6 @@ namespace nsMyGame {
 
 		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/player.tkm";		//プレイヤーのtkmファイルパス
 		constexpr const char* c_filePathTksPlayer = "Assets/modelData/player.tks";		//プレイヤーのtksファイルパス
-		const CVector3 c_addLightCameraPos = { 0.0f,300.0f,300.0f };					//プレイヤー用のライトカメラに加算する座標
 		constexpr const float c_animationInterpolateTime = 0.6f;						//アニメーションの補間時間
 		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム

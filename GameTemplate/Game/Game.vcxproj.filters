@@ -365,6 +365,9 @@
     <ClCompile Include="..\..\ExEngine\effect\Effect.cpp">
       <Filter>ExEngine\effect</Filter>
     </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -690,6 +693,9 @@
     </ClInclude>
     <ClInclude Include="..\..\ExEngine\effect\EffectEngine.h">
       <Filter>ExEngine\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

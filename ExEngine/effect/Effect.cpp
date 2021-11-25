@@ -24,7 +24,7 @@ void Effect::Init(const char16_t* filePath)
 void Effect::Play()
 {
 	//再生中のエフェクトを停止する。
-	EffectEngine::GetInstance()->Stop(m_handle);
+	//EffectEngine::GetInstance()->Stop(m_handle);
 	//新しく再生。
 	m_handle = EffectEngine::GetInstance()->Play(m_effect);
 }
