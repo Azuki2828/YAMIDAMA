@@ -15,6 +15,8 @@ namespace nsMyGame {
 		static int gEnemyNum = 0;
 		static int pointLightNum = 0;
 		static int fireEffectNum = 0;
+
+		//ディレクションライトを作成。
 		CreateDirLight();
 
 		//プレイヤーを検索。

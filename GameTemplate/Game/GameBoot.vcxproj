@@ -113,6 +113,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)/../MiniEngine;$(SolutionDir)/Sample_00;$(SolutionDir)/../ExEngine;$(SolutionDir)/../ExEngine/bulletPhysics/src;$(SolutionDir)/../ExEngine/effekseer/install_msvc2019/include/Effekseer;$(SolutionDir)/../ExEngine/effekseer/install_msvc2019/include/EffekseerRendererDX12</IncludePath>
     <LibraryPath>$(SolutionDir)/exlib/x64;$(SolutionDir)/x64/Debug/;$(SolutionDir)/../ExEngine/effekseer/install_msvc2019/lib;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Platform)\$(Configuration)_Boot\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
