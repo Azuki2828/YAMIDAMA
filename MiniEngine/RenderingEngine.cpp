@@ -11,6 +11,9 @@ namespace nsMyGame {
 		//レンダリングターゲットを作成。
 		CreateRenderTarget();
 
+		//シャドウマップを用意。
+		m_shadowMap.Init();
+
 		//ポストエフェクトを初期化。
 		m_postEffect.Init();
 
@@ -67,7 +70,6 @@ namespace nsMyGame {
 
 		//レンダリングターゲットを作成。
 		CRenderTarget::CreateMainRenderTarget();
-		CRenderTarget::CreateShadowMap();
 		CRenderTarget::CreateAlbedoAndShadowReceiverFlagRenderTarget();
 		CRenderTarget::CreateNormalMapRenderTarget();
 		CRenderTarget::CreateWorldPosRenderTarget();
@@ -91,7 +93,7 @@ namespace nsMyGame {
 		spriteInitData.m_fxFilePath = c_fxFilePath_DeferredLighting;
 		spriteInitData.m_expandConstantBuffer = nsLight::CLightManager::GetInstance()->GetLigData();
 		spriteInitData.m_expandConstantBufferSize = sizeof(*nsLight::CLightManager::GetInstance()->GetLigData());
-		spriteInitData.m_expandShaderResoruceView = &CRenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
+		spriteInitData.m_expandShaderResoruceView = &m_shadowMap.GetBokeShadowTexture();
 		spriteInitData.m_expandShaderResoruceView2 = &m_lightCulling.GetPointLightNoListInTileUAV();
 
 		// 初期化オブジェクトを使って、スプライトを初期化する
@@ -131,19 +133,22 @@ namespace nsMyGame {
 		rc.SetRenderMode(CRenderContext::EnRender_Mode::enRenderMode_Shadow);
 
 		//レンダリングターゲットとして設定できるようになるまで待機。
-		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enShadowMap));
+		rc.WaitUntilToPossibleSetRenderTarget(m_shadowMap.GetRenderTarget());
 
 		//レンダーターゲットとビューポートを設定。
-		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enShadowMap));
+		rc.SetRenderTargetAndViewport(m_shadowMap.GetRenderTarget());
 
 		//レンダーターゲットをクリア。
-		rc.ClearRenderTargetView(*CRenderTarget::GetRenderTarget(enShadowMap));
+		rc.ClearRenderTargetView(m_shadowMap.GetRenderTarget());
 
 		//シャドウモデルを描画。
 		CGameObjectManager::GetInstance()->ExecuteRender(rc);
 
 		//描き込み終了待ち。
-		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enShadowMap));
+		rc.WaitUntilFinishDrawingToRenderTarget(m_shadowMap.GetRenderTarget());
+
+		//シャドウマップにブラーをかける。
+		m_shadowMap.ExecuteBlur(rc);
 	}
 
 	void CRenderingEngine::RenderSprite(CRenderContext& rc) {

@@ -57,7 +57,7 @@ namespace nsMyGame {
 		InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("Game"));
 
 
-		// python初期化。
+		// pythonを初期化。
 		wchar_t* program;
 		InitPython(program);
 
@@ -76,9 +76,9 @@ namespace nsMyGame {
 		//ワイヤーフレーム表示をONにする。
 		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
 
-		//////////////////////////////////////
+		////////////////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで
-		//////////////////////////////////////
+		////////////////////////////////////////////////
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		
 		// とりあえずテストで敵を追加。
@@ -94,18 +94,6 @@ namespace nsMyGame {
 		m_spriteRender->SetPosition({ -400.0f,-200.0f,0.0f });
 		m_spriteRender->SetScale({ 0.2f,0.2f,0.2f });
 		m_spriteRender->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });*/
-
-		/*nsLight::CPointLight* poiLight = NewGO<nsLight::CPointLight>(0);
-		poiLight->SetPosition({ 100.0f,100.0f,0.0f });
-		poiLight->SetColor({ 5.0f,0.0f,0.0f });
-		poiLight->SetRange(200.0f);
-		poiLight->SetAffectPowParam(3.0f);
-
-		nsLight::CPointLight* poiLight2 = NewGO<nsLight::CPointLight>(0);
-		poiLight2->SetPosition({ -50.0f,100.0f,0.0f });
-		poiLight2->SetColor({ 0.0f,0.0f,5.0f });
-		poiLight2->SetRange(200.0f);
-		poiLight2->SetAffectPowParam(3.0f);*/
 
 		// ここからゲームループ。
 		while (DispatchWindowMessage())
@@ -126,9 +114,9 @@ namespace nsMyGame {
 
 			//描画。
 			CRenderingEngine::GetInstance()->Render();
-			//////////////////////////////////////
+			////////////////////////////////////////////////
 			//絵を描くコードを書くのはここまで！！！
-			//////////////////////////////////////
+			////////////////////////////////////////////////
 
 			//レンダリング終了。
 			g_engine->EndFrame();

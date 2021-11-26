@@ -10,7 +10,6 @@ class CGraphicsEngine;
 //レンダリングターゲットのリスト
 enum EnRenderTargetList {
 	enMainRT,
-	enShadowMap,
 
 	enRenderTargetNum
 };
@@ -156,25 +155,6 @@ public:
 			c_renderArraySize1,
 			DXGI_FORMAT_R16G16B16A16_FLOAT,
 			DXGI_FORMAT_D32_FLOAT
-		);
-	}
-
-	/**
-	 * @brief シャドウマップ用のレンダリングターゲットを作成する関数。
-	*/
-	static void CreateShadowMap() {
-
-		m_renderTarget[enShadowMap] = new CRenderTarget;
-
-		float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
-		m_renderTarget[enShadowMap]->Create(
-			c_shadowMapWH.x,
-			c_shadowMapWH.y,
-			c_mipLevel1,
-			c_renderArraySize1,
-			DXGI_FORMAT_R32_FLOAT,
-			DXGI_FORMAT_D32_FLOAT,
-			clearColor
 		);
 	}
 

@@ -20,7 +20,7 @@ namespace nsMyGame {
 		m_modelInitData.m_expandConstantBufferSize = sizeof(m_modelData);
 
 		//レジスタのt10にシャドウマップを設定。
-		m_modelInitData.m_expandShaderResoruceView = &CRenderTarget::GetRenderTarget(enShadowMap)->GetRenderTargetTexture();
+		m_modelInitData.m_expandShaderResoruceView = &CRenderingEngine::GetInstance()->GetShadowMap().GetRenderTargetTexture();
 
 		//スケルトンを設定。
 		if (m_skeleton.IsInited()) {

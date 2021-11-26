@@ -54,7 +54,8 @@ struct PSInput {
 Texture2D<float4> albedoAndShadowReceiverTexture : register(t0);		//rgbにテクスチャカラー。aにシャドウレシーバーフラグ
 Texture2D<float4> normalTexture : register(t1);							//rgbに法線
 Texture2D<float4> worldPosTexture : register(t2);						//rgbにワールド座標
-Texture2D<float4> occlusionAndSmoothAndMetaricTexture : register(t3);	//rにオクルージョン。bに滑らかさ。bに金属度
+Texture2D<float4> depthTexture : register(t3);							//深度値。
+Texture2D<float4> occlusionAndSmoothAndMetaricTexture : register(t4);	//rにオクルージョン。bに滑らかさ。bに金属度
 Texture2D<float4> g_shadowMap : register(t10);							//シャドウマップ
 StructuredBuffer<uint> pointLightListInTile : register(t11);			// タイルごとのポイントライトのインデックスのリスト
 
@@ -249,7 +250,6 @@ float4 PSMain(PSInput psIn) : SV_Target0
 
 	//滑らかさ。
 	float smooth = occlusionAndSmoothAndMetaricTexture.Sample(g_sampler, psIn.uv).y;
-	smooth = 0.8f;
 
 	//視点。
 	float3 toEye = normalize(eyePos - worldPos);
@@ -287,13 +287,27 @@ float4 PSMain(PSInput psIn) : SV_Target0
 			&& zInLVP > 0.0f && zInLVP < 1.0f
 			) {
 			//シャドウマップに描き込まれているZ値と比較する。
-			float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
-			if (zInLVP > zInShadowMap + 0.0001f) {
+			float2 zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).xy;
+			if (zInLVP > zInShadowMap.x + 0.0001f) {
 				//主要のディレクションライトの影響を受けないようにする。
 				ligFactor[0] = 0.0f;
+
+				//// 遮蔽されているなら、チェビシェフの不等式を利用して光が当たる確率を求める 
+				//float depth_sq = zInShadowMap.x * zInShadowMap.x;
+				//// このグループの分散具合を求める
+				//// 分散が大きいほど、varianceの数値は大きくなる
+				//float variance = min(max(zInShadowMap.y - depth_sq, 0.0001f), 1.0f);
+				//// このピクセルのライトから見た深度値とシャドウマップの平均の深度値の差を求める   
+				//float md = zInLVP - zInShadowMap.x;
+				//// 光が届く確率を求める
+				//float lit_factor = variance / (variance + md * md);
+				////確率を元に、太陽光の影響率を求める。
+				//ligFactor[0] *= lit_factor;
 			}
 		}
 	}
+
+	//return float4(ligFactor[0], 0.0f, 0.0f, 1.0f);
 
 	//ディレクションライトの計算。
 	for (int dirLigNo = 0; dirLigNo < MAX_DIRECTION_LIGHT; dirLigNo++) {

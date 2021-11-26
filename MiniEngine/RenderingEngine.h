@@ -1,6 +1,7 @@
 #pragma once
 #include "../MiniEngine/postEffect/PostEffect.h"
 #include "LightCulling.h"
+#include "ShadowMap.h"
 
 namespace nsMyGame {
 	//レンダリングエンジンクラス
@@ -25,6 +26,15 @@ namespace nsMyGame {
 		static CRenderingEngine* GetInstance() {
 
 			return m_renderingEngine;
+		}
+
+		/**
+		 * @brief シャドウマップを取得する関数。
+		 * @return シャドウマップ
+		*/
+		CRenderTarget& GetShadowMap() {
+
+			return m_shadowMap.GetRenderTarget();
 		}
 
 		/**
@@ -117,6 +127,7 @@ namespace nsMyGame {
 		CLightCulling m_lightCulling;				//ライトカリング
 		CRenderTarget m_snapShotMainRT;				//メインレンダリングターゲットのスナップショットを取るためのレンダリングターゲット
 		nsPostEffect::CPostEffect m_postEffect;		//ポストエフェクト
+		CShadowMap m_shadowMap;						//シャドウマップ
 		CSprite m_copyToMainRenderTargetSprite;		//メインレンダリングターゲットのスプライト
 		CSprite m_deferredLightingSprite;			//ディファードライティング用のスプライト
 	};

@@ -150,28 +150,28 @@ namespace {
 	const CVector3 c_cameraUp = { 0.0f,1.0f,0.0f };					//カメラの標準の上方向
 
 	const CVector2 c_renderTargetW1280H720 = { 1280.0f,720.0f };						//レンダリングターゲットで使用する幅と高さ
-	const CVector2 c_shadowMapWH = { 1024.0f,1024.0f };
-	const int c_mipLevel1 = 1;														//レンダリングターゲットで使用するミップマップレベル
-	const int c_renderArraySize1 = 1;												//レンダリングターゲットで使用するテクスチャ配列のサイズ
-	const int c_gaussianBlurNum = 4;												//ガウシアンブラーをかける回数
-	const int c_blurPower = 10;														//ブラーの強さ
-	const char* c_fxFilePath_DeferredLighting = "Assets/shader/deferredLighting.fx";//スプライトシェーダーのファイルパス
-	const char* c_fxFilePath_Sprite = "Assets/shader/sprite.fx";
-	const char* c_fxFilePath_ShadowMap = "Assets/shader/sampleDrawShadowMap.fx";
+	const CVector2 c_shadowMapWH = { 4096.0f,4096.0f };									//シャドウマップの幅と高さ
+	const int c_mipLevel1 = 1;															//レンダリングターゲットで使用するミップマップレベル
+	const int c_renderArraySize1 = 1;													//レンダリングターゲットで使用するテクスチャ配列のサイズ
+	const int c_gaussianBlurNum = 4;													//ガウシアンブラーをかける回数
+	const int c_blurPower = 10;															//ブラーの強さ
+	const char* c_fxFilePath_DeferredLighting = "Assets/shader/deferredLighting.fx";	//ディファードライティングに使うシェーダーのファイルパス
+	const char* c_fxFilePath_Sprite = "Assets/shader/sprite.fx";						//スプライトシェーダーのファイルパス
+	const char* c_fxFilePath_ShadowMap = "Assets/shader/sampleDrawShadowMap.fx";		//シャドウマップ描画に使うシェーダーのファイルパス
 
 	const int c_initializeTime = 0;
 	const int c_restInitialTime = 0;		//スピンロック時の待ちタイムの初期時間
 	const int c_spinLockCriteria = 16;		//スピンロック時の基準となる時間
 
-	const CVector4 c_translucentValue_Half = { 1.0f,1.0f,1.0f,0.5f };			//透明率50%
+	const CVector4 c_translucentValue_Half = { 1.0f,1.0f,1.0f,0.5f };		//透明率50%
 	const CVector4 c_translucentValue_OneThird = { 1.0f,1.0f,1.0f,0.3f };	//透明率70%
-	const CVector4 c_translucentValue_Max = { 1.0f,1.0f,1.0f,1.0f };			//透明率0%
+	const CVector4 c_translucentValue_Max = { 1.0f,1.0f,1.0f,1.0f };		//透明率0%
 
-	const float c_textShadowThickness = 1.0f;					//テキストの影（枠線）の厚さ
+	const float c_textShadowThickness = 1.0f;								//テキストの影（枠線）の厚さ
 
-	const CVector3 c_scaleValue_Half = { 0.5f,0.5f,0.5f };		//拡大率50%
-	const CVector3 c_scaleValue_ATenth = { 0.1f,0.1f,0.1f };		//拡大率10%
-	const CVector3 c_scaleValue_AFifth = { 0.2f,0.2f,0.2f };		//拡大率20%
+	const CVector3 c_scaleValue_Half = { 0.5f,0.5f,0.5f };					//拡大率50%
+	const CVector3 c_scaleValue_ATenth = { 0.1f,0.1f,0.1f };				//拡大率10%
+	const CVector3 c_scaleValue_AFifth = { 0.2f,0.2f,0.2f };				//拡大率20%
 }
 
 /**
