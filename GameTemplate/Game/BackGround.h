@@ -2,6 +2,7 @@
 #include "Door.h"
 #include "enemy/firstWinEnemy/FirstWinEnemy.h"
 #include "enemy/goteWinEnemy/GoteWinEnemy.h"
+#include "item/Item.h"
 
 namespace nsMyGame {
 
@@ -50,6 +51,7 @@ namespace nsMyGame {
 		std::vector<nsEnemy::CFirstWinEnemy*> m_fWEnemy;	//先手必勝の敵のインスタンス
 		std::vector<nsEnemy::CGoteWinEnemy*> m_gWEnemy;		//後手必勝の敵のインスタンス
 		std::vector<nsLight::CPointLight*> m_pointLight;	//ポイントライトのインスタンス
+		std::vector<nsItem::CItem*> m_item;					//アイテムのインスタンス
 		std::vector<Effect*> m_fireEffect;					//炎エフェクトのインスタンス
 		static nsLight::CDirectionLight* m_dirLight[2];		//ディレクションライト
 		CVector3 m_pos = CVector3::Zero;					//座標

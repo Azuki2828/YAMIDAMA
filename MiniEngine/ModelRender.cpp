@@ -86,7 +86,7 @@ namespace nsMyGame {
 
 		//アニメーションを進める。
 		if (m_animFlg) {
-			m_animation.Progress(m_animationSpeed / 60.0f);
+			m_animation.Progress(m_animationSpeed / 30.0f);
 		}
 
 		//モデルの座標、回転率、拡大率を更新。

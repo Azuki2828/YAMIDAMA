@@ -72,6 +72,15 @@ namespace nsMyGame {
 
 			}
 
+			//通常攻撃中なら
+			if ((playerState == enState_Attack)) {
+			
+				float value = c_attackCoolTime - m_coolTime;
+				if (c_attackCoolTime - m_coolTime > 0.1f && c_attackCoolTime - m_coolTime < 0.4f) {
+					m_rollingSpeed = forward * 20.0f *(-4.0f * pow((value - 1.0f), 2.0f) + 8.0f);
+				}
+			}
+
 			//３連続攻撃中なら
 			if ((playerState == enState_ThreeCombo)) {
 
@@ -101,8 +110,11 @@ namespace nsMyGame {
 
 				//指数関数的に速度を求める。
 				//ラストの0.2秒間だけは着地のため、移動しない。
-				if (c_rollingCoolTime - value > 0.2f) {
-					m_rollingSpeed = forward * 150.0f * (-1.5f * pow((value - 1.0f), 2.0f) + 2.0f);
+				if (c_rollingCoolTime - value > 0.8f) {
+					m_rollingSpeed = forward * 400.0f;// *(-1.5f * pow((value - 1.0f), 2.0f) + 2.0f);
+				}
+				else if (c_rollingCoolTime - value > 0.2f) {
+					m_rollingSpeed = forward * 100.0f;
 				}
 
 				//ダッシュ中なら移動距離を増やす。
@@ -177,7 +189,7 @@ namespace nsMyGame {
 					playerState = enState_Attack;
 
 					//クールタイムを設定。
-					m_coolTime = 1.2f;
+					m_coolTime = c_attackCoolTime;
 				}
 
 				//L1ボタンが押されていたら

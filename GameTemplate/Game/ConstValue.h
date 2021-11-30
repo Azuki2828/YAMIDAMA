@@ -37,6 +37,7 @@ namespace nsMyGame {
 		constexpr const char* c_filePathTksPlayer = "Assets/modelData/player.tks";		//プレイヤーのtksファイルパス
 		constexpr const float c_animationInterpolateTime = 0.6f;						//アニメーションの補間時間
 		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
+		constexpr float c_attackCoolTime = 0.8f;										//通常攻撃中のクールタイム
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
 
 		const CVector3 c_attackTriggerBoxSize = { 150.0f,150.0f,100.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
@@ -69,6 +70,16 @@ namespace nsMyGame {
 		const CVector3 c_attackTriggerBoxSize = { 150.0f,150.0f,100.0f };				//敵攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//敵攻撃時のトリガーボックスの前方向への乗算値
 		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//敵攻撃時のトリガーボックスのY方向への加算値
+	}
+
+	namespace nsItem {
+
+		constexpr float c_needToDistanceForGetItem = 300.0f;							//アイテムを回収するのに必要な距離
+		constexpr const char16_t* c_itemEffectFilePath = u"Assets/effect/item.efk";		//アイテムエフェクトのファイルパス
+		const CVector3 c_itemEffectSize = { 10.0f,10.0f,10.0f };						//アイテムエフェクトの拡大率
+		constexpr float c_itemEffectReplayTime = 1.0f;									//エフェクトを再生成する間隔
+
+
 	}
 
 	namespace nsLight {

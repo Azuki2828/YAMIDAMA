@@ -189,7 +189,7 @@ namespace nsMyGame {
 		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 		
-		//レンダーターゲットとビューポートを設定。
+		//レンダーターゲットを設定。
 		rc.SetRenderTarget(
 			CRenderTarget::GetRenderTarget(enMainRT)->GetRTVCpuDescriptorHandle(),
 			CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetDSVCpuDescriptorHandle()

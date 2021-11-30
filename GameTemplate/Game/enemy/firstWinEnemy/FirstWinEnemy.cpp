@@ -8,9 +8,6 @@ namespace nsMyGame {
 		extern CEnemy* g_pCurrentEnemy;
 
 		bool CFirstWinEnemy::StartSub() {
-		
-			//初期座標を設定。
-			//m_position = { 1500.0f,500.0f,-1200.0f };
 
 			//IGameObjectに追加。
 			m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
@@ -93,9 +90,9 @@ namespace nsMyGame {
 		void CFirstWinEnemy::InitAnimationClip() {
 
 			//アニメーションクリップを設定。
-			m_animationClip[enAnim_Walk].Load("Assets/animData/walk.tka");
+			m_animationClip[enAnim_Walk].Load("Assets/animData/walk2.tka");
 			m_animationClip[enAnim_Walk].SetLoopFlag(true);
-			m_animationClip[enAnim_Idle].Load("Assets/animData/idle.tka");
+			m_animationClip[enAnim_Idle].Load("Assets/animData/idle2.tka");
 			m_animationClip[enAnim_Idle].SetLoopFlag(true);
 			m_animationClip[enAnim_ThreeCombo].Load("Assets/animData/threeCombo.tka");
 			m_animationClip[enAnim_ThreeCombo].SetLoopFlag(false);

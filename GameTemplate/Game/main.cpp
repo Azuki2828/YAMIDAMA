@@ -6,6 +6,7 @@
 #include "BackGround.h"
 #include "MainCamera.h"
 #include "Door.h"
+#include "item/Item.h"
 
 namespace nsMyGame {
 

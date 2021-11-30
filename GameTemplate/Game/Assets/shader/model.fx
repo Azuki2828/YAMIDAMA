@@ -131,19 +131,28 @@ SPSOut PSMain(SPSIn psIn)
 {
 	SPSOut psOut;
 
+	//rgbにテクスチャカラーを取得。
 	psOut.albedoAndShadowReceiver.xyz = g_albedo.Sample(g_sampler, psIn.uv).xyz;
+	//aにシャドウレシーバーフラグを取得。
 	psOut.albedoAndShadowReceiver.w = shadowReceiverFlg;
 
-	//-1.0f～1.0fの範囲。
+	//0.0f～1.0fの範囲で法線を取得。
 	psOut.normal.xyz = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
+	//-1.0f～1.0fの範囲に変換。
 	psOut.normal.xyz = (psOut.normal.xyz - 0.5f) * 2.0f;
 
+	//法線を計算。
 	psOut.normal.xyz = psIn.tangent * psOut.normal.x + psIn.biNormal * psOut.normal.y + psIn.normal * psOut.normal.z;
+
+	//ワールド座標を取得。
 	psOut.worldPos.xyz = psIn.worldPos;
 
+	//深度値を取得。
 	psOut.depth = psIn.pos.z;
 
+	//オクルージョン、滑らかさ、金属度を取得。（オクルージョンはまだ未入力）
 	psOut.occlusionAndSmoothAndMetaric.xyz = g_occlusionAndSmoothAndMetaricMap.Sample(g_sampler, psIn.uv).xyz;
 
+	//結果を出力。
 	return psOut;
 }

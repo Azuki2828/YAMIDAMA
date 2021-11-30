@@ -2,6 +2,7 @@
 #include <random>
 #include "BackGround.h"
 #include "player/Player.h"
+#include "item/Item.h"
 
 
 namespace nsMyGame {
@@ -15,6 +16,7 @@ namespace nsMyGame {
 		static int gEnemyNum = 0;
 		static int pointLightNum = 0;
 		static int fireEffectNum = 0;
+		static int itemNum = 0;
 
 		//ディレクションライトを作成。
 		CreateDirLight();
@@ -31,7 +33,7 @@ namespace nsMyGame {
 		pointLightNum++;
 
 		//ステージをロード。
-		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
+		m_level.Init("Assets/level/stage_2.tkl", [&](LevelObjectData& objData) {
 
 			if (objData.EqualObjectName("door")) {
 				
@@ -72,14 +74,12 @@ namespace nsMyGame {
 				return true;
 			}
 
-			if (objData.EqualObjectName("pointLight")) {
+			if (objData.EqualObjectName("key")) {
 
-				//m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-				//m_pointLight[pointLightNum]->SetPosition(objData.position);
-				//m_pointLight[pointLightNum]->SetColor({ 5.0f,0.0f,0.0f });
-				//m_pointLight[pointLightNum]->SetRange(300.0f);
-				//m_pointLight[pointLightNum]->SetAffectPowParam(2.0f);
-				//pointLightNum++;
+				m_item.push_back(NewGO<nsItem::CItem>(enPriority_Zeroth));
+				m_item[itemNum]->SetPosition(objData.position);
+				itemNum++;
+
 				return true;
 			}
 

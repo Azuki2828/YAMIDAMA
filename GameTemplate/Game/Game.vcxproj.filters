@@ -75,6 +75,9 @@
     <Filter Include="ExEngine\effect">
       <UniqueIdentifier>{66e8d4dc-3fd0-47e0-89ec-e79d1f11ee52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\item">
+      <UniqueIdentifier>{37c6e032-4a3c-4e25-a094-e7c5edd10955}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -370,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="..\..\MiniEngine\ShadowMap.cpp">
       <Filter>MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="item\Item.cpp">
+      <Filter>ソース ファイル\item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -702,6 +708,9 @@
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\ShadowMap.h">
       <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="item\Item.h">
+      <Filter>ソース ファイル\item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

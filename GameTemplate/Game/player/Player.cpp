@@ -49,7 +49,9 @@ namespace nsMyGame {
 			m_playerAction.Move(m_position, m_forward, m_playerState);
 
 			//回転処理。
-			m_playerAction.Rotate(m_rotation);
+			if (m_playerState != enState_Rolling) {
+				m_playerAction.Rotate(m_rotation);
+			}
 
 			//前方向を更新。
 			UpdateForward();
