@@ -377,6 +377,9 @@
     <ClCompile Include="item\Item.cpp">
       <Filter>ソース ファイル\item</Filter>
     </ClCompile>
+    <ClCompile Include="player\PlayerSelect.cpp">
+      <Filter>ソース ファイル\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -711,6 +714,9 @@
     </ClInclude>
     <ClInclude Include="item\Item.h">
       <Filter>ソース ファイル\item</Filter>
+    </ClInclude>
+    <ClInclude Include="player\PlayerSelect.h">
+      <Filter>ソース ファイル\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -53,11 +53,11 @@ namespace nsMyGame {
 		//エフェクトモデルを描画。
 		DrawEffect(renderContext);
 
-		//フォントを描画。
-		DrawFont(renderContext);
-
 		//スプライトを描画。
 		RenderSprite(renderContext);
+
+		//フォントを描画。
+		DrawFont(renderContext);
 
 		//ワイヤーフレームを描画。
 		DrawWireFrame(renderContext);

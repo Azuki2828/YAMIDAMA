@@ -39,31 +39,15 @@ namespace nsMyGame{
 		//静的物理オブジェクトを更新。
 		m_physicsStaticObject.GetRigidBody().SetPositionAndRotation(m_position, m_rotation);
 
-		//テキストのスプライトを初期化。
-		m_doorSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
-		m_doorSprite->Init("Assets/image/text.dds", c_textSpriteWH.x, c_textSpriteWH.y);
-		m_doorSprite->SetPosition(c_textSpritePosition);
-		m_doorSprite->SetScale(c_textSpriteSize);
-
-		//非表示に設定。
-		m_doorSprite->Deactivate();
-
-		m_text = NewGO<nsFont::CFontRender>(enPriority_Zeroth);
-		m_text->Init(L"A: Open");
-		m_text->SetPosition(c_textPosition);
-		m_text->SetScale(c_textSize);
-		m_text->SetColor(CVector4::White);
-
-		//非表示に設定。
-		m_text->Deactivate();
-
 		return true;
 	}
 
 	void CDoor::Update() {
 
 		//開かないドアなら更新しない。
-		if (m_isObj) { return; }
+		if (m_isObj) {
+			return;
+		}
 
 		//ドアを開ける判定をして開けられたら開ける。
 		JudgeAndExecuteOpenDoor(m_doorRotNum);
@@ -91,10 +75,20 @@ namespace nsMyGame{
 		CVector3 vecToPlayer = playerPos - m_position;
 
 		//プレイヤーとの距離が一定以下かつまだ開いてない
-		if (vecToPlayer.Length() <= c_distanceForOpenDoor && !IsOpened()) {
-			 
-			//スプライトとテキストを徐々に出現させる。
-			AppearSpriteAndText();
+		if (vecToPlayer.Length() <= c_distanceForOpenDoor
+			&& !IsOpened())
+		{
+			//選択状態にするかどうかを判定。
+			player->SetSelectObject(this);
+		}
+
+		//選択状態じゃないなら終了。
+		if (!IsSelected()) {
+
+			return;
+		}
+		//選択状態
+		else if(!IsOpened()){
 
 			//Aボタンが入力された
 			if (g_pad[0]->IsTrigger(enButtonA)) {
@@ -122,11 +116,6 @@ namespace nsMyGame{
 						/////////////////////////////////////////////
 						//鍵をもってないよ！のテキストを表示させる。
 						/////////////////////////////////////////////
-
-						m_doorSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
-						m_doorSprite->Init("Assets/image/text.dds", c_textSpriteWH.x, c_textSpriteWH.y);
-						m_doorSprite->SetPosition(c_textSpritePosition);
-						m_doorSprite->SetScale(c_textSpriteSize);
 					}
 				}
 				//鍵はかかっていない
@@ -139,11 +128,6 @@ namespace nsMyGame{
 					m_isOpened = true;
 				}
 			}
-		}
-		else {
-
-			//だんだんスプライトが消えるようにする。
-			DisappearSpriteAndText();
 		}
 	}
 
@@ -160,47 +144,6 @@ namespace nsMyGame{
 
 			//回数を減らす。
 			rotNum--;
-		}
-	}
-
-	void CDoor::AppearSpriteAndText() {
-
-		//開くスプライトを表示。
-		m_doorSprite->Activate();
-		//テキストを表示。
-		m_text->Activate();
-
-		//だんだんスプライトが現れるようにする。
-		if (m_doorSpriteTranslucent < 1.0f) {
-
-			//テキストカラーを設定。
-			float textColor = m_doorSpriteTranslucent;
-			m_text->SetColor({ textColor ,textColor ,textColor,m_doorSpriteTranslucent });
-
-			//スプライトの透明度を設定。
-			m_doorSpriteTranslucent += GameTime().GameTimeFunc().GetFrameDeltaTime() * 5.0f;
-			m_doorSprite->SetMulColor({ 1.0f,1.0f,1.0f, m_doorSpriteTranslucent });
-		}
-	}
-
-	void CDoor::DisappearSpriteAndText() {
-
-		if (m_doorSpriteTranslucent > 0.0f) {
-
-			//テキストカラーを設定。
-			float textColor = m_doorSpriteTranslucent;
-			m_text->SetColor({ textColor,textColor,textColor,m_doorSpriteTranslucent });
-
-			//スプライトの透明度を設定。
-			m_doorSpriteTranslucent -= GameTime().GameTimeFunc().GetFrameDeltaTime() * 5.0f;
-			m_doorSprite->SetMulColor({ 1.0f,1.0f,1.0f, m_doorSpriteTranslucent });
-		}
-		//開くスプライトを非表示。
-		//テキストを非表示。
-		else {
-			m_doorSpriteTranslucent = 0.0f;
-			m_doorSprite->Deactivate();
-			m_text->Deactivate();
 		}
 	}
 }

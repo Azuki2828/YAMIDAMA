@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerAction.h"
 #include "PlayerAnimation.h"
+#include "PlayerSelect.h"
 
 namespace nsMyGame {
 
@@ -127,6 +128,14 @@ namespace nsMyGame {
 			}
 
 			/**
+			 * @brief 鍵を取得する関数。
+			*/
+			void GetKey() {
+
+				m_hasKeyNum++;
+			}
+
+			/**
 			 * @brief 鍵を消費する関数。
 			*/
 			void ConsumeKey() {
@@ -151,6 +160,15 @@ namespace nsMyGame {
 
 				return m_isSelect;
 			}
+
+			/**
+			 * @brief オブジェクトを選択状態にする関数。
+			 * @param selectObj オブジェクト
+			*/
+			void SetSelectObject(CIGameObject* selectObj) {
+
+				m_playerSelect.SetSelectObject(selectObj, m_position);
+			}
 		private:
 			bool m_receiveDamage = false;				//ダメージを受けたか？
 			bool m_isSelect = false;					//何かを選んでいる状態？（近くの何かに反応している？）
@@ -159,6 +177,7 @@ namespace nsMyGame {
 			CModelRender* m_modelRender = nullptr;		//モデル
 			CPlayerAction m_playerAction;				//プレイヤーアクションクラス
 			CPlayerAnimation m_playerAnimation;			//プレイヤーアニメーションクラス
+			CPlayerSelect m_playerSelect;				//プレイヤーの選択状態クラス
 			CVector3 m_position = CVector3::Zero;		//座標
 			CQuaternion m_rotation;						//回転
 			CVector3 m_forward = CVector3::Zero;		//前方向

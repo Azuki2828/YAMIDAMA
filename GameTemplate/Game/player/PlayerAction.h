@@ -6,7 +6,6 @@ namespace nsMyGame {
 	namespace nsPlayer {
 
 		//プレイヤーアクションクラス
-
 		class CPlayerAction
 		{
 		public:

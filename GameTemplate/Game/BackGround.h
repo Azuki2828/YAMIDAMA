@@ -40,6 +40,10 @@ namespace nsMyGame {
 			m_dirLight[1]->SetLigColor({ 0.0f,0.0f,0.0f });
 		}
 
+		/**
+		 * @brief ‘¾—zŒõ‚Ì•ûŒü‚ğæ“¾‚·‚éŠÖ”B
+		 * @return ‘¾—zŒõ‚Ì•ûŒü
+		*/
 		static nsLight::CDirectionLight* GetSunDirectionLight() {
 
 			return m_dirLight[0];

@@ -87,8 +87,7 @@ namespace nsMyGame {
 
 				//燃えるエフェクトの座標と回転を調整。
 				CVector3 effectPos = objData.position;
-				effectPos.z += 35.0f;
-				effectPos.y += 5.0f;
+				effectPos += c_addFireEffectPosition;
 				CQuaternion effectRot = objData.rotation;
 				effectRot.AddRotationY(CMath::DegToRad(90.0f));
 				effectPos = effectPos - objData.position;
@@ -97,17 +96,17 @@ namespace nsMyGame {
 
 				//エフェクトを初期化。
 				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
-				m_fireEffect[fireEffectNum]->Init(u"Assets/effect/fire.efk");
-				m_fireEffect[fireEffectNum]->SetScale({ 10.0f,10.0f,10.0f });
+				m_fireEffect[fireEffectNum]->Init(c_filePathFireEffect);
+				m_fireEffect[fireEffectNum]->SetScale(c_fireEffectScale);
 				m_fireEffect[fireEffectNum]->SetPosition(effectPos);
 				m_fireEffect[fireEffectNum]->SetRotation(effectRot);
 
 				//炎エフェクトに対応するポイントライトを作成。
 				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
 				m_pointLight[pointLightNum]->SetPosition(effectPos);
-				m_pointLight[pointLightNum]->SetColor({ 10.0f,5.0f,5.0f });
-				m_pointLight[pointLightNum]->SetRange(600.0f);
-				m_pointLight[pointLightNum]->SetAffectPowParam(5.5f);
+				m_pointLight[pointLightNum]->SetColor(c_firePointLightColor);
+				m_pointLight[pointLightNum]->SetRange(c_firePointLightRange);
+				m_pointLight[pointLightNum]->SetAffectPowParam(c_firePointLightAffectParam);
 				pointLightNum++;
 
 				//再生。
@@ -145,40 +144,50 @@ namespace nsMyGame {
 
 	void CBackGround::Update() {
 
-		/*----------プレイヤーの選択状態を更新するための処理----------*/
-
 		//プレイヤーを検索。
 		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
-		//プレイヤーの座標を取得。
+		//	//プレイヤーの座標を取得。
 		CVector3 playerPos = player->GetPosition();
-		
+
 		//規定値より100.0f大きい数を初期値とする。
 		float vecToPlayerLength = c_distanceForOpenDoor + 100.0f;
 
-		//ステージ上のドアを参照。
-		for (const auto& door : m_door) {
+		/*----------プレイヤーの選択状態を更新するための処理----------*/
 
-			//プレイヤーに伸びるベクトルを計算。
-			CVector3 vecToPlayer = playerPos - door->GetPosition();
+		//リストに含まれるオブジェクトを参照。
+		for (const auto& obj : m_door) {
 
-			//プレイヤーとの最短距離を更新。
-			if (vecToPlayer.Length() < vecToPlayerLength) {
+			//クラスの名前を調べる。
+			const std::type_info& typeInfo = typeid(*obj);
 
-				vecToPlayerLength = vecToPlayer.Length();
+			//ドアだったら
+			if (typeInfo == typeid(CDoor)) {
 
-				//最短距離を更新したドアとプレイヤーの距離が一定以下かつ、そのドアが開いていないなら
-				if (vecToPlayerLength <= c_distanceForOpenDoor && !door->IsOpened()) {
+				//ドアクラスにキャスト。
+				auto doorObj = dynamic_cast<CDoor*>(obj);
 
-					//プレイヤーを選択状態にする。
-					player->SetSelectFlag(true);
-					break;
+				//プレイヤーに伸びるベクトルを計算。
+				CVector3 vecToPlayer = playerPos - doorObj->GetPosition();
+
+				//プレイヤーとの最短距離を更新。
+				if (vecToPlayer.Length() < vecToPlayerLength) {
+
+					vecToPlayerLength = vecToPlayer.Length();
+
+					//最短距離を更新したドアとプレイヤーの距離が一定以下かつ、そのドアが開いていないなら
+					if (vecToPlayerLength <= c_distanceForOpenDoor && !doorObj->IsOpened()) {
+
+						//プレイヤーを選択状態にする。
+						player->SetSelectFlag(true);
+						break;
+					}
 				}
-			}
-			//それ以外は、プレイヤーは何も選択していない状態。
-			else {
+				//それ以外は、プレイヤーは何も選択していない状態。
+				else {
 
-				player->SetSelectFlag(false);
+					player->SetSelectFlag(false);
+				}
 			}
 		}
 

@@ -14,22 +14,38 @@ namespace nsMyGame {
 		enPriority_Fifth
 	};
 
-	constexpr const char* c_entryPointVSMain = "VSMain";
-	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";
-	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";
+	constexpr const char* c_entryPointVSMain = "VSMain";						//頂点シェーダーのエントリーポイント
+	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";				//スキンありの頂点シェーダーのエントリーポイント
+	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";		//G-Buffer作成に使うシェーダーのファイルパス
 
-	constexpr const char* c_classNamePlayer = "player";
-	constexpr const char* c_classNameEnemy = "enemy";
+	constexpr const char* c_classNamePlayer = "player";				//プレイヤークラスの名前
+	constexpr const char* c_classNameEnemy = "enemy";				//敵クラスの名前
 
 	constexpr const char* c_filePathTkmDoor = "Assets/modelData/backGround/door.tkm";	//ドアのtkmファイルパス
-	constexpr float c_distanceForOpenDoor = 300.0f;										//ドアを開けるのに必要な距離
+	constexpr float c_distanceForOpenDoor = 200.0f;										//ドアを開けるのに必要な距離
 	constexpr int c_openDoorRotValue = 90;												//ドアを開けたときの回転角度
 	constexpr int c_openDoorRotNum = 1;													//ドアを開けたときに何度ずつ回転させるか
+	const CVector3 c_textSpritePosition = { 0.0f,-250.0f, 0.0f };						//テキストのスプライトの座標
+	const CVector3 c_textSpriteSize = { 0.45f, 0.1f, 0.2f };							//テキストのスプライトの拡大率
+	const CVector2 c_textSpriteWH = { 1280.0f,720.0f };									//テキストのスプライトの幅と高さ
 
-	constexpr UINT c_frameBufferWidth = 1280;
-	constexpr UINT c_frameBufferHeight = 720;
-	constexpr int c_tileWidth = 16;
-	constexpr int c_tileHeight = 16;
+	const CVector2 c_textPosition = { -50.0f,-240.0f };								//テキストの座標
+	constexpr float c_textSize = 0.5f;												//テキストの拡大率
+
+
+	constexpr const char16_t* c_filePathFireEffect = u"Assets/effect/fire.efk";			//炎エフェクトのファイルパス
+	const CVector3 c_fireEffectScale = { 10.0f,10.0f,10.0f };							//炎エフェクトの拡大率
+
+	constexpr UINT c_frameBufferWidth = 1280;		//フレームバッファの幅
+	constexpr UINT c_frameBufferHeight = 720;		//フレームバッファの高さ
+	constexpr int c_tileWidth = 16;					//TBRで分割するタイルの横の数
+	constexpr int c_tileHeight = 16;				//TBRで分割するタイルの縦の数
+
+	const CVector3 c_firePointLightColor = { 10.0f,5.0f,5.0f };		//炎用のポイントライトのカラー
+	constexpr float c_firePointLightRange = 600.0f;					//炎用のポイントライトの影響範囲
+	constexpr float c_firePointLightAffectParam = 5.5f;				//炎用のポイントライトの減衰率
+
+	const CVector3 c_addFireEffectPosition = { 0.0f,5.0f,35.0f };	//炎エフェクトの座標調整のために加算するもの
 
 	namespace nsPlayer {
 

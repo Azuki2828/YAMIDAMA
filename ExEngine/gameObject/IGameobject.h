@@ -38,6 +38,26 @@ public:
 		*@brief	更新
 		*/
 	virtual void Update() {}
+
+
+	/*-------------------------------------非常時だけ使う関数-------------------------------------------*/
+
+	/**
+	 * @brief 座標を取得する関数。
+	 * @return 
+	*/
+	virtual const CVector3& GetPosition() { return CVector3::Zero; }
+
+	/**
+	 * @brief 選択状態を更新する関数。
+	 * @param selectFlag 選択状態かどうかのフラグ
+	*/
+	virtual void SetSelectFlag(const bool selectFlag) {}
+
+
+	/*-------------------------------------------------------------------------------------------------*/
+
+
 	/*!
 	 *@brief	描画
 	*/

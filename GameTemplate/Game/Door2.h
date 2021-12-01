@@ -70,6 +70,15 @@ namespace nsMyGame {
 
 			return m_isOpened;
 		}
+
+		/**
+		 * @brief 選択状態を変更する関数。
+		 * @param SelectFlg 選択状態かどうかのフラグ
+		*/
+		void SetSelectFlag(bool SelectFlg)override  {
+
+			m_isSelected = SelectFlg;
+		}
 	private:
 		/**
 		 * @brief 鍵がかかっている？
@@ -94,18 +103,18 @@ namespace nsMyGame {
 		void UpdateRotation(unsigned int& rotNum);
 
 		/**
-		 * @brief スプライトとテキストを表示する関数。
+		 * @brief 選択状態？
+		 * @return 選択状態かどうかのフラグ
 		*/
-		void AppearSpriteAndText();
+		const bool IsSelected() {
 
-		/**
-		 * @brief スプライトとテキストを非表示にする関数。
-		*/
-		void DisappearSpriteAndText();
+			return m_isSelected;
+		}
 	private:
 		bool m_isLocked = false;							//鍵がかかっている？
 		bool m_isOpened = false;							//開いている？
 		bool m_isObj = false;								//ただのオブジェクト？
+		bool m_isSelected = false;							//選択状態？
 
 		unsigned int m_doorRotNum = 0;						//ドアを回転させるための回数
 		float m_doorRotValue = 0.0f;						//ドアの回転の値
@@ -115,11 +124,6 @@ namespace nsMyGame {
 		CVector3 m_position = CVector3::Zero;				//座標
 		CQuaternion m_rotation = CQuaternion::Identity;		//回転
 		CVector3 m_scale = CVector3::One;					//拡大
-
-		CSpriteRender* m_doorSprite = nullptr;				//テキストのスプライト
-		float m_doorSpriteTranslucent = 0.0f;						//スプライトの透明度
-
-		nsFont::CFontRender* m_text = nullptr;					//テキスト
 	};
 }
 
