@@ -73,6 +73,8 @@ namespace nsMyGame {
 
 			//ライトカメラを更新。
 			LightCameraUpdate();
+
+			m_isSelect = false;
 		}
 
 		void CPlayer::UpdateForward() {

@@ -8,7 +8,7 @@ namespace nsMyGame {
 		{
 		private:
 			//アイテムリスト
-			enum ItemList {
+			enum EnItemList {
 
 				enItem_Key,		//鍵
 			};
@@ -34,6 +34,25 @@ namespace nsMyGame {
 			 * @param pos 
 			*/
 			const float CheckLengthToPlayer()const;
+
+			/**
+			 * @brief このアイテムが選択されている？
+			 * @return アイテムが選択されているかどうかのフラグ
+			*/
+			const bool IsSelected()const {
+
+				return m_isSelected;
+			}
+
+			/**
+			 * @brief スプライトとテキストを表示する関数。
+			*/
+			void AppearSpriteAndText();
+
+			/**
+			 * @brief スプライトとテキストを非表示にする関数。
+			*/
+			void DisappearSpriteAndText();
 		public:
 
 			/**
@@ -67,6 +86,11 @@ namespace nsMyGame {
 			float m_itemEffectReplayTime = 0.0f;	//アイテムエフェクトを再生成するための時間
 			CVector3 m_position = CVector3::Zero;	//座標
 			Effect* m_itemEffect = nullptr;			//アイテムの印
+			EnItemList m_item = enItem_Key;
+
+			CSpriteRender* m_textSprite = nullptr;				//テキストのスプライト
+			float m_textSpriteTranslucent = 0.0f;				//スプライトの透明度
+			nsFont::CFontRender* m_text = nullptr;				//テキスト
 		};
 	}
 }

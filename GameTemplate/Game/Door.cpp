@@ -41,13 +41,14 @@ namespace nsMyGame{
 
 		//テキストのスプライトを初期化。
 		m_doorSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
-		m_doorSprite->Init("Assets/image/text.dds", c_textSpriteWH.x, c_textSpriteWH.y);
+		m_doorSprite->Init(c_filePathTextSprite, c_textSpriteWH.x, c_textSpriteWH.y);
 		m_doorSprite->SetPosition(c_textSpritePosition);
 		m_doorSprite->SetScale(c_textSpriteSize);
 
 		//非表示に設定。
 		m_doorSprite->Deactivate();
 
+		//テキストを設定。
 		m_text = NewGO<nsFont::CFontRender>(enPriority_Zeroth);
 		m_text->Init(L"A: Open");
 		m_text->SetPosition(c_textPosition);

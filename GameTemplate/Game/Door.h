@@ -117,9 +117,9 @@ namespace nsMyGame {
 		CVector3 m_scale = CVector3::One;					//拡大
 
 		CSpriteRender* m_doorSprite = nullptr;				//テキストのスプライト
-		float m_doorSpriteTranslucent = 0.0f;						//スプライトの透明度
+		float m_doorSpriteTranslucent = 0.0f;				//スプライトの透明度
 
-		nsFont::CFontRender* m_text = nullptr;					//テキスト
+		nsFont::CFontRender* m_text = nullptr;				//テキスト
 	};
 }
 

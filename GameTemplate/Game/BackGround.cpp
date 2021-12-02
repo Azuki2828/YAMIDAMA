@@ -186,7 +186,7 @@ namespace nsMyGame {
 				//それ以外は、プレイヤーは何も選択していない状態。
 				else {
 
-					player->SetSelectFlag(false);
+					//player->SetSelectFlag(false);
 				}
 			}
 		}

@@ -25,11 +25,13 @@ namespace nsMyGame {
 	constexpr float c_distanceForOpenDoor = 200.0f;										//ドアを開けるのに必要な距離
 	constexpr int c_openDoorRotValue = 90;												//ドアを開けたときの回転角度
 	constexpr int c_openDoorRotNum = 1;													//ドアを開けたときに何度ずつ回転させるか
+	constexpr const char* c_filePathTextSprite = "Assets/image/text.dds";				//テキストスプライトのファイルパス
 	const CVector3 c_textSpritePosition = { 0.0f,-250.0f, 0.0f };						//テキストのスプライトの座標
 	const CVector3 c_textSpriteSize = { 0.45f, 0.1f, 0.2f };							//テキストのスプライトの拡大率
 	const CVector2 c_textSpriteWH = { 1280.0f,720.0f };									//テキストのスプライトの幅と高さ
 
 	const CVector2 c_textPosition = { -50.0f,-240.0f };								//テキストの座標
+	const CVector2 c_textPosition_getKey = { -80.0f,-240.0f };						//[Key get.]テキストの座標
 	constexpr float c_textSize = 0.5f;												//テキストの拡大率
 
 
@@ -90,7 +92,7 @@ namespace nsMyGame {
 
 	namespace nsItem {
 
-		constexpr float c_needToDistanceForGetItem = 300.0f;							//アイテムを回収するのに必要な距離
+		constexpr float c_needToDistanceForGetItem = 100.0f;							//アイテムを回収するのに必要な距離
 		constexpr const char16_t* c_itemEffectFilePath = u"Assets/effect/item.efk";		//アイテムエフェクトのファイルパス
 		const CVector3 c_itemEffectSize = { 10.0f,10.0f,10.0f };						//アイテムエフェクトの拡大率
 		constexpr float c_itemEffectReplayTime = 1.0f;									//エフェクトを再生成する間隔
