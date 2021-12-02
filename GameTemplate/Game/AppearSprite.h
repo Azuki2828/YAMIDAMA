@@ -35,6 +35,15 @@ namespace nsMyGame {
 
 			m_textPosition = textPos;
 		}
+
+		/**
+		 * @brief 確認ボタンが入力された？
+		 * @return 入力されたかどうかのフラグ
+		*/
+		const bool IsPressButton()const {
+
+			return m_isPressButton;
+		}
 	private:
 		/**
 		 * @brief スプライトとテキストを表示する関数。
@@ -45,15 +54,6 @@ namespace nsMyGame {
 		 * @brief スプライトとテキストを非表示にする関数。
 		*/
 		void DisappearSpriteAndText();
-
-		/**
-		 * @brief 確認ボタンが入力された？
-		 * @return 入力されたかどうかのフラグ
-		*/
-		const bool IsPressButton()const {
-
-			return m_isPressButton;
-		}
 	private:
 		const wchar_t* m_text = nullptr;			//テキスト
 		CVector2 m_textPosition = CVector2::Zero;	//テキストの座標

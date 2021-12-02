@@ -1,62 +1,17 @@
 #include "stdafx.h"
 #include "Door.h"
 #include "player/Player.h"
+#include "AppearSprite.h"
 
 namespace nsMyGame{
 
 	bool CDoor::Start() {
 
-		//モデルを生成。
-		m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
-
-		//tkmのファイルパスを設定。
-		m_modelRender->SetFilePathTkm(c_filePathTkmDoor);
-
-		//シャドウキャスターフラグを設定。
-		m_modelRender->SetShadowCasterFlag(true);
-
-		//シャドウキャスターフラグを設定。
-		m_modelRender->SetShadowReceiverFlag(true);
-
-		//座標を設定。
-		m_modelRender->SetPosition(m_position);
-
-		//回転を設定。
-		m_modelRender->SetRotation(m_rotation);
-
-		//拡大を設定。
-		m_modelRender->SetScale(m_scale);
-
 		//モデルを初期化。
-		m_modelRender->Init();
+		InitModel();
 
-		//静的物理オブジェクトを初期化。
-		m_physicsStaticObject.CreateFromModel(
-			*m_modelRender->GetModel(),
-			m_modelRender->GetModel()->GetWorldMatrix()
-		);
-
-		//静的物理オブジェクトを更新。
-		m_physicsStaticObject.GetRigidBody().SetPositionAndRotation(m_position, m_rotation);
-
-		//テキストのスプライトを初期化。
-		m_doorSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
-		m_doorSprite->Init(c_filePathTextSprite, c_textSpriteWH.x, c_textSpriteWH.y);
-		m_doorSprite->SetPosition(c_textSpritePosition);
-		m_doorSprite->SetScale(c_textSpriteSize);
-
-		//非表示に設定。
-		m_doorSprite->Deactivate();
-
-		//テキストを設定。
-		m_text = NewGO<nsFont::CFontRender>(enPriority_Zeroth);
-		m_text->Init(L"A: Open");
-		m_text->SetPosition(c_textPosition);
-		m_text->SetScale(c_textSize);
-		m_text->SetColor(CVector4::White);
-
-		//非表示に設定。
-		m_text->Deactivate();
+		//メッセージウィンドウを初期化。
+		InitSpriteAndText();
 
 		return true;
 	}
@@ -91,6 +46,23 @@ namespace nsMyGame{
 		//プレイヤーに伸びるベクトルを計算。
 		CVector3 vecToPlayer = playerPos - m_position;
 
+		//メッセージウィンドウを検索。
+		auto lockSprite = FindGO<CAppearSprite>(c_classNameAppearSprite);
+
+		//メッセージウィンドウが表示されているなら
+		if (lockSprite != nullptr) {
+
+			//選択スプライトを非表示にする。
+			m_doorSprite->Deactivate();
+			m_text->Deactivate();
+
+			//透明度を初期化。
+			m_doorSpriteTranslucent = c_translucentValue_Zero.w;
+
+			//処理はここで終了。
+			return;
+		}
+
 		//プレイヤーとの距離が一定以下かつまだ開いてない
 		if (vecToPlayer.Length() <= c_distanceForOpenDoor && !IsOpened()) {
 			 
@@ -117,17 +89,19 @@ namespace nsMyGame{
 
 						//開いた状態に設定。
 						m_isOpened = true;
+
+						//確認ウィンドウを生成。
+						auto getSprite = NewGO<CAppearSprite>(enPriority_Zeroth);
+						getSprite->SetText(L"Key used.  A:OK");
+						getSprite->SetTextPosition(c_textPosition_getKey);
 					}
 					//鍵をもっていない
 					else {
-						/////////////////////////////////////////////
-						//鍵をもってないよ！のテキストを表示させる。
-						/////////////////////////////////////////////
 
-						m_doorSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
-						m_doorSprite->Init("Assets/image/text.dds", c_textSpriteWH.x, c_textSpriteWH.y);
-						m_doorSprite->SetPosition(c_textSpritePosition);
-						m_doorSprite->SetScale(c_textSpriteSize);
+						//鍵を所持していない確認のウィンドウを生成。
+						auto getSprite = NewGO<CAppearSprite>(enPriority_Zeroth, c_classNameAppearSprite);
+						getSprite->SetText(L"It's locked.  A:OK");
+						getSprite->SetTextPosition(c_textPosition_getKey);
 					}
 				}
 				//鍵はかかっていない
@@ -172,7 +146,7 @@ namespace nsMyGame{
 		m_text->Activate();
 
 		//だんだんスプライトが現れるようにする。
-		if (m_doorSpriteTranslucent < 1.0f) {
+		if (m_doorSpriteTranslucent < c_translucentValue_Max.w) {
 
 			//テキストカラーを設定。
 			float textColor = m_doorSpriteTranslucent;
@@ -186,7 +160,7 @@ namespace nsMyGame{
 
 	void CDoor::DisappearSpriteAndText() {
 
-		if (m_doorSpriteTranslucent > 0.0f) {
+		if (m_doorSpriteTranslucent > c_translucentValue_Zero.w) {
 
 			//テキストカラーを設定。
 			float textColor = m_doorSpriteTranslucent;
@@ -199,9 +173,67 @@ namespace nsMyGame{
 		//開くスプライトを非表示。
 		//テキストを非表示。
 		else {
-			m_doorSpriteTranslucent = 0.0f;
+			m_doorSpriteTranslucent = c_translucentValue_Zero.w;
 			m_doorSprite->Deactivate();
 			m_text->Deactivate();
 		}
+	}
+
+	void CDoor::InitModel() {
+
+		//モデルを生成。
+		m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
+
+		//tkmのファイルパスを設定。
+		m_modelRender->SetFilePathTkm(c_filePathTkmDoor);
+
+		//シャドウキャスターフラグを設定。
+		m_modelRender->SetShadowCasterFlag(true);
+
+		//シャドウキャスターフラグを設定。
+		m_modelRender->SetShadowReceiverFlag(true);
+
+		//座標を設定。
+		m_modelRender->SetPosition(m_position);
+
+		//回転を設定。
+		m_modelRender->SetRotation(m_rotation);
+
+		//拡大を設定。
+		m_modelRender->SetScale(m_scale);
+
+		//モデルを初期化。
+		m_modelRender->Init();
+
+		//静的物理オブジェクトを初期化。
+		m_physicsStaticObject.CreateFromModel(
+			*m_modelRender->GetModel(),
+			m_modelRender->GetModel()->GetWorldMatrix()
+		);
+
+		//静的物理オブジェクトを更新。
+		m_physicsStaticObject.GetRigidBody().SetPositionAndRotation(m_position, m_rotation);
+	}
+
+	void CDoor::InitSpriteAndText() {
+
+		//テキストのスプライトを初期化。
+		m_doorSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
+		m_doorSprite->Init(c_filePathTextSprite, c_textSpriteWH.x, c_textSpriteWH.y);
+		m_doorSprite->SetPosition(c_textSpritePosition);
+		m_doorSprite->SetScale(c_textSpriteSize);
+
+		//非表示に設定。
+		m_doorSprite->Deactivate();
+
+		//テキストを設定。
+		m_text = NewGO<nsFont::CFontRender>(enPriority_Zeroth);
+		m_text->Init(L"A: Open");
+		m_text->SetPosition(c_textPosition);
+		m_text->SetScale(c_textSize);
+		m_text->SetColor(CVector4::White);
+
+		//非表示に設定。
+		m_text->Deactivate();
 	}
 }

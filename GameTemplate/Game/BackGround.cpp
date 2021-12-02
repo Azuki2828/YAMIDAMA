@@ -33,7 +33,7 @@ namespace nsMyGame {
 		pointLightNum++;
 
 		//ステージをロード。
-		m_level.Init("Assets/level/stage_2.tkl", [&](LevelObjectData& objData) {
+		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
 
 			if (objData.EqualObjectName("door")) {
 				
@@ -41,6 +41,19 @@ namespace nsMyGame {
 				m_door[doorNum]->SetPosition(objData.position);
 				m_door[doorNum]->SetRotation(objData.rotation);
 				m_door[doorNum]->SetScale(objData.scale);
+				doorNum++;
+				return true;
+			}
+
+			if (objData.EqualObjectName("door_Lock")) {
+
+				m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
+				m_door[doorNum]->SetPosition(objData.position);
+				m_door[doorNum]->SetRotation(objData.rotation);
+				m_door[doorNum]->SetScale(objData.scale);
+
+				//鍵をかける。
+				m_door[doorNum]->Lock();
 				doorNum++;
 				return true;
 			}

@@ -20,6 +20,7 @@ namespace nsMyGame {
 
 	constexpr const char* c_classNamePlayer = "player";				//プレイヤークラスの名前
 	constexpr const char* c_classNameEnemy = "enemy";				//敵クラスの名前
+	constexpr const char* c_classNameAppearSprite = "appearSprite";	//ウィンドウクラスの名前
 
 	constexpr const char* c_filePathTkmDoor = "Assets/modelData/backGround/door.tkm";	//ドアのtkmファイルパス
 	constexpr float c_distanceForOpenDoor = 200.0f;										//ドアを開けるのに必要な距離
@@ -194,6 +195,7 @@ namespace {
 
 	const CVector4 c_translucentValue_Half = { 1.0f,1.0f,1.0f,0.5f };		//透明率50%
 	const CVector4 c_translucentValue_OneThird = { 1.0f,1.0f,1.0f,0.3f };	//透明率70%
+	const CVector4 c_translucentValue_Zero = { 1.0f,1.0f,1.0f,0.0f };		//透明率100%
 	const CVector4 c_translucentValue_Max = { 1.0f,1.0f,1.0f,1.0f };		//透明率0%
 
 	const float c_textShadowThickness = 1.0f;								//テキストの影（枠線）の厚さ

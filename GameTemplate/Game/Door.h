@@ -1,11 +1,12 @@
 #pragma once
+#include "AppearSprite.h"
 
 namespace nsMyGame {
 
 	//ドアクラス
 	class CDoor : public CIGameObject
 	{
-	public:
+	private:
 		/**
 		 * @brief Update()関数の前に一度だけ呼ばれる関数。
 		 * @return 成功した？
@@ -17,6 +18,16 @@ namespace nsMyGame {
 		*/
 		void Update()override final;
 
+		/**
+		 * @brief モデル初期化関数。
+		*/
+		void InitModel();
+
+		/**
+		 * @brief メッセージウィンドウ初期化関数。
+		*/
+		void InitSpriteAndText();
+	public:
 		/**
 		 * @brief 座標を設定する関数。
 		 * @param pos 座標
@@ -70,6 +81,14 @@ namespace nsMyGame {
 
 			return m_isOpened;
 		}
+
+		/**
+		 * @brief 鍵をかける関数。
+		*/
+		void Lock() {
+
+			m_isLocked = true;
+		}
 	private:
 		/**
 		 * @brief 鍵がかかっている？
@@ -118,7 +137,6 @@ namespace nsMyGame {
 
 		CSpriteRender* m_doorSprite = nullptr;				//テキストのスプライト
 		float m_doorSpriteTranslucent = 0.0f;				//スプライトの透明度
-
 		nsFont::CFontRender* m_text = nullptr;				//テキスト
 	};
 }

@@ -55,7 +55,7 @@ namespace nsMyGame {
 			DisappearSpriteAndText();
 
 			//完全に消えたら自身を削除。
-			if (m_textSpriteTranslucent == 0.0f) {
+			if (m_textSpriteTranslucent == c_translucentValue_Zero.w) {
 				DeleteGO(this);
 				DeleteGO(m_textSprite);
 				DeleteGO(m_font);
@@ -70,7 +70,7 @@ namespace nsMyGame {
 		m_font->Activate();
 
 		//だんだんスプライトが現れるようにする。
-		if (m_textSpriteTranslucent < 1.0f) {
+		if (m_textSpriteTranslucent < c_translucentValue_Max.w) {
 
 			//テキストカラーを設定。
 			float textColor = m_textSpriteTranslucent;
@@ -84,7 +84,7 @@ namespace nsMyGame {
 
 	void CAppearSprite::DisappearSpriteAndText() {
 
-		if (m_textSpriteTranslucent > 0.0f) {
+		if (m_textSpriteTranslucent > c_translucentValue_Zero.w) {
 
 			//テキストカラーを設定。
 			float textColor = m_textSpriteTranslucent;
@@ -97,7 +97,7 @@ namespace nsMyGame {
 		//開くスプライトを非表示。
 		//テキストを非表示。
 		else {
-			m_textSpriteTranslucent = 0.0f;
+			m_textSpriteTranslucent = c_translucentValue_Zero.w;
 			m_textSprite->Deactivate();
 			m_font->Deactivate();
 		}

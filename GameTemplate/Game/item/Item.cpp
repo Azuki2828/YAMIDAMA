@@ -68,7 +68,7 @@ namespace nsMyGame {
 
 					//アイテムの種類
 					switch (m_item) {
-					case enItem_Key:		//鍵
+					case enItem_Key:	//鍵
 
 						//プレイヤーの鍵の所持数を+1する。
 						player->GetKey();
@@ -136,7 +136,7 @@ namespace nsMyGame {
 			m_text->Activate();
 
 			//だんだんスプライトが現れるようにする。
-			if (m_textSpriteTranslucent < 1.0f) {
+			if (m_textSpriteTranslucent < c_translucentValue_Max.w) {
 
 				//テキストカラーを設定。
 				float textColor = m_textSpriteTranslucent;
@@ -150,7 +150,7 @@ namespace nsMyGame {
 
 		void CItem::DisappearSpriteAndText() {
 
-			if (m_textSpriteTranslucent > 0.0f) {
+			if (m_textSpriteTranslucent > c_translucentValue_Zero.w) {
 
 				//テキストカラーを設定。
 				float textColor = m_textSpriteTranslucent;
@@ -163,7 +163,7 @@ namespace nsMyGame {
 			//開くスプライトを非表示。
 			//テキストを非表示。
 			else {
-				m_textSpriteTranslucent = 0.0f;
+				m_textSpriteTranslucent = c_translucentValue_Zero.w;
 				m_textSprite->Deactivate();
 				m_text->Deactivate();
 			}
