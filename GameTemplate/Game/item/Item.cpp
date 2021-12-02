@@ -10,32 +10,10 @@ namespace nsMyGame {
 		bool CItem::Start() {
 
 			//エフェクトを初期化。
-			m_itemEffect = NewGO<Effect>(enPriority_Zeroth);
-			m_itemEffect->Init(c_itemEffectFilePath);
-			m_itemEffect->SetPosition(m_position);
-			m_itemEffect->SetScale(c_itemEffectSize);
+			InitEffect();
 
-			//再生。
-			m_itemEffect->Play();
-
-			//テキストのスプライトを初期化。
-			m_textSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
-			m_textSprite->Init(c_filePathTextSprite, c_textSpriteWH.x, c_textSpriteWH.y);
-			m_textSprite->SetPosition(c_textSpritePosition);
-			m_textSprite->SetScale(c_textSpriteSize);
-
-			//非表示に設定。
-			m_textSprite->Deactivate();
-
-			//テキストを設定。
-			m_text = NewGO<nsFont::CFontRender>(enPriority_Zeroth);
-			m_text->Init(L"A: Pick up");
-			m_text->SetPosition(c_textPosition);
-			m_text->SetScale(c_textSize);
-			m_text->SetColor(CVector4::White);
-
-			//非表示に設定。
-			m_text->Deactivate();
+			//メッセージウィンドウを初期化。
+			InitSpriteAndText();
 
 			return true;
 		}
@@ -73,6 +51,7 @@ namespace nsMyGame {
 						//プレイヤーの鍵の所持数を+1する。
 						player->GetKey();
 
+						//鍵取得ウィンドウを生成。
 						auto getSprite = NewGO<CAppearSprite>(enPriority_Zeroth, c_classNameAppearSprite);
 						getSprite->SetText(L"[Key] get. A: OK");
 						getSprite->SetTextPosition(c_textPosition_getKey);
@@ -167,6 +146,40 @@ namespace nsMyGame {
 				m_textSprite->Deactivate();
 				m_text->Deactivate();
 			}
+		}
+
+		void CItem::InitEffect() {
+
+			//エフェクトを初期化。
+			m_itemEffect = NewGO<Effect>(enPriority_Zeroth);
+			m_itemEffect->Init(c_itemEffectFilePath);
+			m_itemEffect->SetPosition(m_position);
+			m_itemEffect->SetScale(c_itemEffectSize);
+
+			//再生。
+			m_itemEffect->Play();
+		}
+
+		void CItem::InitSpriteAndText() {
+
+			//テキストのスプライトを初期化。
+			m_textSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
+			m_textSprite->Init(c_filePathTextSprite, c_textSpriteWH.x, c_textSpriteWH.y);
+			m_textSprite->SetPosition(c_textSpritePosition);
+			m_textSprite->SetScale(c_textSpriteSize);
+
+			//非表示に設定。
+			m_textSprite->Deactivate();
+
+			//テキストを設定。
+			m_text = NewGO<nsFont::CFontRender>(enPriority_Zeroth);
+			m_text->Init(L"A: Pick up");
+			m_text->SetPosition(c_textPosition);
+			m_text->SetScale(c_textSize);
+			m_text->SetColor(CVector4::White);
+
+			//非表示に設定。
+			m_text->Deactivate();
 		}
 	}
 }

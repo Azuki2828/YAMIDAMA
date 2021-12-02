@@ -94,7 +94,8 @@ namespace nsMyGame {
 
 		void CPlayer::LightCameraUpdate() {
 
-			auto backGround = FindGO<CBackGround>("backGround");
+			//背景クラスを検索。
+			auto backGround = FindGO<CBackGround>(c_classNameBackGround);
 
 			//ライトカメラの情報を更新。
 			CVector3 m_lightCameraTar = m_position;
@@ -120,6 +121,7 @@ namespace nsMyGame {
 			//ライトカメラを更新。
 			CCamera::GetLightCamera()->Update();
 
+			//平行投影に設定。
 			CCamera::GetLightCamera()->SetUpdateProjMatrixFunc(CCamera::enUpdateProjMatrixFunc_Ortho);
 		}
 	}

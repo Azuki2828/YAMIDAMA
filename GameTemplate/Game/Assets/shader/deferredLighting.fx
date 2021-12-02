@@ -289,20 +289,18 @@ float4 PSMain(PSInput psIn) : SV_Target0
 			//シャドウマップに描き込まれているZ値と比較する。
 			float2 zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).xy;
 			if (zInLVP > zInShadowMap.x + 0.0001f) {
-				//主要のディレクションライトの影響を受けないようにする。
-				ligFactor[0] = 0.0f;
 
-				//// 遮蔽されているなら、チェビシェフの不等式を利用して光が当たる確率を求める 
-				//float depth_sq = zInShadowMap.x * zInShadowMap.x;
-				//// このグループの分散具合を求める
-				//// 分散が大きいほど、varianceの数値は大きくなる
-				//float variance = min(max(zInShadowMap.y - depth_sq, 0.0001f), 1.0f);
-				//// このピクセルのライトから見た深度値とシャドウマップの平均の深度値の差を求める   
-				//float md = zInLVP - zInShadowMap.x;
-				//// 光が届く確率を求める
-				//float lit_factor = variance / (variance + md * md);
-				////確率を元に、太陽光の影響率を求める。
-				//ligFactor[0] *= lit_factor;
+				// 遮蔽されているなら、チェビシェフの不等式を利用して光が当たる確率を求める 
+				float depth_sq = zInShadowMap.x * zInShadowMap.x;
+				// このグループの分散具合を求める
+				// 分散が大きいほど、varianceの数値は大きくなる
+				float variance = min(max(zInShadowMap.y - depth_sq, 0.0001f), 1.0f);
+				// このピクセルのライトから見た深度値とシャドウマップの平均の深度値の差を求める   
+				float md = zInLVP - zInShadowMap.x;
+				// 光が届く確率を求める
+				float lit_factor = variance / (variance + md * md);
+				//確率を元に、太陽光の影響率を求める。
+				ligFactor[0] *= lit_factor;
 			}
 		}
 	}

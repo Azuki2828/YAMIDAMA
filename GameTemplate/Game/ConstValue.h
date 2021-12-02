@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 
-
 namespace nsMyGame {
 
 	//優先度。enPriority_Zerothが最も先に描画される。
@@ -21,6 +20,7 @@ namespace nsMyGame {
 	constexpr const char* c_classNamePlayer = "player";				//プレイヤークラスの名前
 	constexpr const char* c_classNameEnemy = "enemy";				//敵クラスの名前
 	constexpr const char* c_classNameAppearSprite = "appearSprite";	//ウィンドウクラスの名前
+	constexpr const char* c_classNameBackGround = "backGround";		//背景クラスの名前
 
 	constexpr const char* c_filePathTkmDoor = "Assets/modelData/backGround/door.tkm";	//ドアのtkmファイルパス
 	constexpr float c_distanceForOpenDoor = 200.0f;										//ドアを開けるのに必要な距離

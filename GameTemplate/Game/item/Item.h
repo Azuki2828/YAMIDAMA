@@ -25,6 +25,16 @@ namespace nsMyGame {
 			void Update()override final;
 
 			/**
+			 * @brief エフェクトの初期化関数。
+			*/
+			void InitEffect();
+
+			/**
+			 * @brief メッセージウィンドウ初期化関数。
+			*/
+			void InitSpriteAndText();
+
+			/**
 			 * @brief エフェクトを更新する関数。
 			*/
 			void EffectUpdate();

@@ -88,7 +88,7 @@ namespace nsMyGame {
 		//NewGO<nsEnemy::CGoteWinEnemy>(0, "Enemy");
 		
 		NewGO<nsPlayer::CPlayer>(0, c_classNamePlayer);
-		NewGO<CBackGround>(0,"backGround");
+		NewGO<CBackGround>(0, c_classNameBackGround);
 		NewGO<CMainCamera>(0);
 		/*CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);
 		m_spriteRender->Init("Assets/image/beer.dds", 1280.0f, 720.0f);

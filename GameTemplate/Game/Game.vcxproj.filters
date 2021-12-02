@@ -78,6 +78,9 @@
     <Filter Include="ソース ファイル\item">
       <UniqueIdentifier>{37c6e032-4a3c-4e25-a094-e7c5edd10955}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MiniEngine\nature">
+      <UniqueIdentifier>{f04a58d3-5926-4f17-bc6c-169420679ce5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
