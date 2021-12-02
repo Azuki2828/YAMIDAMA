@@ -73,7 +73,7 @@ namespace nsMyGame {
 						//プレイヤーの鍵の所持数を+1する。
 						player->GetKey();
 
-						auto getSprite = NewGO<CAppearSprite>(enPriority_Zeroth);
+						auto getSprite = NewGO<CAppearSprite>(enPriority_Zeroth, c_classNameAppearSprite);
 						getSprite->SetText(L"[Key] get. A: OK");
 						getSprite->SetTextPosition(c_textPosition_getKey);
 						break;
