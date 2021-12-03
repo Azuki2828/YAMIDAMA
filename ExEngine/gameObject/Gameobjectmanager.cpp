@@ -45,7 +45,7 @@ void CGameObjectManager::ExecuteUpdate()
 		}
 	}
 	//物理エンジンのアップデートを呼び出す。
-	CPhysicsWorld::GetInstance()->Update(1.0f/60.0f);
+	CPhysicsWorld::GetInstance()->Update(1.0f / 60.0f);
 }
 void CGameObjectManager::ExecuteRender(CRenderContext& rc)
 {
@@ -53,6 +53,16 @@ void CGameObjectManager::ExecuteRender(CRenderContext& rc)
 	for (auto& goList : m_gameObjectListArray) {
 		for (auto& go : goList) {
 			go->RenderWrapper(rc);
+		}
+	}
+}
+
+void CGameObjectManager::ExecuteForwardRender(CRenderContext& rc)
+{
+	//レンダラーを変更するならここを改造していくと良い。
+	for (auto& goList : m_gameObjectListArray) {
+		for (auto& go : goList) {
+			go->ForwardRenderWrapper(rc);
 		}
 	}
 }

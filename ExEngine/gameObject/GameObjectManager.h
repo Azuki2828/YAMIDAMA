@@ -65,6 +65,12 @@ public:
 	/// 描画処理を実行。
 	/// </summary>
 	/// <param name="rc"></param>
+	void ExecuteForwardRender(CRenderContext& rc);
+
+	/// <summary>
+	/// 描画処理を実行。
+	/// </summary>
+	/// <param name="rc"></param>
 	void Execute2DRender(CRenderContext& rc);
 	
 	

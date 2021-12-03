@@ -8,6 +8,7 @@ namespace nsMyGame {
 
 		g_camera3D->SetPosition(m_pos);
 		g_camera3D->SetTarget(m_tar);
+		g_camera3D->SetFar(80000.0f);
 
 		//ばねカメラの初期化。
 		m_springCamera.Init(
@@ -64,6 +65,7 @@ namespace nsMyGame {
 		CVector3 pos = target + m_toCameraPos;
 
 		//バネカメラに注視点と視点を設定する。
+		m_springCamera.SetFar(80000.0f);
 		m_springCamera.SetPosition(pos);
 		m_springCamera.SetTarget(target);
 		m_springCamera.Update();

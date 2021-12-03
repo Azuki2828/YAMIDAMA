@@ -1,6 +1,6 @@
 #pragma once
 
-namespace nsK2Engine {
+namespace nsMyGame {
 
 	enum EnSkyCubeType {
 		enSkyCubeType_Day,		// ’‹ŠÔ
@@ -26,22 +26,21 @@ namespace nsK2Engine {
 	/// <summary>
 	/// ?
 	/// </summary>
-	class SkyCube : public IGameObject
+	class SkyCube : public CIGameObject
 	{
 	public:
 		SkyCube();
 		~SkyCube();
 		bool Start()override final;
 		void Update()override final;
-		void Render(RenderContext& rc)override final;
 	public:
-		void SetPosition(const Vector3& pos)
+		void SetPosition(const CVector3& pos)
 		{
 			m_position = pos;
 			m_isDirty = true;
 		}
 
-		void SetScale(const Vector3& scale)
+		void SetScale(const CVector3& scale)
 		{
 			m_scale = scale;
 			m_isDirty = true;
@@ -73,11 +72,11 @@ namespace nsK2Engine {
 			return m_textureFilePaths[m_type];
 		}
 	private:
-		ModelRender m_modelRender;
+		CModelRender* m_modelRender = nullptr;
 		Texture m_texture[enSkyCubeType_Num];
 		const wchar_t* m_textureFilePaths[enSkyCubeType_Num];
-		Vector3 m_position = g_vec3Zero;
-		Vector3 m_scale = g_vec3One * 1000.0f;
+		CVector3 m_position = g_vec3Zero;
+		CVector3 m_scale = g_vec3One * 1000.0f;
 		float m_luminance = 3.8f;
 		bool m_isDirty = false;
 		EnSkyCubeType m_type = enSkyCubeType_Day;

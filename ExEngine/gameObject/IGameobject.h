@@ -65,6 +65,14 @@ public:
 	{
 		(void)renderContext;
 	}
+
+	/*!
+	 *@brief	•`‰æ
+	*/
+	virtual void ForwardRender(CRenderContext& renderContext)
+	{
+		(void)renderContext;
+	}
 	virtual void Render2D(CRenderContext& renderContext)
 	{
 		(void)renderContext;
@@ -143,6 +151,13 @@ public:
 	{
 		if (m_isActive && m_isStart && !m_isDead ) {
 			Render(renderContext);
+		}
+	}
+
+	void ForwardRenderWrapper(CRenderContext& renderContext)
+	{
+		if (m_isActive && m_isStart && !m_isDead) {
+			ForwardRender(renderContext);
 		}
 	}
 

@@ -110,6 +110,12 @@ namespace nsMyGame {
 		void ExecuteDeferredLighting(CRenderContext& rc);
 
 		/**
+		 * @brief フォワードレンダリングを実行する関数。
+		 * @param rc レンダーコンテキスト
+		*/
+		void ExecuteForwardRendering(CRenderContext& rc);
+
+		/**
 		 * @brief フレームバッファ用に、メインレンダリングターゲットの内容をコピーする関数。
 		 * @param rc レンダーコンテキスト
 		*/

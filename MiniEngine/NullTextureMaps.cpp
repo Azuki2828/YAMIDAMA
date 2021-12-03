@@ -32,9 +32,10 @@ void NullTextureMaps::Init()
 		m_albedoMap,
 		m_albedoMapSize);
 
+	m_normalMapFilePath = "Assets/modelData/preset/NullNormalMap.DDS";
 	//法線マップをロード。
 	TexLoad(
-		"Assets/modelData/preset/NullNormalMap.DDS",
+		m_normalMapFilePath,
 		m_normalMap,
 		m_normalMapSize);
 

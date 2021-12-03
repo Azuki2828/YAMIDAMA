@@ -21,11 +21,33 @@ namespace nsMyGame {
 		 * @param rc レンダーコンテキスト
 		*/
 		void Render(CRenderContext& rc)override final;
+
+		/**
+		 * @brief フォワードレンダリング用の描画関数。
+		 * @param rc レンダーコンテキスト
+		*/
+		void ForwardRender(CRenderContext& rc)override final;
 	public:
 		/**
 		 * @brief 初期化関数。
 		*/
 		void Init();
+
+		/**
+		 * @brief データ付き初期化関数。
+		 * @param modelInitData モデルデータ
+		*/
+		void Init(ModelInitData& modelInitData);
+
+		/**
+		 * @brief フォワードレンダリング用のモデルの初期化関数。
+		*/
+		void InitForwardRenderingModel();
+
+		/**
+		 * @brief データ付きフォワードレンダリング用のモデルの初期化関数。
+		*/
+		void InitForwardRenderingModel(ModelInitData& modelInitData);
 
 		/**
 		 * @brief tkmファイルを設定する関数。
@@ -41,6 +63,15 @@ namespace nsMyGame {
 		*/
 		void SetFilePathTks(const char* filePathTks) {
 			m_filePathTks = filePathTks;
+		}
+
+		/**
+		 * @brief fxファイルパスを設定する関数。
+		 * @param filePathFx ファイル名(.fx)
+		*/
+		void SetFilePathFx(const char* filePathFx) {
+
+			m_filePathFx = filePathFx;
 		}
 
 		/**
@@ -230,15 +261,17 @@ namespace nsMyGame {
 	private:
 		const char* m_filePathTkm = nullptr;		//tkmファイルパス
 		const char* m_filePathTks = nullptr;		//tksファイルパス
+		const char* m_filePathFx = nullptr;			//fxファイルパス
 
 		bool m_shadowCasterFlag = false;			//シャドウキャスターフラグ
-		bool m_isCollisionModel = false;
+		bool m_isCollisionModel = false;			//当たり判定用のモデル？
 
 		CVector3 m_pos = CVector3::Zero;			//座標
 		CQuaternion m_rot = CQuaternion::Identity;	//回転率
 		CVector3 m_sca = CVector3::One;				//拡大率
 
 		CModel m_model;								//モデル
+		CModel m_forwardRenderModel;				//フォワードレンダリング用のモデル
 		CModel m_shadowModel;						//シャドウ作成用のモデル
 		SModelData m_modelData;						//コンスタントバッファに転送するデータ
 		ModelInitData m_modelInitData;				//モデルデータ

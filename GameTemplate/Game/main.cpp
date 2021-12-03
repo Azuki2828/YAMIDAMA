@@ -90,6 +90,24 @@ namespace nsMyGame {
 		NewGO<nsPlayer::CPlayer>(0, c_classNamePlayer);
 		NewGO<CBackGround>(0, c_classNameBackGround);
 		NewGO<CMainCamera>(0);
+
+		auto skyCube = NewGO<SkyCube>(0, "skycube");
+
+		skyCube->SetLuminance(1.0f);
+
+		skyCube->SetType(enSkyCubeType_NightToon_2);
+
+		//CVector3 ligColor, ligDir;
+		//ligColor.x = 0.6f;
+		//ligColor.y = 0.6f;
+		//ligColor.z = 0.6f;
+		//ligDir.x = 1.0f;
+		//ligDir.y = -1.0f;
+		//ligDir.z = -1.0f;
+		//ligDir.Normalize();
+		//g_sceneLight->SetDirectionLight(0, ligDir, ligColor);
+
+
 		/*CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);
 		m_spriteRender->Init("Assets/image/beer.dds", 1280.0f, 720.0f);
 		m_spriteRender->SetPosition({ -400.0f,-200.0f,0.0f });

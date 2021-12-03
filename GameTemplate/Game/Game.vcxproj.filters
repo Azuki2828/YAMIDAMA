@@ -383,6 +383,9 @@
     <ClCompile Include="AppearSprite.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\nature\SkyCube.cpp">
+      <Filter>MiniEngine\nature</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -720,6 +723,9 @@
     </ClInclude>
     <ClInclude Include="AppearSprite.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\nature\SkyCube.h">
+      <Filter>MiniEngine\nature</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

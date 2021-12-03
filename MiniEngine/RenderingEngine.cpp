@@ -47,6 +47,9 @@ namespace nsMyGame {
 		//メインレンダリングターゲットの絵をスナップショット。
 		SnapShotMainRenderTarget(renderContext);
 
+		//フォワードレンダリング。
+		ExecuteForwardRendering(renderContext);
+
 		//ポストエフェクト。
 		m_postEffect.Render(renderContext);
 
@@ -276,6 +279,24 @@ namespace nsMyGame {
 
 		//ディファードライティング。
 		m_deferredLightingSprite.Draw(rc);
+
+		//描き込み終了待ち。
+		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
+	}
+
+	void CRenderingEngine::ExecuteForwardRendering(CRenderContext& rc) {
+
+		//レンダリングターゲットとして設定できるようになるまで待機。
+		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
+
+		//レンダリングターゲットを設定。
+		rc.SetRenderTarget(
+			CRenderTarget::GetRenderTarget(enMainRT)->GetRTVCpuDescriptorHandle(),
+			CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetDSVCpuDescriptorHandle()
+		);
+
+		//フォワードレンダリング。
+		CGameObjectManager::GetInstance()->ExecuteForwardRender(rc);
 
 		//描き込み終了待ち。
 		rc.WaitUntilFinishDrawingToRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));

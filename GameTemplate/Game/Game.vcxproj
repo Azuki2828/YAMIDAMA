@@ -287,6 +287,7 @@
     <ClCompile Include="..\..\MiniEngine\MeshParts.cpp" />
     <ClCompile Include="..\..\MiniEngine\Model.cpp" />
     <ClCompile Include="..\..\MiniEngine\ModelRender.cpp" />
+    <ClCompile Include="..\..\MiniEngine\nature\SkyCube.cpp" />
     <ClCompile Include="..\..\MiniEngine\NullTextureMaps.cpp" />
     <ClCompile Include="..\..\MiniEngine\PipelineState.cpp" />
     <ClCompile Include="..\..\MiniEngine\postEffect\Bloom.cpp" />
@@ -403,6 +404,7 @@
     <ClInclude Include="..\..\MiniEngine\MiniEngine.h" />
     <ClInclude Include="..\..\MiniEngine\Model.h" />
     <ClInclude Include="..\..\MiniEngine\ModelRender.h" />
+    <ClInclude Include="..\..\MiniEngine\nature\SkyCube.h" />
     <ClInclude Include="..\..\MiniEngine\Noncopyable.h" />
     <ClInclude Include="..\..\MiniEngine\NullTextureMaps.h" />
     <ClInclude Include="..\..\MiniEngine\PipelineState.h" />

@@ -1,7 +1,7 @@
-#include "k2EnginePreCompile.h"
+#include "stdafx.h"
 #include "SkyCube.h"
 
-namespace nsK2Engine {
+namespace nsMyGame {
 
 	SkyCube::SkyCube()
 	{
@@ -32,6 +32,8 @@ namespace nsK2Engine {
 
 	bool SkyCube::Start()
 	{
+		m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
+
 		ModelInitData initData;
 		//tkmファイルのファイルパスを指定する。
 		initData.m_tkmFilePath = "Assets/modelData/preset/sky.tkm";
@@ -44,13 +46,17 @@ namespace nsK2Engine {
 			m_texture[i].InitFromDDSFile(m_textureFilePaths[i]);
 		}
 
-		initData.m_expandShaderResoruceView[0] = &m_texture[m_type];
+		initData.m_expandShaderResoruceView = &m_texture[m_type];
 		initData.m_expandConstantBuffer = &m_luminance;
 		initData.m_expandConstantBufferSize = sizeof(m_luminance);
-		m_modelRender.InitForwardRendering(initData);
-		m_modelRender.SetShadowCasterFlag(false);
-		m_modelRender.SetTRS(m_position, g_quatIdentity, m_scale);
-		m_modelRender.Update();
+		m_modelRender->InitForwardRenderingModel(initData);
+		//m_modelRender->SetShadowCasterFlag(false);
+
+		m_modelRender->SetPosition(m_position);
+		m_modelRender->SetRotation(g_quatIdentity);
+		m_modelRender->SetScale(m_scale);
+
+		m_modelRender->Update();
 
 		return true;
 	}
@@ -59,14 +65,11 @@ namespace nsK2Engine {
 	{
 		if (m_isDirty)
 		{
-			m_modelRender.SetTRS(m_position, g_quatIdentity, m_scale);
-			m_modelRender.Update();
+			m_modelRender->SetPosition(m_position);
+			m_modelRender->SetRotation(g_quatIdentity);
+			m_modelRender->SetScale(m_scale);
+			m_modelRender->Update();
 			m_isDirty = false;
 		}
-	}
-
-	void SkyCube::Render(RenderContext& rc)
-	{
-		m_modelRender.Draw(rc);
 	}
 }
