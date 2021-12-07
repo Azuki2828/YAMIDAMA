@@ -32,126 +32,137 @@ namespace nsMyGame {
 		m_pointLight[pointLightNum]->SetAffectPowParam(2.5f);
 		pointLightNum++;
 
+
+		m_modelRender = NewGO<CModelRender>(0);
+		m_modelRender->SetFilePathTkm("Assets/modelData/backGround/testStage.tkm");
+		m_modelRender->Init();
+		m_physicsStaticObject.CreateFromModel(
+			*m_modelRender->GetModel(),
+			m_modelRender->GetModel()->GetWorldMatrix()
+		);
+		m_physicsStaticObject.SetFriction(10.0f);
+
+
 		//ステージをロード。
-		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
+		//m_level.Init("Assets/level/testStage.tkl", [&](LevelObjectData& objData) {
 
-			if (objData.EqualObjectName("door")) {
-				
-				m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
-				m_door[doorNum]->SetPosition(objData.position);
-				m_door[doorNum]->SetRotation(objData.rotation);
-				m_door[doorNum]->SetScale(objData.scale);
-				doorNum++;
-				return true;
-			}
+		//	if (objData.EqualObjectName("door")) {
+		//		
+		//		m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
+		//		m_door[doorNum]->SetPosition(objData.position);
+		//		m_door[doorNum]->SetRotation(objData.rotation);
+		//		m_door[doorNum]->SetScale(objData.scale);
+		//		doorNum++;
+		//		return true;
+		//	}
 
-			if (objData.EqualObjectName("door_Lock")) {
+		//	if (objData.EqualObjectName("door_Lock")) {
 
-				m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
-				m_door[doorNum]->SetPosition(objData.position);
-				m_door[doorNum]->SetRotation(objData.rotation);
-				m_door[doorNum]->SetScale(objData.scale);
+		//		m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
+		//		m_door[doorNum]->SetPosition(objData.position);
+		//		m_door[doorNum]->SetRotation(objData.rotation);
+		//		m_door[doorNum]->SetScale(objData.scale);
 
-				//鍵をかける。
-				m_door[doorNum]->Lock();
-				doorNum++;
-				return true;
-			}
+		//		//鍵をかける。
+		//		m_door[doorNum]->Lock();
+		//		doorNum++;
+		//		return true;
+		//	}
 
-			if (objData.EqualObjectName("doorObj")) {
+		//	if (objData.EqualObjectName("doorObj")) {
 
-				m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
-				m_door[doorNum]->SetPosition(objData.position);
-				m_door[doorNum]->SetRotation(objData.rotation);
-				m_door[doorNum]->SetScale(objData.scale);
-				m_door[doorNum]->SetObj(true);
-				doorNum++;
-				return true;
-			}
+		//		m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
+		//		m_door[doorNum]->SetPosition(objData.position);
+		//		m_door[doorNum]->SetRotation(objData.rotation);
+		//		m_door[doorNum]->SetScale(objData.scale);
+		//		m_door[doorNum]->SetObj(true);
+		//		doorNum++;
+		//		return true;
+		//	}
 
-			if (objData.EqualObjectName("FEnemy")) {
+		//	if (objData.EqualObjectName("FEnemy")) {
 
-				m_fWEnemy.push_back(NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
-				m_fWEnemy[fEnemyNum]->SetPosition(objData.position);
-				m_fWEnemy[fEnemyNum]->SetRotation(objData.rotation);
-				fEnemyNum++;
-				return true;
-			}
+		//		m_fWEnemy.push_back(NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
+		//		m_fWEnemy[fEnemyNum]->SetPosition(objData.position);
+		//		m_fWEnemy[fEnemyNum]->SetRotation(objData.rotation);
+		//		fEnemyNum++;
+		//		return true;
+		//	}
 
-			if (objData.EqualObjectName("GEnemy")) {
+		//	if (objData.EqualObjectName("GEnemy")) {
 
-				m_gWEnemy.push_back(NewGO<nsEnemy::CGoteWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
-				m_gWEnemy[gEnemyNum]->SetPosition(objData.position);
-				m_gWEnemy[gEnemyNum]->SetRotation(objData.rotation);
-				gEnemyNum++;
-				return true;
-			}
+		//		m_gWEnemy.push_back(NewGO<nsEnemy::CGoteWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
+		//		m_gWEnemy[gEnemyNum]->SetPosition(objData.position);
+		//		m_gWEnemy[gEnemyNum]->SetRotation(objData.rotation);
+		//		gEnemyNum++;
+		//		return true;
+		//	}
 
-			if (objData.EqualObjectName("key")) {
+		//	if (objData.EqualObjectName("key")) {
 
-				m_item.push_back(NewGO<nsItem::CItem>(enPriority_Zeroth));
-				m_item[itemNum]->SetPosition(objData.position);
-				itemNum++;
+		//		m_item.push_back(NewGO<nsItem::CItem>(enPriority_Zeroth));
+		//		m_item[itemNum]->SetPosition(objData.position);
+		//		itemNum++;
 
-				return true;
-			}
+		//		return true;
+		//	}
 
-			if (objData.EqualObjectName("torch")) {
+		//	if (objData.EqualObjectName("torch")) {
 
-				//燃えるエフェクトの座標と回転を調整。
-				CVector3 effectPos = objData.position;
-				effectPos += c_addFireEffectPosition;
-				CQuaternion effectRot = objData.rotation;
-				effectRot.AddRotationY(CMath::DegToRad(90.0f));
-				effectPos = effectPos - objData.position;
-				effectRot.Apply(effectPos);
-				effectPos = objData.position + effectPos;
+		//		//燃えるエフェクトの座標と回転を調整。
+		//		CVector3 effectPos = objData.position;
+		//		effectPos += c_addFireEffectPosition;
+		//		CQuaternion effectRot = objData.rotation;
+		//		effectRot.AddRotationY(CMath::DegToRad(90.0f));
+		//		effectPos = effectPos - objData.position;
+		//		effectRot.Apply(effectPos);
+		//		effectPos = objData.position + effectPos;
 
-				//エフェクトを初期化。
-				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
-				m_fireEffect[fireEffectNum]->Init(c_filePathFireEffect);
-				m_fireEffect[fireEffectNum]->SetScale(c_fireEffectScale);
-				m_fireEffect[fireEffectNum]->SetPosition(effectPos);
-				m_fireEffect[fireEffectNum]->SetRotation(effectRot);
+		//		//エフェクトを初期化。
+		//		m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
+		//		m_fireEffect[fireEffectNum]->Init(c_filePathFireEffect);
+		//		m_fireEffect[fireEffectNum]->SetScale(c_fireEffectScale);
+		//		m_fireEffect[fireEffectNum]->SetPosition(effectPos);
+		//		m_fireEffect[fireEffectNum]->SetRotation(effectRot);
 
-				//炎エフェクトに対応するポイントライトを作成。
-				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-				m_pointLight[pointLightNum]->SetPosition(effectPos);
-				m_pointLight[pointLightNum]->SetColor(c_firePointLightColor);
-				m_pointLight[pointLightNum]->SetRange(c_firePointLightRange);
-				m_pointLight[pointLightNum]->SetAffectPowParam(c_firePointLightAffectParam);
-				pointLightNum++;
+		//		//炎エフェクトに対応するポイントライトを作成。
+		//		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+		//		m_pointLight[pointLightNum]->SetPosition(effectPos);
+		//		m_pointLight[pointLightNum]->SetColor(c_firePointLightColor);
+		//		m_pointLight[pointLightNum]->SetRange(c_firePointLightRange);
+		//		m_pointLight[pointLightNum]->SetAffectPowParam(c_firePointLightAffectParam);
+		//		pointLightNum++;
 
-				//再生。
-				m_fireEffect[fireEffectNum]->Play();
-				fireEffectNum++;
-			}
-			if (objData.EqualObjectName("torchBowl")) {
+		//		//再生。
+		//		m_fireEffect[fireEffectNum]->Play();
+		//		fireEffectNum++;
+		//	}
+		//	if (objData.EqualObjectName("torchBowl")) {
 
-				//燃えるエフェクトの座標と回転を調整。
-				CVector3 effectPos = objData.position;
-				effectPos.y += 145.0f;
+		//		//燃えるエフェクトの座標と回転を調整。
+		//		CVector3 effectPos = objData.position;
+		//		effectPos.y += 145.0f;
 
-				//エフェクトを初期化。
-				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
-				m_fireEffect[fireEffectNum]->Init(u"Assets/effect/fire.efk");
-				m_fireEffect[fireEffectNum]->SetScale({ 10.0f,10.0f,10.0f });
-				m_fireEffect[fireEffectNum]->SetPosition(effectPos);
+		//		//エフェクトを初期化。
+		//		m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
+		//		m_fireEffect[fireEffectNum]->Init(u"Assets/effect/fire.efk");
+		//		m_fireEffect[fireEffectNum]->SetScale({ 10.0f,10.0f,10.0f });
+		//		m_fireEffect[fireEffectNum]->SetPosition(effectPos);
 
-				//炎エフェクトに対応するポイントライトを作成。
-				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-				m_pointLight[pointLightNum]->SetPosition(effectPos);
-				m_pointLight[pointLightNum]->SetColor({ 2.0f,1.0f,1.0f });
-				m_pointLight[pointLightNum]->SetRange(300.0f);
-				m_pointLight[pointLightNum]->SetAffectPowParam(1.5f);
-				pointLightNum++;
+		//		//炎エフェクトに対応するポイントライトを作成。
+		//		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+		//		m_pointLight[pointLightNum]->SetPosition(effectPos);
+		//		m_pointLight[pointLightNum]->SetColor({ 2.0f,1.0f,1.0f });
+		//		m_pointLight[pointLightNum]->SetRange(300.0f);
+		//		m_pointLight[pointLightNum]->SetAffectPowParam(1.5f);
+		//		pointLightNum++;
 
-				//再生。
-				m_fireEffect[fireEffectNum]->Play();
-				fireEffectNum++;
-			}
-			return false;
-		});
+		//		//再生。
+		//		m_fireEffect[fireEffectNum]->Play();
+		//		fireEffectNum++;
+		//	}
+		//	return false;
+		//});
 		return true;
 	}
 

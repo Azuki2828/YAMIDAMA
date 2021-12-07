@@ -104,6 +104,15 @@ namespace nsMyGame {
 		}
 
 		/**
+		 * @brief アニメーションイベントを設定する関数。
+		 * @param eventListener イベントリスナー
+		*/
+		void AddAnimationEvent(AnimationEventListener eventListener)
+		{
+			m_animation.AddAnimationEventListener(eventListener);
+		}
+
+		/**
 		 * @brief ワールド行列を更新する関数。(引数あり)
 		 * @param pos 座標
 		 * @param rot 回転

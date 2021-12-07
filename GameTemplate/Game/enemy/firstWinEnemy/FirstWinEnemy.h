@@ -47,6 +47,9 @@ namespace nsMyGame {
 			 * @brief アニメーションを更新する関数。
 			*/
 			void AnimationUpdate()override final;
+
+			// アニメーションイベント用の関数。
+			void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 		public:
 			/**
 			 * @brief Update()関数の前に一度だけ呼ばれる関数。
@@ -106,6 +109,7 @@ namespace nsMyGame {
 				return m_triggerBox.IsGuarded();
 			}
 		private:
+			bool m_isAttack = false;						//攻撃中？
 			EnState m_state = enState_Idle;					//ステート
 			CAnimationClip m_animationClip[enAnim_Num];		//アニメーションクリップ
 			CFirstWinEnemyAttackCollisionDetection m_triggerBox;			//攻撃用のトリガーボックス

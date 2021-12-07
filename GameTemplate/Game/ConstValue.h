@@ -52,8 +52,8 @@ namespace nsMyGame {
 
 	namespace nsPlayer {
 
-		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/player.tkm";		//プレイヤーのtkmファイルパス
-		constexpr const char* c_filePathTksPlayer = "Assets/modelData/player.tks";		//プレイヤーのtksファイルパス
+		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/player2.tkm";		//プレイヤーのtkmファイルパス
+		constexpr const char* c_filePathTksPlayer = "Assets/modelData/player2.tks";		//プレイヤーのtksファイルパス
 		constexpr const float c_animationInterpolateTime = 0.6f;						//アニメーションの補間時間
 		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
 		constexpr float c_attackCoolTime = 0.8f;										//通常攻撃中のクールタイム

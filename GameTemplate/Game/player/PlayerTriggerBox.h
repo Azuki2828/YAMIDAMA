@@ -7,7 +7,6 @@ namespace nsMyGame {
 		class CPlayerTriggerBox
 		{
 		private:
-
 			/**
 			 * @brief トリガーボックスを作成する関数。
 			 * @param pos 座標
@@ -16,6 +15,10 @@ namespace nsMyGame {
 			void Create(const CVector3& pos, const CQuaternion& rot);
 		public:
 
+			/**
+			 * @brief 初期化関数。
+			*/
+			void Init();
 			/**
 			 * @brief トリガーボックスを有効にする関数。
 			 * @param pos 座標

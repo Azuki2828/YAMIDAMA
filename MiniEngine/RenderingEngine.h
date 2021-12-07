@@ -7,6 +7,19 @@ namespace nsMyGame {
 	//レンダリングエンジンクラス
 	class CRenderingEngine
 	{
+		//IBLのデータ
+		struct SIblData {
+			Texture texture;
+			float luminance = 1.0f;
+		};
+
+		//ディファードライティングのデータ
+		struct SDeferredLightingCB {
+
+			nsLight::LigData ligData;		//ライトのデータ
+			int isIbl = 0;					//IBLを行う？
+			float iblLuminance = 1.0f;		//IBLの明るさ
+		};
 	public:
 		/**
 		 * @brief レンダリングエンジンを作成する関数。
@@ -46,6 +59,11 @@ namespace nsMyGame {
 		 * @brief 描画関数。
 		*/
 		void Render();
+
+		/**
+		 * @brief IBLのための初期化関数。
+		*/
+		void InitIbl(const wchar_t* iblTexFilePath, float luminance);
 	private:
 		/**
 		 * @brief レンダリングターゲットを作成する関数。
@@ -61,10 +79,18 @@ namespace nsMyGame {
 		 * @brief メインレンダリングターゲットのコピーを取るためのレンダーターゲットを作成する関数。
 		*/
 		void CreateSnapShotMainRT();
+
 		/**
 		 * @brief フレームバッファにコピーするスプライトを作成する関数。
 		*/
 		void InitCopyToMainRenderTargetSprite();
+
+		
+
+		/**
+		 * @brief IBLのデータの初期化関数。
+		*/
+		void InitIblData(const wchar_t* iblTexFilePath, float luminance);
 
 		/**
 		 * @brief シャドウマップを描画する関数。
@@ -136,6 +162,8 @@ namespace nsMyGame {
 		CShadowMap m_shadowMap;						//シャドウマップ
 		CSprite m_copyToMainRenderTargetSprite;		//メインレンダリングターゲットのスプライト
 		CSprite m_deferredLightingSprite;			//ディファードライティング用のスプライト
+		SIblData m_iblData;							//IBLのデータ
+		SDeferredLightingCB m_deferredLightingCB;	//ディファードライティングに使用する定数バッファ
 	};
 }
 

@@ -5,7 +5,12 @@
 namespace nsMyGame {
 
 	namespace nsPlayer {
-		
+
+		void CPlayerTriggerBox::Init() {
+
+
+		}
+
 		void CPlayerTriggerBox::Create(const CVector3& pos, const CQuaternion& rot) {
 
 			//UŒ‚‚Ì“–‚½‚è”»’è‚ðì¬B
@@ -66,8 +71,6 @@ namespace nsMyGame {
 						//‚Ü‚¾“G‚ª¡‰ñ‚ÌUŒ‚‚ðŽó‚¯‚Ä‚¢‚È‚¢ó‘Ô‚ÅƒgƒŠƒK[ƒ{ƒbƒNƒX‚ÆÚG‚µ‚½B
 						if (!enemy->GetReceiveDamage() && m_ghostBox.IsSelf(contactObject)) {
 
-							//“G‚ðíœB
-							//enemy->Delete();
 							//“G‚Éƒ_ƒ[ƒW‚ð—^‚¦‚éB
 							enemy->SetReceiveDamage(true);
 						}

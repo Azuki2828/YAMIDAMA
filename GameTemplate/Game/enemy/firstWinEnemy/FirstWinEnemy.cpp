@@ -40,6 +40,12 @@ namespace nsMyGame {
 			//初期化。
 			m_modelRender->Init();
 
+			//アニメーションイベント用の関数を設定する。
+			m_modelRender->AddAnimationEvent([&](const wchar_t* clipName, const wchar_t* eventName) {
+
+				OnAnimationEvent(clipName, eventName);
+			});
+
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
 				20.0f,			//半径。
@@ -79,6 +85,11 @@ namespace nsMyGame {
 			//PythonスクリプトのUpdate()関数を呼び出す。
 			auto updateFunc = m_enemyPyModule.attr("Update");
 			updateFunc();
+
+
+
+			//攻撃状態から外す。
+			m_isAttack = false;
 		}
 
 		void CFirstWinEnemy::InitStatus() {
@@ -90,9 +101,9 @@ namespace nsMyGame {
 		void CFirstWinEnemy::InitAnimationClip() {
 
 			//アニメーションクリップを設定。
-			m_animationClip[enAnim_Walk].Load("Assets/animData/walk.tka");
+			m_animationClip[enAnim_Walk].Load("Assets/animData/run2.tka");
 			m_animationClip[enAnim_Walk].SetLoopFlag(true);
-			m_animationClip[enAnim_Idle].Load("Assets/animData/idle.tka");
+			m_animationClip[enAnim_Idle].Load("Assets/animData/idle2.tka");
 			m_animationClip[enAnim_Idle].SetLoopFlag(true);
 			m_animationClip[enAnim_ThreeCombo].Load("Assets/animData/threeCombo.tka");
 			m_animationClip[enAnim_ThreeCombo].SetLoopFlag(false);
@@ -129,6 +140,22 @@ namespace nsMyGame {
 			}
 		}
 
+		void CFirstWinEnemy::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
+		{
+			//キーの名前が「attack」の時。
+			if (wcscmp(eventName, L"attack") == 0)
+			{
+				//攻撃中にする。
+				m_isAttack = true;
+			}
+			////キーの名前が「attack_end」の時。
+			//else if (wcscmp(eventName, L"attack_end") == 0)
+			//{
+			//	//攻撃を終わる。
+			//	m_isAttack = false;
+			//}
+		}
+
 		void CFirstWinEnemy::Move() {
 
 			//x方向とz方向の移動速度を初期化。
@@ -143,7 +170,7 @@ namespace nsMyGame {
 			//歩き状態ならプレイヤーに一定速度で近づく。
 			if (m_state == enState_Walk) {
 
-				m_moveSpeed += toPlayerVec * 150.0f;
+				m_moveSpeed += toPlayerVec * 280.0f;
 			}
 
 			//3連続攻撃状態なら一定速度でプレイヤーに近づく。
@@ -174,11 +201,11 @@ namespace nsMyGame {
 			if (m_state == enState_ThreeCombo) {
 
 				//斬るタイミングでトリガーボックスを有効にする。
-				if (m_coolTime > 0.4f && m_coolTime < 0.8f) {
+				if (m_coolTime > 0.2f && m_coolTime < 0.4f) {
 
 					m_triggerBox.Activate(pos, rot);
 				}
-				else if (m_coolTime > 1.3f && m_coolTime < 1.7f) {
+				else if (m_coolTime > 0.6f && m_coolTime < 0.8f) {
 
 					m_triggerBox.Activate(pos, rot);
 				}

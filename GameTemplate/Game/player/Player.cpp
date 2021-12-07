@@ -45,6 +45,12 @@ namespace nsMyGame {
 
 		void CPlayer::Update() {
 
+			int swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"swordBase");
+
+			CMatrix swordBaseMatrix = m_modelRender->GetSkeleton()->GetBone(swordBoneNum)->GetWorldMatrix();
+
+
+
 			//ˆÚ“®ˆ—B
 			m_playerAction.Move(m_position, m_forward, m_playerState);
 

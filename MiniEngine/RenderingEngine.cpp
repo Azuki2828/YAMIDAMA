@@ -20,6 +20,15 @@ namespace nsMyGame {
 		//ライトカリングの初期化。
 		m_lightCulling.Init();
 
+		auto skyCube = NewGO<SkyCube>(0, "skycube");
+
+		skyCube->SetLuminance(2.0f);
+
+		skyCube->SetType(enSkyCubeType_NightToon_2);
+
+		// 環境光の計算のためのIBLテクスチャをセットする。
+		CRenderingEngine::GetInstance()->InitIbl(skyCube->GetTextureFilePath(), 2.0f);
+
 		//ディファードライティング用のスプライトを初期化。
 		InitDeferredLightingSprite();
 
@@ -28,6 +37,9 @@ namespace nsMyGame {
 	}
 
 	void CRenderingEngine::Render() {
+
+		//ライト情報を更新。
+		m_deferredLightingCB.ligData = *nsLight::CLightManager::GetInstance()->GetLigData();
 
 		//レンダーコンテキストを取得。
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
@@ -69,6 +81,12 @@ namespace nsMyGame {
 		CopyToFrameBuffer(renderContext);
 	}
 
+	void CRenderingEngine::InitIbl(const wchar_t* iblTexFilePath, float luminance) {
+
+		//IBLのデータを初期化。
+		InitIblData(iblTexFilePath, luminance);
+	}
+
 	void CRenderingEngine::CreateRenderTarget() {
 
 		//レンダリングターゲットを作成。
@@ -86,16 +104,25 @@ namespace nsMyGame {
 		//ディファードレンダリングに必要なデータを設定する。
 		SpriteInitData spriteInitData;
 
-		spriteInitData.m_textures[0] = &CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetRenderTargetTexture();
-		spriteInitData.m_textures[1] = &CRenderTarget::GetGBufferRT(enNormalMap)->GetRenderTargetTexture();
-		spriteInitData.m_textures[2] = &CRenderTarget::GetGBufferRT(enWorldPosMap)->GetRenderTargetTexture();
-		spriteInitData.m_textures[3] = &CRenderTarget::GetGBufferRT(enDepthMap)->GetRenderTargetTexture();
-		spriteInitData.m_textures[4] = &CRenderTarget::GetGBufferRT(enocclusionAndSmoothAndMetaricMap)->GetRenderTargetTexture();
+		int texNo = 0;
+
+		spriteInitData.m_textures[texNo++] = &CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[texNo++] = &CRenderTarget::GetGBufferRT(enNormalMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[texNo++] = &CRenderTarget::GetGBufferRT(enWorldPosMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[texNo++] = &CRenderTarget::GetGBufferRT(enDepthMap)->GetRenderTargetTexture();
+		spriteInitData.m_textures[texNo++] = &CRenderTarget::GetGBufferRT(enocclusionAndSmoothAndMetaricMap)->GetRenderTargetTexture();
 		spriteInitData.m_width = c_renderTargetW1280H720.x;
 		spriteInitData.m_height = c_renderTargetW1280H720.y;
 		spriteInitData.m_fxFilePath = c_fxFilePath_DeferredLighting;
-		spriteInitData.m_expandConstantBuffer = nsLight::CLightManager::GetInstance()->GetLigData();
-		spriteInitData.m_expandConstantBufferSize = sizeof(*nsLight::CLightManager::GetInstance()->GetLigData());
+		m_deferredLightingCB.ligData = *nsLight::CLightManager::GetInstance()->GetLigData();
+
+		if (m_iblData.texture.IsValid()) {
+			spriteInitData.m_textures[texNo++] = &m_iblData.texture;
+			m_deferredLightingCB.isIbl = 1;
+			m_deferredLightingCB.iblLuminance = m_iblData.luminance;
+		}
+		spriteInitData.m_expandConstantBuffer = &m_deferredLightingCB;
+		spriteInitData.m_expandConstantBufferSize = sizeof(m_deferredLightingCB);
 		spriteInitData.m_expandShaderResoruceView = &m_shadowMap.GetBokeShadowTexture();
 		spriteInitData.m_expandShaderResoruceView2 = &m_lightCulling.GetPointLightNoListInTileUAV();
 
@@ -128,6 +155,12 @@ namespace nsMyGame {
 		copyToMainRenderTargetSpriteInitData.m_colorBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 
 		m_copyToMainRenderTargetSprite.Init(copyToMainRenderTargetSpriteInitData);
+	}
+
+	void CRenderingEngine::InitIblData(const wchar_t* iblTexFilePath, float luminance) {
+
+		m_iblData.texture.InitFromDDSFile(iblTexFilePath);
+		m_iblData.luminance = luminance;
 	}
 
 	void CRenderingEngine::DrawShadowMap(CRenderContext& rc) {
@@ -220,8 +253,11 @@ namespace nsMyGame {
 		//レンダリングターゲットとして設定できるようになるまで待機。
 		rc.WaitUntilToPossibleSetRenderTarget(*CRenderTarget::GetRenderTarget(enMainRT));
 
-		//レンダーターゲットとビューポートを設定。
-		rc.SetRenderTargetAndViewport(*CRenderTarget::GetRenderTarget(enMainRT));
+		//レンダーターゲットを設定。
+		rc.SetRenderTarget(
+			CRenderTarget::GetRenderTarget(enMainRT)->GetRTVCpuDescriptorHandle(),
+			CRenderTarget::GetGBufferRT(enAlbedoAndShadowReceiverFlgMap)->GetDSVCpuDescriptorHandle()
+		);
 
 		//ワイヤーフレームを描画。
 		CPhysicsWorld::GetInstance()->DebubDrawWorld(rc);

@@ -66,6 +66,8 @@ namespace nsMyGame {
 		// ここから初期化を行うコードを記述する。
 		//////////////////////////////////////
 
+		
+
 		//様々なインスタンスを作成する。
 		CGameObjectManager::CreateInstance();		//ゲームオブジェクト管理クラス
 		CPhysicsWorld::CreateInstance();			//物理ワールド
@@ -75,7 +77,7 @@ namespace nsMyGame {
 		EffectEngine::CreateInstance();				//エフェクトエンジン
 
 		//ワイヤーフレーム表示をONにする。
-		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
+		CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
 
 		////////////////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで
@@ -91,12 +93,7 @@ namespace nsMyGame {
 		NewGO<CBackGround>(0, c_classNameBackGround);
 		NewGO<CMainCamera>(0);
 
-		auto skyCube = NewGO<SkyCube>(0, "skycube");
-
-		skyCube->SetLuminance(1.0f);
-
-		skyCube->SetType(enSkyCubeType_NightToon_2);
-
+		
 		//CVector3 ligColor, ligDir;
 		//ligColor.x = 0.6f;
 		//ligColor.y = 0.6f;
