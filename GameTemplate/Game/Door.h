@@ -1,7 +1,9 @@
 #pragma once
-#include "AppearSprite.h"
 
 namespace nsMyGame {
+
+	//エイリアス宣言
+	class CAppearSprite;
 
 	//ドアクラス
 	class CDoor : public CIGameObject

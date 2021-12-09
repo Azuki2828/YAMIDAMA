@@ -1,14 +1,15 @@
 #pragma once
 #include "../../MiniEngine/SpringCamera.h"
 
-
 namespace nsMyGame {
 
+	//エイリアス宣言
 	namespace nsPlayer {
 
 		class CPlayer;
 	}
 
+	//メインカメラクラス
 	class CMainCamera : public CIGameObject
 	{
 	public:
@@ -31,6 +32,7 @@ namespace nsMyGame {
 		CVector3 m_tar = CVector3::Zero;					//注視点
 		CVector3 m_toCameraPos = { 0.0f,150.0f,-200.0f };	//カメラの追加座標
 
+		//各クラスのポインタ変数
 		nsPlayer::CPlayer* m_player = nullptr;
 	};
 }

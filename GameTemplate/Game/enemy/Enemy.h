@@ -1,6 +1,4 @@
 #pragma once
-#include "EnemyAction.h"
-#include "EnemyAnimation.h"
 #include "../player/Player.h"
 #include "../../../ExEngine/physics/CharacterController.h"
 
@@ -43,10 +41,6 @@ namespace nsMyGame {
 			*/
 			void UpdateForward();
 		public:
-			/**
-			 * @brief デストラクタ。
-			*/
-			~CEnemy();
 
 			/**
 			 * @brief Update()関数の前に一度だけ呼ばれる関数。
@@ -54,6 +48,10 @@ namespace nsMyGame {
 			*/
 			bool Start() override;
 
+			/**
+			 * @brief 削除関数。
+			*/
+			void OnDestroy()override;
 			
 			/**
 			 * @brief 更新関数。
@@ -258,6 +256,7 @@ namespace nsMyGame {
 			CVector3 m_forward = CVector3::Zero;						//前方向
 			pybind11::module m_enemyPyModule;							//Pythonのモジュール
 
+			//各クラスのポインタ変数
 			nsPlayer::CPlayer* m_player = nullptr;						
 		};
 	}

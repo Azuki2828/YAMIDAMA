@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "FirstWinEnemy.h"
+#include "../../AttackCollision.h"
 
 namespace nsMyGame {
 
@@ -52,6 +53,10 @@ namespace nsMyGame {
 				100.0f,			//高さ。
 				m_position		//座標。
 			);
+
+			//剣に取り付けられたボーンの番号を読み込む。
+			m_swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHand");
+
 			return true;
 		}
 
@@ -87,6 +92,10 @@ namespace nsMyGame {
 			updateFunc();
 
 
+			if (m_isAttack) {
+
+
+			}
 
 			//攻撃状態から外す。
 			m_isAttack = false;
@@ -147,6 +156,8 @@ namespace nsMyGame {
 			{
 				//攻撃中にする。
 				m_isAttack = true;
+
+				CreateAttackCollision();
 			}
 			////キーの名前が「attack_end」の時。
 			//else if (wcscmp(eventName, L"attack_end") == 0)
@@ -154,6 +165,24 @@ namespace nsMyGame {
 			//	//攻撃を終わる。
 			//	m_isAttack = false;
 			//}
+		}
+
+		void CFirstWinEnemy::CreateAttackCollision() {
+
+			//剣のボーンのワールド行列を取得する。
+			CMatrix swordBaseMatrix = m_modelRender->GetSkeleton()->GetBone(m_swordBoneNum)->GetWorldMatrix();
+
+			//コリジョンオブジェクトを作成する。
+			auto collisionObject = NewGO<CAttackCollision>(enPriority_Zeroth, c_enemyAttackCollisionName);
+
+			//有効時間を設定。
+			collisionObject->SetActiveTime(0.2f);
+
+			//ボックス状のコリジョンを作成する。
+			collisionObject->CreateBox(m_position, CQuaternion::Identity, c_attackTriggerBoxSize);
+
+			//剣のボーンのワールド行列をコリジョンに適用させる。
+			collisionObject->SetWorldMatrix(swordBaseMatrix);
 		}
 
 		void CFirstWinEnemy::Move() {
@@ -197,6 +226,7 @@ namespace nsMyGame {
 
 		void CFirstWinEnemy::UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
 
+			return;
 			//3連続攻撃状態なら
 			if (m_state == enState_ThreeCombo) {
 

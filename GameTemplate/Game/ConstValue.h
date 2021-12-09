@@ -22,6 +22,9 @@ namespace nsMyGame {
 	constexpr const char* c_classNameAppearSprite = "appearSprite";	//ウィンドウクラスの名前
 	constexpr const char* c_classNameBackGround = "backGround";		//背景クラスの名前
 
+	constexpr const char* c_playerAttackCollisionName = "playerAttackCollision";	//プレイヤーの攻撃判定の名前
+	constexpr const char* c_enemyAttackCollisionName = "enemyAttackCollision";		//敵の攻撃判定の名前
+
 	constexpr const char* c_filePathTkmDoor = "Assets/modelData/backGround/door.tkm";	//ドアのtkmファイルパス
 	constexpr float c_distanceForOpenDoor = 200.0f;										//ドアを開けるのに必要な距離
 	constexpr int c_openDoorRotValue = 90;												//ドアを開けたときの回転角度
@@ -58,6 +61,7 @@ namespace nsMyGame {
 		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
 		constexpr float c_attackCoolTime = 0.8f;										//通常攻撃中のクールタイム
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
+		const CVector3 c_playerStartPosition = { 0.0f,200.0f,0.0f };					//開始時のプレイヤーの座標
 
 		const CVector3 c_attackTriggerBoxSize = { 150.0f,150.0f,100.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//プレイヤー攻撃時のトリガーボックスの前方向への乗算値
@@ -75,6 +79,7 @@ namespace nsMyGame {
 			enState_ThreeCombo,
 			enState_Guard,
 			enState_GuardSuccess,
+			enState_Death,
 
 			enState_Num
 		};
@@ -82,11 +87,11 @@ namespace nsMyGame {
 
 	namespace nsEnemy {
 
-		constexpr const char* c_filePathTkmEnemy = "Assets/modelData/player.tkm";		//敵のtkmファイルパス
-		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player.tks";		//敵のtksファイルパス
+		constexpr const char* c_filePathTkmEnemy = "Assets/modelData/player2.tkm";		//敵のtkmファイルパス
+		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player2.tks";		//敵のtksファイルパス
 
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
-		const CVector3 c_attackTriggerBoxSize = { 150.0f,150.0f,100.0f };				//敵攻撃時のトリガーボックスのサイズ
+		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//敵攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//敵攻撃時のトリガーボックスの前方向への乗算値
 		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//敵攻撃時のトリガーボックスのY方向への加算値
 	}

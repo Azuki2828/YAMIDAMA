@@ -28,6 +28,12 @@ namespace nsMyGame {
 		return true;
 	}
 
+	void CAppearSprite::OnDestroy() {
+
+		DeleteGO(m_textSprite);
+		DeleteGO(m_font);
+	}
+
 	void CAppearSprite::Update() {
 
 		//プレイヤーを検索。

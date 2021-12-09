@@ -1,10 +1,19 @@
 #pragma once
-#include "Door.h"
-#include "enemy/firstWinEnemy/FirstWinEnemy.h"
-#include "enemy/goteWinEnemy/GoteWinEnemy.h"
-#include "item/Item.h"
 
 namespace nsMyGame {
+
+	//エイリアス宣言
+	class CDoor;
+
+	namespace nsEnemy {
+
+		class CGoteWinEnemy;
+		class CFirstWinEnemy;
+	}
+	namespace nsItem {
+
+		class CItem;
+	}
 
 	//背景クラス
 	class CBackGround : public CIGameObject
@@ -15,6 +24,11 @@ namespace nsMyGame {
 		 * @return 成功した？
 		*/
 		bool Start()override final;
+
+		/**
+		 * @brief 削除関数。
+		*/
+		void OnDestroy()override final;
 
 		/**
 		 * @brief 更新関数。

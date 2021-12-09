@@ -322,6 +322,7 @@
     <ClCompile Include="..\..\MiniEngine\tkFile\TksFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
     <ClCompile Include="AppearSprite.cpp" />
+    <ClCompile Include="AttackCollision.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
@@ -331,6 +332,7 @@
     <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.cpp" />
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemy.cpp" />
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="item\Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCamera.cpp" />
@@ -444,6 +446,7 @@
     <ClInclude Include="..\..\MiniEngine\TResourceBank.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
     <ClInclude Include="AppearSprite.h" />
+    <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="ConstValue.h" />
     <ClInclude Include="Door.h" />
@@ -454,12 +457,14 @@
     <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.h" />
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemy.h" />
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="item\Item.h" />
     <ClInclude Include="MainCamera.h" />
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="player\PlayerAnimation.h" />
     <ClInclude Include="player\PlayerAction.h" />
     <ClInclude Include="player\PlayerSelect.h" />
+    <ClInclude Include="player\PlayerStateProcess.h" />
     <ClInclude Include="player\PlayerTriggerBox.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />

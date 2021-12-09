@@ -253,6 +253,10 @@ namespace nsMyGame {
 			m_isCollisionModel = collisionModelFlag;
 		}
 
+		/**
+		 * @brief 当たり判定用のモデル？
+		 * @return 当たり判定用のモデルかどうかのフラグ
+		*/
 		const bool IsCollisionModel()const {
 
 			return m_isCollisionModel;

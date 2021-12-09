@@ -350,13 +350,7 @@
     <ClCompile Include="player\PlayerTriggerBox.cpp">
       <Filter>ソース ファイル\player</Filter>
     </ClCompile>
-    <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.cpp">
-      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
-    </ClCompile>
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemy.cpp">
-      <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.cpp">
       <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
@@ -385,6 +379,18 @@
     </ClCompile>
     <ClCompile Include="..\..\MiniEngine\nature\SkyCube.cpp">
       <Filter>MiniEngine\nature</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackCollision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.cpp">
+      <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.cpp">
+      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -673,9 +679,6 @@
     <ClInclude Include="enemy\EnemyAnimation.h">
       <Filter>ソース ファイル\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemy.h">
-      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ExEngine\physics\tkPhysicsObjectBase.h">
       <Filter>ExEngine\physics</Filter>
     </ClInclude>
@@ -691,13 +694,7 @@
     <ClInclude Include="player\PlayerTriggerBox.h">
       <Filter>ソース ファイル\player</Filter>
     </ClInclude>
-    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.h">
-      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
-    </ClInclude>
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemy.h">
-      <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.h">
       <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
@@ -726,6 +723,24 @@
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\nature\SkyCube.h">
       <Filter>MiniEngine\nature</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCollision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemy.h">
+      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.h">
+      <Filter>ソース ファイル\enemy\goteWinEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.h">
+      <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="player\PlayerStateProcess.h">
+      <Filter>ソース ファイル\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

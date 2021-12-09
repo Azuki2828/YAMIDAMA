@@ -242,29 +242,6 @@ namespace nsMyGame {
 				//ガード中のクールタイムを更新。
 				m_guardSccessCoolTime -= g_gameTime->GetFrameDeltaTime();
 			}
-
-			//攻撃状態なら
-			if (playerState == enState_Attack) {
-
-				//斬るタイミングでトリガーボックスを有効にする。
-				if (m_coolTime > 0.2f && m_coolTime < 0.6f) {
-
-					m_triggerBox.Activate(pos, rot);
-				}
-				//それ以外は無効にする。
-				else {
-					
-					m_triggerBox.Deactivate();
-				}
-			}
-			//攻撃時以外は無効にする。
-			else {
-
-				m_triggerBox.Deactivate();
-			}
-
-			//トリガーボックスを更新。
-			m_triggerBox.Update(pos, rot, forward);
 		}
 	}
 }

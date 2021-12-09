@@ -7,6 +7,9 @@ namespace nsMyGame {
 
 	namespace nsPlayer {
 
+		//エイリアス宣言
+		class CPlayerAnimation;
+
 		//プレイヤークラス
 		class CPlayer : public CIGameObject
 		{
@@ -28,15 +31,70 @@ namespace nsMyGame {
 			bool Start()override final;
 
 			/**
+			 * @brief 削除関数。
+			*/
+			void OnDestroy()override final;
+
+			/**
 			 * @brief 更新関数。
 			*/
 			void Update()override final;
 
 			/**
+			 * @brief ステータスを初期化する関数。
+			*/
+			void InitStatus() {
+
+				m_status.hp = 100;
+				m_status.attack = 10;
+			}
+
+			/**
 			 * @brief プレイヤーの前方向を更新する関数。
 			*/
 			void UpdateForward();
+
+			/**
+			 * @brief アニメーションイベント用の関数。
+			 * @param clipName アニメーションの名前
+			 * @param eventName アニメーションイベントのキーの名前
+			*/
+			void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
+
+			/**
+			 * @brief ダメージ判定をする関数。
+			*/
+			void JudgeDamage();
+
+			/**
+			 * @brief 通常の更新処理。
+			*/
+			void CommonStateProcess();
+
+			/**
+			 * @brief ローリング中の更新処理。
+			*/
+			void IsRollingStateProcess();
+
+			/**
+			 * @brief 死んでいる状態の更新処理。
+			*/
+			void IsDeathStateProcess();
+
+			/**
+			 * @brief 被弾中の更新処理。
+			*/
+			void IsDamagedStateProcess();
 		public:
+			/**
+			 * @brief 死んでいるかどうか判定する関数。
+			 * @return HPが0以下？
+			*/
+			const bool IsDeath()const {
+
+				return m_status.hp <= 0;
+			}
+
 			/**
 			 * @brief 座標を取得する関数。
 			 * @return 座標
@@ -65,44 +123,19 @@ namespace nsMyGame {
 			}
 
 			/**
-			 * @brief ダメージフラグを設定する関数。
-			 * @param recieveDamageFlag ダメージフラグ
+			 * @brief ダメージ状態にする関数。
 			*/
-			void SetReceiveDamage(const bool recieveDamageFlag) {
+			void ReceiveDamage() {
 
-				//ダメージフラグを設定。
-				m_receiveDamage = recieveDamageFlag;
-				if (!m_receiveDamage) {
-					return;
-				}
+				m_status.hp -= 20;
 
-				//ローリング状態ならダメージを食らわない。
-				if (m_playerState == enState_Rolling) {
-					return;
-				}
-				//ガードしたならガード成功状態に。
-				else if (m_playerState == enState_Guard) {
-
-					m_playerState = enState_GuardSuccess;
-					m_playerAction.GuardSuccess();
-					return;
-				}
-				//ダメージを受けたならダメージ状態にする。
-				if (m_receiveDamage) {
-					m_playerAction.ReceiveDamage();
-					m_playerState = enState_Damage;
-				}
+				m_playerAction.ReceiveDamage();
+				m_playerState = enState_Damage;
 			}
 
 			/**
-			 * @brief ダメージフラグを取得する関数。
-			 * @return ダメージフラグ
+			 * @brief 攻撃を弾かれたときに呼ばれる関数。
 			*/
-			const bool GetReceiveDamage()const {
-
-				return m_receiveDamage;
-			}
-
 			void AttackBreak() {
 
 				m_playerState = enState_AttackBreak;
@@ -169,8 +202,8 @@ namespace nsMyGame {
 
 				m_playerSelect.SetSelectObject(selectObj, m_position);
 			}
+
 		private:
-			bool m_receiveDamage = false;				//ダメージを受けたか？
 			bool m_isSelect = false;					//何かを選んでいる状態？（近くの何かに反応している？）
 			int m_hasKeyNum = 0;						//鍵の所持数
 			SStatus m_status;							//ステータス

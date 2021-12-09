@@ -139,7 +139,9 @@ namespace nsMyGame {
 			return StartSub();
 		}
 
-		CEnemy::~CEnemy() {
+		void CEnemy::OnDestroy() {
+
+			//ƒ‚ƒfƒ‹‚ğíœB
 			if (m_modelRender != nullptr) {
 				DeleteGO(m_modelRender);
 			}

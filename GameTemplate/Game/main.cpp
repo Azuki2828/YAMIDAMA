@@ -1,12 +1,6 @@
 #include "stdafx.h"
 #include "system/system.h"
-#include "enemy/GoteWinEnemy/GoteWinEnemy.h"
-#include "enemy/FirstWinEnemy/FirstWinEnemy.h"
-#include "player/Player.h"
-#include "BackGround.h"
-#include "MainCamera.h"
-#include "Door.h"
-#include "item/Item.h"
+#include "Game.h"
 
 namespace nsMyGame {
 
@@ -77,39 +71,16 @@ namespace nsMyGame {
 		EffectEngine::CreateInstance();				//エフェクトエンジン
 
 		//ワイヤーフレーム表示をONにする。
-		CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
+		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
 
 		////////////////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで
 		////////////////////////////////////////////////
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		
-		// とりあえずテストで敵を追加。
-		auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(0, c_classNameEnemy);
-		fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
-		//NewGO<nsEnemy::CGoteWinEnemy>(0, "Enemy");
 		
-		NewGO<nsPlayer::CPlayer>(0, c_classNamePlayer);
-		NewGO<CBackGround>(0, c_classNameBackGround);
-		NewGO<CMainCamera>(0);
-
 		
-		//CVector3 ligColor, ligDir;
-		//ligColor.x = 0.6f;
-		//ligColor.y = 0.6f;
-		//ligColor.z = 0.6f;
-		//ligDir.x = 1.0f;
-		//ligDir.y = -1.0f;
-		//ligDir.z = -1.0f;
-		//ligDir.Normalize();
-		//g_sceneLight->SetDirectionLight(0, ligDir, ligColor);
-
-
-		/*CSpriteRender* m_spriteRender = NewGO<CSpriteRender>(0);
-		m_spriteRender->Init("Assets/image/beer.dds", 1280.0f, 720.0f);
-		m_spriteRender->SetPosition({ -400.0f,-200.0f,0.0f });
-		m_spriteRender->SetScale({ 0.2f,0.2f,0.2f });
-		m_spriteRender->SetMulColor({ 1.0f,1.0f,1.0f,1.0f });*/
+		NewGO<CGameMain>(enPriority_Zeroth);
 
 		// ここからゲームループ。
 		while (DispatchWindowMessage())

@@ -1,5 +1,4 @@
 #pragma once
-#include "PlayerTriggerBox.h"
 
 namespace nsMyGame {
 
@@ -128,7 +127,6 @@ namespace nsMyGame {
 			CVector3 m_moveSpeed = CVector3::Zero;				//移動速度
 			CVector3 m_rollingSpeed = CVector3::Zero;			//回転速度
 			CharacterController m_charaCon;						//キャラクターコントローラー
-			CPlayerTriggerBox m_triggerBox;						//攻撃時に使用するトリガーボックス
 		};
 	}
 }

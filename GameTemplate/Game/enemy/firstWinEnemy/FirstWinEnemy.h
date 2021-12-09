@@ -48,8 +48,17 @@ namespace nsMyGame {
 			*/
 			void AnimationUpdate()override final;
 
-			// アニメーションイベント用の関数。
+			/**
+			 * @brief アニメーションイベント用の関数。
+			 * @param clipName アニメーションの名前
+			 * @param eventName アニメーションイベントのキーの名前
+			*/
 			void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
+
+			/**
+			 * @brief 攻撃用の当たり判定を作成する関数。
+			*/
+			void CreateAttackCollision();
 		public:
 			/**
 			 * @brief Update()関数の前に一度だけ呼ばれる関数。
@@ -109,10 +118,11 @@ namespace nsMyGame {
 				return m_triggerBox.IsGuarded();
 			}
 		private:
-			bool m_isAttack = false;						//攻撃中？
-			EnState m_state = enState_Idle;					//ステート
-			CAnimationClip m_animationClip[enAnim_Num];		//アニメーションクリップ
-			CFirstWinEnemyAttackCollisionDetection m_triggerBox;			//攻撃用のトリガーボックス
+			bool m_isAttack = false;								//攻撃中？
+			int m_swordBoneNum = 0;									//剣に取り付けられたボーンの番号
+			EnState m_state = enState_Idle;							//ステート
+			CAnimationClip m_animationClip[enAnim_Num];				//アニメーションクリップ
+			CFirstWinEnemyAttackCollisionDetection m_triggerBox;	//攻撃用のトリガーボックス
 		};
 	}
 }

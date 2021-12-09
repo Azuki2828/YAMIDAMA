@@ -8,7 +8,6 @@ namespace nsMyGame {
 	}
 
 	namespace nsEnemy {
-
 		
 		//先手必勝の敵の攻撃処理に使うトリガーボックスのクラス
 		class CFirstWinEnemyAttackCollisionDetection

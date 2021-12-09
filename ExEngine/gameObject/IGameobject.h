@@ -35,8 +35,15 @@ public:
 	virtual bool Start() { return true; }
 
 	/*!
-		*@brief	更新
-		*/
+	*@brief	削除されるときに呼ばれる。
+	*@details	CGameManager::DeleteGameObjectを呼んだときに実行されます。
+	* デストラクタより前に実行されます。
+	*/
+	virtual void OnDestroy() {}
+
+	/*!
+	*@brief	更新
+	*/
 	virtual void Update() {}
 
 
@@ -184,6 +191,10 @@ public:
 		}
 	}
 
+	void OnDestroyWrapper()
+	{
+		OnDestroy();
+	}
 		
 	friend class CGameObjectManager;
 protected:

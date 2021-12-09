@@ -96,6 +96,7 @@ public:
 	{
 		if (gameObject != nullptr) {
 			gameObject->Dead();
+			gameObject->OnDestroyWrapper();
 		}
 	}
 	/*!
@@ -137,6 +138,23 @@ public:
 			}
 		}
 	}
+	template<class T>
+	const std::vector<T*>& FindGameObjects(const char* objectName)
+	{
+		static std::vector<T*> objectVector;
+		objectVector.clear();
+
+		for (auto goList : m_gameObjectListArray) {
+			for (auto go : goList) {
+				if (go->IsMatchName(objectName)) {
+					//見つけた。
+					T* p = dynamic_cast<T*>(go);
+					objectVector.push_back(p);
+				}
+			}
+		}
+		return objectVector;
+	}
 	
 private:
 	enum { GAME_OBJECT_PRIO_MAX = 255 };		//!<ゲームオブジェクトの優先度の最大値。
@@ -157,6 +175,18 @@ template<class T>
 static inline T* FindGO(const char* objectName)
 {
 	return CGameObjectManager::GetInstance()->FindGameObject<T>(objectName);
+}
+/*!
+	*@brief	ゲームオブジェクトの検索のヘルパー関数(複数対応)。
+	*@details
+	* 名前の検索が入るため遅いです。
+	*@param[in]	objectName	ゲームオブジェクトの名前。
+	*@return 見つかったインスタンスのアドレスの配列。
+	*/
+template<class T>
+static inline  const std::vector<T*>& FindGOs(const char* objectName)
+{
+	return CGameObjectManager::GetInstance()->FindGameObjects<T>(objectName);
 }
 /*!
 *@brief	ゲームオブジェクトの検索のヘルパー関数。

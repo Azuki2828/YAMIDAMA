@@ -16,11 +16,13 @@ namespace nsMyGame {
 			enAnim_ThreeCombo,
 			enAnim_Guard,
 			enAnim_GuardSuccess,
+			enAnim_Death,
 
 			enAnim_Num
 
 		};
 
+		//プレイヤーのアニメーションを扱うクラス
 		class CPlayerAnimation
 		{
 		public:
@@ -42,6 +44,11 @@ namespace nsMyGame {
 
 				return m_animationClip;
 			}
+
+			/**
+			 * @brief アニメーションの数を取得する関数。
+			 * @return アニメーションの数
+			*/
 			const int GetAnimationNum()const {
 
 				return enAnim_Num;

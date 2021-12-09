@@ -18,13 +18,17 @@ namespace nsMyGame {
 
 		/**
 		 * @brief シャドウマップのレンダリングターゲットを取得する関数。
-		 * @return 
+		 * @return  シャドウマップのレンダリングターゲット
 		*/
 		CRenderTarget& GetRenderTarget() {
 
 			return *m_shadowMap;
 		}
 
+		/**
+		 * @brief ボケ画像を取得する関数。
+		 * @return ボケ画像
+		*/
 		Texture& GetBokeShadowTexture() {
 
 			return m_shadowBlur.GetBokeTexture();

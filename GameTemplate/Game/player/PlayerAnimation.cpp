@@ -28,6 +28,8 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Guard].SetLoopFlag(false);
 			m_animationClip[enAnim_GuardSuccess].Load("Assets/animData/guardSuccess.tka");
 			m_animationClip[enAnim_GuardSuccess].SetLoopFlag(false);
+			m_animationClip[enAnim_Death].Load("Assets/animData/death.tka");
+			m_animationClip[enAnim_Death].SetLoopFlag(false);
 		}
 
 		void CPlayerAnimation::Update(CModelRender& modelRender, const EnPlayerState& playerState) {
@@ -64,6 +66,9 @@ namespace nsMyGame {
 				break;
 			case enState_GuardSuccess:
 				modelRender.PlayAnimation(enAnim_GuardSuccess, 0.1f);
+				break;
+			case enState_Death:
+				modelRender.PlayAnimation(enAnim_Death, 0.8f);
 				break;
 			}
 		}

@@ -28,7 +28,7 @@ namespace nsMyGame {
 				m_player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
 				//ダメージフラグをfalseに設定。
-				m_player->SetReceiveDamage(false);
+				//m_player->SetReceiveDamage(false);
 
 				//トリガーボックスを有効にする。
 				m_isActive = true;
@@ -67,17 +67,17 @@ namespace nsMyGame {
 			//剛体との当たり判定を調べる。
 			CPhysicsWorld::GetInstance()->ContactTest(m_player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
 
-				//まだプレイヤーが今回の攻撃を受けていない状態でトリガーボックスと接触した。
-				if (!m_player->GetReceiveDamage() && m_ghostBox.IsSelf(contactObject)) {
+				////まだプレイヤーが今回の攻撃を受けていない状態でトリガーボックスと接触した。
+				//if (!m_player->GetReceiveDamage() && m_ghostBox.IsSelf(contactObject)) {
 
-					if (m_player->IsGuard()) {
+				//	if (m_player->IsGuard()) {
 
-						m_isGuarded = true;
-					}
+				//		m_isGuarded = true;
+				//	}
 
-					//プレイヤーにダメージを与える。
-					m_player->SetReceiveDamage(true);
-				}
+				//	//プレイヤーにダメージを与える。
+				//	m_player->SetReceiveDamage(true);
+				//}
 			});
 		}
 	}

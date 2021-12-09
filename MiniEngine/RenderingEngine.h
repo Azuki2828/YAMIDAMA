@@ -4,6 +4,7 @@
 #include "ShadowMap.h"
 
 namespace nsMyGame {
+
 	//レンダリングエンジンクラス
 	class CRenderingEngine
 	{
@@ -85,8 +86,6 @@ namespace nsMyGame {
 		*/
 		void InitCopyToMainRenderTargetSprite();
 
-		
-
 		/**
 		 * @brief IBLのデータの初期化関数。
 		*/
@@ -97,7 +96,6 @@ namespace nsMyGame {
 		 * @param rc レンダーコンテキスト
 		*/
 		void DrawShadowMap(CRenderContext& rc);
-
 
 		/**
 		 * @brief スプライトを描画する関数。

@@ -1,5 +1,7 @@
 #include "stdafx.h"
+#include "PlayerStateProcess.h"
 #include "Player.h"
+#include "../AttackCollision.h"
 #include "../enemy/Enemy.h"
 #include "../BackGround.h"
 
@@ -9,10 +11,11 @@ namespace nsMyGame {
 
 		bool CPlayer::Start() {
 
-			m_position = { 0.0f,200.0f,0.0f };
+			//初期座標を設定。
+			m_position = c_playerStartPosition;
 
-			m_status.hp = 100;
-			m_status.attack = 10;
+			//ステータスを初期化。
+			InitStatus();
 
 			//IGameObjectに追加。
 			m_modelRender = NewGO<CModelRender>(enPriority_Zeroth);
@@ -26,7 +29,7 @@ namespace nsMyGame {
 
 			//アニメーションクラスを初期化。
 			m_playerAnimation.Init();
-			
+
 			//アニメーションを初期化。
 			m_modelRender->InitAnimation(m_playerAnimation.GetAnimationClip(), m_playerAnimation.GetAnimationNum());
 
@@ -42,45 +45,64 @@ namespace nsMyGame {
 			return true;
 		}
 
+		void CPlayer::OnDestroy() {
+
+			DeleteGO(m_modelRender);
+		}
 
 		void CPlayer::Update() {
 
-			int swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"swordBase");
+			//更新処理。
+			switch (m_playerState) {
 
-			CMatrix swordBaseMatrix = m_modelRender->GetSkeleton()->GetBone(swordBoneNum)->GetWorldMatrix();
+			case enState_Death:				//死んでいる状態
 
+				IsDeathStateProcess();
+				break;
+			case enState_Rolling:			//ローリング中
 
+				IsRollingStateProcess();
+				break;
+			case enState_Damage:			//被弾中
 
-			//移動処理。
-			m_playerAction.Move(m_position, m_forward, m_playerState);
+				IsDamagedStateProcess();
+				break;
+			default:						//通常処理
 
-			//回転処理。
-			if (m_playerState != enState_Rolling) {
-				m_playerAction.Rotate(m_rotation);
+				CommonStateProcess();
+				break;
+			}
+		}
+
+		void CPlayer::JudgeDamage() {
+
+			//ガードしたならガード成功状態に。
+			if (m_playerState == enState_Guard) {
+
+				m_playerState = enState_GuardSuccess;
+				m_playerAction.GuardSuccess();
+				return;
 			}
 
-			//前方向を更新。
-			UpdateForward();
+			//生成されている敵の攻撃当たり判定を調べる。
+			auto enemyCollision = FindGOs<CAttackCollision>(c_enemyAttackCollisionName);
 
-			//アクション処理。
-			m_playerAction.Action(m_playerState, m_isSelect);
+			//当たり判定処理。
+			//このフレームで全ての当たり判定との衝突判定をするため、一気にダメージを受ける可能性あり。
+			//それが嫌なら、for文の内部でステートを調べること！
+			for (auto& collision : enemyCollision) {
 
-			//アニメーション処理。
-			m_playerAnimation.Update(*m_modelRender, m_playerState);
+				//剛体との当たり判定を調べる。
+				CPhysicsWorld::GetInstance()->ContactTest(m_playerAction.GetCharacterController(), [&](const btCollisionObject& contactObject) {
 
-			//状態を更新。
-			m_playerAction.Update(m_position, m_rotation, m_forward, m_playerState);
+					//トリガーボックスと接触した。
+					if (collision->IsSelf(contactObject)) {
 
-			//座標を設定。
-			m_modelRender->SetPosition(m_position);
-
-			//回転を設定。
-			m_modelRender->SetRotation(m_rotation);
-
-			//ライトカメラを更新。
-			LightCameraUpdate();
-
-			m_isSelect = false;
+						//ダメージを受ける。
+						ReceiveDamage();
+					}
+				});
+			}
 		}
 
 		void CPlayer::UpdateForward() {
@@ -129,6 +151,28 @@ namespace nsMyGame {
 
 			//平行投影に設定。
 			CCamera::GetLightCamera()->SetUpdateProjMatrixFunc(CCamera::enUpdateProjMatrixFunc_Ortho);
+		}
+
+		void CPlayer::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName) {
+
+			//(void)clipName;
+			////キーの名前が「attack_start」の時。
+			//if (wcscmp(eventName, L"attack_start") == 0) {
+			//	//斬撃エフェクトを作成する。
+			//	MakeSlashingEffect();
+			//	//攻撃中にする。
+			//	m_isUnderAttack = true;
+			//}
+			////キーの名前が「attack_end」の時。
+			//else if (wcscmp(eventName, L"attack_end") == 0) {
+			//	//攻撃を終わる。
+			//	m_isUnderAttack = false;
+			//}
+			////キーの名前が「magic_attack」の時。
+			//else if (wcscmp(eventName, L"magic_attack") == 0) {
+			//	//ファイヤーボールを作成する。
+			//	MakeFireBall();
+			//}
 		}
 	}
 }
