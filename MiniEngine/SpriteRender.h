@@ -25,7 +25,7 @@ namespace nsMyGame {
 		 * @param height 高さ
 		 * @param mode アルファブレンドのモード
 		*/
-		void Init(const char* filepath, float width, float height, AlphaBlendMode mode = AlphaBlendMode::AlphaBlendMode_Trans);
+		void Init(const char* filepath, const float width, const float height, const AlphaBlendMode mode = AlphaBlendMode::AlphaBlendMode_Trans);
 		
 		/**
 		 * @brief 描画関数。
