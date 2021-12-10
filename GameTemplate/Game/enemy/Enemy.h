@@ -242,6 +242,8 @@ namespace nsMyGame {
 				return m_guardTime;
 			}
 
+			void JudgeDamage();
+
 			virtual bool IsGuarded() = 0;
 		protected:
 			bool m_receiveDamage = false;								//ダメージを受けたか？（たとえ0ダメージでも）

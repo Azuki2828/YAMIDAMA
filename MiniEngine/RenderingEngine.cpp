@@ -22,12 +22,12 @@ namespace nsMyGame {
 
 		auto skyCube = NewGO<SkyCube>(0, "skycube");
 
-		skyCube->SetLuminance(2.0f);
+		skyCube->SetLuminance(0.2f);
 
 		skyCube->SetType(enSkyCubeType_NightToon_2);
 
 		// 環境光の計算のためのIBLテクスチャをセットする。
-		CRenderingEngine::GetInstance()->InitIbl(skyCube->GetTextureFilePath(), 2.0f);
+		CRenderingEngine::GetInstance()->InitIbl(skyCube->GetTextureFilePath(), 0.2f);
 
 		//ディファードライティング用のスプライトを初期化。
 		InitDeferredLightingSprite();

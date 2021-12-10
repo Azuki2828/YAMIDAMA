@@ -51,6 +51,24 @@ namespace nsMyGame {
 
 			return m_ghostBox.IsSelf(contactObject);
 		}
+
+		/**
+		 * @brief ガードフラグを設定する関数。
+		 * @param guardFlag ガードフラグ
+		*/
+		void SetGuardFlag(const bool guardFlag) {
+
+			m_isGuarded = guardFlag;
+		}
+
+		/**
+		 * @brief ガードされた？
+		 * @return ガードされたかどうかのフラグ
+		*/
+		const bool IsGuarded()const {
+
+			return m_isGuarded;
+		}
 	private:
 		/**
 		 * @brief Update()関数の前に一度だけ呼ばれる関数。
@@ -82,6 +100,7 @@ namespace nsMyGame {
 		}
 	private:
 		float m_activeTime = 0.0f;						//有効タイム
+		bool m_isGuarded = false;						//ガードされた？
 		CPhysicsGhostObject m_ghostBox;					//トリガーボックス
 	};
 }

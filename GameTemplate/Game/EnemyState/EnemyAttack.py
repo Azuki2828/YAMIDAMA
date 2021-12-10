@@ -6,6 +6,7 @@ from Game import SetCoolTime
 from Game import AnimationUpdate
 from Game import UpdateTriggerBox
 from Game import IsGuarded
+from Game import JudgeDamage
 
 def Update() :
 
@@ -19,6 +20,9 @@ def Update() :
 
     #回転関数。
     Rotate()
+
+    #ダメージ判定
+    JudgeDamage()
 
     #クールタイムが0秒になったら待機状態に。
     if(GetCoolTime() == 0.0):

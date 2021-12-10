@@ -7,9 +7,9 @@ from Game import UpdateTriggerBox
 
 def Update() :
 
-    #if(IsDeath()):
-    #     ChangeState(4)
-    #     SetCoolTime(5.0)
+    if(IsDeath()):
+         ChangeState(4)
+         SetCoolTime(5.0)
 
      #クールタイムが0秒になったら待機状態に。
     if(GetCoolTime() == 0.0):

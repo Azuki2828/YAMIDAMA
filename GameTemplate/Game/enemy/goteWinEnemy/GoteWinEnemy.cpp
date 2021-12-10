@@ -80,6 +80,7 @@ namespace nsMyGame {
 			//PythonスクリプトのUpdate()関数を呼び出す。
 			auto updateFunc = m_enemyPyModule.attr("Update");
 			updateFunc();
+			
 		}
 
 		void CGoteWinEnemy::InitStatus() {
@@ -136,7 +137,6 @@ namespace nsMyGame {
 		}
 
 		void CGoteWinEnemy::Move() {
-
 			//x方向とz方向の移動速度を初期化。
 			m_moveSpeed.x = 0.0f;
 			m_moveSpeed.z = 0.0f;

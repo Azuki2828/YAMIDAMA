@@ -12,7 +12,7 @@ namespace nsMyGame {
 			 * @brief 初期化関数。
 			 * @param position プレイヤーの座標。
 			*/
-			void Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward);
+			void Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, const int swordBoneNum);
 
 			/**
 			 * @brief 移動処理を行う関数。
@@ -77,6 +77,13 @@ namespace nsMyGame {
 
 				return m_isGuard;
 			}
+
+			/**
+			 * @brief アニメーションイベント用の関数。
+			 * @param clipName アニメーションの名前
+			 * @param eventName アニメーションイベントのキーの名前
+			*/
+			void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
 		private:
 			/**
 			 * @brief クールタイム中かどうか判定する関数。
@@ -115,6 +122,12 @@ namespace nsMyGame {
 				m_hitAttack = hitAttackFlag;
 			}
 
+			/**
+			 * @brief 攻撃用の当たり判定を作成する関数。
+			*/
+			void CreateAttackCollision();
+
+			
 		private:
 			bool m_isAttack = false;							//アタック中？
 			bool m_hitAttack = false;							//攻撃が当たった？
@@ -122,6 +135,7 @@ namespace nsMyGame {
 			bool m_isGuard = false;								//ガード中？
 			float m_coolTime = 0.0f;							//クールタイム
 			float m_guardSccessCoolTime = 0.0f;					//ガード成功時のクールタイム
+			int m_swordBoneNum = 0;								//剣に取り付けられたボーンの番号
 			CVector3 m_position = CVector3::Zero;				//座標
 			CQuaternion m_rotation = CQuaternion::Identity;		//回転
 			CVector3 m_moveSpeed = CVector3::Zero;				//移動速度

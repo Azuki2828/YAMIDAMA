@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "PlayerAction.h"
+#include "Player.h"
+#include "../AttackCollision.h"
 
 namespace nsMyGame {
 
 	namespace nsPlayer {
 
-		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward) {
+		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, const int swordBoneNum) {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
@@ -13,6 +15,8 @@ namespace nsMyGame {
 				100.0f,			//高さ。
 				position		//座標。
 			);
+
+			m_swordBoneNum = swordBoneNum;
 		}
 
 		void CPlayerAction::Move(CVector3& position, CVector3& forward, EnPlayerState& playerState) {
@@ -225,6 +229,44 @@ namespace nsMyGame {
 					m_coolTime = c_threeComboCoolTime;
 				}
 			}
+		}
+
+		void CPlayerAction::CreateAttackCollision() {
+
+			auto player = FindGO<CPlayer>(c_classNamePlayer);
+			
+			//剣のボーンのワールド行列を取得する。
+			CMatrix swordBaseMatrix = player->GetModelRender()->GetSkeleton()->GetBone(m_swordBoneNum)->GetWorldMatrix();
+
+			//コリジョンオブジェクトを作成する。
+			auto collisionObject = NewGO<CAttackCollision>(enPriority_Zeroth, c_playerAttackCollisionName);
+
+			//有効時間を設定。
+			collisionObject->SetActiveTime(0.2f);
+
+			//ボックス状のコリジョンを作成する。
+			collisionObject->CreateBox(player->GetPosition(), CQuaternion::Identity, c_attackTriggerBoxSize);
+
+			//剣のボーンのワールド行列をコリジョンに適用させる。
+			collisionObject->SetWorldMatrix(swordBaseMatrix);
+		}
+
+		void CPlayerAction::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
+		{
+			//キーの名前が「attack」の時。
+			if (wcscmp(eventName, L"attack") == 0)
+			{
+				//攻撃中にする。
+				m_isAttack = true;
+
+				CreateAttackCollision();
+			}
+			////キーの名前が「attack_end」の時。
+			//else if (wcscmp(eventName, L"attack_end") == 0)
+			//{
+			//	//攻撃を終わる。
+			//	m_isAttack = false;
+			//}
 		}
 
 		void CPlayerAction::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward, EnPlayerState& playerState) {

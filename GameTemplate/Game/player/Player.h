@@ -55,13 +55,6 @@ namespace nsMyGame {
 			void UpdateForward();
 
 			/**
-			 * @brief アニメーションイベント用の関数。
-			 * @param clipName アニメーションの名前
-			 * @param eventName アニメーションイベントのキーの名前
-			*/
-			void OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName);
-
-			/**
 			 * @brief ダメージ判定をする関数。
 			*/
 			void JudgeDamage();
@@ -85,6 +78,16 @@ namespace nsMyGame {
 			 * @brief 被弾中の更新処理。
 			*/
 			void IsDamagedStateProcess();
+
+			/**
+			 * @brief ガード中の更新処理。
+			*/
+			void IsGuardStateProcess();
+
+			/**
+			 * @brief 攻撃中の更新処理。
+			*/
+			void IsAttackStateProcess();
 		public:
 			/**
 			 * @brief 死んでいるかどうか判定する関数。

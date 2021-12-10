@@ -18,7 +18,7 @@ namespace nsMyGame {
 	//背景クラス
 	class CBackGround : public CIGameObject
 	{
-	public:
+	private:
 		/**
 		 * @brief Update()関数の前に一度だけ呼ばれる関数。
 		 * @return 成功した？
@@ -35,6 +35,11 @@ namespace nsMyGame {
 		*/
 		void Update()override final;
 
+		/**
+		 * @brief ステージをロードする関数。
+		*/
+		void LoadStage();
+	public:
 		/**
 		 * @brief 太陽光用のディレクションライトを作成する関数。
 		*/

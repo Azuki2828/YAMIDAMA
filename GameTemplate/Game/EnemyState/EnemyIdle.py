@@ -4,6 +4,7 @@ from Game import Move
 from Game import Rotate
 from Game import AnimationUpdate
 from Game import UpdateTriggerBox
+from Game import JudgeDamage
 
 
 def Update() :
@@ -13,6 +14,9 @@ def Update() :
 
     #回転関数呼び出し。
     Rotate()
+
+    #ダメージ判定
+    JudgeDamage()
 
     #プレイヤーとの距離を調べる。
     lengthToPlayer = GetLengthToPlayer()

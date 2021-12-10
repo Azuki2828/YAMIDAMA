@@ -27,10 +27,14 @@ namespace nsMyGame {
 	{
 		program = Py_DecodeLocale("MyGame", nullptr);
 		// モジュールのパスを設定。
-#ifdef MY_DEBUG
-		Py_SetPath(L"./Python37_64/DLLs;./Python37_64/Lib;./EnemyState;../x64/Debug/");
+#ifdef MASTER
+		Py_SetPath(L"./Python37_64/DLLs;./Python37_64/Lib;./EnemyState;./");
 #else
-		Py_SetPath(L"./Python37_64/DLLs;./Python37_64/Lib;./EnemyState;../x64/Release/");
+#ifdef MY_DEBUG
+		Py_SetPath(L"./Python37_64/DLLs;./Python37_64/Lib;./EnemyState;../x64/Debug/;./");
+#else
+		Py_SetPath(L"./Python37_64/DLLs;./Python37_64/Lib;./EnemyState;../x64/Release/;./");
+#endif
 #endif
 		Py_SetProgramName(program);
 		Py_Initialize();
@@ -77,7 +81,6 @@ namespace nsMyGame {
 		// 初期化を行うコードを書くのはここまで
 		////////////////////////////////////////////////
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
-		
 		
 		
 		NewGO<CGameMain>(enPriority_Zeroth);

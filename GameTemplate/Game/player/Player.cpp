@@ -24,8 +24,11 @@ namespace nsMyGame {
 			m_modelRender->SetFilePathTkm(c_filePathTkmPlayer);
 			m_modelRender->SetFilePathTks(c_filePathTksPlayer);
 
-			//行動クラスを初期化。
-			m_playerAction.Init(m_position, m_rotation, m_forward);
+			//アニメーションイベント用の関数を設定する。
+			m_modelRender->AddAnimationEvent([&](const wchar_t* clipName, const wchar_t* eventName) {
+
+				m_playerAction.OnAnimationEvent(clipName, eventName);
+			});
 
 			//アニメーションクラスを初期化。
 			m_playerAnimation.Init();
@@ -42,6 +45,11 @@ namespace nsMyGame {
 			//初期化。
 			m_modelRender->Init();
 
+			//剣に取り付けられたボーンの番号を読み込む。
+			int swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHand");
+
+			//行動クラスを初期化。
+			m_playerAction.Init(m_position, m_rotation, m_forward, swordBoneNum);
 			return true;
 		}
 
@@ -67,6 +75,12 @@ namespace nsMyGame {
 
 				IsDamagedStateProcess();
 				break;
+			case enState_Guard:
+				IsGuardStateProcess();
+				break;
+			case enState_Attack:
+				IsAttackStateProcess();
+				break;
 			default:						//通常処理
 
 				CommonStateProcess();
@@ -76,14 +90,6 @@ namespace nsMyGame {
 
 		void CPlayer::JudgeDamage() {
 
-			//ガードしたならガード成功状態に。
-			if (m_playerState == enState_Guard) {
-
-				m_playerState = enState_GuardSuccess;
-				m_playerAction.GuardSuccess();
-				return;
-			}
-
 			//生成されている敵の攻撃当たり判定を調べる。
 			auto enemyCollision = FindGOs<CAttackCollision>(c_enemyAttackCollisionName);
 
@@ -92,11 +98,27 @@ namespace nsMyGame {
 			//それが嫌なら、for文の内部でステートを調べること！
 			for (auto& collision : enemyCollision) {
 
+				//ガード成功中なら早期リターン。
+				if (m_playerState == enState_GuardSuccess) {
+
+					return;
+				}
+
 				//剛体との当たり判定を調べる。
 				CPhysicsWorld::GetInstance()->ContactTest(m_playerAction.GetCharacterController(), [&](const btCollisionObject& contactObject) {
 
 					//トリガーボックスと接触した。
 					if (collision->IsSelf(contactObject)) {
+
+						//ガードしたならガード成功状態に。
+						if (m_playerState == enState_Guard) {
+
+							m_playerState = enState_GuardSuccess;
+							m_playerAction.GuardSuccess();
+
+							//処理はここで終了。
+							return;
+						}
 
 						//ダメージを受ける。
 						ReceiveDamage();
@@ -151,28 +173,6 @@ namespace nsMyGame {
 
 			//平行投影に設定。
 			CCamera::GetLightCamera()->SetUpdateProjMatrixFunc(CCamera::enUpdateProjMatrixFunc_Ortho);
-		}
-
-		void CPlayer::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName) {
-
-			//(void)clipName;
-			////キーの名前が「attack_start」の時。
-			//if (wcscmp(eventName, L"attack_start") == 0) {
-			//	//斬撃エフェクトを作成する。
-			//	MakeSlashingEffect();
-			//	//攻撃中にする。
-			//	m_isUnderAttack = true;
-			//}
-			////キーの名前が「attack_end」の時。
-			//else if (wcscmp(eventName, L"attack_end") == 0) {
-			//	//攻撃を終わる。
-			//	m_isUnderAttack = false;
-			//}
-			////キーの名前が「magic_attack」の時。
-			//else if (wcscmp(eventName, L"magic_attack") == 0) {
-			//	//ファイヤーボールを作成する。
-			//	MakeFireBall();
-			//}
 		}
 	}
 }

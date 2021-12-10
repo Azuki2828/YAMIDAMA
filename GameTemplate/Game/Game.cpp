@@ -10,25 +10,25 @@ namespace nsMyGame {
 	bool CGameMain::Start() {
 
 		//プレイヤーを生成。
-		m_player = NewGO<nsPlayer::CPlayer>(0, c_classNamePlayer);
+		m_player = NewGO<nsPlayer::CPlayer>(enPriority_Zeroth, c_classNamePlayer);
 
 		//背景クラスを生成。
-		m_backGround = NewGO<CBackGround>(0, c_classNameBackGround);
+		m_backGround = NewGO<CBackGround>(enPriority_Zeroth, c_classNameBackGround);
 
 		//メインカメラを生成。
-		m_mainCamera = NewGO<CMainCamera>(0);
+		m_mainCamera = NewGO<CMainCamera>(enPriority_Zeroth);
 
-		m_youDiedSprite = NewGO<CSpriteRender>(0);
-		m_youDiedSprite->Init("Assets/image/youDied2.dds", 1740.0f, 180.0f);
-		m_youDiedSprite->SetPosition({ 0.0f,0.0f,0.0f });
-		m_youDiedSprite->SetScale({ 0.8f,0.8f,0.8f });
-		m_youDiedSprite->SetMulColor({ 1.0f,1.0f,1.0f,m_youDiedSpriteTrans });
+		//死亡スプライトを生成。
+		m_youDiedSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
+		m_youDiedSprite->Init(c_filePathYouDiedSprite, c_spriteYouDiedWH.x, c_spriteYouDiedWH.y);
+		m_youDiedSprite->SetScale(c_spriteSizeYouDied);
+		m_youDiedSprite->SetMulColor(c_translucentValue_Zero);
 
 		//非表示に設定。
 		m_youDiedSprite->Deactivate();
 
 		// とりあえずテストで敵を追加。
-		auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(0, c_classNameEnemy);
+		auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, c_classNameEnemy);
 		fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
 
 		return true;
@@ -36,6 +36,7 @@ namespace nsMyGame {
 
 	void CGameMain::OnDestroy() {
 
+		//各クラスを削除。
 		DeleteGO(m_player);
 		DeleteGO(m_youDiedSprite);
 		DeleteGO(m_backGround);
@@ -44,21 +45,31 @@ namespace nsMyGame {
 
 	void CGameMain::Update() {
 
+		//死亡スプライト用のタイマーを初期化。
+		static float youDiedMessageTime = 0.0f;
+
 		//プレイヤーが死んでいるならYouDiedを表示させる。
 		if (m_player->IsDeath()) {
 
 			//有効にする。
 			m_youDiedSprite->Activate();
 
-			static float youDiedMessageTime = 0.0f;
-
+			//死亡スプライト用のタイマーを更新。
 			youDiedMessageTime += GameTime().GameTimeFunc().GetFrameDeltaTime();
 
-			if (youDiedMessageTime >= 3.0f && m_youDiedSpriteTrans < 1.0f) {
+			//一定時間以上かつ、完全に表示されていないなら
+			if (youDiedMessageTime >= 2.5f && m_youDiedSpriteTrans < 1.0f) {
 
-				m_youDiedSpriteTrans += 0.01f;
+				//だんだん表示されるようにする。
+				m_youDiedSpriteTrans += GameTime().GameTimeFunc().GetFrameDeltaTime() * 0.5f;
 				m_youDiedSprite->SetMulColor({ 1.0f, 1.0f, 1.0f, m_youDiedSpriteTrans });
 			}
+		}
+		//死んでいないなら
+		else {
+
+			//死亡スプライト用のタイマーを初期化。
+			youDiedMessageTime = 0.0f;
 		}
 	}
 }

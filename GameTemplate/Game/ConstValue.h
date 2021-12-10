@@ -13,17 +13,23 @@ namespace nsMyGame {
 		enPriority_Fifth
 	};
 
+	/*------クラスの名前------*/
+	constexpr const char* c_classNamePlayer = "player";								//プレイヤークラスの名前
+	constexpr const char* c_classNameEnemy = "enemy";								//敵クラスの名前
+	constexpr const char* c_classNameAppearSprite = "appearSprite";					//ウィンドウクラスの名前
+	constexpr const char* c_classNameBackGround = "backGround";						//背景クラスの名前
+	constexpr const char* c_playerAttackCollisionName = "playerAttackCollision";	//プレイヤーの攻撃判定の名前
+	constexpr const char* c_enemyAttackCollisionName = "enemyAttackCollision";		//敵の攻撃判定の名前
+	/*------------------------*/
+
 	constexpr const char* c_entryPointVSMain = "VSMain";						//頂点シェーダーのエントリーポイント
 	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";				//スキンありの頂点シェーダーのエントリーポイント
 	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";		//G-Buffer作成に使うシェーダーのファイルパス
+	constexpr float c_attackCollisionActiveTime = 0.2f;							//攻撃用当たり判定の有効時間
 
-	constexpr const char* c_classNamePlayer = "player";				//プレイヤークラスの名前
-	constexpr const char* c_classNameEnemy = "enemy";				//敵クラスの名前
-	constexpr const char* c_classNameAppearSprite = "appearSprite";	//ウィンドウクラスの名前
-	constexpr const char* c_classNameBackGround = "backGround";		//背景クラスの名前
-
-	constexpr const char* c_playerAttackCollisionName = "playerAttackCollision";	//プレイヤーの攻撃判定の名前
-	constexpr const char* c_enemyAttackCollisionName = "enemyAttackCollision";		//敵の攻撃判定の名前
+	constexpr const char* c_filePathYouDiedSprite = "Assets/image/youDied2.dds";	//死亡スプライトのファイルパス
+	const CVector2 c_spriteYouDiedWH = { 1740.0f, 180.0f };							//死亡スプライトの幅と高さ
+	const CVector3 c_spriteSizeYouDied = { 0.8f,0.8f,0.8f };						//死亡スプライトの拡大率
 
 	constexpr const char* c_filePathTkmDoor = "Assets/modelData/backGround/door.tkm";	//ドアのtkmファイルパス
 	constexpr float c_distanceForOpenDoor = 200.0f;										//ドアを開けるのに必要な距離
@@ -34,9 +40,9 @@ namespace nsMyGame {
 	const CVector3 c_textSpriteSize = { 0.45f, 0.1f, 0.2f };							//テキストのスプライトの拡大率
 	const CVector2 c_textSpriteWH = { 1280.0f,720.0f };									//テキストのスプライトの幅と高さ
 
-	const CVector2 c_textPosition = { -50.0f,-240.0f };								//テキストの座標
-	const CVector2 c_textPosition_getKey = { -80.0f,-240.0f };						//[Key get.]テキストの座標
-	constexpr float c_textSize = 0.5f;												//テキストの拡大率
+	const CVector2 c_textPosition = { -50.0f,-240.0f };									//テキストの座標
+	const CVector2 c_textPosition_getKey = { -80.0f,-240.0f };							//[Key get.]テキストの座標
+	constexpr float c_textSize = 0.5f;													//テキストの拡大率
 
 
 	constexpr const char16_t* c_filePathFireEffect = u"Assets/effect/fire.efk";			//炎エフェクトのファイルパス

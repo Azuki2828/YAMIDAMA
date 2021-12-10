@@ -743,4 +743,7 @@
       <Filter>ソース ファイル\player</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

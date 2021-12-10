@@ -5,6 +5,7 @@ from Game import GetLengthToPlayer
 from Game import SetCoolTime
 from Game import AnimationUpdate
 from Game import UpdateTriggerBox
+from Game import JudgeDamage
 
 def Update():
 
@@ -14,6 +15,8 @@ def Update():
     #回転関数。
     Rotate()
 
+    #ダメージ判定
+    JudgeDamage()
 
     #プレイヤーとの距離を調べる。
     lengthToPlayer = GetLengthToPlayer()
@@ -24,7 +27,7 @@ def Update():
         ChangeState(2)
 
         #クールタイムを3.0秒に設定。
-        SetCoolTime(3.0)
+        SetCoolTime(1.6)
     #プレイヤーとの距離が500より遠いなら待機状態に。
     elif(lengthToPlayer > 500.0):
         ChangeState(0)

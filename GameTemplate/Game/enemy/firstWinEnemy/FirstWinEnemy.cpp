@@ -61,7 +61,7 @@ namespace nsMyGame {
 		}
 
 		void CFirstWinEnemy::UpdateSub() {
-
+			
 			// 現在更新処理を実行中のエネミーのアドレスを代入
 			g_pCurrentEnemy = this;
 			
@@ -118,7 +118,7 @@ namespace nsMyGame {
 			m_animationClip[enAnim_ThreeCombo].SetLoopFlag(false);
 			m_animationClip[enAnim_Damage].Load("Assets/animData/damage.tka");
 			m_animationClip[enAnim_Damage].SetLoopFlag(false);
-			m_animationClip[enAnim_Death].Load("Assets/animData/death.tka");
+			m_animationClip[enAnim_Death].Load("Assets/animData/death2.tka");
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
 			m_animationClip[enAnim_AttackBreak].Load("Assets/animData/attackBreak.tka");
 			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);
@@ -169,19 +169,22 @@ namespace nsMyGame {
 
 		void CFirstWinEnemy::CreateAttackCollision() {
 
-			//剣のボーンのワールド行列を取得する。
-			CMatrix swordBaseMatrix = m_modelRender->GetSkeleton()->GetBone(m_swordBoneNum)->GetWorldMatrix();
+			//剣のボーンを取得。
+			Bone* swordBone = m_modelRender->GetSkeleton()->GetBone(m_swordBoneNum);
 
-			//コリジョンオブジェクトを作成する。
+			//剣のボーンのワールド行列を取得。
+			CMatrix swordBaseMatrix = swordBone->GetWorldMatrix();
+
+			//コリジョンオブジェクトを作成。
 			auto collisionObject = NewGO<CAttackCollision>(enPriority_Zeroth, c_enemyAttackCollisionName);
-
+			
 			//有効時間を設定。
-			collisionObject->SetActiveTime(0.2f);
+			collisionObject->SetActiveTime(c_attackCollisionActiveTime);
 
-			//ボックス状のコリジョンを作成する。
+			//ボックス状のコリジョンを作成。
 			collisionObject->CreateBox(m_position, CQuaternion::Identity, c_attackTriggerBoxSize);
 
-			//剣のボーンのワールド行列をコリジョンに適用させる。
+			//剣のボーンのワールド行列をコリジョンに適用。
 			collisionObject->SetWorldMatrix(swordBaseMatrix);
 		}
 
@@ -199,7 +202,7 @@ namespace nsMyGame {
 			//歩き状態ならプレイヤーに一定速度で近づく。
 			if (m_state == enState_Walk) {
 
-				m_moveSpeed += toPlayerVec * 280.0f;
+				m_moveSpeed += toPlayerVec * 240.0f;
 			}
 
 			//3連続攻撃状態なら一定速度でプレイヤーに近づく。

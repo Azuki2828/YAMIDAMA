@@ -1,6 +1,7 @@
 #pragma once
 #include "../Enemy.h"
 #include "FirstWinEnemyAttackCollisionDetection.h"
+#include "../../AttackCollision.h"
 
 namespace nsMyGame {
 
@@ -123,6 +124,7 @@ namespace nsMyGame {
 			EnState m_state = enState_Idle;							//ステート
 			CAnimationClip m_animationClip[enAnim_Num];				//アニメーションクリップ
 			CFirstWinEnemyAttackCollisionDetection m_triggerBox;	//攻撃用のトリガーボックス
+			std::vector<CAttackCollision*> m_attackCollision;			//攻撃用当たり判定のリスト
 		};
 	}
 }

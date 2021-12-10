@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Enemy.h"
+#include "../AttackCollision.h"
 
 namespace nsMyGame {
 
@@ -108,8 +109,12 @@ namespace nsMyGame {
 
 		bool IsGuarded() {
 
-			bool a = g_pCurrentEnemy->IsGuarded();
-			return a;
+			return g_pCurrentEnemy->IsGuarded();
+		}
+
+		void JudgeDamage() {
+
+			g_pCurrentEnemy->JudgeDamage();
 		}
 
 		//Python側に関数を渡す。
@@ -127,6 +132,7 @@ namespace nsMyGame {
 			m.def("SetGuardTime", &SetGuardTime);
 			m.def("GetGuardTime", &GetGuardTime);
 			m.def("IsGuarded", &IsGuarded);
+			m.def("JudgeDamage", &JudgeDamage);
 		}
 
 
@@ -214,6 +220,45 @@ namespace nsMyGame {
 
 			//正規化。
 			m_forward.Normalize();
+		}
+
+		void CEnemy::JudgeDamage() {
+
+			//生成されている敵の攻撃当たり判定を調べる。
+			auto playerCollision = FindGOs<CAttackCollision>(c_playerAttackCollisionName);
+
+			//当たり判定処理。
+			//このフレームで全ての当たり判定との衝突判定をするため、一気にダメージを受ける可能性あり。
+			//それが嫌なら、for文の内部でステートを調べること！
+			for (auto& collision : playerCollision) {
+
+				//ガード成功中なら早期リターン。
+				//if (m_playerState == enState_GuardSuccess) {
+				//
+				//	return;
+				//}
+
+				//剛体との当たり判定を調べる。
+				CPhysicsWorld::GetInstance()->ContactTest(m_charaCon, [&](const btCollisionObject& contactObject) {
+
+					//トリガーボックスと接触した。
+					if (collision->IsSelf(contactObject)) {
+
+						////ガードしたならガード成功状態に。
+						//if (m_playerState == enState_Guard) {
+						//
+						//	m_playerState = enState_GuardSuccess;
+						//	m_playerAction.GuardSuccess();
+						//
+						//	//処理はここで終了。
+						//	return;
+						//}
+
+						//ダメージを受ける。
+						SetReceiveDamage(true);
+					}
+					});
+			}
 		}
 	}
 }

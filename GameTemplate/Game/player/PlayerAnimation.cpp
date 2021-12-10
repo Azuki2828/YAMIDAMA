@@ -28,7 +28,7 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Guard].SetLoopFlag(false);
 			m_animationClip[enAnim_GuardSuccess].Load("Assets/animData/guardSuccess.tka");
 			m_animationClip[enAnim_GuardSuccess].SetLoopFlag(false);
-			m_animationClip[enAnim_Death].Load("Assets/animData/death.tka");
+			m_animationClip[enAnim_Death].Load("Assets/animData/death2.tka");
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
 		}
 

@@ -7,7 +7,7 @@ from Game import UpdateTriggerBox
 
 
 def Update() :
-
+    
     #移動関数呼び出し。
     Move()
 
