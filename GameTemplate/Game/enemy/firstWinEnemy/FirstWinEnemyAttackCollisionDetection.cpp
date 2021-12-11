@@ -6,78 +6,36 @@ namespace nsMyGame {
 
 	namespace nsEnemy {
 
-		void CFirstWinEnemyAttackCollisionDetection::Create(const CVector3& pos, const CQuaternion& rot) {
+		void CFirstWinEnemyAttackCollisionDetection::Update() {
 
-			//攻撃の当たり判定を作成。
-			m_ghostBox.CreateBox(
-				pos,
-				rot,
-				c_attackTriggerBoxSize
-			);
-			
-		}
-
-		void CFirstWinEnemyAttackCollisionDetection::Activate(const CVector3& pos, const CQuaternion& rot) {
-
-			if (!m_isActive) {
-
-				//トリガーボックスを作成。
-				Create(pos, rot);
-
-				//プレイヤーを探す。
-				m_player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
-
-				//ダメージフラグをfalseに設定。
-				//m_player->SetReceiveDamage(false);
-
-				//トリガーボックスを有効にする。
-				m_isActive = true;
-			}
-		}
-
-		void CFirstWinEnemyAttackCollisionDetection::Deactivate() {
-
-			if (m_isActive) {
-
-				//トリガーボックスを削除。
-				m_ghostBox.Release();
-				//トリガーボックスを無効にする。
-				m_isActive = false;
-				m_isGuarded = false;
-			}
-		}
-
-
-		void CFirstWinEnemyAttackCollisionDetection::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
+			//ガードフラグを初期化。
+			m_isGuarded = false;
 
 			//アクティブじゃないなら終了。
-			if (!m_isActive) {
+			if (!m_isActive) { return; }
 
-				return;
-			}
+			//プレイヤーを検索。
+			auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
-			//座標を求める。
-			CVector3 position = pos;
-			position.y += c_attackTriggerBoxSize.y / 2;
-
-			//座標と回転を設定。
-			m_ghostBox.SetPosition(position + forward * c_attackTriggerBoxMul);
-			m_ghostBox.SetRotation(rot);
+			//プレイヤーの検索に失敗したなら終了。
+			if (player == nullptr) { return; }
 
 			//剛体との当たり判定を調べる。
-			CPhysicsWorld::GetInstance()->ContactTest(m_player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
+			CPhysicsWorld::GetInstance()->ContactTest(player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
 
-				////まだプレイヤーが今回の攻撃を受けていない状態でトリガーボックスと接触した。
-				//if (!m_player->GetReceiveDamage() && m_ghostBox.IsSelf(contactObject)) {
+				//トリガーボックスと接触した。
+				if (m_attackCollision.IsSelf(contactObject)) {
 
-				//	if (m_player->IsGuard()) {
+					//プレイヤーがガード状態ならガードされ、当たり判定をしないように設定する。
+					if (player->IsGuard()) {
 
-				//		m_isGuarded = true;
-				//	}
+						m_isGuarded = true;
+						m_isActive = false;
+					}
 
-				//	//プレイヤーにダメージを与える。
-				//	m_player->SetReceiveDamage(true);
-				//}
+					//プレイヤーに攻撃。
+					player->JudgeDamage();
+				}
 			});
 		}
 	}

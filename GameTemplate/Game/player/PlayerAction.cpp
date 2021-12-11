@@ -7,7 +7,7 @@ namespace nsMyGame {
 
 	namespace nsPlayer {
 
-		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, const int swordBoneNum) {
+		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, Bone* swordBone) {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
@@ -16,7 +16,19 @@ namespace nsMyGame {
 				position		//座標。
 			);
 
-			m_swordBoneNum = swordBoneNum;
+			m_swordBone = swordBone;
+
+			//剣のボーンのワールド行列を取得。
+			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
+
+			//当たり判定のインスタンスを初期化。
+			m_attackCollision.Create(m_position, m_rotation);
+
+			//当たり判定の座標と回転を更新。
+			m_attackCollision.UpdatePositionAndRotation(swordBaseMatrix);
+
+			//当たり判定をしないように設定。
+			m_attackCollision.Deactivate();
 		}
 
 		void CPlayerAction::Move(CVector3& position, CVector3& forward, EnPlayerState& playerState) {
@@ -236,7 +248,7 @@ namespace nsMyGame {
 			auto player = FindGO<CPlayer>(c_classNamePlayer);
 			
 			//剣のボーンのワールド行列を取得する。
-			CMatrix swordBaseMatrix = player->GetModelRender()->GetSkeleton()->GetBone(m_swordBoneNum)->GetWorldMatrix();
+			CMatrix swordBaseMatrix = player->GetModelRender()->GetSkeleton()->GetBone(66)->GetWorldMatrix();
 
 			//コリジョンオブジェクトを作成する。
 			auto collisionObject = NewGO<CAttackCollision>(enPriority_Zeroth, c_playerAttackCollisionName);
@@ -257,19 +269,26 @@ namespace nsMyGame {
 			if (wcscmp(eventName, L"attack") == 0)
 			{
 				//攻撃中にする。
-				m_isAttack = true;
-
-				CreateAttackCollision();
+				m_attackCollision.Activate();
 			}
-			////キーの名前が「attack_end」の時。
-			//else if (wcscmp(eventName, L"attack_end") == 0)
-			//{
-			//	//攻撃を終わる。
-			//	m_isAttack = false;
-			//}
+			//キーの名前が「attack_end」の時。
+			else if (wcscmp(eventName, L"attackEnd") == 0)
+			{
+				//攻撃を終わる。
+				m_attackCollision.Deactivate();
+			}
 		}
 
-		void CPlayerAction::Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward, EnPlayerState& playerState) {
+		void CPlayerAction::Update() {
+
+			//剣のボーンのワールド行列を取得。
+			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
+
+			//当たり判定の座標と回転を更新。
+			m_attackCollision.UpdatePositionAndRotation(swordBaseMatrix);
+
+			//当たり判定を更新。
+			m_attackCollision.Update();
 
 			//クールタイム中なら
 			if (IsCoolTime()) {

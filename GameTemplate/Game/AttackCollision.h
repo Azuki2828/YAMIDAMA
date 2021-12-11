@@ -69,6 +69,19 @@ namespace nsMyGame {
 
 			return m_isGuarded;
 		}
+
+		/**
+		 * @brief 更新関数。
+		 * @param pos 座標
+		 * @param rot 回転
+		 * @param worldMatrix ワールド行列
+		*/
+		void Update(const CVector3& pos, const CQuaternion& rot, const CMatrix& worldMatrix) {
+
+			m_ghostBox.SetPosition(pos);
+			m_ghostBox.SetRotation(rot);
+			SetWorldMatrix(worldMatrix);
+		}
 	private:
 		/**
 		 * @brief Update()関数の前に一度だけ呼ばれる関数。
@@ -97,7 +110,7 @@ namespace nsMyGame {
 		void SetRotation(const CQuaternion& rot) {
 
 			m_ghostBox.SetRotation(rot);
-		}
+		}	
 	private:
 		float m_activeTime = 0.0f;						//有効タイム
 		bool m_isGuarded = false;						//ガードされた？

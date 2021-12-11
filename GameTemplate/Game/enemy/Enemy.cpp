@@ -90,11 +90,7 @@ namespace nsMyGame {
 		*/
 		void UpdateTriggerBox() {
 
-			g_pCurrentEnemy->UpdateTriggerBox(
-				g_pCurrentEnemy->GetPosition(),
-				g_pCurrentEnemy->GetRotation(),
-				g_pCurrentEnemy->GetForward()
-			);
+			g_pCurrentEnemy->UpdateTriggerBox();
 		}
 
 		void SetGuardTime(const float guardTime) {

@@ -69,7 +69,7 @@ namespace nsMyGame {
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
 		const CVector3 c_playerStartPosition = { 0.0f,200.0f,0.0f };					//開始時のプレイヤーの座標
 
-		const CVector3 c_attackTriggerBoxSize = { 150.0f,150.0f,100.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
+		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//プレイヤー攻撃時のトリガーボックスの前方向への乗算値
 		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//プレイヤー攻撃時のトリガーボックスのY方向への加算値
 

@@ -18,7 +18,7 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Attack].SetLoopFlag(false);
 			m_animationClip[enAnim_AttackBreak].Load("Assets/animData/attackBreak.tka");
 			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);
-			m_animationClip[enAnim_Damage].Load("Assets/animData/damage.tka");
+			m_animationClip[enAnim_Damage].Load("Assets/animData/damage2.tka");
 			m_animationClip[enAnim_Damage].SetLoopFlag(false);
 			m_animationClip[enAnim_Rolling].Load("Assets/animData/rolling2.tka");
 			m_animationClip[enAnim_Rolling].SetLoopFlag(false);
@@ -53,7 +53,7 @@ namespace nsMyGame {
 				modelRender.PlayAnimation(enAnim_AttackBreak, 0.8f);
 				break;
 			case enState_Damage:
-				modelRender.PlayAnimation(enAnim_Damage, 0.8f);
+				modelRender.PlayAnimation(enAnim_Damage, 0.4f);
 				break;
 			case enState_Rolling:
 				modelRender.PlayAnimation(enAnim_Rolling, 0.8f);

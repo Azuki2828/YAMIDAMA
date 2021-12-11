@@ -82,7 +82,7 @@ namespace nsMyGame {
 			 * @param rot 回転
 			 * @param forward 前方向
 			*/
-			void UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward)override final;
+			void UpdateTriggerBox()override final;
 
 			/**
 			 * @brief ダメージフラグを設定する関数。

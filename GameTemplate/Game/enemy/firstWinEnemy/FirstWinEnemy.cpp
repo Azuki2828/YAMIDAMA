@@ -55,7 +55,22 @@ namespace nsMyGame {
 			);
 
 			//剣に取り付けられたボーンの番号を読み込む。
-			m_swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHand");
+			auto swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHand");
+
+			//剣のボーンを取得。
+			m_swordBone = m_modelRender->GetSkeleton()->GetBone(swordBoneNum);
+
+			//剣のボーンのワールド行列を取得。
+			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
+
+			//当たり判定のインスタンスを初期化。
+			m_triggerBox.Create(m_position, m_rotation);
+
+			//当たり判定の座標と回転を更新。
+			m_triggerBox.UpdatePositionAndRotation(swordBaseMatrix);
+
+			//当たり判定をしないように設定。
+			m_triggerBox.Deactivate();
 
 			return true;
 		}
@@ -64,6 +79,12 @@ namespace nsMyGame {
 			
 			// 現在更新処理を実行中のエネミーのアドレスを代入
 			g_pCurrentEnemy = this;
+
+			//剣のボーンのワールド行列を取得。
+			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
+
+			//当たり判定のワールド行列を更新。
+			m_triggerBox.UpdatePositionAndRotation(swordBaseMatrix);
 			
 			//ステートに応じて読み込むPythonスクリプトを変える。
 			switch (m_state) {
@@ -90,15 +111,6 @@ namespace nsMyGame {
 			//PythonスクリプトのUpdate()関数を呼び出す。
 			auto updateFunc = m_enemyPyModule.attr("Update");
 			updateFunc();
-
-
-			if (m_isAttack) {
-
-
-			}
-
-			//攻撃状態から外す。
-			m_isAttack = false;
 		}
 
 		void CFirstWinEnemy::InitStatus() {
@@ -155,25 +167,20 @@ namespace nsMyGame {
 			if (wcscmp(eventName, L"attack") == 0)
 			{
 				//攻撃中にする。
-				m_isAttack = true;
-
-				CreateAttackCollision();
+				m_triggerBox.Activate();
 			}
-			////キーの名前が「attack_end」の時。
-			//else if (wcscmp(eventName, L"attack_end") == 0)
-			//{
-			//	//攻撃を終わる。
-			//	m_isAttack = false;
-			//}
+			//キーの名前が「attack_end」の時。
+			else if (wcscmp(eventName, L"attackEnd") == 0)
+			{
+				//攻撃を終わる。
+				m_triggerBox.Deactivate();
+			}
 		}
 
 		void CFirstWinEnemy::CreateAttackCollision() {
 
-			//剣のボーンを取得。
-			Bone* swordBone = m_modelRender->GetSkeleton()->GetBone(m_swordBoneNum);
-
 			//剣のボーンのワールド行列を取得。
-			CMatrix swordBaseMatrix = swordBone->GetWorldMatrix();
+			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
 
 			//コリジョンオブジェクトを作成。
 			auto collisionObject = NewGO<CAttackCollision>(enPriority_Zeroth, c_enemyAttackCollisionName);
@@ -227,38 +234,10 @@ namespace nsMyGame {
 			}
 		}
 
-		void CFirstWinEnemy::UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) {
-
-			return;
-			//3連続攻撃状態なら
-			if (m_state == enState_ThreeCombo) {
-
-				//斬るタイミングでトリガーボックスを有効にする。
-				if (m_coolTime > 0.2f && m_coolTime < 0.4f) {
-
-					m_triggerBox.Activate(pos, rot);
-				}
-				else if (m_coolTime > 0.6f && m_coolTime < 0.8f) {
-
-					m_triggerBox.Activate(pos, rot);
-				}
-				else if (m_coolTime > 2.0f && m_coolTime < 2.4f) {
-
-					m_triggerBox.Activate(pos, rot);
-				}
-				//それ以外は無効にする。
-				else {
-					m_triggerBox.Deactivate();
-				}
-			}
-			//攻撃時以外は無効にする。
-			else {
-
-				m_triggerBox.Deactivate();
-			}
+		void CFirstWinEnemy::UpdateTriggerBox() {
 
 			//トリガーボックスを更新。
-			m_triggerBox.Update(pos, rot, forward);
+			m_triggerBox.Update();
 		}
 	}
 }

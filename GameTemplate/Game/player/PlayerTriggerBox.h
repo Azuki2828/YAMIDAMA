@@ -6,45 +6,58 @@ namespace nsMyGame {
 		//プレイヤーの攻撃処理に使うトリガーボックスのクラス
 		class CPlayerTriggerBox
 		{
-		private:
+		public:
 			/**
-			 * @brief トリガーボックスを作成する関数。
+			 * @brief 攻撃の当たり判定を作成する関数。
 			 * @param pos 座標
 			 * @param rot 回転
 			*/
-			void Create(const CVector3& pos, const CQuaternion& rot);
-		public:
+			void Create(const CVector3& pos, const CQuaternion& rot) {
 
-			/**
-			 * @brief 初期化関数。
-			*/
-			void Init();
+				m_attackCollision.CreateBox(pos, rot, c_attackTriggerBoxSize);
+			}
+			
 			/**
 			 * @brief トリガーボックスを有効にする関数。
-			 * @param pos 座標
-			 * @param rot 回転
 			*/
-			void Activate(const CVector3& pos, const CQuaternion& rot);
+			void Activate() {
+
+				m_isActive = true;
+			}
 
 			/**
 			 * @brief トリガーボックスを無効にする関数。
 			*/
-			void Deactivate();
+			void Deactivate() {
+
+				m_isActive = false;
+			}
+
+			/**
+			 * @brief 座標と回転を更新する関数。
+			 * @param worldMatrix ワールド行列
+			*/
+			void UpdatePositionAndRotation(const CMatrix& worldMatrix) {
+
+				CVector3 position;
+				position.x = worldMatrix.m[3][0];
+				position.y = worldMatrix.m[3][1];
+				position.z = worldMatrix.m[3][2];
+				m_attackCollision.SetPosition(position);
+
+				CQuaternion rotation;
+				rotation.SetRotation(worldMatrix);
+				m_attackCollision.SetRotation(rotation);
+			}
 
 			/**
 			 * @brief トリガーボックスを更新する関数。
-			 * @param pos 座標
-			 * @param rot 回転
-			 * @param forward 前方向
 			*/
-			void Update(const CVector3& pos, const CQuaternion& rot, const CVector3& forward);
+			void Update();
 
 		private:
 			bool m_isActive = false;			//トリガーボックスが有効かどうか？
-			CVector3 m_position;				//座標
-			CQuaternion m_rotation;				//回転
-			CVector3 m_forward;					//前方向
-			CPhysicsGhostObject m_ghostBox;		//トリガーボックス
+			CPhysicsGhostObject m_attackCollision;		//トリガーボックス
 		};
 	}
 }

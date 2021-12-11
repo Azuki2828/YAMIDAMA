@@ -23,14 +23,11 @@ namespace nsMyGame {
 			//アクション処理。
 			m_playerAction.Action(m_playerState, m_isSelect);
 
-			//ダメージ判定。
-			JudgeDamage();
-
 			//アニメーション処理。
 			m_playerAnimation.Update(*m_modelRender, m_playerState);
 
 			//クールタイムを更新。
-			m_playerAction.Update(m_position, m_rotation, m_forward, m_playerState);
+			m_playerAction.Update();
 
 			//死んでいる状態かどうか判定。
 			if (IsDeath()){ m_playerState = enState_Death; }
@@ -62,7 +59,7 @@ namespace nsMyGame {
 			m_playerAnimation.Update(*m_modelRender, m_playerState);
 
 			//クールタイムを更新。
-			m_playerAction.Update(m_position, m_rotation, m_forward, m_playerState);
+			m_playerAction.Update();
 
 			//死んでいる状態かどうか判定。
 			if (IsDeath()) { m_playerState = enState_Death; }
@@ -109,7 +106,7 @@ namespace nsMyGame {
 			m_playerAnimation.Update(*m_modelRender, m_playerState);
 
 			//クールタイムを更新。
-			m_playerAction.Update(m_position, m_rotation, m_forward, m_playerState);
+			m_playerAction.Update();
 
 			//死んでいる状態かどうか判定。
 			if (IsDeath()) { m_playerState = enState_Death; }
@@ -137,14 +134,11 @@ namespace nsMyGame {
 			//アクション処理。
 			m_playerAction.Action(m_playerState, m_isSelect);
 
-			//ダメージ判定。
-			JudgeDamage();
-
 			//アニメーション処理。
 			m_playerAnimation.Update(*m_modelRender, m_playerState);
 
 			//クールタイムを更新。
-			m_playerAction.Update(m_position, m_rotation, m_forward, m_playerState);
+			m_playerAction.Update();
 
 			//座標を設定。
 			m_modelRender->SetPosition(m_position);
@@ -169,14 +163,11 @@ namespace nsMyGame {
 			//アクション処理。
 			m_playerAction.Action(m_playerState, m_isSelect);
 
-			//ダメージ判定。
-			JudgeDamage();
-
 			//アニメーション処理。
 			m_playerAnimation.Update(*m_modelRender, m_playerState);
 
 			//クールタイムを更新。
-			m_playerAction.Update(m_position, m_rotation, m_forward, m_playerState);
+			m_playerAction.Update();
 
 			//死んでいる状態かどうか判定。
 			if (IsDeath()) { m_playerState = enState_Death; }

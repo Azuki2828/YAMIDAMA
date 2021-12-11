@@ -14,7 +14,15 @@ namespace nsMyGame {
 
 	bool CBackGround::Start() {
 
-		
+		////プレイヤーを検索。
+		//auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+		//
+		////プレイヤーを中心とするポイントライトを作成。
+		//m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+		//m_pointLight[0]->SetPosition(player->GetPosition());
+		//m_pointLight[0]->SetColor({ 1.0f,1.0f,1.0f });
+		//m_pointLight[0]->SetRange(300.0f);
+		//m_pointLight[0]->SetAffectPowParam(2.5f);
 
 		//ディレクションライトを作成。
 		CreateDirLight();
@@ -197,10 +205,10 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("GEnemy")) {
 
-				m_gWEnemy.push_back(NewGO<nsEnemy::CGoteWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
-				m_gWEnemy[gEnemyNum]->SetPosition(objData.position);
-				m_gWEnemy[gEnemyNum]->SetRotation(objData.rotation);
-				gEnemyNum++;
+				//m_gWEnemy.push_back(NewGO<nsEnemy::CGoteWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
+				//m_gWEnemy[gEnemyNum]->SetPosition(objData.position);
+				//m_gWEnemy[gEnemyNum]->SetRotation(objData.rotation);
+				//gEnemyNum++;
 				return true;
 			}
 

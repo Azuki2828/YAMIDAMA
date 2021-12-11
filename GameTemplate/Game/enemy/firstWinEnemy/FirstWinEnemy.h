@@ -92,7 +92,7 @@ namespace nsMyGame {
 			 * @param rot 回転
 			 * @param forward 前方向
 			*/
-			void UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward)override final;
+			void UpdateTriggerBox()override final;
 
 			/**
 			 * @brief ダメージフラグを設定する関数。
@@ -104,8 +104,8 @@ namespace nsMyGame {
 
 				//ダメージを与える。
 				if (m_receiveDamage) {
-					m_coolTime = 0.5f;
-					m_status.hp -= 70;
+					m_coolTime = 0.3f;
+					m_status.hp -= 30;
 					m_state = enState_Damage;
 				}
 			}
@@ -119,12 +119,10 @@ namespace nsMyGame {
 				return m_triggerBox.IsGuarded();
 			}
 		private:
-			bool m_isAttack = false;								//攻撃中？
-			int m_swordBoneNum = 0;									//剣に取り付けられたボーンの番号
+			Bone* m_swordBone = nullptr;							//剣に取り付けられたボーン
 			EnState m_state = enState_Idle;							//ステート
 			CAnimationClip m_animationClip[enAnim_Num];				//アニメーションクリップ
 			CFirstWinEnemyAttackCollisionDetection m_triggerBox;	//攻撃用のトリガーボックス
-			std::vector<CAttackCollision*> m_attackCollision;			//攻撃用当たり判定のリスト
 		};
 	}
 }

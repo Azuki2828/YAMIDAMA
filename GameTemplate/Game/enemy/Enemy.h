@@ -201,7 +201,7 @@ namespace nsMyGame {
 			 * @param rot ‰ñ“]
 			 * @param forward ‘O•ûŒü
 			*/
-			virtual void UpdateTriggerBox(const CVector3& pos, const CQuaternion& rot, const CVector3& forward) = 0;
+			virtual void UpdateTriggerBox() = 0;
 
 			/**
 			 * @brief ˆÚ“®ŠÖ”B

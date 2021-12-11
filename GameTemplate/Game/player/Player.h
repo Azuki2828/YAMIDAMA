@@ -55,11 +55,6 @@ namespace nsMyGame {
 			void UpdateForward();
 
 			/**
-			 * @brief ダメージ判定をする関数。
-			*/
-			void JudgeDamage();
-
-			/**
 			 * @brief 通常の更新処理。
 			*/
 			void CommonStateProcess();
@@ -89,6 +84,11 @@ namespace nsMyGame {
 			*/
 			void IsAttackStateProcess();
 		public:
+			/**
+			 * @brief ダメージ判定をする関数。
+			*/
+			void JudgeDamage();
+
 			/**
 			 * @brief 死んでいるかどうか判定する関数。
 			 * @return HPが0以下？

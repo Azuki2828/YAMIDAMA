@@ -1,4 +1,5 @@
 #pragma once
+#include "PlayerTriggerBox.h"
 
 namespace nsMyGame {
 
@@ -12,7 +13,7 @@ namespace nsMyGame {
 			 * @brief 初期化関数。
 			 * @param position プレイヤーの座標。
 			*/
-			void Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, const int swordBoneNum);
+			void Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, Bone* swordBone);
 
 			/**
 			 * @brief 移動処理を行う関数。
@@ -38,7 +39,7 @@ namespace nsMyGame {
 			/**
 			 * @brief 更新関数。クールタイムの更新などを行う。
 			*/
-			void Update(const CVector3& pos, const CQuaternion& rot,const CVector3& forward, EnPlayerState& playerState);
+			void Update();
 
 			/**
 			 * @brief キャラクターコントローラーを取得する関数。
@@ -51,7 +52,7 @@ namespace nsMyGame {
 
 			void ReceiveDamage() {
 
-				m_coolTime = 0.5f;
+				m_coolTime = 0.3f;
 			}
 
 			/**
@@ -126,8 +127,6 @@ namespace nsMyGame {
 			 * @brief 攻撃用の当たり判定を作成する関数。
 			*/
 			void CreateAttackCollision();
-
-			
 		private:
 			bool m_isAttack = false;							//アタック中？
 			bool m_hitAttack = false;							//攻撃が当たった？
@@ -135,12 +134,13 @@ namespace nsMyGame {
 			bool m_isGuard = false;								//ガード中？
 			float m_coolTime = 0.0f;							//クールタイム
 			float m_guardSccessCoolTime = 0.0f;					//ガード成功時のクールタイム
-			int m_swordBoneNum = 0;								//剣に取り付けられたボーンの番号
+			Bone* m_swordBone = nullptr;						//剣に取り付けられたボーン
 			CVector3 m_position = CVector3::Zero;				//座標
 			CQuaternion m_rotation = CQuaternion::Identity;		//回転
 			CVector3 m_moveSpeed = CVector3::Zero;				//移動速度
 			CVector3 m_rollingSpeed = CVector3::Zero;			//回転速度
 			CharacterController m_charaCon;						//キャラクターコントローラー
+			CPlayerTriggerBox m_attackCollision;				//攻撃用当たり判定
 		};
 	}
 }

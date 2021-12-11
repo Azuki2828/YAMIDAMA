@@ -48,8 +48,11 @@ namespace nsMyGame {
 			//剣に取り付けられたボーンの番号を読み込む。
 			int swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHand");
 
+			//剣のボーンを取得。
+			Bone* swordBone = m_modelRender->GetSkeleton()->GetBone(swordBoneNum);
+
 			//行動クラスを初期化。
-			m_playerAction.Init(m_position, m_rotation, m_forward, swordBoneNum);
+			m_playerAction.Init(m_position, m_rotation, m_forward, swordBone);
 			return true;
 		}
 
@@ -90,41 +93,21 @@ namespace nsMyGame {
 
 		void CPlayer::JudgeDamage() {
 
-			//生成されている敵の攻撃当たり判定を調べる。
-			auto enemyCollision = FindGOs<CAttackCollision>(c_enemyAttackCollisionName);
+			//ガード成功中なら終了。
+			if (m_playerState == enState_GuardSuccess) { return; }
 
-			//当たり判定処理。
-			//このフレームで全ての当たり判定との衝突判定をするため、一気にダメージを受ける可能性あり。
-			//それが嫌なら、for文の内部でステートを調べること！
-			for (auto& collision : enemyCollision) {
+			//ガードしたならガード成功状態に。
+			if (m_playerState == enState_Guard) {
 
-				//ガード成功中なら早期リターン。
-				if (m_playerState == enState_GuardSuccess) {
+				m_playerState = enState_GuardSuccess;
+				m_playerAction.GuardSuccess();
 
-					return;
-				}
-
-				//剛体との当たり判定を調べる。
-				CPhysicsWorld::GetInstance()->ContactTest(m_playerAction.GetCharacterController(), [&](const btCollisionObject& contactObject) {
-
-					//トリガーボックスと接触した。
-					if (collision->IsSelf(contactObject)) {
-
-						//ガードしたならガード成功状態に。
-						if (m_playerState == enState_Guard) {
-
-							m_playerState = enState_GuardSuccess;
-							m_playerAction.GuardSuccess();
-
-							//処理はここで終了。
-							return;
-						}
-
-						//ダメージを受ける。
-						ReceiveDamage();
-					}
-				});
+				//処理はここで終了。
+				return;
 			}
+
+			//ダメージを受ける。
+			ReceiveDamage();
 		}
 
 		void CPlayer::UpdateForward() {
