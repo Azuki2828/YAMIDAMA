@@ -68,12 +68,13 @@ namespace nsMyGame {
 		
 
 		//様々なインスタンスを作成する。
-		CGameObjectManager::CreateInstance();		//ゲームオブジェクト管理クラス
-		CPhysicsWorld::CreateInstance();			//物理ワールド
-		nsLight::CLightManager::CreateInstance();	//ライト管理クラス
-		CCamera::CreateLightCamera();				//ライトカメラ
-		CRenderingEngine::CreateRenderingEngine();	//レンダリングエンジン
-		EffectEngine::CreateInstance();				//エフェクトエンジン
+		CGameObjectManager::CreateInstance();				//ゲームオブジェクト管理クラス
+		CPhysicsWorld::CreateInstance();					//物理ワールド
+		nsLight::CLightManager::CreateInstance();			//ライト管理クラス
+		CCamera::CreateLightCamera();						//ライトカメラ
+		CRenderingEngine::CreateRenderingEngine();			//レンダリングエンジン
+		EffectEngine::CreateInstance();						//エフェクトエンジン
+		NewGO<Fade>(enPriority_Zeroth, c_classNameFade);	//フェード
 
 		//ワイヤーフレーム表示をONにする。
 		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();

@@ -348,6 +348,7 @@
     <ClCompile Include="..\..\MiniEngine\CameraCollisionSolver.cpp" />
     <ClCompile Include="..\..\MiniEngine\ConstantBuffer.cpp" />
     <ClCompile Include="..\..\MiniEngine\DescriptorHeap.cpp" />
+    <ClCompile Include="..\..\MiniEngine\Fade.cpp" />
     <ClCompile Include="..\..\MiniEngine\font\Font.cpp" />
     <ClCompile Include="..\..\MiniEngine\font\FontEngine.cpp" />
     <ClCompile Include="..\..\MiniEngine\font\FontRender.cpp" />
@@ -467,6 +468,7 @@
     <ClInclude Include="..\..\MiniEngine\debug\MyAssert.h" />
     <ClInclude Include="..\..\MiniEngine\DescriptorHeap.h" />
     <ClInclude Include="..\..\MiniEngine\DescriptorHeap_inline.h" />
+    <ClInclude Include="..\..\MiniEngine\Fade.h" />
     <ClInclude Include="..\..\MiniEngine\font\Font.h" />
     <ClInclude Include="..\..\MiniEngine\font\FontEngine.h" />
     <ClInclude Include="..\..\MiniEngine\font\FontRender.h" />

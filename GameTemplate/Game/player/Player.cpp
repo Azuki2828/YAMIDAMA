@@ -14,6 +14,11 @@ namespace nsMyGame {
 			//初期座標を設定。
 			m_position = c_playerStartPosition;
 
+			//初期回転を設定。
+			CQuaternion quaternion = CQuaternion::Identity;
+			quaternion.SetRotationDegY(180.0f);
+			m_rotation = quaternion;
+
 			//ステータスを初期化。
 			InitStatus();
 

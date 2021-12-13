@@ -31,6 +31,10 @@ namespace nsMyGame {
 		auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, c_classNameEnemy);
 		fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
 
+		//フェードイン。
+		m_fade = FindGO<Fade>(c_classNameFade);
+		m_fade->StartFadeIn();
+
 		return true;
 	}
 

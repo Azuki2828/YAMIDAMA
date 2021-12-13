@@ -38,6 +38,7 @@ namespace nsMyGame {
 		CSpriteRender* m_youDiedSprite = nullptr;
 		CBackGround* m_backGround = nullptr;
 		CMainCamera* m_mainCamera = nullptr;
+		Fade* m_fade = nullptr;
 	};
 }
 

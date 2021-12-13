@@ -207,17 +207,17 @@ namespace nsMyGame {
 			}
 
 		private:
-			bool m_isSelect = false;					//何かを選んでいる状態？（近くの何かに反応している？）
-			int m_hasKeyNum = 0;						//鍵の所持数
-			SStatus m_status;							//ステータス
-			CModelRender* m_modelRender = nullptr;		//モデル
-			CPlayerAction m_playerAction;				//プレイヤーアクションクラス
-			CPlayerAnimation m_playerAnimation;			//プレイヤーアニメーションクラス
-			CPlayerSelect m_playerSelect;				//プレイヤーの選択状態クラス
-			CVector3 m_position = CVector3::Zero;		//座標
-			CQuaternion m_rotation;						//回転
-			CVector3 m_forward = CVector3::Zero;		//前方向
-			EnPlayerState m_playerState;				//プレイヤーのステート
+			bool m_isSelect = false;							//何かを選んでいる状態？（近くの何かに反応している？）
+			int m_hasKeyNum = 0;								//鍵の所持数
+			SStatus m_status;									//ステータス
+			CModelRender* m_modelRender = nullptr;				//モデル
+			CPlayerAction m_playerAction;						//プレイヤーアクションクラス
+			CPlayerAnimation m_playerAnimation;					//プレイヤーアニメーションクラス
+			CPlayerSelect m_playerSelect;						//プレイヤーの選択状態クラス
+			CVector3 m_position = CVector3::Zero;				//座標
+			CQuaternion m_rotation = CQuaternion::Identity;		//回転
+			CVector3 m_forward = CVector3::Zero;				//前方向
+			EnPlayerState m_playerState;						//プレイヤーのステート
 		};
 	}
 }

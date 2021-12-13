@@ -30,7 +30,7 @@ namespace nsMyGame {
 		CVector3 m_sca = CVector3::One;						//拡大
 
 		CVector3 m_tar = CVector3::Zero;					//注視点
-		CVector3 m_toCameraPos = { 0.0f,150.0f,-200.0f };	//カメラの追加座標
+		CVector3 m_toCameraPos = { 0.0f,150.0f,200.0f };	//カメラの追加座標
 
 		//各クラスのポインタ変数
 		nsPlayer::CPlayer* m_player = nullptr;
