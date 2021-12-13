@@ -81,6 +81,9 @@
     <Filter Include="MiniEngine\nature">
       <UniqueIdentifier>{f04a58d3-5926-4f17-bc6c-169420679ce5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MiniEngine\sound">
+      <UniqueIdentifier>{4bdf4d99-3c4b-4301-8caf-28d1dcc28d83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -390,6 +393,9 @@
       <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTitle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -741,6 +747,12 @@
     </ClInclude>
     <ClInclude Include="player\PlayerStateProcess.h">
       <Filter>ソース ファイル\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\tkUtil.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTitle.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

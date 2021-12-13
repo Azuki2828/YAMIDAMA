@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "system/system.h"
 #include "Game.h"
+#include "GameTitle.h"
 
 namespace nsMyGame {
 
@@ -82,8 +83,8 @@ namespace nsMyGame {
 		////////////////////////////////////////////////
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		
-		
-		NewGO<CGameMain>(enPriority_Zeroth);
+		NewGO<CGameTitle>(enPriority_Zeroth);
+		//NewGO<CGameMain>(enPriority_Zeroth);
 
 		// ここからゲームループ。
 		while (DispatchWindowMessage())

@@ -62,6 +62,11 @@
 #include "Model.h"
 #include "HID/GamePad.h"
 
+//#include "sound/tkWaveFile.h"
+//#include "sound/tkWaveFileBank.h"
+//#include "sound/tkSoundEngine.h"
+//#include "sound/tkSoundSource.h"
+
 #include "light/DirectionLight.h"
 #include "light/PointLight.h"
 #include "light/LightManager.h"

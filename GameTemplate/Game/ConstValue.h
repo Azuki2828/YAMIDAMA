@@ -59,6 +59,8 @@ namespace nsMyGame {
 
 	const CVector3 c_addFireEffectPosition = { 0.0f,5.0f,35.0f };	//炎エフェクトの座標調整のために加算するもの
 
+	constexpr const char* c_filePathTitleSprite = "Assets/Image/title.dds";	//タイトル画像のファイルパス
+
 	namespace nsPlayer {
 
 		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/player2.tkm";		//プレイヤーのtkmファイルパス
