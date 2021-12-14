@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "stdafx.h"
+#include "tkWaveFileBank.h"
 
 #define INPUTCHANNELS 2  // number of source channels
 #define OUTPUTCHANNELS 8	//最大出力チャンネル数。
@@ -27,6 +27,9 @@ public:
 	static void CreateInstance() {
 
 		m_soundEngine = new CSoundEngine;
+
+		//初期化。
+		m_soundEngine->Init();
 	}
 	/*!
 	* @brief	CSoundEngineのインスタンスを取得。

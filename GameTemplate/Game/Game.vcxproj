@@ -392,6 +392,10 @@
     <ClCompile Include="..\..\MiniEngine\Shader.cpp" />
     <ClCompile Include="..\..\MiniEngine\ShadowMap.cpp" />
     <ClCompile Include="..\..\MiniEngine\Skeleton.cpp" />
+    <ClCompile Include="..\..\MiniEngine\sound\tkSoundEngine.cpp" />
+    <ClCompile Include="..\..\MiniEngine\sound\tkSoundSource.cpp" />
+    <ClCompile Include="..\..\MiniEngine\sound\tkWaveFile.cpp" />
+    <ClCompile Include="..\..\MiniEngine\sound\tkWaveFileBank.cpp" />
     <ClCompile Include="..\..\MiniEngine\SpringCamera.cpp" />
     <ClCompile Include="..\..\MiniEngine\Sprite.cpp" />
     <ClCompile Include="..\..\MiniEngine\SpriteRender.cpp" />
@@ -521,6 +525,10 @@
     <ClInclude Include="..\..\MiniEngine\Shader.h" />
     <ClInclude Include="..\..\MiniEngine\ShadowMap.h" />
     <ClInclude Include="..\..\MiniEngine\Skeleton.h" />
+    <ClInclude Include="..\..\MiniEngine\sound\tkSoundEngine.h" />
+    <ClInclude Include="..\..\MiniEngine\sound\tkSoundSource.h" />
+    <ClInclude Include="..\..\MiniEngine\sound\tkWaveFile.h" />
+    <ClInclude Include="..\..\MiniEngine\sound\tkWaveFileBank.h" />
     <ClInclude Include="..\..\MiniEngine\SpringCamera.h" />
     <ClInclude Include="..\..\MiniEngine\Sprite.h" />
     <ClInclude Include="..\..\MiniEngine\SpriteRender.h" />

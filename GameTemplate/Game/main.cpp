@@ -70,6 +70,7 @@ namespace nsMyGame {
 		//様々なインスタンスを作成する。
 		CGameObjectManager::CreateInstance();				//ゲームオブジェクト管理クラス
 		CPhysicsWorld::CreateInstance();					//物理ワールド
+		CSoundEngine::CreateInstance();						//サウンドエンジン
 		nsLight::CLightManager::CreateInstance();			//ライト管理クラス
 		CCamera::CreateLightCamera();						//ライトカメラ
 		CRenderingEngine::CreateRenderingEngine();			//レンダリングエンジン

@@ -4,6 +4,7 @@
 
 #pragma once
 #include "stdafx.h"
+#include "tkWaveFile.h"
 
 	/*!
 	 * @brief	‰¹Œ¹ƒNƒ‰ƒXB

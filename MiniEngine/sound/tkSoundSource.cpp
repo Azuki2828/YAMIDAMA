@@ -4,8 +4,6 @@
 //#include "tkEngine/tkEnginePreCompile.h"
 #include "stdafx.h"
 #include "tkSoundSource.h"
-#include "tkSoundEngine.h"
-#include "tkWaveFile.h"
 #include "GameTime.h"
 
 	CSoundSource::CSoundSource()
@@ -92,7 +90,7 @@
 		m_sourceVoice = CSoundEngine::GetInstance()->CreateXAudio2SourceVoice(m_waveFile.get(), is3DSound);
 
 		if (m_sourceVoice == nullptr) {
-			MessageBoxA(nullptr, "wavのファイルパスが違います", "エラー", MB_OK);
+			MessageBoxA(nullptr, "たぶん絶対wavのファイルパスが違うよっ", "たいへん！", MB_OK);
 			return;
 		}
 		if (is3DSound) {

@@ -23,6 +23,9 @@
 #include <dxgi.h>
 #include <dxgitype.h>
 #include <dxgiformat.h>
+#include <xaudio2.h>
+#include <x3daudio.h>
+#include <xaudio2fx.h>
 
 #include "DirectXTK/Inc/CommonStates.h"
 #include "DirectXTK/Inc/SpriteBatch.h"
@@ -62,10 +65,7 @@
 #include "Model.h"
 #include "HID/GamePad.h"
 
-//#include "sound/tkWaveFile.h"
-//#include "sound/tkWaveFileBank.h"
-//#include "sound/tkSoundEngine.h"
-//#include "sound/tkSoundSource.h"
+
 
 #include "light/DirectionLight.h"
 #include "light/PointLight.h"

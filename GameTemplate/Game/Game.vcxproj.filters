@@ -410,6 +410,18 @@
     <ClCompile Include="enemy\boss\BossAttackCollisionDetection.cpp">
       <Filter>ソース ファイル\enemy\boss</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\sound\tkSoundEngine.cpp">
+      <Filter>MiniEngine\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\sound\tkSoundSource.cpp">
+      <Filter>MiniEngine\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\sound\tkWaveFile.cpp">
+      <Filter>MiniEngine\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\sound\tkWaveFileBank.cpp">
+      <Filter>MiniEngine\sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -774,6 +786,18 @@
     </ClInclude>
     <ClInclude Include="enemy\boss\BossAttackCollisionDetection.h">
       <Filter>ソース ファイル\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\sound\tkSoundEngine.h">
+      <Filter>MiniEngine\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\sound\tkSoundSource.h">
+      <Filter>MiniEngine\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\sound\tkWaveFile.h">
+      <Filter>MiniEngine\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\sound\tkWaveFileBank.h">
+      <Filter>MiniEngine\sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
