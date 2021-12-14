@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "player/Player.h"
 #include "enemy/firstWinEnemy/FirstWinEnemy.h"
+#include "enemy/boss/Boss.h"
 #include "Game.h"
 #include "BackGround.h"
 #include "MainCamera.h"
@@ -28,7 +29,7 @@ namespace nsMyGame {
 		m_youDiedSprite->Deactivate();
 
 		// とりあえずテストで敵を追加。
-		auto fEnemy = NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, c_classNameEnemy);
+		auto fEnemy = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameEnemy);
 		fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
 
 		//フェードイン。

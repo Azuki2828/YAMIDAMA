@@ -221,7 +221,7 @@ namespace nsMyGame {
 		void CEnemy::JudgeDamage() {
 
 			//生成されている敵の攻撃当たり判定を調べる。
-			auto playerCollision = FindGOs<CAttackCollision>(c_playerAttackCollisionName);
+			auto playerCollision = FindGOs<CAttackCollision>(c_classNamePlayerAttackCollision);
 
 			//当たり判定処理。
 			//このフレームで全ての当たり判定との衝突判定をするため、一気にダメージを受ける可能性あり。

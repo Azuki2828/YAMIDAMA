@@ -407,6 +407,8 @@
     <ClCompile Include="AttackCollision.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="enemy\boss\Boss.cpp" />
+    <ClCompile Include="enemy\boss\BossAttackCollisionDetection.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
     <ClCompile Include="enemy\EnemyAction.cpp" />
     <ClCompile Include="enemy\EnemyAnimation.cpp" />
@@ -537,6 +539,8 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="ConstValue.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="enemy\boss\Boss.h" />
+    <ClInclude Include="enemy\boss\BossAttackCollisionDetection.h" />
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="enemy\EnemyAction.h" />
     <ClInclude Include="enemy\EnemyAnimation.h" />

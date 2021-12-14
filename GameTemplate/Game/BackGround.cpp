@@ -14,30 +14,30 @@ namespace nsMyGame {
 
 	bool CBackGround::Start() {
 
-		////プレイヤーを検索。
-		//auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
-		//
-		////プレイヤーを中心とするポイントライトを作成。
-		//m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-		//m_pointLight[0]->SetPosition(player->GetPosition());
-		//m_pointLight[0]->SetColor({ 1.0f,1.0f,1.0f });
-		//m_pointLight[0]->SetRange(300.0f);
-		//m_pointLight[0]->SetAffectPowParam(2.5f);
+		//プレイヤーを検索。
+		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+		
+		//プレイヤーを中心とするポイントライトを作成。
+		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+		m_pointLight[0]->SetPosition(player->GetPosition());
+		m_pointLight[0]->SetColor({ 1.0f,1.0f,1.0f });
+		m_pointLight[0]->SetRange(300.0f);
+		m_pointLight[0]->SetAffectPowParam(2.5f);
 
 		//ディレクションライトを作成。
 		CreateDirLight();
 
-		//m_modelRender = NewGO<CModelRender>(0);
-		//m_modelRender->SetFilePathTkm("Assets/modelData/backGround/testStage.tkm");
-		//m_modelRender->Init();
-		//m_physicsStaticObject.CreateFromModel(
-		//	*m_modelRender->GetModel(),
-		//	m_modelRender->GetModel()->GetWorldMatrix()
-		//);
-		//m_physicsStaticObject.SetFriction(10.0f);
+		m_modelRender = NewGO<CModelRender>(0);
+		m_modelRender->SetFilePathTkm("Assets/modelData/backGround/testStage.tkm");
+		m_modelRender->Init();
+		m_physicsStaticObject.CreateFromModel(
+			*m_modelRender->GetModel(),
+			m_modelRender->GetModel()->GetWorldMatrix()
+		);
+		m_physicsStaticObject.SetFriction(10.0f);
 
 		//ステージをロード。
-		LoadStage();
+		//LoadStage();
 
 		return true;
 	}

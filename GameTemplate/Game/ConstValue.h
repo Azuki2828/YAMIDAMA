@@ -18,8 +18,8 @@ namespace nsMyGame {
 	constexpr const char* c_classNameEnemy = "enemy";								//敵クラスの名前
 	constexpr const char* c_classNameAppearSprite = "appearSprite";					//ウィンドウクラスの名前
 	constexpr const char* c_classNameBackGround = "backGround";						//背景クラスの名前
-	constexpr const char* c_playerAttackCollisionName = "playerAttackCollision";	//プレイヤーの攻撃判定の名前
-	constexpr const char* c_enemyAttackCollisionName = "enemyAttackCollision";		//敵の攻撃判定の名前
+	constexpr const char* c_classNamePlayerAttackCollision = "playerAttackCollision";	//プレイヤーの攻撃判定の名前
+	constexpr const char* c_classnameEnemyAttackCollision = "enemyAttackCollision";		//敵の攻撃判定の名前
 	constexpr const char* c_classNameFade = "fade";									//フェードクラスの名前
 	/*------------------------*/
 
@@ -74,7 +74,7 @@ namespace nsMyGame {
 		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
 		constexpr float c_attackCoolTime = 0.8f;										//通常攻撃中のクールタイム
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
-		const CVector3 c_playerStartPosition = { 0.0f,0.0f,0.0f };					//開始時のプレイヤーの座標
+		const CVector3 c_playerStartPosition = { 0.0f,200.0f,0.0f };					//開始時のプレイヤーの座標
 
 		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//プレイヤー攻撃時のトリガーボックスの前方向への乗算値
@@ -102,6 +102,8 @@ namespace nsMyGame {
 
 		constexpr const char* c_filePathTkmEnemy = "Assets/modelData/player2.tkm";		//敵のtkmファイルパス
 		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player2.tks";		//敵のtksファイルパス
+		constexpr const char* c_filePathTkmBoss = "Assets/modelData/boss.tkm";			//ボスのtkmファイルパス
+		constexpr const char* c_filePathTksBoss = "Assets/modelData/boss.tks";			//ボスのtksファイルパス
 
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
 		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//敵攻撃時のトリガーボックスのサイズ

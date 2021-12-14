@@ -251,7 +251,7 @@ namespace nsMyGame {
 			CMatrix swordBaseMatrix = player->GetModelRender()->GetSkeleton()->GetBone(66)->GetWorldMatrix();
 
 			//コリジョンオブジェクトを作成する。
-			auto collisionObject = NewGO<CAttackCollision>(enPriority_Zeroth, c_playerAttackCollisionName);
+			auto collisionObject = NewGO<CAttackCollision>(enPriority_Zeroth, c_classNamePlayerAttackCollision);
 
 			//有効時間を設定。
 			collisionObject->SetActiveTime(0.2f);

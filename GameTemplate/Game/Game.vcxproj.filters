@@ -84,6 +84,9 @@
     <Filter Include="ExEngine\dbg">
       <UniqueIdentifier>{a4afebf9-da6c-48cf-86ed-ad66371d7516}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\enemy\boss">
+      <UniqueIdentifier>{fb22078b-063c-45be-95da-3035ceb243d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -400,6 +403,12 @@
     </ClCompile>
     <ClCompile Include="..\..\MiniEngine\Fade.cpp">
       <Filter>MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\boss\Boss.cpp">
+      <Filter>ソース ファイル\enemy\boss</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\boss\BossAttackCollisionDetection.cpp">
+      <Filter>ソース ファイル\enemy\boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -759,6 +768,12 @@
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\Fade.h">
       <Filter>MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\boss\Boss.h">
+      <Filter>ソース ファイル\enemy\boss</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\boss\BossAttackCollisionDetection.h">
+      <Filter>ソース ファイル\enemy\boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
