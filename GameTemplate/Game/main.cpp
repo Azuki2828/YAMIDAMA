@@ -74,7 +74,7 @@ namespace nsMyGame {
 		CCamera::CreateLightCamera();						//ライトカメラ
 		CRenderingEngine::CreateRenderingEngine();			//レンダリングエンジン
 		EffectEngine::CreateInstance();						//エフェクトエンジン
-		NewGO<Fade>(enPriority_Zeroth, c_classNameFade);	//フェード
+		NewGO<CFade>(enPriority_Zeroth, c_classNameFade);	//フェード
 
 		//ワイヤーフレーム表示をONにする。
 		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();

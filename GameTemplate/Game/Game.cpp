@@ -32,7 +32,7 @@ namespace nsMyGame {
 		fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
 
 		//フェードイン。
-		m_fade = FindGO<Fade>(c_classNameFade);
+		m_fade = FindGO<CFade>(c_classNameFade);
 		m_fade->StartFadeIn();
 
 		return true;

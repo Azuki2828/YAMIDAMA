@@ -25,7 +25,7 @@ namespace nsMyGame {
 		CSpriteRender* m_titleSprite = nullptr;		//タイトル画像
 		CSpriteRender* m_newGameSprite = nullptr;	//「NEW GAME」テキスト
 		CSpriteRender* m_textBackSprite = nullptr;	//テキストの後ろに配置する画像
-		Fade* m_fade = nullptr;						//フェード
+		CFade* m_fade = nullptr;					//フェード
 	};
 }
 

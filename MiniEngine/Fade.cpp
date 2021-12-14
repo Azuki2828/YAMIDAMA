@@ -3,7 +3,7 @@
 
 namespace nsMyGame {
 
-	bool Fade::Start()
+	bool CFade::Start()
 	{
 		//フェード用のスプライトを初期化。
 		m_fadeSprite = NewGO<CSpriteRender>(enPriority_Fifth);
@@ -11,11 +11,12 @@ namespace nsMyGame {
 
 		return true;
 	}
-	void Fade::Update()
+	void CFade::Update()
 	{
 		//状態を調べる。
 		switch (m_state) {
 		case enState_FadeIn:
+
 			//徐々にフェードイン。
 			m_currentAlpha -= 0.5f * GameTime().GameTimeFunc().GetFrameDeltaTime();
 
@@ -26,6 +27,7 @@ namespace nsMyGame {
 			}
 			break;
 		case enState_FadeOut:
+
 			//徐々にフェードアウト。
 			m_currentAlpha += 0.5f * GameTime().GameTimeFunc().GetFrameDeltaTime();
 

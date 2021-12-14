@@ -3,7 +3,7 @@
 namespace nsMyGame {
 
 	//フェードクラス
-	class Fade : public CIGameObject
+	class CFade : public CIGameObject
 	{
 	public:
 		/**

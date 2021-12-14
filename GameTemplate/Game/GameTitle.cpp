@@ -23,7 +23,7 @@ namespace nsMyGame {
 		m_textBackSprite->SetPosition({ 0.0f,-150.0f,0.0f });
 
 		//フェードイン
-		m_fade = FindGO<Fade>(c_classNameFade);
+		m_fade = FindGO<CFade>(c_classNameFade);
 		m_fade->StartFadeIn();
 
 		return true;
