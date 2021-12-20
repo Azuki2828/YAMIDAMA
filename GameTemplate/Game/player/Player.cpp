@@ -96,10 +96,12 @@ namespace nsMyGame {
 			}
 		}
 
-		void CPlayer::JudgeDamage() {
+		void CPlayer::JudgeDamage(const CVector3& effectPos) {
 
 			//ガード成功中なら終了。
-			if (m_playerState == enState_GuardSuccess) { return; }
+			if (m_playerState == enState_GuardSuccess
+				|| m_playerState == enState_Attack
+				) { return; }
 
 			//ガードしたならガード成功状態に。
 			if (m_playerState == enState_Guard) {
@@ -112,7 +114,7 @@ namespace nsMyGame {
 			}
 
 			//ダメージを受ける。
-			ReceiveDamage();
+			//ReceiveDamage(effectPos);
 		}
 
 		void CPlayer::UpdateForward() {

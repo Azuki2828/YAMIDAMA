@@ -4,8 +4,6 @@
 #include "MiniEngine.h"
 #include "ExEngine.h"
 
-#include "../../MiniEngine/NameKey.h"
-
 #include "../../MiniEngine/sound/tkSoundEngine.h"
 #include "../../MiniEngine/sound/tkWaveFile.h"
 #include "../../MiniEngine/sound/tkWaveFileBank.h"

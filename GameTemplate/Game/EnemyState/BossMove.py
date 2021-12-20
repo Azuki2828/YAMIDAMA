@@ -30,7 +30,8 @@ def Update():
         SetCoolTime(3.0)
     #プレイヤーとの距離が500より遠いならジャンプ攻撃状態に。
     elif(lengthToPlayer > 500.0):
-        ChangeState(3.6)
+        ChangeState(2)
+        SetCoolTime(3.6)
 
 
 

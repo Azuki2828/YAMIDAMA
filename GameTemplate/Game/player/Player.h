@@ -87,7 +87,7 @@ namespace nsMyGame {
 			/**
 			 * @brief ダメージ判定をする関数。
 			*/
-			void JudgeDamage();
+			void JudgeDamage(const CVector3& effectPos);
 
 			/**
 			 * @brief 死んでいるかどうか判定する関数。
@@ -128,12 +128,19 @@ namespace nsMyGame {
 			/**
 			 * @brief ダメージ状態にする関数。
 			*/
-			void ReceiveDamage() {
+			void ReceiveDamage(const CVector3& effectPos) {
 
 				m_status.hp -= 20;
 
 				m_playerAction.ReceiveDamage();
 				m_playerState = enState_Damage;
+
+				//血しぶきエフェクトを再生。
+				//Effect* bloodEffect = NewGO<Effect>(enPriority_Zeroth);
+				//bloodEffect->Init(u"Assets/effect/blood.efk");
+				//bloodEffect->SetPosition(effectPos);
+				//bloodEffect->SetScale({ 5.0f, 5.0f,5.0f });
+				//bloodEffect->Play();
 			}
 
 			/**

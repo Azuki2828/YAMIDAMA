@@ -34,7 +34,7 @@ namespace nsMyGame {
 					}
 
 					//プレイヤーに攻撃。
-					player->JudgeDamage();
+					//player->JudgeDamage();
 				}
 				});
 		}

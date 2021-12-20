@@ -49,6 +49,8 @@ namespace nsMyGame {
 				position.z = worldMatrix.m[3][2];
 				m_attackCollision.SetPosition(position);
 
+				m_position = position;
+
 				CQuaternion rotation;
 				rotation.SetRotation(worldMatrix);
 				m_attackCollision.SetRotation(rotation);
@@ -73,6 +75,7 @@ namespace nsMyGame {
 		private:
 			bool m_isActive = false;			//トリガーボックスが有効？
 			bool m_isGuarded = false;			//攻撃がガードされた？
+			CVector3 m_position = CVector3::Zero;	//座標
 
 			CPhysicsGhostObject m_attackCollision;	//攻撃用当たり判定
 		};

@@ -220,14 +220,6 @@ namespace nsMyGame {
 				m_moveSpeed += toPlayerVec * 240.0f;
 			}
 
-			//3連続攻撃状態なら一定速度でプレイヤーに近づく。
-			else if (m_state == enState_JumpAttack) {
-
-				if (c_threeComboCoolTime - m_coolTime < 2.4f) {
-					m_moveSpeed += toPlayerVec * 50.0f;
-				}
-			}
-
 			//重力をかける。
 			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
 
