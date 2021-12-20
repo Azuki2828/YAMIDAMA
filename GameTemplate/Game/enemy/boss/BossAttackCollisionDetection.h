@@ -16,25 +16,40 @@ namespace nsMyGame {
 			*/
 			void Create(const CVector3& pos, const CQuaternion& rot) {
 
-				m_attackCollision.CreateBox(pos, rot, c_attackTriggerBoxSize);
+				m_attackCollision.CreateBox(pos, rot, c_bossAttackTriggerBoxSize);
+				m_jumpAttackCollision.CreateBox(pos, rot, { 500.0f,100.0f,500.0f });
 			}
 
 			/**
 			 * @brief トリガーボックスを有効にする関数。
-			 * @param pos 座標
-			 * @param rot 回転
 			*/
-			void Activate() {
+			void ActivateAttack() {
 
-				m_isActive = true;
+				m_isAttackActive = true;
 			}
 
 			/**
 			 * @brief トリガーボックスを無効にする関数。
 			*/
-			void Deactivate() {
+			void DeactivateAttack() {
 
-				m_isActive = false;
+				m_isAttackActive = false;
+			}
+
+			/**
+			 * @brief トリガーボックスを有効にする関数。
+			*/
+			void ActivateRangeAttack() {
+
+				m_isRangeAttackActive = true;
+			}
+
+			/**
+			 * @brief トリガーボックスを無効にする関数。
+			*/
+			void DeactivateRangeAttack() {
+
+				m_isRangeAttackActive = false;
 			}
 
 			/**
@@ -57,10 +72,8 @@ namespace nsMyGame {
 			/**
 			 * @brief 更新関数。
 			 * @param pos 座標
-			 * @param rot 回転
-			 * @param forward 前方向
 			*/
-			void Update();
+			void Update(const CVector3& pos);
 
 			/**
 			 * @brief 攻撃がガードされた？
@@ -71,10 +84,12 @@ namespace nsMyGame {
 				return m_isGuarded;
 			}
 		private:
-			bool m_isActive = false;			//トリガーボックスが有効？
+			bool m_isAttackActive = false;			//トリガーボックスが有効？
+			bool m_isRangeAttackActive = false;			//トリガーボックスが有効？
 			bool m_isGuarded = false;			//攻撃がガードされた？
 
 			CPhysicsGhostObject m_attackCollision;	//攻撃用当たり判定
+			CPhysicsGhostObject m_jumpAttackCollision;	//攻撃用当たり判定
 		};
 	}
 }

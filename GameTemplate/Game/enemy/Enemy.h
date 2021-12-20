@@ -245,6 +245,11 @@ namespace nsMyGame {
 			void JudgeDamage();
 
 			virtual bool IsGuarded() = 0;
+
+			virtual const bool NoticePlayer()const {
+
+				return true;
+			}
 		protected:
 			bool m_receiveDamage = false;								//ダメージを受けたか？（たとえ0ダメージでも）
 			SStatus m_status;											//ステータス

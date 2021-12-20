@@ -6,6 +6,7 @@
 #include "Door.h"
 #include "enemy/firstWinEnemy/FirstWinEnemy.h"
 #include "enemy/goteWinEnemy/GoteWinEnemy.h"
+#include "enemy/boss/Boss.h"
 
 
 namespace nsMyGame {
@@ -209,6 +210,15 @@ namespace nsMyGame {
 				//m_gWEnemy[gEnemyNum]->SetPosition(objData.position);
 				//m_gWEnemy[gEnemyNum]->SetRotation(objData.rotation);
 				//gEnemyNum++;
+				return true;
+			}
+
+			if (objData.EqualObjectName("Boss")) {
+
+				auto boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameEnemy);
+				boss->SetPosition(objData.position);
+				boss->SetRotation(objData.rotation);
+
 				return true;
 			}
 

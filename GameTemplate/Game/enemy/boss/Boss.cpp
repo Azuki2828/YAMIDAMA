@@ -55,7 +55,7 @@ namespace nsMyGame {
 			);
 
 			//剣に取り付けられたボーンの番号を読み込む。
-			auto swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHand");
+			auto swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"RightHand");
 
 			//剣のボーンを取得。
 			m_swordBone = m_modelRender->GetSkeleton()->GetBone(swordBoneNum);
@@ -70,7 +70,11 @@ namespace nsMyGame {
 			m_triggerBox.UpdatePositionAndRotation(swordBaseMatrix);
 
 			//当たり判定をしないように設定。
-			m_triggerBox.Deactivate();
+			m_triggerBox.DeactivateAttack();
+			m_triggerBox.DeactivateRangeAttack();
+
+			//プレイヤーに気づくためのトリガーボックスを設定。
+			m_noticePlayerTriggerBox.CreateBox(m_position, CQuaternion::Identity, { 1500.0f,1000.0f,1500.0f });
 
 			return true;
 		}
@@ -79,6 +83,8 @@ namespace nsMyGame {
 
 			// 現在更新処理を実行中のエネミーのアドレスを代入
 			g_pCurrentEnemy = this;
+
+			FindPlayer();
 
 			//剣のボーンのワールド行列を取得。
 			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
@@ -108,6 +114,9 @@ namespace nsMyGame {
 				break;
 			case enState_AttackBreak:
 				ImportModule("EnemyAttackBreak");
+				break;
+			case enState_Scream:
+				ImportModule("BossScream");
 				break;
 			}
 
@@ -139,6 +148,8 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
 			m_animationClip[enAnim_AttackBreak].Load("Assets/animData/attackBreak.tka");
 			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);
+			m_animationClip[enAnim_Scream].Load("Assets/animData/Boss/scream.tka");
+			m_animationClip[enAnim_Scream].SetLoopFlag(false);
 		}
 
 		void CBoss::AnimationUpdate() {
@@ -166,22 +177,37 @@ namespace nsMyGame {
 			case enState_AttackBreak:
 				m_modelRender->PlayAnimation(enAnim_AttackBreak, 0.4f);
 				break;
+			case enState_Scream:
+				m_modelRender->PlayAnimation(enAnim_Scream, 0.4f);
+				break;
 			}
 		}
 
 		void CBoss::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		{
 			//キーの名前が「attack」の時。
-			if (wcscmp(eventName, L"attack") == 0)
+			if (wcscmp(eventName, L"startAttack") == 0)
 			{
 				//攻撃中にする。
-				m_triggerBox.Activate();
+				m_triggerBox.ActivateAttack();
 			}
 			//キーの名前が「attack_end」の時。
-			else if (wcscmp(eventName, L"attackEnd") == 0)
+			else if (wcscmp(eventName, L"endAttack") == 0)
 			{
 				//攻撃を終わる。
-				m_triggerBox.Deactivate();
+				m_triggerBox.DeactivateAttack();
+			}
+			//キーの名前が「attack」の時。
+			else if (wcscmp(eventName, L"startRangeAttack") == 0)
+			{
+				//攻撃中にする。
+				m_triggerBox.ActivateRangeAttack();
+			}
+			//キーの名前が「attack_end」の時。
+			else if (wcscmp(eventName, L"endRangeAttack") == 0)
+			{
+				//攻撃を終わる。
+				m_triggerBox.DeactivateRangeAttack();
 			}
 			else if (wcscmp(eventName, L"ready") == 0)
 			{
@@ -213,7 +239,7 @@ namespace nsMyGame {
 			collisionObject->SetActiveTime(c_attackCollisionActiveTime);
 
 			//ボックス状のコリジョンを作成。
-			collisionObject->CreateBox(m_position, CQuaternion::Identity, c_attackTriggerBoxSize);
+			collisionObject->CreateBox(m_position, CQuaternion::Identity, c_bossAttackTriggerBoxSize);
 
 			//剣のボーンのワールド行列をコリジョンに適用。
 			collisionObject->SetWorldMatrix(swordBaseMatrix);
@@ -248,7 +274,7 @@ namespace nsMyGame {
 			//歩き状態ならプレイヤーに一定速度で近づく。
 			if (m_state == enState_Walk) {
 
-				m_moveSpeed += toPlayerVec * 240.0f;
+				m_moveSpeed += toPlayerVec * 200.0f;
 			}
 
 			//重力をかける。
@@ -294,7 +320,21 @@ namespace nsMyGame {
 		void CBoss::UpdateTriggerBox() {
 
 			//トリガーボックスを更新。
-			m_triggerBox.Update();
+			m_triggerBox.Update(m_position);
+		}
+
+		void CBoss::FindPlayer() {
+ 
+			//剛体との当たり判定を調べる。
+			CPhysicsWorld::GetInstance()->ContactTest(m_player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
+
+				//トリガーボックスと接触した。
+				if (m_noticePlayerTriggerBox.IsSelf(contactObject)) {
+
+					//プレイヤーと遭遇。
+					m_noticePlayer = true;
+				}
+			});
 		}
 	}
 }

@@ -20,6 +20,7 @@ namespace nsMyGame {
 				enState_Damage,
 				enState_Death,
 				enState_AttackBreak,
+				enState_Scream,
 
 				enState_Num
 			};
@@ -33,6 +34,7 @@ namespace nsMyGame {
 				enAnim_Damage,
 				enAnim_Death,
 				enAnim_AttackBreak,
+				enAnim_Scream,
 
 				enAnim_Num
 			};
@@ -131,6 +133,20 @@ namespace nsMyGame {
 
 				return m_triggerBox.IsGuarded();
 			}
+
+			/**
+			 * @brief プレイヤーに気づいた？
+			 * @return プレイヤーに気づいたかどうかの判定
+			*/
+			const bool NoticePlayer()const {
+
+				return m_noticePlayer;
+			}
+
+			/**
+			 * @brief プレイヤーに気づくための関数。
+			*/
+			void FindPlayer();
 		private:
 			Bone* m_swordBone = nullptr;							//剣に取り付けられたボーン
 			EnState m_state = enState_Idle;							//ステート
@@ -138,6 +154,8 @@ namespace nsMyGame {
 			CBossCollisionDetection m_triggerBox;					//攻撃用のトリガーボックス
 
 			bool m_canMove = false;									//移動できる？
+			bool m_noticePlayer = false;							//プレイヤーに気づいた？
+			CPhysicsGhostObject m_noticePlayerTriggerBox;			//プレイヤーに気づくためのトリガー
 			CVector3 m_vecToPlayer = CVector3::Zero;				//プレイヤーに伸びるベクトル
 		};
 	}

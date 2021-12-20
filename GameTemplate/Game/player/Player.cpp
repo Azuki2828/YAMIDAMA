@@ -114,7 +114,7 @@ namespace nsMyGame {
 			}
 
 			//ダメージを受ける。
-			//ReceiveDamage(effectPos);
+			ReceiveDamage(effectPos);
 		}
 
 		void CPlayer::UpdateForward() {

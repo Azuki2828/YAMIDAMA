@@ -21,6 +21,7 @@ void AnimationPlayController::ChangeAnimationClip(CAnimationClip* clip)
 	m_animationClip = clip;
 	m_currentKeyFrameNo = 0;
 	m_time = 0.0f;
+	float* pt2 = &m_time;
 	m_isPlaying = true;
 	m_footstepPos = g_vec3Zero;
 	m_footstepDeltaValue = g_vec3Zero;
@@ -36,6 +37,7 @@ void AnimationPlayController::InvokeAnimationEvent(Animation* animation)
 	for (auto i = 0; i < m_animationClip->GetNumAnimationEvent(); i++) {
 		if (m_time > animEventArray[i].GetInvokeTime()
 			&& animEventArray[i].IsInvoked() == false) {
+			float* pt = &m_time;
 			//アニメーションの起動時間を過ぎている且つ、まだイベント起動していない。
 			animation->NotifyAnimationEventToListener(
 				m_animationClip->GetName(), animEventArray[i].GetEventName()

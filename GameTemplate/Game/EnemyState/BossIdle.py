@@ -5,7 +5,7 @@ from Game import Rotate
 from Game import AnimationUpdate
 from Game import UpdateTriggerBox
 from Game import JudgeDamage
-
+from Game import NoticePlayer
 
 def Update() :
 
@@ -21,9 +21,8 @@ def Update() :
     #プレイヤーとの距離を調べる。
     lengthToPlayer = GetLengthToPlayer()
 
-
     #プレイヤーとの距離が500以下ならプレイヤーに近づく。
-    if(lengthToPlayer <= 500.0):
+    if(NoticePlayer()):
         ChangeState(1)
 
     #アニメーションを更新。

@@ -29,6 +29,7 @@
     <Compile Include="BossIdle.py" />
     <Compile Include="BossJumpAttack.py" />
     <Compile Include="BossMove.py" />
+    <Compile Include="BossScream.py" />
     <Compile Include="BossSwipingAttack.py" />
     <Compile Include="EnemyAttack.py">
       <SubType>Code</SubType>

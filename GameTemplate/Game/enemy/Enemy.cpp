@@ -113,6 +113,11 @@ namespace nsMyGame {
 			g_pCurrentEnemy->JudgeDamage();
 		}
 
+		bool NoticePlayer() {
+
+			return g_pCurrentEnemy->NoticePlayer();
+		}
+
 		//Python‘¤‚ÉŠÖ”‚ğ“n‚·B
 		PYBIND11_MODULE(Game, m) {
 			m.def("ChangeState", &ChangeState);
@@ -129,6 +134,7 @@ namespace nsMyGame {
 			m.def("GetGuardTime", &GetGuardTime);
 			m.def("IsGuarded", &IsGuarded);
 			m.def("JudgeDamage", &JudgeDamage);
+			m.def("NoticePlayer", &NoticePlayer);
 		}
 
 
