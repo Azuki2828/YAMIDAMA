@@ -45,7 +45,7 @@ namespace nsMyGame {
 			m_modelRender->AddAnimationEvent([&](const wchar_t* clipName, const wchar_t* eventName) {
 
 				OnAnimationEvent(clipName, eventName);
-			});
+				});
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
@@ -183,6 +183,22 @@ namespace nsMyGame {
 				//攻撃を終わる。
 				m_triggerBox.Deactivate();
 			}
+			else if (wcscmp(eventName, L"ready") == 0)
+			{
+				//ジャンプ攻撃の準備。
+				//プレイヤーに伸びるベクトルを求める。
+				m_vecToPlayer = m_player->GetPosition() - m_position;
+			}
+			else if (wcscmp(eventName, L"startJump") == 0) {
+
+				//移動できる。
+				m_canMove = true;
+			}
+			else if (wcscmp(eventName, L"endJump") == 0) {
+
+				//移動できない。
+				m_canMove = false;
+			}
 		}
 
 		void CBoss::CreateAttackCollision() {
@@ -205,6 +221,21 @@ namespace nsMyGame {
 
 		void CBoss::Move() {
 
+			switch (m_state) {
+
+			case enState_JumpAttack:
+				//ジャンプ攻撃中の移動処理。
+				JumpAttackMove();
+				break;
+			default:
+				//通常の移動処理。
+				MoveCommon();
+				break;
+			}
+		}
+
+		void CBoss::MoveCommon() {
+
 			//x方向とz方向の移動速度を初期化。
 			m_moveSpeed.x = 0.0f;
 			m_moveSpeed.z = 0.0f;
@@ -219,6 +250,32 @@ namespace nsMyGame {
 
 				m_moveSpeed += toPlayerVec * 240.0f;
 			}
+
+			//重力をかける。
+			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
+
+			//座標を設定。
+			m_position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+
+			//地面についているか判定。
+			if (m_charaCon.IsOnGround()) {
+
+				//地面についているなら下向きには力をかけない。
+				m_moveSpeed.y = 0.0f;
+			}
+		}
+
+		void CBoss::JumpAttackMove() {
+
+			//ジャンプ中じゃないなら終了。
+			if (!m_canMove) { return; }
+
+			//x方向とz方向の移動速度を初期化。
+			m_moveSpeed.x = 0.0f;
+			m_moveSpeed.z = 0.0f;
+
+			//求められたベクトルに向かって移動する。
+			m_moveSpeed += m_vecToPlayer;
 
 			//重力をかける。
 			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();

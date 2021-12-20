@@ -8,6 +8,7 @@ namespace nsMyGame {
 
 		void CPlayerTriggerBox::Update() {
 
+			//アクティブ状態じゃないなら終了。
 			if (!m_isActive) { return; }
 
 			//名前がEnemyのオブジェクトをCEnemyクラスにキャスト。
@@ -30,6 +31,7 @@ namespace nsMyGame {
 						bloodEffect->Play();
 					}
 				});
+
 				return true;
 			});
 		}

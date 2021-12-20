@@ -10,11 +10,6 @@ from Game import JudgeDamage
 
 def Update() :
 
-    #ガードされたら弾き状態に
-    if(IsGuarded()):
-        ChangeState(6)
-        SetCoolTime(0.4)
-
     #移動関数。
     Move()
 

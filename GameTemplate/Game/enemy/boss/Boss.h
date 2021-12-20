@@ -90,6 +90,16 @@ namespace nsMyGame {
 			void Move()override final;
 
 			/**
+			 * @brief 通常移動関数。
+			*/
+			void MoveCommon();
+
+			/**
+			 * @brief ジャンプ攻撃時の移動関数。
+			*/
+			void JumpAttackMove();
+
+			/**
 			 * @brief トリガーボックスを更新する関数。
 			 * @param pos 座標
 			 * @param rot 回転
@@ -126,6 +136,9 @@ namespace nsMyGame {
 			EnState m_state = enState_Idle;							//ステート
 			CAnimationClip m_animationClip[enAnim_Num];				//アニメーションクリップ
 			CBossCollisionDetection m_triggerBox;					//攻撃用のトリガーボックス
+
+			bool m_canMove = false;									//移動できる？
+			CVector3 m_vecToPlayer = CVector3::Zero;				//プレイヤーに伸びるベクトル
 		};
 	}
 }
