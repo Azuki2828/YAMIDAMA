@@ -30,11 +30,11 @@ namespace nsMyGame {
 					if (player->IsGuard()) {
 
 						m_isGuarded = true;
-						m_isActive = false;
 					}
 
 					//プレイヤーに攻撃。
 					player->JudgeDamage(m_position);
+					m_isActive = false;
 				}
 			});
 		}
