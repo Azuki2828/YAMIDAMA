@@ -49,7 +49,7 @@ namespace nsMyGame {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
-				20.0f,			//半径。
+				100.0f,			//半径。
 				100.0f,			//高さ。
 				m_position		//座標。
 			);
@@ -110,7 +110,7 @@ namespace nsMyGame {
 				ImportModule("EnemyDamage");
 				break;
 			case enState_Death:
-				ImportModule("EnemyDeath");
+				ImportModule("BossDeath");
 				break;
 			case enState_AttackBreak:
 				ImportModule("EnemyAttackBreak");
@@ -144,7 +144,7 @@ namespace nsMyGame {
 			m_animationClip[enAnim_SwipingAttack].SetLoopFlag(false);
 			m_animationClip[enAnim_Damage].Load("Assets/animData/damage.tka");
 			m_animationClip[enAnim_Damage].SetLoopFlag(false);
-			m_animationClip[enAnim_Death].Load("Assets/animData/death2.tka");
+			m_animationClip[enAnim_Death].Load("Assets/animData/Boss/death.tka");
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
 			m_animationClip[enAnim_AttackBreak].Load("Assets/animData/attackBreak.tka");
 			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);

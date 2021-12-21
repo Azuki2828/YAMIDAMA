@@ -20,7 +20,6 @@ namespace nsMyGame {
 			 * @return 成功した？
 			*/
 			bool StartSub();
-			~CDirectionLight();
 		public:
 			/**
 			 * @brief ライトの方向を設定する関数。

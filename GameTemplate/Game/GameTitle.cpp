@@ -52,7 +52,7 @@ namespace nsMyGame {
 		if (m_finishedFadeOut && !m_fade->IsFade()) {
 
 			//ゲームシーンに移行。
-			NewGO<CGameMain>(enPriority_Zeroth);
+			NewGO<CGameMain>(enPriority_Zeroth, c_classNameGameMain);
 
 			//タイトル画面を削除。
 			DeleteGO(this);

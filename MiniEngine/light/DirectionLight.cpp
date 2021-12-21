@@ -9,9 +9,5 @@ namespace nsMyGame {
 
 			return true;
 		}
-
-		CDirectionLight::~CDirectionLight() {
-
-		}
 	}
 }

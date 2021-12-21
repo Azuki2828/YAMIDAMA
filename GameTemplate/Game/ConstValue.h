@@ -14,6 +14,7 @@ namespace nsMyGame {
 	};
 
 	/*------クラスの名前------*/
+	constexpr const char* c_classNameGameMain = "gameMain";							//ゲームメインクラスの名前
 	constexpr const char* c_classNamePlayer = "player";								//プレイヤークラスの名前
 	constexpr const char* c_classNameEnemy = "enemy";								//敵クラスの名前
 	constexpr const char* c_classNameAppearSprite = "appearSprite";					//ウィンドウクラスの名前
@@ -29,6 +30,7 @@ namespace nsMyGame {
 	constexpr float c_attackCollisionActiveTime = 0.2f;							//攻撃用当たり判定の有効時間
 
 	constexpr const char* c_filePathYouDiedSprite = "Assets/image/youDied2.dds";	//死亡スプライトのファイルパス
+	constexpr const char* c_filePathGameClearSprite = "Assets/image/Victory.dds";	//ゲームクリアスプライトのファイルパス
 	const CVector2 c_spriteYouDiedWH = { 1740.0f, 180.0f };							//死亡スプライトの幅と高さ
 	const CVector3 c_spriteSizeYouDied = { 0.8f,0.8f,0.8f };						//死亡スプライトの拡大率
 
@@ -74,7 +76,7 @@ namespace nsMyGame {
 		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
 		constexpr float c_attackCoolTime = 0.8f;										//通常攻撃中のクールタイム
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
-		const CVector3 c_playerStartPosition = { 0.0f,200.0f,0.0f };					//開始時のプレイヤーの座標
+		const CVector3 c_playerStartPosition = { 0.0f,0.0f,0.0f };					//開始時のプレイヤーの座標
 
 		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//プレイヤー攻撃時のトリガーボックスの前方向への乗算値

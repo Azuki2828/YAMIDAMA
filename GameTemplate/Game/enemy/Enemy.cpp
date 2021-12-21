@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Enemy.h"
+#include "../Game.h"
 #include "../AttackCollision.h"
 
 namespace nsMyGame {
@@ -118,6 +119,12 @@ namespace nsMyGame {
 			return g_pCurrentEnemy->NoticePlayer();
 		}
 
+		void GameClear() {
+
+			auto gameMain = FindGO<CGameMain>(c_classNameGameMain);
+			gameMain->GameClear();
+		}
+
 		//Pythonë§Ç…ä÷êîÇìnÇ∑ÅB
 		PYBIND11_MODULE(Game, m) {
 			m.def("ChangeState", &ChangeState);
@@ -135,6 +142,7 @@ namespace nsMyGame {
 			m.def("IsGuarded", &IsGuarded);
 			m.def("JudgeDamage", &JudgeDamage);
 			m.def("NoticePlayer", &NoticePlayer);
+			m.def("GameClear", &GameClear);
 		}
 
 

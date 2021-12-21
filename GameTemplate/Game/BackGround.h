@@ -9,6 +9,7 @@ namespace nsMyGame {
 
 		class CGoteWinEnemy;
 		class CFirstWinEnemy;
+		class CBoss;
 	}
 	namespace nsItem {
 
@@ -59,6 +60,12 @@ namespace nsMyGame {
 			m_dirLight[1]->SetLigColor({ 0.0f,0.0f,0.0f });
 		}
 
+		static void RemoveDirLight() {
+
+			DeleteGO(m_dirLight[0]);
+			DeleteGO(m_dirLight[1]);
+		}
+
 		/**
 		 * @brief 太陽光の方向を取得する関数。
 		 * @return 太陽光の方向
@@ -73,6 +80,7 @@ namespace nsMyGame {
 		std::vector<CDoor*> m_door;							//ドアクラスのインスタンス
 		std::vector<nsEnemy::CFirstWinEnemy*> m_fWEnemy;	//先手必勝の敵のインスタンス
 		std::vector<nsEnemy::CGoteWinEnemy*> m_gWEnemy;		//後手必勝の敵のインスタンス
+		nsEnemy::CBoss* m_boss = nullptr;					//ボスのインスタンス
 		std::vector<nsLight::CPointLight*> m_pointLight;	//ポイントライトのインスタンス
 		std::vector<nsItem::CItem*> m_item;					//アイテムのインスタンス
 		std::vector<Effect*> m_fireEffect;					//炎エフェクトのインスタンス
@@ -82,6 +90,13 @@ namespace nsMyGame {
 		CVector3 m_sca = CVector3::One;						//拡大
 		Level m_level;										//レベル
 		PhysicsStaticObject m_physicsStaticObject;			//静的物理オブジェクト
+
+		int m_doorNum = 0;
+		int m_fEnemyNum = 0;
+		int m_gEnemyNum = 0;
+		int m_pointLightNum = 0;
+		int m_fireEffectNum = 0;
+		int m_itemNum = 0;
 	};
 }
 

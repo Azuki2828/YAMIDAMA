@@ -18,53 +18,66 @@ namespace nsMyGame {
 		//プレイヤーを検索。
 		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 		
-		//プレイヤーを中心とするポイントライトを作成。
-		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-		m_pointLight[0]->SetPosition(player->GetPosition());
-		m_pointLight[0]->SetColor({ 1.0f,1.0f,1.0f });
-		m_pointLight[0]->SetRange(300.0f);
-		m_pointLight[0]->SetAffectPowParam(2.5f);
+		////プレイヤーを中心とするポイントライトを作成。
+		//m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
+		//m_pointLight[0]->SetPosition(player->GetPosition());
+		//m_pointLight[0]->SetColor({ 1.0f,1.0f,1.0f });
+		//m_pointLight[0]->SetRange(300.0f);
+		//m_pointLight[0]->SetAffectPowParam(2.5f);
 
 		//ディレクションライトを作成。
 		CreateDirLight();
 
-		m_modelRender = NewGO<CModelRender>(0);
-		m_modelRender->SetFilePathTkm("Assets/modelData/backGround/testStage.tkm");
-		m_modelRender->Init();
-		m_physicsStaticObject.CreateFromModel(
-			*m_modelRender->GetModel(),
-			m_modelRender->GetModel()->GetWorldMatrix()
-		);
-		m_physicsStaticObject.SetFriction(10.0f);
+		//m_modelRender = NewGO<CModelRender>(0);
+		//m_modelRender->SetFilePathTkm("Assets/modelData/backGround/testStage.tkm");
+		//m_modelRender->Init();
+		//m_physicsStaticObject.CreateFromModel(
+		//	*m_modelRender->GetModel(),
+		//	m_modelRender->GetModel()->GetWorldMatrix()
+		//);
+		//m_physicsStaticObject.SetFriction(10.0f);
 
 		//ステージをロード。
-		//LoadStage();
+		LoadStage();
 
 		return true;
 	}
 
 	void CBackGround::OnDestroy() {
 
-		for (int i = 0; m_pointLight.size(); i++) {
+		for (int i = 0; i < m_pointLight.size(); i++) {
 
 			DeleteGO(m_pointLight[i]);
 		}
-		for (int i = 0; m_door.size(); i++) {
+		m_pointLight.clear();
+
+		for (int i = 0; i < m_door.size(); i++) {
 
 			DeleteGO(m_door[i]);
 		}
-		for (int i = 0; m_fWEnemy.size(); i++) {
+		m_door.clear();
+
+		for (int i = 0; i < m_fWEnemy.size(); i++) {
 
 			DeleteGO(m_fWEnemy[i]);
 		}
-		for (int i = 0; m_gWEnemy.size(); i++) {
+		m_fWEnemy.clear();
+
+		for (int i = 0; i < m_gWEnemy.size(); i++) {
 
 			DeleteGO(m_gWEnemy[i]);
 		}
-		for (int i = 0; m_item.size(); i++) {
+		m_gWEnemy.clear();
+
+		for (int i = 0; i < m_item.size(); i++) {
 
 			DeleteGO(m_item[i]);
 		}
+		m_item.clear();
+
+		RemoveDirLight();
+
+		DeleteGO(m_boss);
 	}
 
 	void CBackGround::Update() {
@@ -140,23 +153,16 @@ namespace nsMyGame {
 	}
 	void CBackGround::LoadStage() {
 
-		static int doorNum = 0;
-		static int fEnemyNum = 0;
-		static int gEnemyNum = 0;
-		static int pointLightNum = 0;
-		static int fireEffectNum = 0;
-		static int itemNum = 0;
-
 		//プレイヤーを検索。
 		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
 		//プレイヤーを中心とするポイントライトを作成。
 		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-		m_pointLight[pointLightNum]->SetPosition(player->GetPosition());
-		m_pointLight[pointLightNum]->SetColor({ 1.0f,1.0f,1.0f });
-		m_pointLight[pointLightNum]->SetRange(300.0f);
-		m_pointLight[pointLightNum]->SetAffectPowParam(2.5f);
-		pointLightNum++;
+		m_pointLight[m_pointLightNum]->SetPosition(player->GetPosition());
+		m_pointLight[m_pointLightNum]->SetColor({ 1.0f,1.0f,1.0f });
+		m_pointLight[m_pointLightNum]->SetRange(300.0f);
+		m_pointLight[m_pointLightNum]->SetAffectPowParam(2.5f);
+		m_pointLightNum++;
 
 		//ステージをロード。
 		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
@@ -164,43 +170,43 @@ namespace nsMyGame {
 			if (objData.EqualObjectName("door")) {
 
 				m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
-				m_door[doorNum]->SetPosition(objData.position);
-				m_door[doorNum]->SetRotation(objData.rotation);
-				m_door[doorNum]->SetScale(objData.scale);
-				doorNum++;
+				m_door[m_doorNum]->SetPosition(objData.position);
+				m_door[m_doorNum]->SetRotation(objData.rotation);
+				m_door[m_doorNum]->SetScale(objData.scale);
+				m_doorNum++;
 				return true;
 			}
 
 			if (objData.EqualObjectName("door_Lock")) {
 
 				m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
-				m_door[doorNum]->SetPosition(objData.position);
-				m_door[doorNum]->SetRotation(objData.rotation);
-				m_door[doorNum]->SetScale(objData.scale);
+				m_door[m_doorNum]->SetPosition(objData.position);
+				m_door[m_doorNum]->SetRotation(objData.rotation);
+				m_door[m_doorNum]->SetScale(objData.scale);
 
 				//鍵をかける。
-				m_door[doorNum]->Lock();
-				doorNum++;
+				m_door[m_doorNum]->Lock();
+				m_doorNum++;
 				return true;
 			}
 
 			if (objData.EqualObjectName("doorObj")) {
 
 				m_door.push_back(NewGO<CDoor>(enPriority_Zeroth));
-				m_door[doorNum]->SetPosition(objData.position);
-				m_door[doorNum]->SetRotation(objData.rotation);
-				m_door[doorNum]->SetScale(objData.scale);
-				m_door[doorNum]->SetObj(true);
-				doorNum++;
+				m_door[m_doorNum]->SetPosition(objData.position);
+				m_door[m_doorNum]->SetRotation(objData.rotation);
+				m_door[m_doorNum]->SetScale(objData.scale);
+				m_door[m_doorNum]->SetObj(true);
+				m_doorNum++;
 				return true;
 			}
 
 			if (objData.EqualObjectName("FEnemy")) {
 
 				m_fWEnemy.push_back(NewGO<nsEnemy::CFirstWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
-				m_fWEnemy[fEnemyNum]->SetPosition(objData.position);
-				m_fWEnemy[fEnemyNum]->SetRotation(objData.rotation);
-				fEnemyNum++;
+				m_fWEnemy[m_fEnemyNum]->SetPosition(objData.position);
+				m_fWEnemy[m_fEnemyNum]->SetRotation(objData.rotation);
+				m_fEnemyNum++;
 				return true;
 			}
 
@@ -215,9 +221,9 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("Boss")) {
 
-				auto boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameEnemy);
-				boss->SetPosition(objData.position);
-				boss->SetRotation(objData.rotation);
+				m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameEnemy);
+				m_boss->SetPosition(objData.position);
+				m_boss->SetRotation(objData.rotation);
 
 				return true;
 			}
@@ -225,8 +231,8 @@ namespace nsMyGame {
 			if (objData.EqualObjectName("key")) {
 
 				m_item.push_back(NewGO<nsItem::CItem>(enPriority_Zeroth));
-				m_item[itemNum]->SetPosition(objData.position);
-				itemNum++;
+				m_item[m_itemNum]->SetPosition(objData.position);
+				m_itemNum++;
 
 				return true;
 			}
@@ -244,22 +250,22 @@ namespace nsMyGame {
 
 				//エフェクトを初期化。
 				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
-				m_fireEffect[fireEffectNum]->Init(c_filePathFireEffect);
-				m_fireEffect[fireEffectNum]->SetScale(c_fireEffectScale);
-				m_fireEffect[fireEffectNum]->SetPosition(effectPos);
-				m_fireEffect[fireEffectNum]->SetRotation(effectRot);
+				m_fireEffect[m_fireEffectNum]->Init(c_filePathFireEffect);
+				m_fireEffect[m_fireEffectNum]->SetScale(c_fireEffectScale);
+				m_fireEffect[m_fireEffectNum]->SetPosition(effectPos);
+				m_fireEffect[m_fireEffectNum]->SetRotation(effectRot);
 
 				//炎エフェクトに対応するポイントライトを作成。
 				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-				m_pointLight[pointLightNum]->SetPosition(effectPos);
-				m_pointLight[pointLightNum]->SetColor(c_firePointLightColor);
-				m_pointLight[pointLightNum]->SetRange(c_firePointLightRange);
-				m_pointLight[pointLightNum]->SetAffectPowParam(c_firePointLightAffectParam);
-				pointLightNum++;
+				m_pointLight[m_pointLightNum]->SetPosition(effectPos);
+				m_pointLight[m_pointLightNum]->SetColor(c_firePointLightColor);
+				m_pointLight[m_pointLightNum]->SetRange(c_firePointLightRange);
+				m_pointLight[m_pointLightNum]->SetAffectPowParam(c_firePointLightAffectParam);
+				m_pointLightNum++;
 
 				//再生。
-				m_fireEffect[fireEffectNum]->Play();
-				fireEffectNum++;
+				m_fireEffect[m_fireEffectNum]->Play();
+				m_fireEffectNum++;
 			}
 			if (objData.EqualObjectName("torchBowl")) {
 
@@ -269,21 +275,21 @@ namespace nsMyGame {
 
 				//エフェクトを初期化。
 				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
-				m_fireEffect[fireEffectNum]->Init(u"Assets/effect/fire.efk");
-				m_fireEffect[fireEffectNum]->SetScale({ 10.0f,10.0f,10.0f });
-				m_fireEffect[fireEffectNum]->SetPosition(effectPos);
+				m_fireEffect[m_fireEffectNum]->Init(u"Assets/effect/fire.efk");
+				m_fireEffect[m_fireEffectNum]->SetScale({ 10.0f,10.0f,10.0f });
+				m_fireEffect[m_fireEffectNum]->SetPosition(effectPos);
 
 				//炎エフェクトに対応するポイントライトを作成。
 				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-				m_pointLight[pointLightNum]->SetPosition(effectPos);
-				m_pointLight[pointLightNum]->SetColor({ 2.0f,1.0f,1.0f });
-				m_pointLight[pointLightNum]->SetRange(300.0f);
-				m_pointLight[pointLightNum]->SetAffectPowParam(1.5f);
-				pointLightNum++;
+				m_pointLight[m_pointLightNum]->SetPosition(effectPos);
+				m_pointLight[m_pointLightNum]->SetColor({ 2.0f,1.0f,1.0f });
+				m_pointLight[m_pointLightNum]->SetRange(300.0f);
+				m_pointLight[m_pointLightNum]->SetAffectPowParam(1.5f);
+				m_pointLightNum++;
 
 				//再生。
-				m_fireEffect[fireEffectNum]->Play();
-				fireEffectNum++;
+				m_fireEffect[m_fireEffectNum]->Play();
+				m_fireEffectNum++;
 			}
 			return false;
 			});

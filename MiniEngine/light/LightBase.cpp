@@ -12,7 +12,7 @@ namespace nsMyGame {
 			return StartSub();
 		}
 
-		CLightBase::~CLightBase() {
+		void CLightBase::OnDestroy() {
 
 			//ライトマネージャーからライトを削除する。
 			CLightManager::GetInstance()->RemoveLight(this);

@@ -119,9 +119,7 @@ namespace nsMyGame {
 
 				//ダメージを与える。
 				if (m_receiveDamage) {
-					m_coolTime = 0.3f;
 					m_status.hp -= 30;
-					m_state = enState_Damage;
 				}
 			}
 

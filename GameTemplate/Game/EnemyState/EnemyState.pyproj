@@ -26,6 +26,7 @@
     <OutputPath>bin\Master\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BossDeath.py" />
     <Compile Include="BossIdle.py" />
     <Compile Include="BossJumpAttack.py" />
     <Compile Include="BossMove.py" />
