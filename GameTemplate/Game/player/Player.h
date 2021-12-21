@@ -136,11 +136,11 @@ namespace nsMyGame {
 				m_playerState = enState_Damage;
 
 				//血しぶきエフェクトを再生。
-				//Effect* bloodEffect = NewGO<Effect>(enPriority_Zeroth);
-				//bloodEffect->Init(u"Assets/effect/blood.efk");
-				//bloodEffect->SetPosition(effectPos);
-				//bloodEffect->SetScale({ 5.0f, 5.0f,5.0f });
-				//bloodEffect->Play();
+				Effect* bloodEffect = NewGO<Effect>(enPriority_Zeroth);
+				bloodEffect->Init(u"Assets/effect/bloodGreen.efk");
+				bloodEffect->SetPosition(effectPos);
+				bloodEffect->SetScale({ 5.0f, 5.0f,5.0f });
+				bloodEffect->Play();
 			}
 
 			/**
