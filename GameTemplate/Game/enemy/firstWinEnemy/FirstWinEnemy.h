@@ -18,6 +18,7 @@ namespace nsMyGame {
 				enState_Damage,
 				enState_Death,
 				enState_AttackBreak,
+				enState_Back,
 
 				enState_Num
 			};
@@ -30,6 +31,7 @@ namespace nsMyGame {
 				enAnim_Damage,
 				enAnim_Death,
 				enAnim_AttackBreak,
+				enAnim_Back,
 
 				enAnim_Num
 			};

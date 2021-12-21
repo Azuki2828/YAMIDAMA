@@ -255,6 +255,7 @@ namespace nsMyGame {
 			SStatus m_status;											//ステータス
 			CModelRender* m_modelRender = nullptr;						//モデル
 			CVector3 m_position = CVector3::Zero;						//座標
+			bool m_canRotate = false;									//後ろ歩き？
 			CQuaternion m_rotation = CQuaternion::Identity;				//回転
 			float m_coolTime = 0.0f;									//クールタイム
 			float m_guardTime = 0.0f;									//ガード時間

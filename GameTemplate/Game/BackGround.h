@@ -91,6 +91,7 @@ namespace nsMyGame {
 		Level m_level;										//レベル
 		PhysicsStaticObject m_physicsStaticObject;			//静的物理オブジェクト
 
+		//各インスタンスの数
 		int m_doorNum = 0;
 		int m_fEnemyNum = 0;
 		int m_gEnemyNum = 0;

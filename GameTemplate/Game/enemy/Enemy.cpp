@@ -210,8 +210,16 @@ namespace nsMyGame {
 				return;
 			}
 
-			//‰ñ“]Šp“x‚ğ‹‚ß‚éB
-			float angle = atan2(-m_moveSpeed.x, m_moveSpeed.z);
+			float angle;
+
+			if (!m_canRotate) {
+				//‰ñ“]Šp“x‚ğ‹‚ß‚éB
+				angle = atan2(-m_moveSpeed.x, m_moveSpeed.z);
+			}
+			else {
+				//‰ñ“]Šp“x‚ğ‹‚ß‚éB
+				angle = atan2(m_moveSpeed.x, -m_moveSpeed.z);
+			}
 
 			//‰ñ“]‚ğİ’èB
 			m_rotation.SetRotationY(-angle);

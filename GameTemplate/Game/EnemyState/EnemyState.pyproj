@@ -36,6 +36,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EnemyAttackBreak.py" />
+    <Compile Include="EnemyBack.py" />
     <Compile Include="EnemyDamage.py">
       <SubType>Code</SubType>
     </Compile>

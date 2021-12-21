@@ -106,6 +106,9 @@ namespace nsMyGame {
 			case enState_AttackBreak:
 				ImportModule("EnemyAttackBreak");
 				break;
+			case enState_Back:
+				ImportModule("EnemyBack");
+				break;
 			}
 
 			//PythonスクリプトのUpdate()関数を呼び出す。
@@ -134,6 +137,8 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
 			m_animationClip[enAnim_AttackBreak].Load("Assets/animData/attackBreak.tka");
 			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);
+			m_animationClip[enAnim_Back].Load("Assets/animData/back.tka");
+			m_animationClip[enAnim_Back].SetLoopFlag(true);
 		}
 
 		void CFirstWinEnemy::AnimationUpdate() {
@@ -157,6 +162,9 @@ namespace nsMyGame {
 				break;
 			case enState_AttackBreak:
 				m_modelRender->PlayAnimation(enAnim_AttackBreak, 0.4f);
+				break;
+			case enState_Back:
+				m_modelRender->PlayAnimation(enAnim_Back, 0.4f);
 				break;
 			}
 		}
@@ -211,9 +219,18 @@ namespace nsMyGame {
 
 				m_moveSpeed += toPlayerVec * 240.0f;
 			}
+			//歩き状態ならプレイヤーに一定速度で近づく。
+			if (m_state == enState_Back) {
+
+				m_moveSpeed -= toPlayerVec * 120.0f;
+				m_canRotate = true;
+			}
+			else {
+				m_canRotate = false;
+			}
 
 			//3連続攻撃状態なら一定速度でプレイヤーに近づく。
-			else if (m_state == enState_ThreeCombo) {
+			if (m_state == enState_ThreeCombo) {
 
 				if (c_threeComboCoolTime - m_coolTime < 2.4f) {
 					m_moveSpeed += toPlayerVec * 50.0f;
