@@ -48,6 +48,12 @@ namespace nsMyGame {
 		Py_Finalize();
 		PyMem_RawFree(program);
 	}
+
+	/**
+	 * @brief BGMとSEを一括ロードする関数。
+	*/
+	void InitBGMAndSE();
+
 	///////////////////////////////////////////////////////////////////
 	// ウィンドウプログラムのメイン関数。
 	///////////////////////////////////////////////////////////////////
@@ -75,6 +81,11 @@ namespace nsMyGame {
 		CCamera::CreateLightCamera();						//ライトカメラ
 		CRenderingEngine::CreateRenderingEngine();			//レンダリングエンジン
 		EffectEngine::CreateInstance();						//エフェクトエンジン
+		CSoundManager::CreateInstance();					//サウンドエンジン
+
+		//BGMとSEを一括ロード。
+		InitBGMAndSE();
+
 		NewGO<CFade>(enPriority_Zeroth, c_classNameFade);	//フェード
 
 		//ワイヤーフレーム表示をONにする。
@@ -122,6 +133,15 @@ namespace nsMyGame {
 		FinalPython(program);
 
 		return 0;
+	}
+
+	void InitBGMAndSE() {
+
+		CSoundManager::GetInstance()->Init(c_filePathBGM_Boss, enBGM_Boss, true, SoundType::Type_BGM);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Kill, enSE_Kill, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Guard, enSE_Guard, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Rolling, enSE_Rolling, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Walk, enSE_Walk, false, SoundType::Type_SE);
 	}
 }
 

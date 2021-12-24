@@ -29,6 +29,9 @@ namespace nsMyGame {
 						bloodEffect->SetPosition(m_position);
 						bloodEffect->SetScale({ 5.0f, 5.0f,5.0f });
 						bloodEffect->Play();
+
+						//斬るサウンドを再生。
+						CSoundManager::GetInstance()->Play(enSE_Kill);
 					}
 				});
 

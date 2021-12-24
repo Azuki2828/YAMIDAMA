@@ -20,7 +20,7 @@ namespace nsMyGame {
 			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);
 			m_animationClip[enAnim_Damage].Load("Assets/animData/damage2.tka");
 			m_animationClip[enAnim_Damage].SetLoopFlag(false);
-			m_animationClip[enAnim_Rolling].Load("Assets/animData/rolling2.tka");
+			m_animationClip[enAnim_Rolling].Load("Assets/animData/rolling3.tka");
 			m_animationClip[enAnim_Rolling].SetLoopFlag(false);
 			m_animationClip[enAnim_ThreeCombo].Load("Assets/animData/threeCombo.tka");
 			m_animationClip[enAnim_ThreeCombo].SetLoopFlag(false);

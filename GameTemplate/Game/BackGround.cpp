@@ -45,33 +45,38 @@ namespace nsMyGame {
 
 	void CBackGround::OnDestroy() {
 
-		for (int i = 0; i < m_pointLight.size(); i++) {
+		for (int i = 0; i < m_pointLightNum; i++) {
 
 			DeleteGO(m_pointLight[i]);
+			//m_pointLight[i] = nullptr;
 		}
 		m_pointLight.clear();
 
-		for (int i = 0; i < m_door.size(); i++) {
+		for (int i = 0; i < m_doorNum; i++) {
 
 			DeleteGO(m_door[i]);
+			//m_door[i] = nullptr;
 		}
 		m_door.clear();
 
-		for (int i = 0; i < m_fWEnemy.size(); i++) {
+		for (int i = 0; i < m_fEnemyNum; i++) {
 
 			DeleteGO(m_fWEnemy[i]);
+			//m_fWEnemy[i] = nullptr;
 		}
 		m_fWEnemy.clear();
 
-		for (int i = 0; i < m_gWEnemy.size(); i++) {
+		for (int i = 0; i < m_gEnemyNum; i++) {
 
 			DeleteGO(m_gWEnemy[i]);
+			//m_gWEnemy[i] = nullptr;
 		}
 		m_gWEnemy.clear();
 
-		for (int i = 0; i < m_item.size(); i++) {
+		for (int i = 0; i < m_itemNum; i++) {
 
 			DeleteGO(m_item[i]);
+			//m_item[i] = nullptr;
 		}
 		m_item.clear();
 

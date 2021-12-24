@@ -24,6 +24,24 @@ namespace nsMyGame {
 	constexpr const char* c_classNameFade = "fade";									//フェードクラスの名前
 	/*------------------------*/
 
+	//サウンドリスト
+	enum EnSoundList {
+		enBGM_Boss,
+		enSE_Kill,
+		enSE_Guard,
+		enSE_Rolling,
+		enSE_Walk,
+
+		enSound_Num
+	};
+	/*------サウンドのファイルパス------*/
+	constexpr const wchar_t* c_filePathBGM_Boss = L"Assets/sound/BGM_Boss.wav";		//ボス戦BGM
+	constexpr const wchar_t* c_filePathSE_Kill = L"Assets/sound/SE_Kill.wav";		//斬るSE
+	constexpr const wchar_t* c_filePathSE_Guard = L"Assets/sound/SE_Guard.wav";		//ガードSE
+	constexpr const wchar_t* c_filePathSE_Rolling = L"Assets/sound/SE_Rolling.wav";	//ローリングSE
+	constexpr const wchar_t* c_filePathSE_Walk = L"Assets/sound/SE_Walk.wav";		//歩行SE
+	/*----------------------------------*/
+
 	constexpr const char* c_entryPointVSMain = "VSMain";						//頂点シェーダーのエントリーポイント
 	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";				//スキンありの頂点シェーダーのエントリーポイント
 	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";		//G-Buffer作成に使うシェーダーのファイルパス
@@ -175,13 +193,7 @@ namespace nsMyGame {
 
 
 
-/**
- * @brief サウンドリスト
-*/
-enum SoundList {
 
-	enSound_Num
-};
 
 /**
  * @brief HUDに登録されているスプライト

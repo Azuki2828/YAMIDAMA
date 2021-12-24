@@ -7,8 +7,14 @@ from Game import AnimationUpdate
 from Game import UpdateTriggerBox
 from Game import IsGuarded
 from Game import JudgeDamage
+from Game import IsDeath
 
 def Update() :
+
+    #死亡判定
+    if(IsDeath()):
+         ChangeState(5)
+         SetCoolTime(5.0)
 
     #移動関数。
     Move()

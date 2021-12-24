@@ -112,9 +112,6 @@ namespace nsMyGame {
 			case enState_Death:
 				ImportModule("BossDeath");
 				break;
-			case enState_AttackBreak:
-				ImportModule("EnemyAttackBreak");
-				break;
 			case enState_Scream:
 				ImportModule("BossScream");
 				break;
@@ -146,8 +143,6 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Damage].SetLoopFlag(false);
 			m_animationClip[enAnim_Death].Load("Assets/animData/Boss/death.tka");
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
-			m_animationClip[enAnim_AttackBreak].Load("Assets/animData/attackBreak.tka");
-			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);
 			m_animationClip[enAnim_Scream].Load("Assets/animData/Boss/scream.tka");
 			m_animationClip[enAnim_Scream].SetLoopFlag(false);
 		}
@@ -173,9 +168,6 @@ namespace nsMyGame {
 				break;
 			case enState_Death:
 				m_modelRender->PlayAnimation(enAnim_Death, 0.4f);
-				break;
-			case enState_AttackBreak:
-				m_modelRender->PlayAnimation(enAnim_AttackBreak, 0.4f);
 				break;
 			case enState_Scream:
 				m_modelRender->PlayAnimation(enAnim_Scream, 0.4f);
@@ -268,6 +260,8 @@ namespace nsMyGame {
 
 			//プレイヤーの座標を取得する。
 			CVector3 toPlayerVec = m_player->GetPosition() - m_position;
+			toPlayerVec.y = 0.0f;
+
 			//正規化。
 			toPlayerVec.Normalize();
 

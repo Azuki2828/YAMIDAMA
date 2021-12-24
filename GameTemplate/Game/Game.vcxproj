@@ -392,6 +392,7 @@
     <ClCompile Include="..\..\MiniEngine\Shader.cpp" />
     <ClCompile Include="..\..\MiniEngine\ShadowMap.cpp" />
     <ClCompile Include="..\..\MiniEngine\Skeleton.cpp" />
+    <ClCompile Include="..\..\MiniEngine\sound\SoundManager.cpp" />
     <ClCompile Include="..\..\MiniEngine\sound\tkSoundEngine.cpp" />
     <ClCompile Include="..\..\MiniEngine\sound\tkSoundSource.cpp" />
     <ClCompile Include="..\..\MiniEngine\sound\tkWaveFile.cpp" />
@@ -525,6 +526,7 @@
     <ClInclude Include="..\..\MiniEngine\Shader.h" />
     <ClInclude Include="..\..\MiniEngine\ShadowMap.h" />
     <ClInclude Include="..\..\MiniEngine\Skeleton.h" />
+    <ClInclude Include="..\..\MiniEngine\sound\SoundManager.h" />
     <ClInclude Include="..\..\MiniEngine\sound\tkSoundEngine.h" />
     <ClInclude Include="..\..\MiniEngine\sound\tkSoundSource.h" />
     <ClInclude Include="..\..\MiniEngine\sound\tkWaveFile.h" />

@@ -34,7 +34,12 @@ namespace nsMyGame {
 
 					//プレイヤーに攻撃。
 					player->JudgeDamage(m_position);
+
+					//当たり判定を無効化。
 					m_isActive = false;
+
+					//斬るサウンドを再生。
+					CSoundManager::GetInstance()->Play(enSE_Kill);
 				}
 			});
 		}

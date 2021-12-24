@@ -422,6 +422,9 @@
     <ClCompile Include="..\..\MiniEngine\sound\tkWaveFileBank.cpp">
       <Filter>MiniEngine\sound</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\MiniEngine\sound\SoundManager.cpp">
+      <Filter>MiniEngine\sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -797,6 +800,9 @@
       <Filter>MiniEngine\sound</Filter>
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\sound\tkWaveFileBank.h">
+      <Filter>MiniEngine\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\sound\SoundManager.h">
       <Filter>MiniEngine\sound</Filter>
     </ClInclude>
   </ItemGroup>

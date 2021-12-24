@@ -211,6 +211,7 @@ namespace nsMyGame {
 
 			//プレイヤーの座標を取得する。
 			CVector3 toPlayerVec = m_player->GetPosition() - m_position;
+			toPlayerVec.y = 0.0f;
 			//正規化。
 			toPlayerVec.Normalize();
 

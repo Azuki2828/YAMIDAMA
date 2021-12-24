@@ -7,9 +7,9 @@ def Update() :
 
 
     #クールタイムが0秒になったら消える。
-    if(GetCoolTime() == 0.0):
-        #自信を削除。
-        Delete()    
+    #if(GetCoolTime() == 0.0):
+    #    #自信を削除。
+    #    Delete()    
 
     #アニメーションを更新。
     AnimationUpdate()

@@ -99,15 +99,16 @@ namespace nsMyGame {
 		void CPlayer::JudgeDamage(const CVector3& effectPos) {
 
 			//ガード成功中なら終了。
-			if (m_playerState == enState_GuardSuccess
-				|| m_playerState == enState_Attack
-				) { return; }
+			if (m_playerState == enState_GuardSuccess || m_playerState == enState_Death) { return; }
 
 			//ガードしたならガード成功状態に。
 			if (m_playerState == enState_Guard) {
 
 				m_playerState = enState_GuardSuccess;
 				m_playerAction.GuardSuccess();
+
+				//ガードSEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Guard);
 
 				//処理はここで終了。
 				return;

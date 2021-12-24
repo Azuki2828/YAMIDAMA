@@ -38,6 +38,7 @@ namespace nsMyGame {
 		//非表示に設定。
 		m_gameClearSprite->Deactivate();
 
+		//CSoundManager::GetInstance()->Play(enBGM_Boss);
 		// とりあえずテストで敵を追加。
 		//auto fEnemy = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameEnemy);
 		//fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
@@ -88,8 +89,8 @@ namespace nsMyGame {
 			//死亡スプライト用のタイマーを更新。
 			m_gameClearMessageTime += GameTime().GameTimeFunc().GetFrameDeltaTime();
 
-			//一定時間以上かつ、完全に表示されていないなら
-			if (m_gameClearMessageTime >= 2.5f && m_gameClearSpriteTrans < 1.0f) {
+			//完全に表示されていないなら
+			if (m_gameClearSpriteTrans < 1.0f) {
 
 				//だんだん表示されるようにする。
 				m_gameClearSpriteTrans += GameTime().GameTimeFunc().GetFrameDeltaTime() * 0.5f;
@@ -98,7 +99,7 @@ namespace nsMyGame {
 		}
 
 		//タイトルに戻る。
-		if (m_youDiedMessageTime > 7.0f || m_gameClearMessageTime > 7.0f) {
+		if (m_youDiedMessageTime > 7.0f || m_gameClearMessageTime > 4.5f) {
 
 			if (!m_fade->IsFade()) {
 				DeleteGO(this);
@@ -106,7 +107,7 @@ namespace nsMyGame {
 			}
 		}
 		//フェードアウト。
-		else if (m_youDiedMessageTime > 6.0f || m_gameClearMessageTime > 6.0f) {
+		else if (m_youDiedMessageTime > 6.0f || m_gameClearMessageTime > 3.5f) {
 
 			m_fade->StartFadeOut();
 		}

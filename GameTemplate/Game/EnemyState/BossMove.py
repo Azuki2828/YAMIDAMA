@@ -6,7 +6,6 @@ from Game import SetCoolTime
 from Game import AnimationUpdate
 from Game import UpdateTriggerBox
 from Game import JudgeDamage
-from Game import NoticePlayer
 from Game import IsDeath
 import random
 import time
@@ -31,7 +30,6 @@ def Update():
     lengthToPlayer = GetLengthToPlayer()
 
     #プレイヤーとの距離が120以下なら攻撃態勢に入る。
-
     if(lengthToPlayer <= 120.0):
 
         #乱数を生成

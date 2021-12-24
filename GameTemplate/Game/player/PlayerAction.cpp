@@ -277,6 +277,16 @@ namespace nsMyGame {
 				//攻撃を終わる。
 				m_attackCollision.Deactivate();
 			}
+			else if (wcscmp(eventName, L"startRolling") == 0)
+			{
+				//ローリングSEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Rolling);
+			}
+			else if (wcscmp(eventName, L"walk") == 0)
+			{
+				//ローリングSEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Walk);
+			}
 		}
 
 		void CPlayerAction::Update() {

@@ -1,19 +1,14 @@
 from Game import GetCoolTime
 from Game import AnimationUpdate
-from Game import Delete
 from Game import GameClear
 from Game import UpdateTriggerBox
 
 def Update() :
 
-
     #クールタイムが0秒になったら消える。
     if(GetCoolTime() == 0.0):
-        #自信を削除。
-        Delete()
         #ゲームクリア
         GameClear()
-        
 
     #アニメーションを更新。
     AnimationUpdate()

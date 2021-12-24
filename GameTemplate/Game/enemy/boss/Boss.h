@@ -19,7 +19,6 @@ namespace nsMyGame {
 				enState_SwipingAttack,
 				enState_Damage,
 				enState_Death,
-				enState_AttackBreak,
 				enState_Scream,
 
 				enState_Num
@@ -33,7 +32,6 @@ namespace nsMyGame {
 				enAnim_SwipingAttack,
 				enAnim_Damage,
 				enAnim_Death,
-				enAnim_AttackBreak,
 				enAnim_Scream,
 
 				enAnim_Num

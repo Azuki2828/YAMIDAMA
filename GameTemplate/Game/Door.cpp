@@ -16,6 +16,13 @@ namespace nsMyGame{
 		return true;
 	}
 
+	void CDoor::OnDestroy() {
+
+		DeleteGO(m_modelRender);
+		DeleteGO(m_text);
+		DeleteGO(m_doorSprite);
+	}
+
 	void CDoor::Update() {
 
 		//開かないドアなら更新しない。
@@ -32,7 +39,6 @@ namespace nsMyGame{
 
 		//静的物理オブジェクトを更新。
 		m_physicsStaticObject.GetRigidBody().SetPositionAndRotation(m_position, m_rotation);
-
 	}
 
 	void CDoor::JudgeAndExecuteOpenDoor(unsigned int& rotNum) {
