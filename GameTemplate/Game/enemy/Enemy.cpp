@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "../Game.h"
 #include "../AttackCollision.h"
+#include "../GameHUD.h"
 
 namespace nsMyGame {
 
@@ -131,6 +132,12 @@ namespace nsMyGame {
 			gameMain->GameClear();
 		}
 
+		void ActivateBossHUD() {
+
+			auto hud = FindGO<CGameHUD>(c_classNameGameHUD);
+			hud->ActivateBossHUD();
+		}
+
 		//Python側に関数を渡す。
 		PYBIND11_MODULE(Game, m) {
 			m.def("ChangeState", &ChangeState);
@@ -150,6 +157,7 @@ namespace nsMyGame {
 			m.def("NoticePlayer", &NoticePlayer);
 			m.def("GameClear", &GameClear);
 			m.def("PlayerIsDeath", &PlayerIsDeath);
+			m.def("ActivateBossHUD", &ActivateBossHUD);
 		}
 
 
@@ -257,27 +265,11 @@ namespace nsMyGame {
 			//それが嫌なら、for文の内部でステートを調べること！
 			for (auto& collision : playerCollision) {
 
-				//ガード成功中なら早期リターン。
-				//if (m_playerState == enState_GuardSuccess) {
-				//
-				//	return;
-				//}
-
 				//剛体との当たり判定を調べる。
 				CPhysicsWorld::GetInstance()->ContactTest(m_charaCon, [&](const btCollisionObject& contactObject) {
 
 					//トリガーボックスと接触した。
 					if (collision->IsSelf(contactObject)) {
-
-						////ガードしたならガード成功状態に。
-						//if (m_playerState == enState_Guard) {
-						//
-						//	m_playerState = enState_GuardSuccess;
-						//	m_playerAction.GuardSuccess();
-						//
-						//	//処理はここで終了。
-						//	return;
-						//}
 
 						//ダメージを受ける。
 						SetReceiveDamage(true);

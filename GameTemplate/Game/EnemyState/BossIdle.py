@@ -7,6 +7,7 @@ from Game import UpdateTriggerBox
 from Game import JudgeDamage
 from Game import NoticePlayer
 from Game import PlayerIsDeath
+from Game import ActivateBossHUD
 
 def Update() :
 
@@ -26,6 +27,7 @@ def Update() :
 
     #プレイヤーとの距離が500以下ならプレイヤーに近づく。
     if(playerIsDeath == False and NoticePlayer()):
+        ActivateBossHUD()
         ChangeState(1)
 
     #アニメーションを更新。

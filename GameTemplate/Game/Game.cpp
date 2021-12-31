@@ -22,7 +22,7 @@ namespace nsMyGame {
 		m_mainCamera = NewGO<CMainCamera>(enPriority_Zeroth);
 
 		//HUDを作成。
-		m_gameHUD = NewGO<CGameHUD>(enPriority_Zeroth);
+		m_gameHUD = NewGO<CGameHUD>(enPriority_Zeroth, c_classNameGameHUD);
 
 		//死亡スプライトを生成。
 		m_youDiedSprite = NewGO<CSpriteRender>(enPriority_Zeroth);

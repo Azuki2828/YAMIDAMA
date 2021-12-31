@@ -2,6 +2,7 @@
 #include "../Enemy.h"
 #include "BossAttackCollisionDetection.h"
 #include "../../AttackCollision.h"
+#include "../../GameHUD.h"
 
 namespace nsMyGame {
 
@@ -117,7 +118,11 @@ namespace nsMyGame {
 
 				//ダメージを与える。
 				if (m_receiveDamage) {
+
 					m_status.hp -= 30;
+
+					auto hud = FindGO<CGameHUD>(c_classNameGameHUD);
+					hud->UpdateBossHUD(m_status.hp);
 				}
 			}
 

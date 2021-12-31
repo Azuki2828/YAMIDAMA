@@ -22,6 +22,7 @@ namespace nsMyGame {
 	constexpr const char* c_classNamePlayerAttackCollision = "playerAttackCollision";	//プレイヤーの攻撃判定の名前
 	constexpr const char* c_classnameEnemyAttackCollision = "enemyAttackCollision";		//敵の攻撃判定の名前
 	constexpr const char* c_classNameFade = "fade";									//フェードクラスの名前
+	constexpr const char* c_classNameGameHUD = "gameHUD";							//HUDクラスの名前
 	/*------------------------*/
 
 	//サウンドリスト
@@ -137,6 +138,7 @@ namespace nsMyGame {
 		constexpr const char* c_filePathTkmBoss = "Assets/modelData/boss.tkm";			//ボスのtkmファイルパス
 		constexpr const char* c_filePathTksBoss = "Assets/modelData/boss.tks";			//ボスのtksファイルパス
 
+		constexpr const int c_bossMaxHP = 100;											//ボスの最大HP
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
 		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//敵攻撃時のトリガーボックスのサイズ
 		const CVector3 c_bossAttackTriggerBoxSize = { 145.0f, 90.0f, 90.0f };			//ボス攻撃時のトリガーボックスのサイズ

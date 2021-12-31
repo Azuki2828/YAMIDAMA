@@ -45,7 +45,7 @@ namespace nsMyGame {
 			m_modelRender->AddAnimationEvent([&](const wchar_t* clipName, const wchar_t* eventName) {
 
 				OnAnimationEvent(clipName, eventName);
-				});
+			});
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
@@ -124,7 +124,7 @@ namespace nsMyGame {
 
 		void CBoss::InitStatus() {
 
-			m_status.hp = 100;
+			m_status.hp = c_bossMaxHP;
 			m_status.attack = 10;
 		}
 
