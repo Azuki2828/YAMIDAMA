@@ -119,6 +119,12 @@ namespace nsMyGame {
 			return g_pCurrentEnemy->NoticePlayer();
 		}
 
+		bool PlayerIsDeath() {
+
+			auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+			return player->IsDeath();
+		}
+
 		void GameClear() {
 
 			auto gameMain = FindGO<CGameMain>(c_classNameGameMain);
@@ -143,6 +149,7 @@ namespace nsMyGame {
 			m.def("JudgeDamage", &JudgeDamage);
 			m.def("NoticePlayer", &NoticePlayer);
 			m.def("GameClear", &GameClear);
+			m.def("PlayerIsDeath", &PlayerIsDeath);
 		}
 
 

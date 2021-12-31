@@ -32,6 +32,8 @@ namespace nsMyGame {
 
 						//斬るサウンドを再生。
 						CSoundManager::GetInstance()->Play(enSE_Kill);
+
+						m_isActive = false;
 					}
 				});
 

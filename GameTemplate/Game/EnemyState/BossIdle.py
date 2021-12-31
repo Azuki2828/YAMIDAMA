@@ -6,6 +6,7 @@ from Game import AnimationUpdate
 from Game import UpdateTriggerBox
 from Game import JudgeDamage
 from Game import NoticePlayer
+from Game import PlayerIsDeath
 
 def Update() :
 
@@ -18,11 +19,13 @@ def Update() :
     #ダメージ判定
     JudgeDamage()
 
+    playerIsDeath = PlayerIsDeath()
+
     #プレイヤーとの距離を調べる。
     lengthToPlayer = GetLengthToPlayer()
 
     #プレイヤーとの距離が500以下ならプレイヤーに近づく。
-    if(NoticePlayer()):
+    if(playerIsDeath == False and NoticePlayer()):
         ChangeState(1)
 
     #アニメーションを更新。

@@ -45,7 +45,7 @@ namespace nsMyGame {
 			*/
 			void InitStatus() {
 
-				m_status.hp = 100;
+				m_status.hp = c_playerMaxHP;
 				m_status.attack = 10;
 			}
 
@@ -84,6 +84,16 @@ namespace nsMyGame {
 			*/
 			void IsAttackStateProcess();
 		public:
+
+			/**
+			 * @brief HPを取得する関数。
+			 * @return HP
+			*/
+			const int GetHP()const {
+
+				return m_status.hp;
+			}
+
 			/**
 			 * @brief ダメージ判定をする関数。
 			*/

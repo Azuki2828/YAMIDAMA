@@ -6,6 +6,7 @@
 #include "BackGround.h"
 #include "MainCamera.h"
 #include "GameTitle.h"
+#include "GameHUD.h"
 
 namespace nsMyGame {
 
@@ -19,6 +20,9 @@ namespace nsMyGame {
 
 		//メインカメラを生成。
 		m_mainCamera = NewGO<CMainCamera>(enPriority_Zeroth);
+
+		//HUDを作成。
+		m_gameHUD = NewGO<CGameHUD>(enPriority_Zeroth);
 
 		//死亡スプライトを生成。
 		m_youDiedSprite = NewGO<CSpriteRender>(enPriority_Zeroth);
@@ -38,7 +42,8 @@ namespace nsMyGame {
 		//非表示に設定。
 		m_gameClearSprite->Deactivate();
 
-		//CSoundManager::GetInstance()->Play(enBGM_Boss);
+		
+		
 		// とりあえずテストで敵を追加。
 		//auto fEnemy = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameEnemy);
 		//fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
@@ -58,6 +63,7 @@ namespace nsMyGame {
 		DeleteGO(m_gameClearSprite);
 		DeleteGO(m_backGround);
 		DeleteGO(m_mainCamera);
+		DeleteGO(m_gameHUD);
 	}
 
 	void CGameMain::Update() {
@@ -65,14 +71,24 @@ namespace nsMyGame {
 		//プレイヤーが死んでいるならYouDiedを表示させる。
 		if (m_player->IsDeath()) {
 
-			//有効にする。
-			m_youDiedSprite->Activate();
-
 			//死亡スプライト用のタイマーを更新。
 			m_youDiedMessageTime += GameTime().GameTimeFunc().GetFrameDeltaTime();
 
 			//一定時間以上かつ、完全に表示されていないなら
 			if (m_youDiedMessageTime >= 2.5f && m_youDiedSpriteTrans < 1.0f) {
+
+				//ゲームオーバーサウンドが再生されていないなら
+				if (!m_gameOverSoundFlag) {
+
+					//ゲームオーバーサウンドを再生。
+					CSoundManager::GetInstance()->Play(enSE_GameOver);
+
+					//ゲームオーバーサウンドが再生された。
+					m_gameOverSoundFlag = true;
+				}
+				
+				//有効にする。
+				m_youDiedSprite->Activate();
 
 				//だんだん表示されるようにする。
 				m_youDiedSpriteTrans += GameTime().GameTimeFunc().GetFrameDeltaTime() * 0.5f;

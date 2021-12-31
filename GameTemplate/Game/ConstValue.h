@@ -26,20 +26,31 @@ namespace nsMyGame {
 
 	//サウンドリスト
 	enum EnSoundList {
+		enBGM_GameMain,
 		enBGM_Boss,
 		enSE_Kill,
 		enSE_Guard,
 		enSE_Rolling,
 		enSE_Walk,
+		enSE_Death_1,
+		enSE_Death_2,
+		enSE_GameOver,
+		enSE_Select,
 
 		enSound_Num
 	};
+
 	/*------サウンドのファイルパス------*/
-	constexpr const wchar_t* c_filePathBGM_Boss = L"Assets/sound/BGM_Boss.wav";		//ボス戦BGM
-	constexpr const wchar_t* c_filePathSE_Kill = L"Assets/sound/SE_Kill.wav";		//斬るSE
-	constexpr const wchar_t* c_filePathSE_Guard = L"Assets/sound/SE_Guard.wav";		//ガードSE
-	constexpr const wchar_t* c_filePathSE_Rolling = L"Assets/sound/SE_Rolling.wav";	//ローリングSE
-	constexpr const wchar_t* c_filePathSE_Walk = L"Assets/sound/SE_Walk.wav";		//歩行SE
+	constexpr const wchar_t* c_filePathBGM_Boss = L"Assets/sound/BGM_Boss.wav";			//ボス戦BGM
+	constexpr const wchar_t* c_filePathBGM_GameMain = L"Assets/sound/BGM_GameMain.wav";	//ゲーム中BGM
+	constexpr const wchar_t* c_filePathSE_Kill = L"Assets/sound/SE_Kill.wav";			//斬るSE
+	constexpr const wchar_t* c_filePathSE_Guard = L"Assets/sound/SE_Guard.wav";			//ガードSE
+	constexpr const wchar_t* c_filePathSE_Rolling = L"Assets/sound/SE_Rolling.wav";		//ローリングSE
+	constexpr const wchar_t* c_filePathSE_Walk = L"Assets/sound/SE_Walk.wav";			//歩行SE
+	constexpr const wchar_t* c_filePathSE_Death_1 = L"Assets/sound/SE_Death_1.wav";		//倒れるSE
+	constexpr const wchar_t* c_filePathSE_Death_2 = L"Assets/sound/SE_Death_2.wav";		//倒れるSE2
+	constexpr const wchar_t* c_filePathSE_GameOver = L"Assets/sound/SE_GameOver.wav";	//ゲームオーバーSE
+	constexpr const wchar_t* c_filePathSE_Select = L"Assets/sound/SE_Select.wav";		//選択SE
 	/*----------------------------------*/
 
 	constexpr const char* c_entryPointVSMain = "VSMain";						//頂点シェーダーのエントリーポイント
@@ -96,6 +107,7 @@ namespace nsMyGame {
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
 		const CVector3 c_playerStartPosition = { 0.0f,0.0f,0.0f };					//開始時のプレイヤーの座標
 
+		constexpr const int c_playerMaxHP = 100;									//プレイヤーの最大HP
 		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//プレイヤー攻撃時のトリガーボックスの前方向への乗算値
 		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//プレイヤー攻撃時のトリガーボックスのY方向への加算値

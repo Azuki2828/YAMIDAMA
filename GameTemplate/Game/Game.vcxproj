@@ -422,6 +422,7 @@
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemy.cpp" />
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="GameTitle.cpp" />
     <ClCompile Include="item\Item.cpp" />
     <ClCompile Include="main.cpp" />
@@ -559,6 +560,7 @@
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemy.h" />
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemyAttackCollisionDetection.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameHUD.h" />
     <ClInclude Include="GameTitle.h" />
     <ClInclude Include="item\Item.h" />
     <ClInclude Include="MainCamera.h" />

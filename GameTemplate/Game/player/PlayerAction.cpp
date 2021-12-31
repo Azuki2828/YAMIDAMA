@@ -282,10 +282,22 @@ namespace nsMyGame {
 				//ローリングSEを再生。
 				CSoundManager::GetInstance()->Play(enSE_Rolling);
 			}
-			else if (wcscmp(eventName, L"walk") == 0)
+			else if (wcscmp(eventName, L"walk") == 0
+				|| wcscmp(eventName, L"run") == 0
+			)
 			{
-				//ローリングSEを再生。
+				//歩行SEを再生。
 				CSoundManager::GetInstance()->Play(enSE_Walk);
+			}
+			else if (wcscmp(eventName, L"death_1") == 0)
+			{
+				//倒れるSEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Death_1);
+			}
+			else if (wcscmp(eventName, L"death_2") == 0)
+			{
+				//倒れるSE2を再生。
+				CSoundManager::GetInstance()->Play(enSE_Death_2);
 			}
 		}
 

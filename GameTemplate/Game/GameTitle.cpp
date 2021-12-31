@@ -22,6 +22,9 @@ namespace nsMyGame {
 		m_textBackSprite->SetScale({ 0.4f,0.06f,0.15f });
 		m_textBackSprite->SetPosition({ 0.0f,-150.0f,0.0f });
 
+		//ゲーム中のBGMを再生。
+		CSoundManager::GetInstance()->Play(enBGM_GameMain);
+
 		//フェードイン
 		m_fade = FindGO<CFade>(c_classNameFade);
 		m_fade->StartFadeIn();
@@ -46,6 +49,9 @@ namespace nsMyGame {
 			m_fade->StartFadeOut();
 
 			m_finishedFadeOut = true;
+
+			//選択SEを再生。
+			CSoundManager::GetInstance()->Play(enSE_Select);
 		}
 
 		//フェードアウトが終わったら

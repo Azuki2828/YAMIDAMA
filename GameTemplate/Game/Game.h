@@ -5,6 +5,7 @@ namespace nsMyGame {
 	//エイリアス宣言
 	class CBackGround;
 	class CMainCamera;
+	class CGameHUD;
 
 	namespace nsPlayer {
 
@@ -40,6 +41,7 @@ namespace nsMyGame {
 		}
 	private:
 		bool m_isGameClear = false;					//ゲームクリア？
+		bool m_gameOverSoundFlag = false;			//ゲームオーバーサウンドが再生された？
 		float m_youDiedSpriteTrans = 0.0f;			//死亡スプライトの透明度
 		float m_youDiedMessageTime = 0.0f;			//ゲームオーバースプライトがでるまでの時間
 		float m_gameClearSpriteTrans = 0.0f;		//ゲームクリアスプライトの透明度
@@ -50,6 +52,7 @@ namespace nsMyGame {
 		CSpriteRender* m_youDiedSprite = nullptr;
 		CSpriteRender* m_gameClearSprite = nullptr;
 		CBackGround* m_backGround = nullptr;
+		CGameHUD* m_gameHUD = nullptr;
 		CMainCamera* m_mainCamera = nullptr;
 		CFade* m_fade = nullptr;
 	};

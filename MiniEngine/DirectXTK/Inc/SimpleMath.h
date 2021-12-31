@@ -202,6 +202,7 @@ namespace DirectX
             // Constants
             static const Vector2 Zero;
             static const Vector2 One;
+            static const Vector2 Half;
             static const Vector2 UnitX;
             static const Vector2 UnitY;
         };

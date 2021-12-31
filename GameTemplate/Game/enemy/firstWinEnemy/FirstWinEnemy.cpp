@@ -183,6 +183,23 @@ namespace nsMyGame {
 				//UŒ‚‚ðI‚í‚éB
 				m_triggerBox.Deactivate();
 			}
+			else if (wcscmp(eventName, L"walk") == 0
+				|| wcscmp(eventName, L"run") == 0
+				)
+			{
+				//•àsSE‚ðÄ¶B
+				CSoundManager::GetInstance()->Play(enSE_Walk);
+			}
+			else if (wcscmp(eventName, L"death_1") == 0)
+			{
+				//“|‚ê‚éSE‚ðÄ¶B
+				CSoundManager::GetInstance()->Play(enSE_Death_1);
+			}
+			else if (wcscmp(eventName, L"death_2") == 0)
+			{
+				//“|‚ê‚éSE2‚ðÄ¶B
+				CSoundManager::GetInstance()->Play(enSE_Death_2);
+			}
 		}
 
 		void CFirstWinEnemy::CreateAttackCollision() {

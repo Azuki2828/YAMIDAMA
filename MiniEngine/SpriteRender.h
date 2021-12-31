@@ -52,6 +52,12 @@ namespace nsMyGame {
 		void SetScale(const CVector3& sca) { m_sca = sca; }
 
 		/**
+		 * @brief 基点を設定する関数。
+		 * @param pivot 基点
+		*/
+		void SetPivot(const CVector2& pivot) { m_pivot = pivot; }
+
+		/**
 		 * @brief 拡大率を取得する関数。
 		 * @return 拡大率
 		*/
@@ -72,6 +78,7 @@ namespace nsMyGame {
 		CQuaternion m_rot = CQuaternion::Identity;	//回転
 		CVector3 m_sca = CVector3::One;				//拡大
 		CVector4 m_mulColor = CVector4::White;		//乗算カラー
+		CVector2 m_pivot = CVector2::Half;			//ピボット
 	};
 }
 

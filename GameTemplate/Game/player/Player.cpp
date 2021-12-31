@@ -83,10 +83,10 @@ namespace nsMyGame {
 
 				IsDamagedStateProcess();
 				break;
-			case enState_Guard:
+			case enState_Guard:				//ガード中
 				IsGuardStateProcess();
 				break;
-			case enState_Attack:
+			case enState_Attack:			//攻撃中
 				IsAttackStateProcess();
 				break;
 			default:						//通常処理
@@ -108,6 +108,7 @@ namespace nsMyGame {
 				m_playerAction.GuardSuccess();
 
 				//ガードSEを再生。
+				
 				CSoundManager::GetInstance()->Play(enSE_Guard);
 
 				//処理はここで終了。

@@ -5,6 +5,7 @@ from Game import Rotate
 from Game import AnimationUpdate
 from Game import UpdateTriggerBox
 from Game import JudgeDamage
+from Game import PlayerIsDeath
 
 
 def Update() :
@@ -18,12 +19,14 @@ def Update() :
     #ダメージ判定
     JudgeDamage()
 
+    #プレイヤーが死んでいるかどうか調べる。
+    playerIsDeath = PlayerIsDeath()
+
     #プレイヤーとの距離を調べる。
     lengthToPlayer = GetLengthToPlayer()
 
-
     #プレイヤーとの距離が500以下ならプレイヤーに近づく。
-    if(lengthToPlayer <= 500.0):
+    if(playerIsDeath == False and lengthToPlayer <= 500.0):
         ChangeState(1)
 
     #アニメーションを更新。

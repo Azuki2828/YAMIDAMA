@@ -82,11 +82,11 @@ namespace nsMyGame {
 		CRenderingEngine::CreateRenderingEngine();			//レンダリングエンジン
 		EffectEngine::CreateInstance();						//エフェクトエンジン
 		CSoundManager::CreateInstance();					//サウンドエンジン
+		NewGO<CFade>(enPriority_Zeroth, c_classNameFade);	//フェード
 
 		//BGMとSEを一括ロード。
 		InitBGMAndSE();
 
-		NewGO<CFade>(enPriority_Zeroth, c_classNameFade);	//フェード
 
 		//ワイヤーフレーム表示をONにする。
 		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
@@ -138,10 +138,20 @@ namespace nsMyGame {
 	void InitBGMAndSE() {
 
 		CSoundManager::GetInstance()->Init(c_filePathBGM_Boss, enBGM_Boss, true, SoundType::Type_BGM);
+		CSoundManager::GetInstance()->Init(c_filePathBGM_GameMain, enBGM_GameMain, true, SoundType::Type_BGM);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enBGM_GameMain, 0.2f);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Kill, enSE_Kill, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Kill, 0.3f);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Guard, enSE_Guard, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Guard, 0.3f);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Rolling, enSE_Rolling, false, SoundType::Type_SE);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Walk, enSE_Walk, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Walk, 0.3f);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Death_1, enSE_Death_1, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Death_2, enSE_Death_2, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_GameOver, enSE_GameOver, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_GameOver, 0.5f);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Select, enSE_Select, false, SoundType::Type_SE);
 	}
 }
 

@@ -23,7 +23,7 @@ namespace nsMyGame {
 	void CSpriteRender::Update() {
 
 		m_sprite.SetMulColor(m_mulColor);
-		m_sprite.Update(m_pos, m_rot, m_sca);
+		m_sprite.Update(m_pos, m_rot, m_sca, m_pivot);
 	}
 
 	void CSpriteRender::Render2D(CRenderContext& rc) {
