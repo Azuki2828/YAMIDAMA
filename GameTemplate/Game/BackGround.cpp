@@ -226,7 +226,7 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("Boss")) {
 
-				m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameEnemy);
+				m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameBoss);
 				m_boss->SetPosition(objData.position);
 				m_boss->SetRotation(objData.rotation);
 

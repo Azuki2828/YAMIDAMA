@@ -17,6 +17,7 @@ namespace nsMyGame {
 	constexpr const char* c_classNameGameMain = "gameMain";							//ゲームメインクラスの名前
 	constexpr const char* c_classNamePlayer = "player";								//プレイヤークラスの名前
 	constexpr const char* c_classNameEnemy = "enemy";								//敵クラスの名前
+	constexpr const char* c_classNameBoss = "boss";									//ボスクラスの名前
 	constexpr const char* c_classNameAppearSprite = "appearSprite";					//ウィンドウクラスの名前
 	constexpr const char* c_classNameBackGround = "backGround";						//背景クラスの名前
 	constexpr const char* c_classNamePlayerAttackCollision = "playerAttackCollision";	//プレイヤーの攻撃判定の名前

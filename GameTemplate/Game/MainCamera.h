@@ -12,6 +12,11 @@ namespace nsMyGame {
 	//メインカメラクラス
 	class CMainCamera : public CIGameObject
 	{
+		//ステート
+		enum EnState {
+			enNormal,
+			enEvent
+		};
 	public:
 		/**
 		 * @brief Update()関数の前に一度だけ呼ばれる関数。
@@ -24,6 +29,8 @@ namespace nsMyGame {
 		*/
 		void Update()override final;
 	private:
+		EnState m_state = enNormal;							//ステート
+		float m_eventTimer = 0.0f;							//イベントタイマー(ボス登場時のカメラワーク)
 		SpringCamera m_springCamera;						//ばねカメラ。
 		CVector3 m_pos = CVector3::Zero;					//視点
 		CQuaternion m_rot = CQuaternion::Identity;			//回転

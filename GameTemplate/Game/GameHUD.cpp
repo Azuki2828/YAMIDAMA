@@ -15,6 +15,11 @@ namespace nsMyGame {
 
 		DeleteGO(m_hpBarFrame);
 		DeleteGO(m_hpBar);
+		DeleteGO(m_hpBarBack);
+		DeleteGO(m_bossHpBarFrame);
+		DeleteGO(m_bossHpBarBack);
+		DeleteGO(m_bossHpBar);
+		DeleteGO(m_bossNameText);
 	}
 
 	void CGameHUD::Update() {

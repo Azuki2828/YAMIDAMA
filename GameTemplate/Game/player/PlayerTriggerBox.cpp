@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PlayerTriggerBox.h"
 #include "../enemy/Enemy.h"
+#include "../enemy/boss/Boss.h"
 
 namespace nsMyGame {
 
@@ -38,6 +39,31 @@ namespace nsMyGame {
 				});
 
 				return true;
+			});
+
+			auto boss = FindGO<nsEnemy::CBoss>(c_classNameBoss);
+
+			//剛体との当たり判定を調べる。
+			CPhysicsWorld::GetInstance()->ContactTest(boss->GetCharacterController(), [&](const btCollisionObject& contactObject) {
+
+				//まだ敵が今回の攻撃を受けていない状態でトリガーボックスと接触した。
+				if (m_attackCollision.IsSelf(contactObject)) {
+
+					//敵にダメージを与える。
+					boss->SetReceiveDamage(true);
+
+					//血しぶきエフェクトを再生。
+					Effect* bloodEffect = NewGO<Effect>(enPriority_Zeroth);
+					bloodEffect->Init(u"Assets/effect/bloodGreen.efk");
+					bloodEffect->SetPosition(m_position);
+					bloodEffect->SetScale({ 5.0f, 5.0f,5.0f });
+					bloodEffect->Play();
+
+					//斬るサウンドを再生。
+					CSoundManager::GetInstance()->Play(enSE_Kill);
+
+					m_isActive = false;
+				}
 			});
 		}
 	}
