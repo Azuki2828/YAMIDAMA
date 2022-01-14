@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Boss.h"
 #include "../../AttackCollision.h"
+#include "../../BackGround.h"
+#include "../../MainCamera.h"
 
 namespace nsMyGame {
 
@@ -76,6 +78,9 @@ namespace nsMyGame {
 			//プレイヤーに気づくためのトリガーボックスを設定。
 			m_noticePlayerTriggerBox.CreateBox(m_position, CQuaternion::Identity, { 1500.0f,1000.0f,1500.0f });
 
+			//登場時のクールタイムは2.0秒。
+			m_coolTime = 2.0f;
+
 			return true;
 		}
 
@@ -115,6 +120,9 @@ namespace nsMyGame {
 			case enState_Scream:
 				ImportModule("BossScream");
 				break;
+			case enState_Start:
+				ImportModule("BossStart");
+				break;
 			}
 
 			//PythonスクリプトのUpdate()関数を呼び出す。
@@ -145,6 +153,8 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
 			m_animationClip[enAnim_Scream].Load("Assets/animData/Boss/scream.tka");
 			m_animationClip[enAnim_Scream].SetLoopFlag(false);
+			m_animationClip[enAnim_Start].Load("Assets/animData/Boss/startAnim_1.tka");
+			m_animationClip[enAnim_Start].SetLoopFlag(false);
 		}
 
 		void CBoss::AnimationUpdate() {
@@ -172,6 +182,9 @@ namespace nsMyGame {
 			case enState_Scream:
 				m_modelRender->PlayAnimation(enAnim_Scream, 0.4f);
 				break;
+			case enState_Start:
+				m_modelRender->PlayAnimation(enAnim_Start, 0.4f);
+				break;
 			}
 		}
 
@@ -194,6 +207,11 @@ namespace nsMyGame {
 			{
 				//攻撃中にする。
 				m_triggerBox.ActivateRangeAttack();
+
+				auto mainCamera = FindGO<CMainCamera>(c_classNameMainCamera);
+
+				//カメラを揺れ状態にする。
+				mainCamera->ShakeCamera();
 			}
 			//キーの名前が「attack_end」の時。
 			else if (wcscmp(eventName, L"endRangeAttack") == 0)
@@ -216,6 +234,36 @@ namespace nsMyGame {
 
 				//移動できない。
 				m_canMove = false;
+
+				//衝撃SEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Impact);
+			}
+			else if (wcscmp(eventName, L"impact") == 0) {
+
+				//衝撃SEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Impact);
+			}
+			else if (wcscmp(eventName, L"endShakeCamera") == 0) {
+
+				auto mainCamera = FindGO<CMainCamera>(c_classNameMainCamera);
+				
+				//カメラを通常状態にする。
+				mainCamera->SetNormalCamera();
+			}
+			else if (wcscmp(eventName, L"scream") == 0) {
+
+				//咆哮SEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Scream);
+			}
+			else if (wcscmp(eventName, L"walk") == 0) {
+
+				//ボス足音SEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Footsteps);
+			}
+			else if (wcscmp(eventName, L"scratch") == 0) {
+
+				//引っ掻きSEを再生。
+				CSoundManager::GetInstance()->Play(enSE_Scratch);
 			}
 		}
 
@@ -319,16 +367,14 @@ namespace nsMyGame {
 
 		void CBoss::FindPlayer() {
  
-			//剛体との当たり判定を調べる。
-			CPhysicsWorld::GetInstance()->ContactTest(m_player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
+			auto backGround = FindGO<CBackGround>(c_classNameBackGround);
 
-				//トリガーボックスと接触した。
-				if (m_noticePlayerTriggerBox.IsSelf(contactObject)) {
+			//ボスが登場しているなら
+			if (backGround->CreatedBoss()) {
 
-					//プレイヤーと遭遇。
-					m_noticePlayer = true;
-				}
-			});
+				//プレイヤーに気づいた。
+				m_noticePlayer = true;
+			}
 		}
 	}
 }

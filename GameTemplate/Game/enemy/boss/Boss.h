@@ -21,6 +21,7 @@ namespace nsMyGame {
 				enState_Damage,
 				enState_Death,
 				enState_Scream,
+				enState_Start,
 
 				enState_Num
 			};
@@ -34,6 +35,7 @@ namespace nsMyGame {
 				enAnim_Damage,
 				enAnim_Death,
 				enAnim_Scream,
+				enAnim_Start,
 
 				enAnim_Num
 			};
@@ -150,7 +152,7 @@ namespace nsMyGame {
 			void FindPlayer();
 		private:
 			Bone* m_swordBone = nullptr;							//剣に取り付けられたボーン
-			EnState m_state = enState_Idle;							//ステート
+			EnState m_state = enState_Start;						//ステート
 			CAnimationClip m_animationClip[enAnim_Num];				//アニメーションクリップ
 			CBossCollisionDetection m_triggerBox;					//攻撃用のトリガーボックス
 

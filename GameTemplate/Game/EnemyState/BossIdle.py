@@ -26,7 +26,7 @@ def Update() :
     lengthToPlayer = GetLengthToPlayer()
 
     #プレイヤーとの距離が500以下ならプレイヤーに近づく。
-    if(playerIsDeath == False and NoticePlayer()):
+    if(playerIsDeath == False):
         ActivateBossHUD()
         ChangeState(1)
 

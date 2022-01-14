@@ -14,8 +14,8 @@ namespace nsMyGame {
 	{
 		//ステート
 		enum EnState {
-			enNormal,
-			enEvent
+			enNormal,		//通常
+			enShake			//揺れ状態
 		};
 	public:
 		/**
@@ -28,6 +28,22 @@ namespace nsMyGame {
 		 * @brief 更新関数。
 		*/
 		void Update()override final;
+
+		/**
+		 * @brief カメラを揺れ状態にする関数。
+		*/
+		void ShakeCamera() {
+
+			m_state = enShake;
+		}
+
+		/**
+		 * @brief カメラの状態を通常状態にする関数。
+		*/
+		void SetNormalCamera() {
+
+			m_state = enNormal;
+		}
 	private:
 		EnState m_state = enNormal;							//ステート
 		float m_eventTimer = 0.0f;							//イベントタイマー(ボス登場時のカメラワーク)

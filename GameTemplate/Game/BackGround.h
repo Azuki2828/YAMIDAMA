@@ -74,6 +74,15 @@ namespace nsMyGame {
 
 			return m_dirLight[0];
 		}
+
+		/**
+		 * @brief ボスが登場した？
+		 * @return ボスが登場したかどうかのフラグ
+		*/
+		const bool CreatedBoss()const {
+
+			return m_createBoss;
+		}
 	private:
 		float m_fireTime = 0.0f;							//炎を発生させるための時間
 		CModelRender* m_modelRender = nullptr;				//モデル
@@ -90,6 +99,10 @@ namespace nsMyGame {
 		CVector3 m_sca = CVector3::One;						//拡大
 		Level m_level;										//レベル
 		PhysicsStaticObject m_physicsStaticObject;			//静的物理オブジェクト
+		CPhysicsGhostObject m_noticePlayerTriggerBox;			//ボスが登場するためのトリガー
+		CVector3 m_bossPosition = CVector3::Zero;				//ボスの登場座標
+		CQuaternion m_bossRotation = CQuaternion::Identity;		//ボスの登場回転
+		bool m_createBoss = false;								//ボスが登場した？
 
 		//各インスタンスの数
 		int m_doorNum = 0;

@@ -7,10 +7,14 @@ from Game import AnimationUpdate
 from Game import UpdateTriggerBox
 from Game import JudgeDamage
 from Game import IsDeath
+from Game import ActivateBossHUD
 import random
 import time
 
 def Update():
+
+    #ボスのHUDを表示
+    ActivateBossHUD()
 
     #死亡判定
     if(IsDeath()):

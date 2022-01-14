@@ -19,7 +19,7 @@ namespace nsMyGame {
 		m_backGround = NewGO<CBackGround>(enPriority_Zeroth, c_classNameBackGround);
 
 		//メインカメラを生成。
-		m_mainCamera = NewGO<CMainCamera>(enPriority_Zeroth);
+		m_mainCamera = NewGO<CMainCamera>(enPriority_Zeroth, c_classNameMainCamera);
 
 		//HUDを作成。
 		m_gameHUD = NewGO<CGameHUD>(enPriority_Zeroth, c_classNameGameHUD);

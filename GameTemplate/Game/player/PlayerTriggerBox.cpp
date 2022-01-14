@@ -43,6 +43,11 @@ namespace nsMyGame {
 
 			auto boss = FindGO<nsEnemy::CBoss>(c_classNameBoss);
 
+			//ボスが出現していないなら終了。
+			if (boss == nullptr) {
+				return;
+			}
+
 			//剛体との当たり判定を調べる。
 			CPhysicsWorld::GetInstance()->ContactTest(boss->GetCharacterController(), [&](const btCollisionObject& contactObject) {
 

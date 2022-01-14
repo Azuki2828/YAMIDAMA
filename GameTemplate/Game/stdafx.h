@@ -8,7 +8,7 @@
 #include "../../MiniEngine/sound/tkWaveFile.h"
 #include "../../MiniEngine/sound/tkWaveFileBank.h"
 #include "../../MiniEngine/sound/tkSoundSource.h"
-//#include "../../MiniEngine/sound/SoundManager.h"
+#include "../../MiniEngine/sound/SoundManager.h"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/eval.h>

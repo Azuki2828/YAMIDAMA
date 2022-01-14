@@ -152,6 +152,12 @@ namespace nsMyGame {
 		CSoundManager::GetInstance()->Init(c_filePathSE_GameOver, enSE_GameOver, false, SoundType::Type_SE);
 		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_GameOver, 0.5f);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Select, enSE_Select, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Scream, enSE_Scream, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Impact, enSE_Impact, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Impact, 0.5f);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Footsteps, enSE_Footsteps, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Footsteps, 0.5f);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Scratch, enSE_Scratch, false, SoundType::Type_SE);
 	}
 }
 

@@ -136,6 +136,23 @@ namespace nsMyGame {
 
 		/*------------------------------------------------------------*/
 
+		if (!m_createBoss) {
+			//剛体との当たり判定を調べる。
+			CPhysicsWorld::GetInstance()->ContactTest(player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
+
+				//トリガーボックスと接触した。
+				if (m_noticePlayerTriggerBox.IsSelf(contactObject)) {
+
+					//ボスを出現させる。
+					m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameBoss);
+					m_boss->SetPosition(m_bossPosition);
+					m_boss->SetRotation(m_bossRotation);
+
+					m_createBoss = true;
+				}
+			});
+		}
+
 		//プレイヤー中心のポイントライトの座標を更新。
 		CVector3 playerLightPosition = player->GetPosition();
 		playerLightPosition.y += 130.0f;
@@ -226,9 +243,11 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("Boss")) {
 
-				m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameBoss);
-				m_boss->SetPosition(objData.position);
-				m_boss->SetRotation(objData.rotation);
+				m_bossPosition = objData.position;
+				m_bossRotation = objData.rotation;
+
+				//ボスが登場するためのトリガーボックスを設定。
+				m_noticePlayerTriggerBox.CreateBox(objData.position, CQuaternion::Identity, { 1300.0f,3000.0f,1300.0f });
 
 				return true;
 			}
