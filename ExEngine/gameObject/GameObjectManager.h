@@ -90,8 +90,8 @@ public:
 		return newObject;
 	}
 	/*!
-		*@brief	ゲームオブジェクトの削除。
-		*/
+	*@brief	ゲームオブジェクトの削除。
+	*/
 	void DeleteGameObject( CIGameObject* gameObject )
 	{
 		if (gameObject != nullptr) {

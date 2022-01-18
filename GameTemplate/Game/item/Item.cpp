@@ -18,6 +18,13 @@ namespace nsMyGame {
 			return true;
 		}
 
+		void CItem::OnDestroy() {
+
+			DeleteGO(m_textSprite);
+			DeleteGO(m_text);
+			DeleteGO(m_itemEffect);
+		}
+
 		void CItem::Update() {
 
 			//プレイヤーを検索。

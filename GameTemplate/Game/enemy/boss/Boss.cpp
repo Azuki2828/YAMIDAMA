@@ -81,6 +81,10 @@ namespace nsMyGame {
 			//登場時のクールタイムは2.0秒。
 			m_coolTime = 2.0f;
 
+			//ゲーム音楽をボス戦BGMに変更。
+			CSoundManager::GetInstance()->Release(enBGM_GameMain);
+			CSoundManager::GetInstance()->Play(enBGM_Boss);
+
 			return true;
 		}
 

@@ -20,6 +20,11 @@ namespace nsMyGame {
 			bool Start()override final;
 
 			/**
+			 * @brief 削除関数。
+			*/
+			void OnDestroy()override final;
+
+			/**
 			 * @brief 更新関数。
 			*/
 			void Update()override final;

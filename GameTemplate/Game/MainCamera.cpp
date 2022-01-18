@@ -76,7 +76,8 @@ namespace nsMyGame {
 			std::mt19937 random(seed_gen());
 
 			
-			shakeTarget = { static_cast<float>(random() / 2.0f),static_cast<float>(random() / 2.0f) ,static_cast<float>(random() / 2.0f) };
+			shakeTarget = { static_cast<float>(random() % 201) - 100.0f,static_cast<float>(random() % 201) - 100.0f ,static_cast<float>(random() % 201) - 100.0f};
+			int a = 0;
 		}
 
 		//視点を計算する。
@@ -84,7 +85,7 @@ namespace nsMyGame {
 
 		//バネカメラに注視点と視点を設定する。
 		m_springCamera.SetFar(80000.0f);
-		m_springCamera.SetPosition(pos);
+		m_springCamera.SetPosition(pos + shakeTarget);
 		m_springCamera.SetTarget(target + shakeTarget);
 		m_springCamera.Update();
 	}

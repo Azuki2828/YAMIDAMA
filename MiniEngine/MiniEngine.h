@@ -88,4 +88,8 @@
 
 const UINT FRAME_BUFFER_W = 1280;				//フレームバッファの幅。
 const UINT FRAME_BUFFER_H = 720;				//フレームバッファの高さ。
+
+const UINT FULL_HD_W = 1920;
+const UINT FULL_HD_H = 1080;
+
 static const int MAX_BONE = 512;	//!<ボーンの最大数。

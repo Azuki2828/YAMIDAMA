@@ -120,6 +120,8 @@ namespace nsMyGame {
 			if (!m_fade->IsFade()) {
 				DeleteGO(this);
 				NewGO<CGameTitle>(enPriority_Zeroth);
+
+				CSoundManager::GetInstance()->Release(enBGM_Boss);
 			}
 		}
 		//フェードアウト。

@@ -52,6 +52,15 @@ namespace nsMyGame {
 		}
 
 		/**
+		 * @brief インスタンスを削除する関数。
+		*/
+		static void DeleteInstance() {
+
+			//サウンドデータを全削除。
+			m_soundManager->m_soundData.clear();
+		}
+
+		/**
 		 * @brief 更新関数。
 		*/
 		void Update();
