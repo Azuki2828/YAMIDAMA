@@ -158,6 +158,13 @@ namespace nsMyGame {
 		CSoundManager::GetInstance()->Init(c_filePathSE_Footsteps, enSE_Footsteps, false, SoundType::Type_SE);
 		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Footsteps, 0.5f);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Scratch, enSE_Scratch, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_DeathVoice, enSE_DeathVoice, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->Init(c_filePathSE_GetItem, enSE_GetItem, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_GetItem, 0.5f);
+		CSoundManager::GetInstance()->Init(c_filePathSE_DoorOpen, enSE_DoorOpen, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_DoorOpen, 0.7f);
+		CSoundManager::GetInstance()->Init(c_filePathSE_Torch, enSE_Torch, true, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Torch, 0.08f);
 	}
 }
 

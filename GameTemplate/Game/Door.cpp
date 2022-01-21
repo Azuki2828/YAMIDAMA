@@ -96,6 +96,9 @@ namespace nsMyGame{
 						//開いた状態に設定。
 						m_isOpened = true;
 
+						//ドア開閉SEを再生。
+						CSoundManager::GetInstance()->Play(enSE_DoorOpen);
+
 						//確認ウィンドウを生成。
 						auto getSprite = NewGO<CAppearSprite>(enPriority_Zeroth);
 						getSprite->SetText(L"Key used.  A:OK");
@@ -118,6 +121,9 @@ namespace nsMyGame{
 
 					//開いた状態に設定。
 					m_isOpened = true;
+
+					//ドア開閉SEを再生。
+					CSoundManager::GetInstance()->Play(enSE_DoorOpen);
 				}
 			}
 		}

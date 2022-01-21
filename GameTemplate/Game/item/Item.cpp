@@ -65,6 +65,9 @@ namespace nsMyGame {
 						break;
 					}
 
+					//アイテム取得SEを再生。
+					CSoundManager::GetInstance()->Play(enSE_GetItem);
+
 					//自信を削除。
 					DeleteGO(this);
 					DeleteGO(m_textSprite);

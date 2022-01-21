@@ -85,6 +85,9 @@ namespace nsMyGame {
 
 		//ボスを削除。
 		DeleteGO(m_boss);
+
+		//松明SEを停止。
+		CSoundManager::GetInstance()->Release(enSE_Torch);
 	}
 
 	void CBackGround::Update() {
@@ -182,6 +185,9 @@ namespace nsMyGame {
 		m_pointLight[m_pointLightNum]->SetRange(300.0f);
 		m_pointLight[m_pointLightNum]->SetAffectPowParam(2.5f);
 		m_pointLightNum++;
+
+		//松明SEを再生。
+		CSoundManager::GetInstance()->Play(enSE_Torch);
 
 		//ステージをロード。
 		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {

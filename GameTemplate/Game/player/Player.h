@@ -140,8 +140,17 @@ namespace nsMyGame {
 			*/
 			void ReceiveDamage(const CVector3& effectPos) {
 
+				//被弾。
 				m_status.hp -= 20;
 
+				//死んだなら
+				if (m_status.hp <= 0) {
+
+					//死亡時のボイスを再生。
+					CSoundManager::GetInstance()->Play(enSE_DeathVoice);
+				}
+
+				//ダメージ状態に。
 				m_playerAction.ReceiveDamage();
 				m_playerState = enState_Damage;
 

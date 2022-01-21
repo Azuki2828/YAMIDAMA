@@ -5,7 +5,7 @@ namespace nsMyGame {
 
 	CSoundManager* CSoundManager::m_soundManager = nullptr;
 
-	void CSoundManager::Init(const wchar_t* filePath, int num, bool flg, SoundType sType, float vol) {
+	void CSoundManager::Init(const wchar_t* filePath, const int num, const bool flg, SoundType sType, const float vol) {
 
 		for (int i = 0; i < m_soundData.size(); i++) {
 			if (m_soundData[i].soundNum == num) {
@@ -25,7 +25,7 @@ namespace nsMyGame {
 		m_soundData.push_back(soundData);
 	}
 
-	void CSoundManager::Play(int num) {
+	void CSoundManager::Play(const int num) {
 		bool Flg = false;
 		for (int i = 0; i < m_soundData.size(); i++) {
 			//“o˜^”Ô†‚ª“¯‚¶‚¾‚Á‚½‚çÄ¶B
@@ -54,7 +54,19 @@ namespace nsMyGame {
 		}
 	}
 
-	bool CSoundManager::IsPlaying(int num) {
+	void CSoundManager::Stop(const int num) {
+
+		for (int i = 0; i < m_soundData.size(); i++) {
+			//“o˜^”Ô†‚ª“¯‚¶‚È‚ç
+			if (m_soundData[i].soundNum == num) {
+				
+				//’âŽ~B
+				m_soundData[i].sound->Stop();
+			}
+		}
+	}
+
+	bool CSoundManager::IsPlaying(const int num) {
 		for (int i = 0; i < m_soundData.size(); i++) {
 			//“o˜^”Ô†‚ª“¯‚¶‚¾‚Á‚½‚çÄ¶B
 			if (m_soundData[i].soundNum == num) {
@@ -67,7 +79,7 @@ namespace nsMyGame {
 		return false;
 	}
 
-	void CSoundManager::SetRoopFlg(int num, bool flg) {
+	void CSoundManager::SetRoopFlg(const int num, const bool flg) {
 
 		bool Flg = false;
 		for (int i = 0; i < m_soundData.size(); i++) {
@@ -85,7 +97,7 @@ namespace nsMyGame {
 		}
 	}
 
-	void CSoundManager::Release(int num) {
+	void CSoundManager::Release(const int num) {
 
 		for (int i = 0; i < m_soundData.size(); i++) {
 			//“o˜^”Ô†‚ª“¯‚¶‚¾‚Á‚½‚çíœB
@@ -95,7 +107,7 @@ namespace nsMyGame {
 		}
 	}
 
-	void CSoundManager::SetSoundSourceVolume(int num, float vol) {
+	void CSoundManager::SetSoundSourceVolume(const int num, const float vol) {
 
 		bool Flg = false;
 		for (int i = 0; i < m_soundData.size(); i++) {

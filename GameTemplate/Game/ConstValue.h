@@ -43,6 +43,10 @@ namespace nsMyGame {
 		enSE_Impact,
 		enSE_Footsteps,
 		enSE_Scratch,
+		enSE_DeathVoice,
+		enSE_GetItem,
+		enSE_DoorOpen,
+		enSE_Torch,
 
 		enSound_Num
 	};
@@ -62,6 +66,10 @@ namespace nsMyGame {
 	constexpr const wchar_t* c_filePathSE_Impact = L"Assets/sound/SE_Impact.wav";		//衝撃SE
 	constexpr const wchar_t* c_filePathSE_Footsteps = L"Assets/sound/SE_Footsteps.wav";	//ボス足音SE
 	constexpr const wchar_t* c_filePathSE_Scratch = L"Assets/sound/SE_Scratch.wav";		//引っ掻きSE
+	constexpr const wchar_t* c_filePathSE_DeathVoice = L"Assets/sound/SE_DeathVoice.wav";	//死んだときのボイスSE
+	constexpr const wchar_t* c_filePathSE_GetItem = L"Assets/sound/SE_GetItem.wav";		//アイテム取得SE
+	constexpr const wchar_t* c_filePathSE_DoorOpen = L"Assets/sound/SE_DoorOpen.wav";	//ドア開閉SE
+	constexpr const wchar_t* c_filePathSE_Torch = L"Assets/sound/SE_Torch.wav";			//松明SE
 	/*----------------------------------*/
 
 	constexpr const char* c_entryPointVSMain = "VSMain";						//頂点シェーダーのエントリーポイント

@@ -32,7 +32,7 @@ namespace nsMyGame {
 		 * @param sType サウンドの種類
 		 * @param vol 音量
 		*/
-		void Init(const wchar_t* filePath, int num, bool flg = false, SoundType sType = SoundType::Type_BGM, float vol = 1.0f);
+		void Init(const wchar_t* filePath, const int num, const bool flg = false, SoundType sType = SoundType::Type_BGM, const float vol = 1.0f);
 
 		/**
 		 * @brief インスタンスを生成する関数。
@@ -69,41 +69,47 @@ namespace nsMyGame {
 		 * @brief サウンドを削除する関数。
 		 * @param num サウンド番号
 		*/
-		void Release(int num);
+		void Release(const int num);
 
 		/**
 		 * @brief サウンドを再生する関数。
 		 * @param num サウンド番号
 		*/
-		void Play(int num);
+		void Play(const int num);
+
+		/**
+		 * @brief サウンドを停止する関数。
+		 * @param num サウンド番号
+		*/
+		void Stop(const int num);
 
 		/**
 		 * @brief 再生中？
 		 * @param num サウンド番号
 		 * @return 再生中かどうかの判定
 		*/
-		bool IsPlaying(int num);
+		bool IsPlaying(const int num);
 		
 		/**
 		 * @brief 音量を設定する関数。
 		 * @param num  サウンド番号
 		 * @param vol サウンドボリューム (0.0f～1.0fを設定)
 		*/
-		void SetSoundSourceVolume(int num, float vol);
+		void SetSoundSourceVolume(const int num, const float vol);
 
 		/**
 		 * @brief ループ再生するかどうか設定する関数。
 		 * @param num サウンド番号
 		 * @param flg ループ再生するかどうかのフラグ
 		*/
-		void SetRoopFlg(int num, bool flg);
+		void SetRoopFlg(const int num, const bool flg);
 
 		/**
 		 * @brief 音量を設定する関数。
 		 * @param vol サウンドボリューム
 		 * @param type サウンドの種類
 		*/
-		void SetVolume(float vol, SoundType type = SoundType::Type_BGM) {
+		void SetVolume(const float vol, SoundType type = SoundType::Type_BGM) {
 			switch (type) {
 			case SoundType::Type_BGM:
 				m_bgmVolume = vol;
