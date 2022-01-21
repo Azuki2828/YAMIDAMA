@@ -45,43 +45,45 @@ namespace nsMyGame {
 
 	void CBackGround::OnDestroy() {
 
+		//ポイントライトを削除。
 		for (int i = 0; i < m_pointLightNum; i++) {
 
 			DeleteGO(m_pointLight[i]);
-			//m_pointLight[i] = nullptr;
 		}
 		m_pointLight.clear();
 
+		//ドアを削除。
 		for (int i = 0; i < m_doorNum; i++) {
 
 			DeleteGO(m_door[i]);
-			//m_door[i] = nullptr;
 		}
 		m_door.clear();
 
+		//先手必勝の敵を削除。
 		for (int i = 0; i < m_fEnemyNum; i++) {
 
 			DeleteGO(m_fWEnemy[i]);
-			//m_fWEnemy[i] = nullptr;
 		}
 		m_fWEnemy.clear();
 
+		//後手必勝の敵を削除。
 		for (int i = 0; i < m_gEnemyNum; i++) {
 
 			DeleteGO(m_gWEnemy[i]);
-			//m_gWEnemy[i] = nullptr;
 		}
 		m_gWEnemy.clear();
 
+		//アイテムを削除。
 		for (int i = 0; i < m_itemNum; i++) {
 
 			DeleteGO(m_item[i]);
-			//m_item[i] = nullptr;
 		}
 		m_item.clear();
 
+		//ディレクションライトを削除。
 		RemoveDirLight();
 
+		//ボスを削除。
 		DeleteGO(m_boss);
 	}
 
@@ -125,11 +127,6 @@ namespace nsMyGame {
 						player->SetSelectFlag(true);
 						break;
 					}
-				}
-				//それ以外は、プレイヤーは何も選択していない状態。
-				else {
-
-					//player->SetSelectFlag(false);
 				}
 			}
 		}

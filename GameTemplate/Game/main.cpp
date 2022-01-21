@@ -62,7 +62,6 @@ namespace nsMyGame {
 		//ゲームの初期化。
 		InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("Game"));
 
-
 		// pythonを初期化。
 		wchar_t* program;
 		InitPython(program);
@@ -70,8 +69,6 @@ namespace nsMyGame {
 		//////////////////////////////////////
 		// ここから初期化を行うコードを記述する。
 		//////////////////////////////////////
-
-		
 
 		//様々なインスタンスを作成する。
 		CGameObjectManager::CreateInstance();				//ゲームオブジェクト管理クラス
@@ -118,6 +115,7 @@ namespace nsMyGame {
 
 			//描画。
 			CRenderingEngine::GetInstance()->Render();
+
 			////////////////////////////////////////////////
 			//絵を描くコードを書くのはここまで！！！
 			////////////////////////////////////////////////
@@ -138,6 +136,7 @@ namespace nsMyGame {
 	void InitBGMAndSE() {
 
 		CSoundManager::GetInstance()->Init(c_filePathBGM_Boss, enBGM_Boss, true, SoundType::Type_BGM);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enBGM_Boss, 0.5f);
 		CSoundManager::GetInstance()->Init(c_filePathBGM_GameMain, enBGM_GameMain, true, SoundType::Type_BGM);
 		CSoundManager::GetInstance()->SetSoundSourceVolume(enBGM_GameMain, 0.2f);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Kill, enSE_Kill, false, SoundType::Type_SE);
@@ -152,6 +151,7 @@ namespace nsMyGame {
 		CSoundManager::GetInstance()->Init(c_filePathSE_GameOver, enSE_GameOver, false, SoundType::Type_SE);
 		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_GameOver, 0.5f);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Select, enSE_Select, false, SoundType::Type_SE);
+		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Select, 0.5f);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Scream, enSE_Scream, false, SoundType::Type_SE);
 		CSoundManager::GetInstance()->Init(c_filePathSE_Impact, enSE_Impact, false, SoundType::Type_SE);
 		CSoundManager::GetInstance()->SetSoundSourceVolume(enSE_Impact, 0.5f);

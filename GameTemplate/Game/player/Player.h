@@ -145,10 +145,14 @@ namespace nsMyGame {
 				m_playerAction.ReceiveDamage();
 				m_playerState = enState_Damage;
 
+				//血しぶきエフェクトの座標を初期化。
+				CVector3 effectPosition = m_position;
+				effectPosition.y += 100.0f;
+
 				//血しぶきエフェクトを再生。
 				Effect* bloodEffect = NewGO<Effect>(enPriority_Zeroth);
 				bloodEffect->Init(u"Assets/effect/bloodGreen.efk");
-				bloodEffect->SetPosition(effectPos);
+				bloodEffect->SetPosition(effectPosition);
 				bloodEffect->SetScale({ 5.0f, 5.0f,5.0f });
 				bloodEffect->Play();
 			}

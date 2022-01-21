@@ -97,14 +97,6 @@ namespace nsMyGame {
 				}
 			}
 
-			//３連続攻撃中なら
-			if ((playerState == enState_ThreeCombo)) {
-
-				if (c_threeComboCoolTime - m_coolTime < 2.4f) {
-					m_moveSpeed += forward * 50.0f;
-				}
-			}
-
 			//ガード成功時のノックバック
 			if (IsGuardSccessCoolTime()) {
 
@@ -229,16 +221,6 @@ namespace nsMyGame {
 
 					//クールタイムを設定。
 					m_coolTime = c_rollingCoolTime;
-				}
-
-				//Xボタンが押されたら
-				if (g_pad[0]->IsTrigger(enButtonX)) {
-
-					//3連攻撃状態に。
-					playerState = enState_ThreeCombo;
-
-					//クールタイムを設定。
-					m_coolTime = c_threeComboCoolTime;
 				}
 			}
 		}

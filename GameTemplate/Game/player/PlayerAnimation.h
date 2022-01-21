@@ -13,7 +13,6 @@ namespace nsMyGame {
 			enAnim_AttackBreak,
 			enAnim_Damage,
 			enAnim_Rolling,
-			enAnim_ThreeCombo,
 			enAnim_Guard,
 			enAnim_GuardSuccess,
 			enAnim_Death,

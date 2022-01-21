@@ -132,7 +132,6 @@ namespace nsMyGame {
 			enState_AttackBreak,
 			enState_Damage,
 			enState_Rolling,
-			enState_ThreeCombo,
 			enState_Guard,
 			enState_GuardSuccess,
 			enState_Death,

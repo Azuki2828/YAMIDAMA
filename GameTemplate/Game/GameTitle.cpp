@@ -42,8 +42,8 @@ namespace nsMyGame {
 
 	void CGameTitle::Update() {
 
-		//Aボタンが押されたら
-		if (g_pad[0]->IsTrigger(enButtonA)) {
+		//初めてAボタンが押されたら
+		if (g_pad[0]->IsTrigger(enButtonA) && !m_finishedFadeOut) {
 
 			//フェードアウトを始める。
 			m_fade->StartFadeOut();
