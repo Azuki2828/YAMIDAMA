@@ -145,6 +145,7 @@ namespace nsMyGame {
 		CSpriteRender* m_doorSprite = nullptr;				//テキストのスプライト
 		float m_doorSpriteTranslucent = 0.0f;				//スプライトの透明度
 		nsFont::CFontRender* m_text = nullptr;				//テキスト
+		CAppearSprite* m_textSprite = nullptr;				//選択時のスプライト
 	};
 }
 

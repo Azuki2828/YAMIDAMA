@@ -42,12 +42,6 @@ namespace nsMyGame {
 		//非表示に設定。
 		m_gameClearSprite->Deactivate();
 
-		
-		
-		// とりあえずテストで敵を追加。
-		//auto fEnemy = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameEnemy);
-		//fEnemy->SetPosition({ 500.0f,500.0f,500.0f });
-
 		//フェードイン。
 		m_fade = FindGO<CFade>(c_classNameFade);
 		m_fade->StartFadeIn();
@@ -92,7 +86,7 @@ namespace nsMyGame {
 
 				//だんだん表示されるようにする。
 				m_youDiedSpriteTrans += GameTime().GameTimeFunc().GetFrameDeltaTime() * 0.5f;
-				m_youDiedSprite->SetMulColor({ 1.0f, 1.0f, 1.0f, m_youDiedSpriteTrans });
+				m_youDiedSprite->SetMulColor({ CVector4::White.x,CVector4::White.y,CVector4::White.z, m_youDiedSpriteTrans });
 			}
 		}
 
@@ -110,7 +104,7 @@ namespace nsMyGame {
 
 				//だんだん表示されるようにする。
 				m_gameClearSpriteTrans += GameTime().GameTimeFunc().GetFrameDeltaTime() * 0.5f;
-				m_gameClearSprite->SetMulColor({ 1.0f, 1.0f, 1.0f, m_gameClearSpriteTrans });
+				m_gameClearSprite->SetMulColor({ CVector4::White.x,CVector4::White.y,CVector4::White.z, m_gameClearSpriteTrans });
 			}
 		}
 

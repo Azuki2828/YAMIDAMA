@@ -36,11 +36,17 @@ namespace nsMyGame {
 
 	void CAppearSprite::Update() {
 
+		//テキストが消え始めるまでのタイマーを進める。
+		m_timer += GameTime::GameTimeFunc().GetFrameDeltaTime();
+
 		//プレイヤーを検索。
 		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
-		//プレイヤーを選択状態に設定。
-		player->SetSelectFlag(true);
+		if (player != nullptr) {
+
+			//プレイヤーを選択状態に設定。
+			player->SetSelectFlag(true);
+		}
 
 		//Aボタンが入力されたら確認フラグをtrueにする。
 		if (g_pad[0]->IsTrigger(enButtonA)) {
@@ -48,13 +54,13 @@ namespace nsMyGame {
 			m_isPressButton = true;
 		}
 
-		//確認ボタンが入力されていないなら
-		if (!IsPressButton()) {
+		//確認ボタンが入力されていなくて、タイマーが規定時間内なら
+		if (!IsPressButton() && m_timer < c_textDisappearTime) {
 
 			//スプライトとテキストを徐々に出現させる。
 			AppearSpriteAndText();
 		}
-		//確認ボタンが入力されたら
+		//そうじゃないなら
 		else {
 
 			//だんだんスプライトが消えるようにする。
@@ -62,9 +68,9 @@ namespace nsMyGame {
 
 			//完全に消えたら自身を削除。
 			if (m_textSpriteTranslucent == c_translucentValue_Zero.w) {
+
+				//エラーが起こるため今はしない。呼び出し元のクラスで消している。
 				DeleteGO(this);
-				DeleteGO(m_textSprite);
-				DeleteGO(m_font);
 			}
 		}
 	}
@@ -83,7 +89,7 @@ namespace nsMyGame {
 			m_font->SetColor({ textColor ,textColor ,textColor,m_textSpriteTranslucent });
 
 			//スプライトの透明度を設定。
-			m_textSpriteTranslucent += GameTime().GameTimeFunc().GetFrameDeltaTime() * 5.0f;
+			m_textSpriteTranslucent += GameTime().GameTimeFunc().GetFrameDeltaTime() * c_appearSpriteTranslucent;
 			m_textSprite->SetMulColor({ 1.0f,1.0f,1.0f, m_textSpriteTranslucent });
 		}
 	}
@@ -97,7 +103,7 @@ namespace nsMyGame {
 			m_font->SetColor({ textColor,textColor,textColor,m_textSpriteTranslucent });
 
 			//スプライトの透明度を設定。
-			m_textSpriteTranslucent -= GameTime().GameTimeFunc().GetFrameDeltaTime() * 5.0f;
+			m_textSpriteTranslucent -= GameTime().GameTimeFunc().GetFrameDeltaTime() * c_appearSpriteTranslucent;
 			m_textSprite->SetMulColor({ 1.0f,1.0f,1.0f, m_textSpriteTranslucent });
 		}
 		//開くスプライトを非表示。

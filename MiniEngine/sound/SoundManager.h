@@ -58,6 +58,9 @@ namespace nsMyGame {
 
 			//サウンドデータを全削除。
 			m_soundManager->m_soundData.clear();
+
+			//インスタンスを削除。
+			delete m_soundManager;
 		}
 
 		/**

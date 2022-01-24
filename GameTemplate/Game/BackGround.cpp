@@ -17,25 +17,9 @@ namespace nsMyGame {
 
 		//プレイヤーを検索。
 		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
-		
-		////プレイヤーを中心とするポイントライトを作成。
-		//m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
-		//m_pointLight[0]->SetPosition(player->GetPosition());
-		//m_pointLight[0]->SetColor({ 1.0f,1.0f,1.0f });
-		//m_pointLight[0]->SetRange(300.0f);
-		//m_pointLight[0]->SetAffectPowParam(2.5f);
 
 		//ディレクションライトを作成。
 		CreateDirLight();
-
-		//m_modelRender = NewGO<CModelRender>(0);
-		//m_modelRender->SetFilePathTkm("Assets/modelData/backGround/testStage.tkm");
-		//m_modelRender->Init();
-		//m_physicsStaticObject.CreateFromModel(
-		//	*m_modelRender->GetModel(),
-		//	m_modelRender->GetModel()->GetWorldMatrix()
-		//);
-		//m_physicsStaticObject.SetFriction(10.0f);
 
 		//ステージをロード。
 		LoadStage();
@@ -181,9 +165,9 @@ namespace nsMyGame {
 		//プレイヤーを中心とするポイントライトを作成。
 		m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
 		m_pointLight[m_pointLightNum]->SetPosition(player->GetPosition());
-		m_pointLight[m_pointLightNum]->SetColor({ 1.0f,1.0f,1.0f });
-		m_pointLight[m_pointLightNum]->SetRange(300.0f);
-		m_pointLight[m_pointLightNum]->SetAffectPowParam(2.5f);
+		m_pointLight[m_pointLightNum]->SetColor({ CVector4::White.x,CVector4::White.y,CVector4::White.z });
+		m_pointLight[m_pointLightNum]->SetRange(c_playerPointLightRange);
+		m_pointLight[m_pointLightNum]->SetAffectPowParam(c_playerPointLightAffectPowParam);
 		m_pointLightNum++;
 
 		//松明SEを再生。
@@ -237,6 +221,7 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("GEnemy")) {
 
+				//後手必勝の敵は今は削除中。
 				//m_gWEnemy.push_back(NewGO<nsEnemy::CGoteWinEnemy>(enPriority_Zeroth, c_classNameEnemy));
 				//m_gWEnemy[gEnemyNum]->SetPosition(objData.position);
 				//m_gWEnemy[gEnemyNum]->SetRotation(objData.rotation);
@@ -250,7 +235,7 @@ namespace nsMyGame {
 				m_bossRotation = objData.rotation;
 
 				//ボスが登場するためのトリガーボックスを設定。
-				m_noticePlayerTriggerBox.CreateBox(objData.position, CQuaternion::Identity, { 1300.0f,3000.0f,1300.0f });
+				m_noticePlayerTriggerBox.CreateBox(objData.position, CQuaternion::Identity, c_noticePlayerTriggerBoxSize);
 
 				return true;
 			}
@@ -302,16 +287,16 @@ namespace nsMyGame {
 
 				//エフェクトを初期化。
 				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
-				m_fireEffect[m_fireEffectNum]->Init(u"Assets/effect/fire.efk");
-				m_fireEffect[m_fireEffectNum]->SetScale({ 10.0f,10.0f,10.0f });
+				m_fireEffect[m_fireEffectNum]->Init(c_filePathFireEffect);
+				m_fireEffect[m_fireEffectNum]->SetScale(c_fireEffectScale);
 				m_fireEffect[m_fireEffectNum]->SetPosition(effectPos);
 
 				//炎エフェクトに対応するポイントライトを作成。
 				m_pointLight.push_back(NewGO<nsLight::CPointLight>(enPriority_Zeroth));
 				m_pointLight[m_pointLightNum]->SetPosition(effectPos);
-				m_pointLight[m_pointLightNum]->SetColor({ 2.0f,1.0f,1.0f });
-				m_pointLight[m_pointLightNum]->SetRange(300.0f);
-				m_pointLight[m_pointLightNum]->SetAffectPowParam(1.5f);
+				m_pointLight[m_pointLightNum]->SetColor(c_firePointLightColor);
+				m_pointLight[m_pointLightNum]->SetRange(c_firePointLightRange);
+				m_pointLight[m_pointLightNum]->SetAffectPowParam(c_firePointLightAffectParam);
 				m_pointLightNum++;
 
 				//再生。

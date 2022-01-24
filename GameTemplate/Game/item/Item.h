@@ -1,6 +1,9 @@
 #pragma once
 namespace nsMyGame {
 
+	//エイリアス宣言
+	class CAppearSprite;
+
 	namespace nsItem {
 
 		//アイテムクラス
@@ -104,6 +107,7 @@ namespace nsMyGame {
 			EnItemList m_item = enItem_Key;
 
 			CSpriteRender* m_textSprite = nullptr;				//テキストのスプライト
+			CAppearSprite* m_getSprite = nullptr;				//アイテム取得時のスプライト
 			float m_textSpriteTranslucent = 0.0f;				//スプライトの透明度
 			nsFont::CFontRender* m_text = nullptr;				//テキスト
 		};

@@ -31,7 +31,7 @@ namespace nsMyGame {
 			auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 
 			//プレイヤーとの距離が規定以下なら自身が選択されている状態にする。
-			if (CheckLengthToPlayer() <= c_needToDistanceForGetItem) {
+			if (player != nullptr && CheckLengthToPlayer() <= c_needToDistanceForGetItem) {
 
 				//プレイヤーを選択状態に設定。
 				player->SetSelectFlag(true);
@@ -68,13 +68,17 @@ namespace nsMyGame {
 					//アイテム取得SEを再生。
 					CSoundManager::GetInstance()->Play(enSE_GetItem);
 
-					//自信を削除。
-					DeleteGO(this);
+					//スプライトを削除。
 					DeleteGO(m_textSprite);
+
+					//テキストを削除。
 					DeleteGO(m_text);
 
 					//エフェクトを削除。
 					DeleteGO(m_itemEffect);
+
+					//自信を削除。
+					DeleteGO(this);
 				}
 			}
 			else {

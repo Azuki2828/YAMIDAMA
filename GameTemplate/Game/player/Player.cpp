@@ -108,7 +108,6 @@ namespace nsMyGame {
 				m_playerAction.GuardSuccess();
 
 				//ガードSEを再生。
-				
 				CSoundManager::GetInstance()->Play(enSE_Guard);
 
 				//処理はここで終了。

@@ -21,6 +21,7 @@ namespace nsMyGame{
 		DeleteGO(m_modelRender);
 		DeleteGO(m_text);
 		DeleteGO(m_doorSprite);
+		DeleteGO(m_textSprite);
 	}
 
 	void CDoor::Update() {
@@ -56,7 +57,7 @@ namespace nsMyGame{
 		auto lockSprite = FindGO<CAppearSprite>(c_classNameAppearSprite);
 
 		//メッセージウィンドウが表示されているなら
-		if (lockSprite != nullptr) {
+		if (m_textSprite != nullptr) {
 
 			//選択スプライトを非表示にする。
 			m_doorSprite->Deactivate();
@@ -100,17 +101,17 @@ namespace nsMyGame{
 						CSoundManager::GetInstance()->Play(enSE_DoorOpen);
 
 						//確認ウィンドウを生成。
-						auto getSprite = NewGO<CAppearSprite>(enPriority_Zeroth);
-						getSprite->SetText(L"Key used.  A:OK");
-						getSprite->SetTextPosition(c_textPosition_getKey);
+						m_textSprite = NewGO<CAppearSprite>(enPriority_Zeroth, c_classNameAppearSprite);
+						m_textSprite->SetText(L"Key used.  A:OK");
+						m_textSprite->SetTextPosition(c_textPosition_getKey);
 					}
 					//鍵をもっていない
 					else {
 
 						//鍵を所持していない確認のウィンドウを生成。
-						auto getSprite = NewGO<CAppearSprite>(enPriority_Zeroth, c_classNameAppearSprite);
-						getSprite->SetText(L"It's locked.  A:OK");
-						getSprite->SetTextPosition(c_textPosition_getKey);
+						m_textSprite = NewGO<CAppearSprite>(enPriority_Zeroth, c_classNameAppearSprite);
+						m_textSprite->SetText(L"It's locked.  A:OK");
+						m_textSprite->SetTextPosition(c_textPosition_getKey);
 					}
 				}
 				//鍵はかかっていない
@@ -165,8 +166,8 @@ namespace nsMyGame{
 			m_text->SetColor({ textColor ,textColor ,textColor,m_doorSpriteTranslucent });
 
 			//スプライトの透明度を設定。
-			m_doorSpriteTranslucent += GameTime().GameTimeFunc().GetFrameDeltaTime() * 5.0f;
-			m_doorSprite->SetMulColor({ 1.0f,1.0f,1.0f, m_doorSpriteTranslucent });
+			m_doorSpriteTranslucent += GameTime().GameTimeFunc().GetFrameDeltaTime() * c_appearSpriteTranslucent;
+			m_doorSprite->SetMulColor({ CVector4::White.x,CVector4::White.y,CVector4::White.z, m_doorSpriteTranslucent });
 		}
 	}
 
@@ -179,8 +180,8 @@ namespace nsMyGame{
 			m_text->SetColor({ textColor,textColor,textColor,m_doorSpriteTranslucent });
 
 			//スプライトの透明度を設定。
-			m_doorSpriteTranslucent -= GameTime().GameTimeFunc().GetFrameDeltaTime() * 5.0f;
-			m_doorSprite->SetMulColor({ 1.0f,1.0f,1.0f, m_doorSpriteTranslucent });
+			m_doorSpriteTranslucent -= GameTime().GameTimeFunc().GetFrameDeltaTime() * c_appearSpriteTranslucent;
+			m_doorSprite->SetMulColor({ CVector4::White.x,CVector4::White.y,CVector4::White.z, m_doorSpriteTranslucent });
 		}
 		//開くスプライトを非表示。
 		//テキストを非表示。

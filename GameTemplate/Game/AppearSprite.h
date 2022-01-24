@@ -66,6 +66,8 @@ namespace nsMyGame {
 		float m_textSpriteTranslucent = 0.0f;		//スプライトの透明度
 		CSpriteRender* m_textSprite = nullptr;		//スプライト
 		nsFont::CFontRender* m_font = nullptr;		//テキストの設定
+
+		float m_timer = 0.0f;						//テキストが消え始めるまでのタイマー
 	};
 }
 

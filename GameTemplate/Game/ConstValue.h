@@ -103,6 +103,16 @@ namespace nsMyGame {
 	constexpr const char16_t* c_filePathFireEffect = u"Assets/effect/fire.efk";			//炎エフェクトのファイルパス
 	const CVector3 c_fireEffectScale = { 10.0f,10.0f,10.0f };							//炎エフェクトの拡大率
 
+	const CVector2 c_hpBarSize = { 400.0f, 25.0f };		//HPバーの解像度
+	const CVector3 c_hpBarPosition = { -570.0f,300.0f,0.0f };		//HPバーの座標
+	const CVector3 c_bossHpBarPosition = { -400.0f,-300.0f,0.0f };		//ボスのHPバーの座標
+
+	const CVector4 c_bossTextColor = { 0.8f,0.8f,0.8f,1.0f };	//ボスの名前のカラー
+	const float c_bossTextScale = 0.5f;		//ボスの名前の拡大率
+	const CVector2 c_bossTextPosition = { -400.0f,-250.0f };	//ボスの名前の座標
+
+	constexpr float c_textDisappearTime = 3.0f;		//確認テキストが消え始めるまでの時間
+
 	constexpr UINT c_frameBufferWidth = 1280;		//フレームバッファの幅
 	constexpr UINT c_frameBufferHeight = 720;		//フレームバッファの高さ
 	constexpr int c_tileWidth = 16;					//TBRで分割するタイルの横の数
@@ -113,6 +123,11 @@ namespace nsMyGame {
 	constexpr float c_firePointLightAffectParam = 5.5f;				//炎用のポイントライトの減衰率
 
 	const CVector3 c_addFireEffectPosition = { 0.0f,5.0f,35.0f };	//炎エフェクトの座標調整のために加算するもの
+
+	const float c_playerPointLightRange = 300.0f;		//プレイヤー中心のポイントライトの影響範囲
+	const float c_playerPointLightAffectPowParam = 2.5f;		//プレイヤー中心のポイントライトの減衰率
+
+	const CVector3 c_noticePlayerTriggerBoxSize = { 1300.0f,3000.0f,1300.0f };	//ボスが登場するためのトリガーボックスのサイズ
 
 	constexpr const char* c_filePathTitleSprite = "Assets/image/title.dds";	//タイトル画像のファイルパス
 
@@ -130,6 +145,7 @@ namespace nsMyGame {
 		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//プレイヤー攻撃時のトリガーボックスの前方向への乗算値
 		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//プレイヤー攻撃時のトリガーボックスのY方向への加算値
+
 
 		//プレイヤーのステート
 		enum EnPlayerState {
@@ -265,6 +281,9 @@ namespace {
 	const CVector4 c_translucentValue_Max = { 1.0f,1.0f,1.0f,1.0f };		//透明率0%
 
 	const float c_textShadowThickness = 1.0f;								//テキストの影（枠線）の厚さ
+
+	const float c_appearSpriteTranslucent = 5.0f;							//AppearSpriteクラスで使う、透明度の定数値
+	
 
 	const CVector3 c_scaleValue_Half = { 0.5f,0.5f,0.5f };					//拡大率50%
 	const CVector3 c_scaleValue_ATenth = { 0.1f,0.1f,0.1f };				//拡大率10%
