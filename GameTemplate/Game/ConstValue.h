@@ -124,8 +124,10 @@ namespace nsMyGame {
 
 	const CVector3 c_addFireEffectPosition = { 0.0f,5.0f,35.0f };	//炎エフェクトの座標調整のために加算するもの
 
-	const float c_playerPointLightRange = 300.0f;		//プレイヤー中心のポイントライトの影響範囲
-	const float c_playerPointLightAffectPowParam = 2.5f;		//プレイヤー中心のポイントライトの減衰率
+	constexpr float c_playerPointLightRange = 300.0f;		//プレイヤー中心のポイントライトの影響範囲
+	constexpr float c_playerPointLightAffectPowParam = 2.5f;		//プレイヤー中心のポイントライトの減衰率
+	constexpr float c_playerPointLightAddParam = 130.0f;			//プレイヤー中心のポイントライトの加算座標
+	constexpr float c_fireEffectLoopTime = 1.0f;					//松明の炎エフェクトのループまでの時間
 
 	const CVector3 c_noticePlayerTriggerBoxSize = { 1300.0f,3000.0f,1300.0f };	//ボスが登場するためのトリガーボックスのサイズ
 
@@ -185,8 +187,6 @@ namespace nsMyGame {
 		constexpr const char16_t* c_itemEffectFilePath = u"Assets/effect/item.efk";		//アイテムエフェクトのファイルパス
 		const CVector3 c_itemEffectSize = { 10.0f,10.0f,10.0f };						//アイテムエフェクトの拡大率
 		constexpr float c_itemEffectReplayTime = 1.0f;									//エフェクトを再生成する間隔
-
-
 	}
 
 	namespace nsLight {

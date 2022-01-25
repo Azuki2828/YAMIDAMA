@@ -79,6 +79,9 @@ namespace nsMyGame {
 					//テキストを削除。
 					DeleteGO(m_text);
 
+					//エフェクト停止。
+					//m_itemEffect->Stop();
+
 					//エフェクトを削除。
 					DeleteGO(m_itemEffect);
 

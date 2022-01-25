@@ -15,9 +15,6 @@ namespace nsMyGame {
 
 	bool CBackGround::Start() {
 
-		//プレイヤーを検索。
-		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
-
 		//ディレクションライトを作成。
 		CreateDirLight();
 
@@ -33,6 +30,7 @@ namespace nsMyGame {
 		for (int i = 0; i < m_pointLightNum; i++) {
 
 			DeleteGO(m_pointLight[i]);
+			m_pointLight[i] = nullptr;
 		}
 		m_pointLight.clear();
 
@@ -61,6 +59,7 @@ namespace nsMyGame {
 		for (int i = 0; i < m_itemNum; i++) {
 
 			DeleteGO(m_item[i]);
+			m_item[i] = nullptr;
 		}
 		m_item.clear();
 
@@ -75,6 +74,43 @@ namespace nsMyGame {
 	}
 
 	void CBackGround::Update() {
+
+		//プレイヤーの選択状態を更新。
+		UpdatePlayerSelect();
+
+		//プレイヤーを検索。
+		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+
+		if (!m_createBoss) {
+			//剛体との当たり判定を調べる。
+			CPhysicsWorld::GetInstance()->ContactTest(player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
+
+				//トリガーボックスと接触した。
+				if (m_noticePlayerTriggerBox.IsSelf(contactObject)) {
+
+					//ボスを出現させる。
+					m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameBoss);
+					m_boss->SetPosition(m_bossPosition);
+					m_boss->SetRotation(m_bossRotation);
+
+					m_createBoss = true;
+				}
+			});
+		}
+
+		//プレイヤー中心のポイントライトの座標を更新。
+		CVector3 playerLightPosition = player->GetPosition();
+		playerLightPosition.y += c_playerPointLightAddParam;
+		m_pointLight[0]->SetPosition(playerLightPosition);
+
+		//カメラの前方向に向けて放たれるディレクションライトの向きを更新。
+		m_dirLight[1]->SetLigDirection(g_camera3D->GetForward());
+
+		//松明の炎エフェクトを更新。
+		UpdateFireEffect();
+	}
+
+	void CBackGround::UpdatePlayerSelect() {
 
 		//プレイヤーを検索。
 		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
@@ -117,46 +153,26 @@ namespace nsMyGame {
 				}
 			}
 		}
+	}
 
-		/*------------------------------------------------------------*/
+	void CBackGround::UpdateFireEffect() {
 
-		if (!m_createBoss) {
-			//剛体との当たり判定を調べる。
-			CPhysicsWorld::GetInstance()->ContactTest(player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
-
-				//トリガーボックスと接触した。
-				if (m_noticePlayerTriggerBox.IsSelf(contactObject)) {
-
-					//ボスを出現させる。
-					m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameBoss);
-					m_boss->SetPosition(m_bossPosition);
-					m_boss->SetRotation(m_bossRotation);
-
-					m_createBoss = true;
-				}
-			});
-		}
-
-		//プレイヤー中心のポイントライトの座標を更新。
-		CVector3 playerLightPosition = player->GetPosition();
-		playerLightPosition.y += 130.0f;
-		m_pointLight[0]->SetPosition(playerLightPosition);
-
-		//カメラの前方向に向けて放たれるディレクションライトの向きを更新。
-		m_dirLight[1]->SetLigDirection(g_camera3D->GetForward());
-
+		//タイマーを更新。
 		m_fireTime += GameTime().GameTimeFunc().GetFrameDeltaTime();
 
-		//1.0秒ごとにエフェクトを再生。
-		if (m_fireTime >= 1.0f) {
+		//タイマーが規定時間を超えたら
+		if (m_fireTime >= c_fireEffectLoopTime) {
 
+			//炎エフェクトを再生成。
 			for (const auto& fireEffect : m_fireEffect) {
 
 				fireEffect->Play();
 			}
+			//タイマーをリセット。
 			m_fireTime = 0.0f;
 		}
 	}
+
 	void CBackGround::LoadStage() {
 
 		//プレイヤーを検索。

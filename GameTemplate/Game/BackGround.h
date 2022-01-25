@@ -40,6 +40,16 @@ namespace nsMyGame {
 		 * @brief ステージをロードする関数。
 		*/
 		void LoadStage();
+
+		/**
+		 * @brief プレイヤーの選択状態を更新する関数。
+		*/
+		void UpdatePlayerSelect();
+
+		/**
+		 * @brief 松明の炎エフェクトの更新関数。
+		*/
+		void UpdateFireEffect();
 	public:
 		/**
 		 * @brief 太陽光用のディレクションライトを作成する関数。
