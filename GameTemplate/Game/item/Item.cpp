@@ -21,8 +21,13 @@ namespace nsMyGame {
 		void CItem::OnDestroy() {
 
 			DeleteGO(m_textSprite);
+			m_textSprite = nullptr;
+
 			DeleteGO(m_text);
+			m_text = nullptr;
+
 			DeleteGO(m_itemEffect);
+			m_itemEffect = nullptr;
 		}
 
 		void CItem::Update() {

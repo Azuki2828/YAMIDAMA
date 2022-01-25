@@ -193,7 +193,15 @@ public:
 
 	void OnDestroyWrapper()
 	{
+		//死んだとき用の関数を呼び出す。
+		m_destroyEventListener;
+
 		OnDestroy();
+	}
+
+	void AddEventListener(std::function<void()> listener)
+	{
+		m_destroyEventListener = listener;
 	}
 		
 	friend class CGameObjectManager;
@@ -205,5 +213,5 @@ protected:
 	bool m_isNewFromGameObjectManager;				//GameObjectManagerでnewされた。
 	bool m_isRegist = false;						//GameObjectManagerに登録されている？
 	bool m_isActive = true;							//Activeフラグ。
-	
+	std::function<void()> m_destroyEventListener;	//死んだときのイベントリスナー
 };

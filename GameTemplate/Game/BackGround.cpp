@@ -244,6 +244,14 @@ namespace nsMyGame {
 
 				m_item.push_back(NewGO<nsItem::CItem>(enPriority_Zeroth));
 				m_item[m_itemNum]->SetPosition(objData.position);
+
+				//自身でDeleteすることによる二重Deleteを回避するため、
+				//Deleteするときにnullptrを割り当てるイベントを記述。
+				m_item[m_itemNum]->AddEventListener([&] {
+
+					m_item[m_itemNum] = nullptr;
+				});
+
 				m_itemNum++;
 
 				return true;
