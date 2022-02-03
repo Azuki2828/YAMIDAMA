@@ -31,7 +31,10 @@ namespace nsMyGame {
 	void CAppearSprite::OnDestroy() {
 
 		DeleteGO(m_textSprite);
+		m_textSprite = nullptr;
+
 		DeleteGO(m_font);
+		m_font = nullptr;
 	}
 
 	void CAppearSprite::Update() {

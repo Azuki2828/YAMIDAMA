@@ -90,7 +90,7 @@
 		m_sourceVoice = CSoundEngine::GetInstance()->CreateXAudio2SourceVoice(m_waveFile.get(), is3DSound);
 
 		if (m_sourceVoice == nullptr) {
-			MessageBoxA(nullptr, "たぶん絶対wavのファイルパスが違うよっ", "たいへん！", MB_OK);
+			MessageBoxA(nullptr, "おそらくwavのファイルパスが違います。", "警告", MB_OK);
 			return;
 		}
 		if (is3DSound) {

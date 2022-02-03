@@ -20,7 +20,7 @@ namespace nsMyGame {
 
 		//ステージをロード。
 		LoadStage();
-
+		int a;
 		return true;
 	}
 
@@ -38,6 +38,7 @@ namespace nsMyGame {
 		for (int i = 0; i < m_doorNum; i++) {
 
 			DeleteGO(m_door[i]);
+			m_door[i] = nullptr;
 		}
 		m_door.clear();
 
@@ -45,6 +46,7 @@ namespace nsMyGame {
 		for (int i = 0; i < m_fEnemyNum; i++) {
 
 			DeleteGO(m_fWEnemy[i]);
+			m_fWEnemy[i] = nullptr;
 		}
 		m_fWEnemy.clear();
 
@@ -52,6 +54,7 @@ namespace nsMyGame {
 		for (int i = 0; i < m_gEnemyNum; i++) {
 
 			DeleteGO(m_gWEnemy[i]);
+			m_gWEnemy[i] = nullptr;
 		}
 		m_gWEnemy.clear();
 
@@ -68,6 +71,7 @@ namespace nsMyGame {
 
 		//ボスを削除。
 		DeleteGO(m_boss);
+		m_boss = nullptr;
 
 		//松明SEを停止。
 		CSoundManager::GetInstance()->Release(enSE_Torch);
@@ -78,33 +82,11 @@ namespace nsMyGame {
 		//プレイヤーの選択状態を更新。
 		UpdatePlayerSelect();
 
-		//プレイヤーを検索。
-		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+		//ボスが登場するためのトリガーボックスを更新。
+		UpdateBossNoticeTriggerBox();
 
-		if (!m_createBoss) {
-			//剛体との当たり判定を調べる。
-			CPhysicsWorld::GetInstance()->ContactTest(player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
-
-				//トリガーボックスと接触した。
-				if (m_noticePlayerTriggerBox.IsSelf(contactObject)) {
-
-					//ボスを出現させる。
-					m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameBoss);
-					m_boss->SetPosition(m_bossPosition);
-					m_boss->SetRotation(m_bossRotation);
-
-					m_createBoss = true;
-				}
-			});
-		}
-
-		//プレイヤー中心のポイントライトの座標を更新。
-		CVector3 playerLightPosition = player->GetPosition();
-		playerLightPosition.y += c_playerPointLightAddParam;
-		m_pointLight[0]->SetPosition(playerLightPosition);
-
-		//カメラの前方向に向けて放たれるディレクションライトの向きを更新。
-		m_dirLight[1]->SetLigDirection(g_camera3D->GetForward());
+		//プレイヤーに関するライトを更新。
+		UpdatePlayerLight();
 
 		//松明の炎エフェクトを更新。
 		UpdateFireEffect();
@@ -120,8 +102,6 @@ namespace nsMyGame {
 
 		//規定値より100.0f大きい数を初期値とする。
 		float vecToPlayerLength = c_distanceForOpenDoor + 100.0f;
-
-		/*----------プレイヤーの選択状態を更新するための処理----------*/
 
 		//リストに含まれるオブジェクトを参照。
 		for (const auto& obj : m_door) {
@@ -152,6 +132,43 @@ namespace nsMyGame {
 					}
 				}
 			}
+		}
+	}
+	
+	void CBackGround::UpdatePlayerLight() {
+
+		//プレイヤーを検索。
+		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+
+		//プレイヤー中心のポイントライトの座標を更新。
+		CVector3 playerLightPosition = player->GetPosition();
+		playerLightPosition.y += c_playerPointLightAddParam;
+		m_pointLight[0]->SetPosition(playerLightPosition);
+
+		//カメラの前方向に向けて放たれるディレクションライトの向きを更新。
+		m_dirLight[1]->SetLigDirection(g_camera3D->GetForward());
+	}
+
+	void CBackGround::UpdateBossNoticeTriggerBox() {
+
+		//プレイヤーを検索。
+		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+
+		if (!m_createBoss) {
+			//剛体との当たり判定を調べる。
+			CPhysicsWorld::GetInstance()->ContactTest(player->GetCharacterController(), [&](const btCollisionObject& contactObject) {
+
+				//トリガーボックスと接触した。
+				if (m_noticePlayerTriggerBox.IsSelf(contactObject)) {
+
+					//ボスを出現させる。
+					m_boss = NewGO<nsEnemy::CBoss>(enPriority_Zeroth, c_classNameBoss);
+					m_boss->SetPosition(m_bossPosition);
+					m_boss->SetRotation(m_bossRotation);
+
+					m_createBoss = true;
+				}
+			});
 		}
 	}
 
@@ -198,7 +215,14 @@ namespace nsMyGame {
 				m_door[m_doorNum]->SetPosition(objData.position);
 				m_door[m_doorNum]->SetRotation(objData.rotation);
 				m_door[m_doorNum]->SetScale(objData.scale);
+
+				//m_door[m_doorNum]->AddEventListener([&] {
+				//
+				//	m_door[m_doorNum] = nullptr;
+				//});
+
 				m_doorNum++;
+
 				return true;
 			}
 
@@ -211,6 +235,12 @@ namespace nsMyGame {
 
 				//鍵をかける。
 				m_door[m_doorNum]->Lock();
+
+				//m_door[m_doorNum]->AddEventListener([&] {
+				//
+				//	m_door[m_doorNum] = nullptr;
+				//});
+
 				m_doorNum++;
 				return true;
 			}

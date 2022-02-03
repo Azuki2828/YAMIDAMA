@@ -4,8 +4,8 @@
 
 cbuffer cb : register(b0)
 {
-    float4x4 mvp;       // MVP行列
-    float4 mulColor;    // 乗算カラー
+    float4x4 mvp;       //MVP行列
+    float4 mulColor;    //乗算カラー
 };
 
 struct VSInput
@@ -31,7 +31,7 @@ PSInput VSMain(VSInput In)
     return psIn;
 }
 
-Texture2D<float4> mainRenderTargetTexture : register(t0); // メインレンダリングターゲットのテクスチャ
+Texture2D<float4> mainRenderTargetTexture : register(t0); //メインレンダリングターゲットのテクスチャ
 sampler Sampler : register(s0);
 
 /////////////////////////////////////////////////////////
@@ -44,21 +44,19 @@ float4 PSSamplingLuminance(PSInput In) : SV_Target0
 {
     //float2 NewUv = In.uv;
     //NewUv.x *= -1.0f;
-    // メインレンダリングターゲットからカラーをサンプリング
+    //メインレンダリングターゲットからカラーをサンプリング
     float4 color = mainRenderTargetTexture.Sample(Sampler, In.uv);
 
-    // サンプリングしたカラーの明るさを計算
+    //サンプリングしたカラーの明るさを計算
     float t = dot( color.xyz, float3(0.2125f, 0.7154f, 0.0721f) );
 
-    // clip()関数は引数の値がマイナスになると、以降の処理をスキップする
-    // なので、マイナスになるとピクセルカラーは出力されない
-    // 今回の実装はカラーの明るさが１以下ならピクセルキルする
+    //clip()関数は引数の値がマイナスになると、以降の処理をスキップする
+    //なので、マイナスになるとピクセルカラーは出力されない
+    //今回の実装はカラーの明るさが１以下ならピクセルキルする
     clip(t - 1.0f);
 
     return color;
 }
-
-// step-5 4枚のボケ画像にアクセスするための変数を追加
 
 texture2D<float4> g_bokeTexture_0 : register(t0);
 texture2D<float4> g_bokeTexture_1 : register(t1);
@@ -68,9 +66,9 @@ texture2D<float4> g_bokeTexture_3 : register(t3);
 
 float4 PSBloomFinal( PSInput In ) : SV_Target0
 {
-    // float2 NewUv = In.uv;
+    //float2 NewUv = In.uv;
     //NewUv.x *= -1.0f;
-    //step-6 ボケ画像をサンプリングして、平均をとって出力する。
+    //ボケ画像をサンプリングして、平均をとって出力する。
     float4 combineColor = g_bokeTexture_0.Sample(Sampler, In.uv);
 
     combineColor += g_bokeTexture_1.Sample(Sampler, In.uv);

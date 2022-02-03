@@ -51,6 +51,7 @@ float4 FxaaPixelShader(
     float2 sceneTexSize
 )
 {
+    return sceneTexture.Sample(Sampler, pos);
 	//近傍4テクセルをフェッチ。
 	float4 nTex = float4( 
 		pos.x + 0.5f/sceneTexSize.x, 
@@ -110,7 +111,7 @@ float4 FxaaPixelShader(
     float4 rgbyP2 = sceneTexture.Sample(Sampler, pos.xy + dir2 * fxaaConsoleRcpFrameOpt2.zw);
     
 /*--------------------------------------------------------------------------*/
-	//ブレンドブレンド。
+	//ブレンド。
     float4 rgbyA = rgbyN1 + rgbyP1;
     float4 rgbyB = ((rgbyN2 + rgbyP2) * 0.25) + (rgbyA * 0.25);
 /*--------------------------------------------------------------------------*/
@@ -141,12 +142,12 @@ float4 PSMain( PSInput In ) : SV_Target0
         0.0833f,							// FxaaFloat fxaaQualityEdgeThresholdMin,
         1.0f,								// FxaaFloat fxaaConsoleEdgeSharpness,
         0.4f,								// FxaaFloat fxaaConsoleEdgeThreshold,
-        0.0833f,								// FxaaFloat fxaaConsoleEdgeThresholdMin,
+        0.0833f,							// FxaaFloat fxaaConsoleEdgeThresholdMin,
         texSize
 	);
 
     //ガンマ補正。
-    color.xyz =  pow(max( color.xyz, 0.0001f ), 1.0f/2.2f);
+    color.xyz =  pow(max( color.xyz, 0.0001f ), 1.0f / 2.2f);
 
     return color;
 }

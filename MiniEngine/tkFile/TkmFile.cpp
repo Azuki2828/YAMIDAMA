@@ -19,7 +19,7 @@ public:
 	void Execute(CTkmFile::SMesh& mesh, const IndexBuffer& indexBuffer)
 	{
 
-		//ステップ１面法線を計算していく。
+		//面法線を計算していく。
 		auto numPolygon = indexBuffer.indices.size() / 3;
 		std::vector< SFace> faces;
 		faces.reserve(numPolygon);
@@ -47,7 +47,7 @@ public:
 			faces.push_back(face);
 		}
 		
-		//ステップ２　法線の平均化
+		//法線の平均化
 		for (auto& face : faces) {
 			for (auto vertNo : face.vertexNos) {
 				auto& vert = mesh.vertexBuffer[vertNo];
@@ -57,7 +57,7 @@ public:
 		for (auto& vert : mesh.vertexBuffer) {
 			vert.normal.Normalize();
 		}
-		//ステップ２　座標と向きが同じ頂点の法線を平均化していく。
+		//座標と向きが同じ頂点の法線を平均化していく。
 		if(mesh.isFlatShading == 0)
 		{
 			//BSPツリー構造
@@ -73,29 +73,6 @@ public:
 			//BSPツリーを構築。
 			bsp.Build();
 
-			////重複している頂点の法線を平均化
-			//std::vector<SSmoothVertex> smoothVertex;
-			//smoothVertex.reserve(mesh.vertexBuffer.size());
-			//for (auto& v : mesh.vertexBuffer) {
-			//	smoothVertex.push_back({ v.normal, &v });
-			//}
-			//for (auto& va : smoothVertex) {	
-			//	for (auto& vb : smoothVertex) {
-			//		
-			//		if (va.vertex != vb.vertex
-			//			&& va.vertex->pos.x == vb.vertex->pos.x
-			//			&& va.vertex->pos.y == vb.vertex->pos.y
-			//			&& va.vertex->pos.z == vb.vertex->pos.z
-			//			) {
-			//			//同じ座標。
-			//			if (va.vertex->normal.Dot(vb.vertex->normal) > 0.0f) {
-			//				//同じ向き。
-			//				va.newNormal += vb.vertex->normal;
-			//			}
-			//		}
-			//	}
-			//	va.newNormal.Normalize();
-			//}
 			for (auto& va : smoothVertex) {
 				va.vertex->normal = va.newNormal;
 			}

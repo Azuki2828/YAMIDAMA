@@ -1,7 +1,5 @@
-/*!
- * @brief	ブルーム。
- */
- 
+
+
 cbuffer cb : register(b0){
 	float4x4 mvp;		//MVP行列
 	float4 mulColor;	//乗算カラー
@@ -59,7 +57,6 @@ cbuffer CBBlur : register(b1)
  */
 PS_BlurInput VSXBlur(VSInput In)
 {
-	//step-13 横ブラー用の頂点シェーダーを実装。
 	PS_BlurInput Out;
 	//座標変換
 	Out.pos = mul(mvp, In.pos);
@@ -117,7 +114,6 @@ PS_BlurInput VSXBlur(VSInput In)
  */
 PS_BlurInput VSYBlur(VSInput In)
 {
-	//step-14 Yブラー用の頂点シェーダーを実装。
 	PS_BlurInput Out;
 	//座標変換。
 	Out.pos = mul(mvp, In.pos);
@@ -175,7 +171,6 @@ PS_BlurInput VSYBlur(VSInput In)
  */
 float4 PSBlur( PS_BlurInput In ) : SV_Target0
 {
-	//step-15 X,Yブラー用のピクセルシェーダーを実装。
 	float4 Color;
 	//基準テクセルからプラス方向に8テクセル、重み付きでサンプリング。
 	Color  = weight[0].x * sceneTexture.Sample( Sampler, In.tex0.xy );

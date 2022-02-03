@@ -19,9 +19,18 @@ namespace nsMyGame{
 	void CDoor::OnDestroy() {
 
 		DeleteGO(m_modelRender);
+		m_modelRender = nullptr;
+
 		DeleteGO(m_text);
+		m_text = nullptr;
+
 		DeleteGO(m_doorSprite);
-		DeleteGO(m_textSprite);
+		m_doorSprite = nullptr;
+
+		if (m_textSprite != nullptr) {
+			DeleteGO(m_textSprite);
+			m_textSprite = nullptr;
+		}
 	}
 
 	void CDoor::Update() {
@@ -53,8 +62,7 @@ namespace nsMyGame{
 		//プレイヤーに伸びるベクトルを計算。
 		CVector3 vecToPlayer = playerPos - m_position;
 
-		//メッセージウィンドウを検索。
-		auto lockSprite = FindGO<CAppearSprite>(c_classNameAppearSprite);
+		auto textSprite = FindGO<CAppearSprite>(c_classNameAppearSprite);
 
 		//メッセージウィンドウが表示されているなら
 		if (m_textSprite != nullptr) {
@@ -104,6 +112,13 @@ namespace nsMyGame{
 						m_textSprite = NewGO<CAppearSprite>(enPriority_Zeroth, c_classNameAppearSprite);
 						m_textSprite->SetText(L"Key used.  A:OK");
 						m_textSprite->SetTextPosition(c_textPosition_getKey);
+
+						//自身でDeleteすることで二重Deleteになるのを防ぐため、
+						//死亡したときにnullptrを代入するように設定。
+						m_textSprite->AddEventListener([&] {
+
+							m_textSprite = nullptr;
+						});
 					}
 					//鍵をもっていない
 					else {
@@ -112,6 +127,13 @@ namespace nsMyGame{
 						m_textSprite = NewGO<CAppearSprite>(enPriority_Zeroth, c_classNameAppearSprite);
 						m_textSprite->SetText(L"It's locked.  A:OK");
 						m_textSprite->SetTextPosition(c_textPosition_getKey);
+
+						//自身でDeleteすることで二重Deleteになるのを防ぐため、
+						//死亡したときにnullptrを代入するように設定。
+						m_textSprite->AddEventListener([&] {
+
+							m_textSprite = nullptr;
+						});
 					}
 				}
 				//鍵はかかっていない

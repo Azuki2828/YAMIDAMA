@@ -194,24 +194,28 @@ public:
 	void OnDestroyWrapper()
 	{
 		//死んだとき用の関数を呼び出す。
-		m_destroyEventListener;
+		m_destroyEventListener();
 
 		OnDestroy();
 	}
 
-	void AddEventListener(std::function<void()> listener)
+	/**
+	 * @brief イベントリスナーにイベントを追加する関数。
+	 * @param event イベント
+	*/
+	void AddEventListener(std::function<void()> event)
 	{
-		m_destroyEventListener = listener;
+		m_destroyEventListener = event;
 	}
 		
 	friend class CGameObjectManager;
 protected:
-	std::string m_name;								//ゲームオブジェクトの名前
-	bool m_isStart = false;							//Startの開始フラグ。
-	bool m_isDead = false;							//死亡フラグ。
-	bool m_isRegistDeadList = false;				//死亡リストに積まれている。
-	bool m_isNewFromGameObjectManager;				//GameObjectManagerでnewされた。
-	bool m_isRegist = false;						//GameObjectManagerに登録されている？
-	bool m_isActive = true;							//Activeフラグ。
-	std::function<void()> m_destroyEventListener;	//死んだときのイベントリスナー
+	std::string m_name;										//ゲームオブジェクトの名前
+	bool m_isStart = false;									//Startの開始フラグ。
+	bool m_isDead = false;									//死亡フラグ。
+	bool m_isRegistDeadList = false;						//死亡リストに積まれている。
+	bool m_isNewFromGameObjectManager;						//GameObjectManagerでnewされた。
+	bool m_isRegist = false;								//GameObjectManagerに登録されている？
+	bool m_isActive = true;									//Activeフラグ。
+	std::function<void()> m_destroyEventListener = [] {};	//死んだときのイベントリスナー
 };

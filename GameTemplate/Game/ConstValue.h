@@ -207,7 +207,7 @@ namespace nsMyGame {
 
 
 		/*------PostEffectComponentBase------*/
-		constexpr const char* c_fxFilePathCopySprite = "Assets/shader/Sprite.fx";			//メインレンダリングターゲットにコピーする時に使用するシェーダーのファイルパス
+		constexpr const char* c_fxFilePathCopySprite = "Assets/shader/sprite.fx";			//メインレンダリングターゲットにコピーする時に使用するシェーダーのファイルパス
 		/*-----------------------------------*/
 
 
@@ -269,7 +269,7 @@ namespace {
 	const int c_blurPower = 10;															//ブラーの強さ
 	const char* c_fxFilePath_DeferredLighting = "Assets/shader/deferredLighting.fx";	//ディファードライティングに使うシェーダーのファイルパス
 	const char* c_fxFilePath_Sprite = "Assets/shader/sprite.fx";						//スプライトシェーダーのファイルパス
-	const char* c_fxFilePath_ShadowMap = "Assets/shader/sampleDrawShadowMap.fx";		//シャドウマップ描画に使うシェーダーのファイルパス
+	const char* c_fxFilePath_ShadowMap = "Assets/shader/drawShadowMap.fx";				//シャドウマップ描画に使うシェーダーのファイルパス
 
 	const int c_initializeTime = 0;
 	const int c_restInitialTime = 0;		//スピンロック時の待ちタイムの初期時間

@@ -81,7 +81,7 @@ namespace nsMyGame {
 		m_bossHpBar->Deactivate();
 
 		m_bossNameText = NewGO<nsFont::CFontRender>(enPriority_Zeroth);
-		m_bossNameText->Init(L"Œ´‰‚Ì–å”Ô");
+		m_bossNameText->Init(L"Œ´‰‚Ì”Ôl");
 		m_bossNameText->SetColor(c_bossTextColor);
 		m_bossNameText->SetScale(c_bossTextScale);
 		m_bossNameText->SetPosition(c_bossTextPosition);

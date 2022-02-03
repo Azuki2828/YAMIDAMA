@@ -47,6 +47,16 @@ namespace nsMyGame {
 		void UpdatePlayerSelect();
 
 		/**
+		 * @brief ボスが登場するためのトリガーボックスを更新する関数。
+		*/
+		void UpdateBossNoticeTriggerBox();
+
+		/**
+		 * @brief プレイヤーに関するライトの更新関数。
+		*/
+		void UpdatePlayerLight();
+
+		/**
 		 * @brief 松明の炎エフェクトの更新関数。
 		*/
 		void UpdateFireEffect();
@@ -73,7 +83,10 @@ namespace nsMyGame {
 		static void RemoveDirLight() {
 
 			DeleteGO(m_dirLight[0]);
+			m_dirLight[0] = nullptr;
+
 			DeleteGO(m_dirLight[1]);
+			m_dirLight[1] = nullptr;
 		}
 
 		/**
