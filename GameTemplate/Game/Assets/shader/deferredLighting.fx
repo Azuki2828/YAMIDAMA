@@ -275,7 +275,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 	//シャドウレシーバー？
 	if (shadowReceiverFlg) {
 
-		//ライトビューの座標系に変換。
+		//ライトビュースクリーン空間での座標系に変換。
 		float4 posInLVP = mul(light.mLVP, float4(worldPos, 1.0f));
 
 		//ライトビューの座標系を.wで割ることで正規化スクリーン座標系に変換できる。(重要)
@@ -379,6 +379,7 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		//ポイントライトの影響を加算する。
 		lig += poiDiffuse * (1.0f - smooth) + poiSpec * smooth;
 	}
+
 
 	if (isIbl == 1) {
 		// 視線からの反射ベクトルを求める。

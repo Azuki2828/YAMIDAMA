@@ -26,11 +26,12 @@ namespace nsMyGame{
 
 		DeleteGO(m_doorSprite);
 		m_doorSprite = nullptr;
-
-		if (m_textSprite != nullptr) {
-			DeleteGO(m_textSprite);
-			m_textSprite = nullptr;
-		}
+		
+		QueryGOs<CAppearSprite>(c_classNameAppearSprite, [&](CAppearSprite* go) {
+			DeleteGO(go);
+			return true;
+		});
+		
 	}
 
 	void CDoor::Update() {
@@ -113,12 +114,6 @@ namespace nsMyGame{
 						m_textSprite->SetText(L"Key used.  A:OK");
 						m_textSprite->SetTextPosition(c_textPosition_getKey);
 
-						//Ž©g‚ÅDelete‚·‚é‚±‚Æ‚Å“ñdDelete‚É‚È‚é‚Ì‚ð–h‚®‚½‚ßA
-						//Ž€–S‚µ‚½‚Æ‚«‚Énullptr‚ð‘ã“ü‚·‚é‚æ‚¤‚ÉÝ’èB
-						m_textSprite->AddEventListener([&] {
-
-							m_textSprite = nullptr;
-						});
 					}
 					//Œ®‚ð‚à‚Á‚Ä‚¢‚È‚¢
 					else {
@@ -128,12 +123,6 @@ namespace nsMyGame{
 						m_textSprite->SetText(L"It's locked.  A:OK");
 						m_textSprite->SetTextPosition(c_textPosition_getKey);
 
-						//Ž©g‚ÅDelete‚·‚é‚±‚Æ‚Å“ñdDelete‚É‚È‚é‚Ì‚ð–h‚®‚½‚ßA
-						//Ž€–S‚µ‚½‚Æ‚«‚Énullptr‚ð‘ã“ü‚·‚é‚æ‚¤‚ÉÝ’èB
-						m_textSprite->AddEventListener([&] {
-
-							m_textSprite = nullptr;
-						});
 					}
 				}
 				//Œ®‚Í‚©‚©‚Á‚Ä‚¢‚È‚¢

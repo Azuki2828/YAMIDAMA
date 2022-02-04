@@ -20,7 +20,7 @@ namespace nsMyGame {
 
 		//ステージをロード。
 		LoadStage();
-		int a;
+
 		return true;
 	}
 
@@ -59,11 +59,17 @@ namespace nsMyGame {
 		m_gWEnemy.clear();
 
 		//アイテムを削除。
-		for (int i = 0; i < m_itemNum; i++) {
+		//for (int i = 0; i < m_itemNum; i++) {
+		//
+		//	DeleteGO(m_item[i]);
+		//	m_item[i] = nullptr;
+		//}
+		//m_item.clear();
 
-			DeleteGO(m_item[i]);
-			m_item[i] = nullptr;
-		}
+		QueryGOs<nsItem::CItem>(c_classNameAppearSprite, [&](nsItem::CItem* go) {
+			DeleteGO(go);
+			return true;
+		});
 		m_item.clear();
 
 		//ディレクションライトを削除。
@@ -288,15 +294,8 @@ namespace nsMyGame {
 
 			if (objData.EqualObjectName("key")) {
 
-				m_item.push_back(NewGO<nsItem::CItem>(enPriority_Zeroth));
+				m_item.push_back(NewGO<nsItem::CItem>(enPriority_Zeroth, c_classNameItem));
 				m_item[m_itemNum]->SetPosition(objData.position);
-
-				//自身でDeleteすることによる二重Deleteを回避するため、
-				//Deleteするときにnullptrを割り当てるイベントを記述。
-				m_item[m_itemNum]->AddEventListener([&] {
-
-					m_item[m_itemNum] = nullptr;
-				});
 
 				m_itemNum++;
 

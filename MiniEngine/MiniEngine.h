@@ -57,6 +57,7 @@
 #include "RenderTarget.h"
 #include "Animation.h"
 #include "GameTime.h"
+#include "Stopwatch.h"
 
 #include "RenderContext_inline.h"
 #include "DescriptorHeap_inline.h"

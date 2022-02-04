@@ -50,6 +50,11 @@ namespace nsMyGame {
 	}
 
 	/**
+	 * @brief 様々なインスタンスを作成する関数。
+	*/
+	void CreateInstance();
+
+	/**
 	 * @brief BGMとSEを一括ロードする関数。
 	*/
 	void InitBGMAndSE();
@@ -71,19 +76,10 @@ namespace nsMyGame {
 		//////////////////////////////////////
 
 		//様々なインスタンスを作成する。
-		CGameObjectManager::CreateInstance();				//ゲームオブジェクト管理クラス
-		CPhysicsWorld::CreateInstance();					//物理ワールド
-		CSoundEngine::CreateInstance();						//サウンドエンジン
-		nsLight::CLightManager::CreateInstance();			//ライト管理クラス
-		CCamera::CreateLightCamera();						//ライトカメラ
-		CRenderingEngine::CreateRenderingEngine();			//レンダリングエンジン
-		EffectEngine::CreateInstance();						//エフェクトエンジン
-		CSoundManager::CreateInstance();					//サウンドエンジン
-		NewGO<CFade>(enPriority_Zeroth, c_classNameFade);	//フェード
+		CreateInstance();
 
 		//BGMとSEを一括ロード。
 		InitBGMAndSE();
-
 
 		//ワイヤーフレーム表示をONにする。
 		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
@@ -91,10 +87,12 @@ namespace nsMyGame {
 		////////////////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで
 		////////////////////////////////////////////////
+
+		//レンダーコンテキストを取得。
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		
+		//タイトル画面から始まる。
 		NewGO<CGameTitle>(enPriority_Zeroth);
-		//NewGO<CGameMain>(enPriority_Zeroth);
 
 		// ここからゲームループ。
 		while (DispatchWindowMessage())
@@ -102,12 +100,10 @@ namespace nsMyGame {
 			//レンダリング開始。
 			g_engine->BeginFrame();
 
-			//////////////////////////////////////
-			//ここから絵を描くコードを記述する。
-			//////////////////////////////////////
-
 			//ゲームオブジェクトを更新。
 			CGameObjectManager::GetInstance()->ExecuteUpdate();
+
+			//エフェクトエンジンを更新。
 			EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
 
 			//ライトを更新。
@@ -115,10 +111,6 @@ namespace nsMyGame {
 
 			//描画。
 			CRenderingEngine::GetInstance()->Render();
-
-			////////////////////////////////////////////////
-			//絵を描くコードを書くのはここまで！！！
-			////////////////////////////////////////////////
 
 			//レンダリング終了。
 			g_engine->EndFrame();
@@ -131,6 +123,19 @@ namespace nsMyGame {
 		FinalPython(program);
 
 		return 0;
+	}
+
+	void CreateInstance() {
+
+		CGameObjectManager::CreateInstance();				//ゲームオブジェクト管理クラス
+		CPhysicsWorld::CreateInstance();					//物理ワールド
+		CSoundEngine::CreateInstance();						//サウンドエンジン
+		nsLight::CLightManager::CreateInstance();			//ライト管理クラス
+		CCamera::CreateLightCamera();						//ライトカメラ
+		CRenderingEngine::CreateRenderingEngine();			//レンダリングエンジン
+		EffectEngine::CreateInstance();						//エフェクトエンジン
+		CSoundManager::CreateInstance();					//サウンドエンジン
+		NewGO<CFade>(enPriority_Zeroth, c_classNameFade);	//フェード
 	}
 
 	void InitBGMAndSE() {

@@ -156,6 +156,7 @@ namespace nsMyGame {
 			CAnimationClip m_animationClip[enAnim_Num];				//アニメーションクリップ
 			CBossCollisionDetection m_triggerBox;					//攻撃用のトリガーボックス
 
+			bool m_isAnimStart = true;								//最初のアニメーション？
 			bool m_canMove = false;									//移動できる？
 			bool m_noticePlayer = false;							//プレイヤーに気づいた？
 			CPhysicsGhostObject m_noticePlayerTriggerBox;			//プレイヤーに気づくためのトリガー

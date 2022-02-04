@@ -20,6 +20,7 @@ namespace nsMyGame {
 	constexpr const char* c_classNameBoss = "boss";									//ボスクラスの名前
 	constexpr const char* c_classNameAppearSprite = "appearSprite";					//ウィンドウクラスの名前
 	constexpr const char* c_classNameBackGround = "backGround";						//背景クラスの名前
+	constexpr const char* c_classNameItem = "item";									//アイテムクラスの名前
 	constexpr const char* c_classNamePlayerAttackCollision = "playerAttackCollision";	//プレイヤーの攻撃判定の名前
 	constexpr const char* c_classnameEnemyAttackCollision = "enemyAttackCollision";		//敵の攻撃判定の名前
 	constexpr const char* c_classNameFade = "fade";									//フェードクラスの名前
@@ -172,6 +173,8 @@ namespace nsMyGame {
 		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player2.tks";		//敵のtksファイルパス
 		constexpr const char* c_filePathTkmBoss = "Assets/modelData/boss.tkm";			//ボスのtkmファイルパス
 		constexpr const char* c_filePathTksBoss = "Assets/modelData/boss.tks";			//ボスのtksファイルパス
+
+		constexpr const float c_bossAnimBlendValue = 0.4f;
 
 		constexpr const int c_bossMaxHP = 100;											//ボスの最大HP
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム

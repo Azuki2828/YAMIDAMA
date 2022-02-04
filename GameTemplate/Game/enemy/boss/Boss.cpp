@@ -163,31 +163,40 @@ namespace nsMyGame {
 
 		void CBoss::AnimationUpdate() {
 
+			float bossAnimBlendValue = c_bossAnimBlendValue;
+
+			//登場時だけは補間をしない。
+			if (m_isAnimStart) {
+
+				bossAnimBlendValue = 0.0f;
+				m_isAnimStart = false;
+			}
+
 			//各ステートに対応したアニメーションを再生する。
 			switch (m_state) {
 			case enState_Idle:
-				m_modelRender->PlayAnimation(enAnim_Idle, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_Idle, bossAnimBlendValue);
 				break;
 			case enState_Walk:
-				m_modelRender->PlayAnimation(enAnim_Walk, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_Walk, bossAnimBlendValue);
 				break;
 			case enState_JumpAttack:
-				m_modelRender->PlayAnimation(enAnim_JumpAttack, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_JumpAttack, bossAnimBlendValue);
 				break;
 			case enState_SwipingAttack:
-				m_modelRender->PlayAnimation(enAnim_SwipingAttack, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_SwipingAttack, bossAnimBlendValue);
 				break;
 			case enState_Damage:
-				m_modelRender->PlayAnimation(enAnim_Damage, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_Damage, bossAnimBlendValue);
 				break;
 			case enState_Death:
-				m_modelRender->PlayAnimation(enAnim_Death, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_Death, bossAnimBlendValue);
 				break;
 			case enState_Scream:
-				m_modelRender->PlayAnimation(enAnim_Scream, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_Scream, bossAnimBlendValue);
 				break;
 			case enState_Start:
-				m_modelRender->PlayAnimation(enAnim_Start, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_Start, bossAnimBlendValue);
 				break;
 			}
 		}

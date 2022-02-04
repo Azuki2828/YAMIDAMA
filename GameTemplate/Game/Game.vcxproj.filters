@@ -811,6 +811,9 @@
     <ClInclude Include="GameHUD.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\Stopwatch.h">
+      <Filter>MiniEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -535,6 +535,7 @@
     <ClInclude Include="..\..\MiniEngine\SpringCamera.h" />
     <ClInclude Include="..\..\MiniEngine\Sprite.h" />
     <ClInclude Include="..\..\MiniEngine\SpriteRender.h" />
+    <ClInclude Include="..\..\MiniEngine\Stopwatch.h" />
     <ClInclude Include="..\..\MiniEngine\StructuredBuffer.h" />
     <ClInclude Include="..\..\MiniEngine\Texture.h" />
     <ClInclude Include="..\..\MiniEngine\tkEngine.h" />
