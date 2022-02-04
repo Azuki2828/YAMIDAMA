@@ -103,14 +103,6 @@ namespace nsMyGame {
 				m_moveSpeed -= forward * 150.0f;
 			}
 
-			//ジャンプ処理。
-			if (g_pad[0]->IsTrigger(enButtonY) //Aボタンが押されたら 
-				//&& m_charaCon.IsOnGround()  //かつ、地面に居たら
-				) {
-				//ジャンプする。
-				m_moveSpeed.y = 400.0f;	//上方向に速度を設定。
-			}
-
 			//ローリング中の移動処理。
 			if (playerState == enState_Rolling) {
 

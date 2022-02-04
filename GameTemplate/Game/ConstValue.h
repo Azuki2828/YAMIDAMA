@@ -125,6 +125,9 @@ namespace nsMyGame {
 
 	const CVector3 c_addFireEffectPosition = { 0.0f,5.0f,35.0f };	//炎エフェクトの座標調整のために加算するもの
 
+	constexpr const char16_t* c_bloodEffectFilePath = u"Assets/effect/bloodGreen.efk";	//血しぶきエフェクトのファイルパス
+	const CVector3 c_bloodEffectSize = { 5.0f,5.0f,5.0f };								//血しぶきエフェクトのサイズ
+
 	constexpr float c_playerPointLightRange = 300.0f;		//プレイヤー中心のポイントライトの影響範囲
 	constexpr float c_playerPointLightAffectPowParam = 2.5f;		//プレイヤー中心のポイントライトの減衰率
 	constexpr float c_playerPointLightAddParam = 130.0f;			//プレイヤー中心のポイントライトの加算座標
@@ -169,8 +172,8 @@ namespace nsMyGame {
 
 	namespace nsEnemy {
 
-		constexpr const char* c_filePathTkmEnemy = "Assets/modelData/player2.tkm";		//敵のtkmファイルパス
-		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player2.tks";		//敵のtksファイルパス
+		constexpr const char* c_filePathTkmEnemy = "Assets/modelData/player3.tkm";		//敵のtkmファイルパス
+		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player3.tks";		//敵のtksファイルパス
 		constexpr const char* c_filePathTkmBoss = "Assets/modelData/boss.tkm";			//ボスのtkmファイルパス
 		constexpr const char* c_filePathTksBoss = "Assets/modelData/boss.tks";			//ボスのtksファイルパス
 

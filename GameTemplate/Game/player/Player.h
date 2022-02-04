@@ -141,10 +141,13 @@ namespace nsMyGame {
 			void ReceiveDamage(const CVector3& effectPos) {
 
 				//被弾。
-				m_status.hp -= 120;
+				m_status.hp -= 30;
 
 				//死んだなら
 				if (m_status.hp <= 0) {
+
+					//HPを0に設定。
+					m_status.hp = 0;
 
 					//死亡時のボイスを再生。
 					CSoundManager::GetInstance()->Play(enSE_DeathVoice);
@@ -160,9 +163,9 @@ namespace nsMyGame {
 
 				//血しぶきエフェクトを再生。
 				Effect* bloodEffect = NewGO<Effect>(enPriority_Zeroth);
-				bloodEffect->Init(u"Assets/effect/bloodGreen.efk");
+				bloodEffect->Init(c_bloodEffectFilePath);
 				bloodEffect->SetPosition(effectPosition);
-				bloodEffect->SetScale({ 5.0f, 5.0f,5.0f });
+				bloodEffect->SetScale(c_bloodEffectSize);
 				bloodEffect->Play();
 			}
 

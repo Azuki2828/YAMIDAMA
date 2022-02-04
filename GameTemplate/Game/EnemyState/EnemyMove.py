@@ -28,17 +28,21 @@ def Update():
     random.seed(carentTime)
     attack = random.randrange(4)
     
-    #プレイヤーとの距離が120以下なら攻撃態勢に入る。
+    #プレイヤーとの距離が120以下なら
     if(lengthToPlayer <= 120.0):
+    #判定がバックならバック状態に設定。
         if(attack == 0):
            ChangeState(6)
 
-           #クールタイムを3.0秒に設定。
-           SetCoolTime(2.0)
+           #クールタイムをランダムに設定。
+           random.seed(carentTime + 1.0)
+           coolTime = random.uniform(1, 2)
+           SetCoolTime(coolTime)
+    #そうじゃないなら攻撃状態に設定。
         else:
             ChangeState(2)
 
-            #クールタイムを3.0秒に設定。
+            #クールタイムを1.6秒に設定。
             SetCoolTime(1.6)
             
     #プレイヤーとの距離が500より遠いなら待機状態に。
