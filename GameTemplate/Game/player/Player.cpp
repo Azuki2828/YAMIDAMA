@@ -68,10 +68,6 @@ namespace nsMyGame {
 
 		void CPlayer::Update() {
 
-			if (g_pad[0]->IsTrigger(enButtonX)) {
-
-				ReceiveDamage(m_position);
-			}
 			//XVˆ—B
 			switch (m_playerState) {
 
