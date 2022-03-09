@@ -125,15 +125,15 @@ namespace nsMyGame {
 		void CFirstWinEnemy::InitAnimationClip() {
 
 			//アニメーションクリップを設定。
-			m_animationClip[enAnim_Walk].Load("Assets/animData/run2.tka");
+			m_animationClip[enAnim_Walk].Load("Assets/animData/run.tka");
 			m_animationClip[enAnim_Walk].SetLoopFlag(true);
-			m_animationClip[enAnim_Idle].Load("Assets/animData/idle2.tka");
+			m_animationClip[enAnim_Idle].Load("Assets/animData/idle.tka");
 			m_animationClip[enAnim_Idle].SetLoopFlag(true);
 			m_animationClip[enAnim_ThreeCombo].Load("Assets/animData/threeCombo.tka");
 			m_animationClip[enAnim_ThreeCombo].SetLoopFlag(false);
 			m_animationClip[enAnim_Damage].Load("Assets/animData/damage.tka");
 			m_animationClip[enAnim_Damage].SetLoopFlag(false);
-			m_animationClip[enAnim_Death].Load("Assets/animData/death2.tka");
+			m_animationClip[enAnim_Death].Load("Assets/animData/death.tka");
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
 			m_animationClip[enAnim_AttackBreak].Load("Assets/animData/attackBreak.tka");
 			m_animationClip[enAnim_AttackBreak].SetLoopFlag(false);

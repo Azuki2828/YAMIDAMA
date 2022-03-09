@@ -59,13 +59,6 @@ namespace nsMyGame {
 		m_gWEnemy.clear();
 
 		//アイテムを削除。
-		//for (int i = 0; i < m_itemNum; i++) {
-		//
-		//	DeleteGO(m_item[i]);
-		//	m_item[i] = nullptr;
-		//}
-		//m_item.clear();
-
 		QueryGOs<nsItem::CItem>(c_classNameAppearSprite, [&](nsItem::CItem* go) {
 			DeleteGO(go);
 			return true;

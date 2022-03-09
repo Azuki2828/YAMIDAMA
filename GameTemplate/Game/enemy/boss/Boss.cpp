@@ -157,7 +157,7 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
 			m_animationClip[enAnim_Scream].Load("Assets/animData/Boss/scream.tka");
 			m_animationClip[enAnim_Scream].SetLoopFlag(false);
-			m_animationClip[enAnim_Start].Load("Assets/animData/Boss/startAnim_1.tka");
+			m_animationClip[enAnim_Start].Load("Assets/animData/Boss/startAnim.tka");
 			m_animationClip[enAnim_Start].SetLoopFlag(false);
 		}
 

@@ -14,18 +14,19 @@ namespace nsMyGame {
 	};
 
 	/*------クラスの名前------*/
-	constexpr const char* c_classNameGameMain = "gameMain";							//ゲームメインクラスの名前
-	constexpr const char* c_classNamePlayer = "player";								//プレイヤークラスの名前
-	constexpr const char* c_classNameEnemy = "enemy";								//敵クラスの名前
-	constexpr const char* c_classNameBoss = "boss";									//ボスクラスの名前
-	constexpr const char* c_classNameAppearSprite = "appearSprite";					//ウィンドウクラスの名前
-	constexpr const char* c_classNameBackGround = "backGround";						//背景クラスの名前
-	constexpr const char* c_classNameItem = "item";									//アイテムクラスの名前
+	constexpr const char* c_classNameGameMain = "gameMain";								//ゲームメインクラスの名前
+	constexpr const char* c_classNamePlayer = "player";									//プレイヤークラスの名前
+	constexpr const char* c_classNameEnemy = "enemy";									//敵クラスの名前
+	constexpr const char* c_classNameBoss = "boss";										//ボスクラスの名前
+	constexpr const char* c_classNameAppearSprite = "appearSprite";						//ウィンドウクラスの名前
+	constexpr const char* c_classNameBackGround = "backGround";							//背景クラスの名前
+	constexpr const char* c_classNameItem = "item";										//アイテムクラスの名前
 	constexpr const char* c_classNamePlayerAttackCollision = "playerAttackCollision";	//プレイヤーの攻撃判定の名前
 	constexpr const char* c_classnameEnemyAttackCollision = "enemyAttackCollision";		//敵の攻撃判定の名前
-	constexpr const char* c_classNameFade = "fade";									//フェードクラスの名前
-	constexpr const char* c_classNameGameHUD = "gameHUD";							//HUDクラスの名前
-	constexpr const char* c_classNameMainCamera = "mainCamera";					//カメラクラスの名前
+	constexpr const char* c_classNameFade = "fade";										//フェードクラスの名前
+	constexpr const char* c_classNameGameHUD = "gameHUD";								//HUDクラスの名前
+	constexpr const char* c_classNameMainCamera = "mainCamera";							//カメラクラスの名前
+	constexpr const char* c_classNameSkyCube = "skycube";								//空クラスの名前
 	/*------------------------*/
 
 	/*--------サウンドリスト--------*/
@@ -54,32 +55,41 @@ namespace nsMyGame {
 	/*-----------------------------*/
 
 	/*------サウンドのファイルパス------*/
-	constexpr const wchar_t* c_filePathBGM_Boss = L"Assets/sound/BGM_Boss.wav";			//ボス戦BGM
-	constexpr const wchar_t* c_filePathBGM_GameMain = L"Assets/sound/BGM_GameMain.wav";	//ゲーム中BGM
-	constexpr const wchar_t* c_filePathSE_Kill = L"Assets/sound/SE_Kill.wav";			//斬るSE
-	constexpr const wchar_t* c_filePathSE_Guard = L"Assets/sound/SE_Guard.wav";			//ガードSE
-	constexpr const wchar_t* c_filePathSE_Rolling = L"Assets/sound/SE_Rolling.wav";		//ローリングSE
-	constexpr const wchar_t* c_filePathSE_Walk = L"Assets/sound/SE_Walk.wav";			//歩行SE
-	constexpr const wchar_t* c_filePathSE_Death_1 = L"Assets/sound/SE_Death_1.wav";		//倒れるSE
-	constexpr const wchar_t* c_filePathSE_Death_2 = L"Assets/sound/SE_Death_2.wav";		//倒れるSE2
-	constexpr const wchar_t* c_filePathSE_GameOver = L"Assets/sound/SE_GameOver.wav";	//ゲームオーバーSE
-	constexpr const wchar_t* c_filePathSE_Select = L"Assets/sound/SE_Select.wav";		//選択SE
-	constexpr const wchar_t* c_filePathSE_Scream = L"Assets/sound/SE_Roar.wav";			//咆哮SE
-	constexpr const wchar_t* c_filePathSE_Impact = L"Assets/sound/SE_Impact.wav";		//衝撃SE
-	constexpr const wchar_t* c_filePathSE_Footsteps = L"Assets/sound/SE_Footsteps.wav";	//ボス足音SE
-	constexpr const wchar_t* c_filePathSE_Scratch = L"Assets/sound/SE_Scratch.wav";		//引っ掻きSE
+	constexpr const wchar_t* c_filePathBGM_Boss = L"Assets/sound/BGM_Boss.wav";				//ボス戦BGM
+	constexpr const wchar_t* c_filePathBGM_GameMain = L"Assets/sound/BGM_GameMain.wav";		//ゲーム中BGM
+	constexpr const wchar_t* c_filePathSE_Kill = L"Assets/sound/SE_Kill.wav";				//斬るSE
+	constexpr const wchar_t* c_filePathSE_Guard = L"Assets/sound/SE_Guard.wav";				//ガードSE
+	constexpr const wchar_t* c_filePathSE_Rolling = L"Assets/sound/SE_Rolling.wav";			//ローリングSE
+	constexpr const wchar_t* c_filePathSE_Walk = L"Assets/sound/SE_Walk.wav";				//歩行SE
+	constexpr const wchar_t* c_filePathSE_Death_1 = L"Assets/sound/SE_Death_1.wav";			//倒れるSE
+	constexpr const wchar_t* c_filePathSE_Death_2 = L"Assets/sound/SE_Death_2.wav";			//倒れるSE2
+	constexpr const wchar_t* c_filePathSE_GameOver = L"Assets/sound/SE_GameOver.wav";		//ゲームオーバーSE
+	constexpr const wchar_t* c_filePathSE_Select = L"Assets/sound/SE_Select.wav";			//選択SE
+	constexpr const wchar_t* c_filePathSE_Scream = L"Assets/sound/SE_Roar.wav";				//咆哮SE
+	constexpr const wchar_t* c_filePathSE_Impact = L"Assets/sound/SE_Impact.wav";			//衝撃SE
+	constexpr const wchar_t* c_filePathSE_Footsteps = L"Assets/sound/SE_Footsteps.wav";		//ボス足音SE
+	constexpr const wchar_t* c_filePathSE_Scratch = L"Assets/sound/SE_Scratch.wav";			//引っ掻きSE
 	constexpr const wchar_t* c_filePathSE_DeathVoice = L"Assets/sound/SE_DeathVoice.wav";	//死んだときのボイスSE
-	constexpr const wchar_t* c_filePathSE_GetItem = L"Assets/sound/SE_GetItem.wav";		//アイテム取得SE
-	constexpr const wchar_t* c_filePathSE_DoorOpen = L"Assets/sound/SE_DoorOpen.wav";	//ドア開閉SE
-	constexpr const wchar_t* c_filePathSE_Torch = L"Assets/sound/SE_Torch.wav";			//松明SE
+	constexpr const wchar_t* c_filePathSE_GetItem = L"Assets/sound/SE_GetItem.wav";			//アイテム取得SE
+	constexpr const wchar_t* c_filePathSE_DoorOpen = L"Assets/sound/SE_DoorOpen.wav";		//ドア開閉SE
+	constexpr const wchar_t* c_filePathSE_Torch = L"Assets/sound/SE_Torch.wav";				//松明SE
 	/*----------------------------------*/
 
+	/*----------シェーダー関係----------*/
 	constexpr const char* c_entryPointVSMain = "VSMain";						//頂点シェーダーのエントリーポイント
 	constexpr const char* c_entryPointVSSkinMain = "VSSkinMain";				//スキンありの頂点シェーダーのエントリーポイント
 	constexpr const char* c_fxFilePath_Model = "Assets/shader/model.fx";		//G-Buffer作成に使うシェーダーのファイルパス
+	constexpr UINT c_frameBufferWidth = 1280;									//フレームバッファの幅
+	constexpr UINT c_frameBufferHeight = 720;									//フレームバッファの高さ
+	constexpr int c_tileWidth = 16;												//TBRで分割するタイルの横の数
+	constexpr int c_tileHeight = 16;											//TBRで分割するタイルの縦の数
+	/*----------------------------------*/
+
+	constexpr float c_skyCubeLumminance = 0.2f;		//空の輝度
+
 	constexpr float c_attackCollisionActiveTime = 0.2f;							//攻撃用当たり判定の有効時間
 
-	constexpr const char* c_filePathYouDiedSprite = "Assets/image/youDied2.dds";	//死亡スプライトのファイルパス
+	constexpr const char* c_filePathYouDiedSprite = "Assets/image/youDied.dds";	//死亡スプライトのファイルパス
 	constexpr const char* c_filePathGameClearSprite = "Assets/image/Victory.dds";	//ゲームクリアスプライトのファイルパス
 	const CVector2 c_spriteYouDiedWH = { 1740.0f, 180.0f };							//死亡スプライトの幅と高さ
 	const CVector3 c_spriteSizeYouDied = { 0.8f,0.8f,0.8f };						//死亡スプライトの拡大率
@@ -105,20 +115,17 @@ namespace nsMyGame {
 	constexpr const char16_t* c_filePathFireEffect = u"Assets/effect/fire.efk";			//炎エフェクトのファイルパス
 	const CVector3 c_fireEffectScale = { 10.0f,10.0f,10.0f };							//炎エフェクトの拡大率
 
-	const CVector2 c_hpBarSize = { 400.0f, 25.0f };		//HPバーの解像度
-	const CVector3 c_hpBarPosition = { -570.0f,300.0f,0.0f };		//HPバーの座標
+	const CVector2 c_hpBarSize = { 400.0f, 25.0f };						//HPバーの解像度
+	const CVector3 c_hpBarPosition = { -570.0f,300.0f,0.0f };			//HPバーの座標
 	const CVector3 c_bossHpBarPosition = { -400.0f,-300.0f,0.0f };		//ボスのHPバーの座標
 
 	const CVector4 c_bossTextColor = { 0.8f,0.8f,0.8f,1.0f };	//ボスの名前のカラー
-	const float c_bossTextScale = 0.5f;		//ボスの名前の拡大率
+	const float c_bossTextScale = 0.5f;							//ボスの名前の拡大率
 	const CVector2 c_bossTextPosition = { -400.0f,-250.0f };	//ボスの名前の座標
 
 	constexpr float c_textDisappearTime = 3.0f;		//確認テキストが消え始めるまでの時間
 
-	constexpr UINT c_frameBufferWidth = 1280;		//フレームバッファの幅
-	constexpr UINT c_frameBufferHeight = 720;		//フレームバッファの高さ
-	constexpr int c_tileWidth = 16;					//TBRで分割するタイルの横の数
-	constexpr int c_tileHeight = 16;				//TBRで分割するタイルの縦の数
+	
 
 	const CVector3 c_firePointLightColor = { 10.0f,5.0f,5.0f };		//炎用のポイントライトのカラー
 	constexpr float c_firePointLightRange = 600.0f;					//炎用のポイントライトの影響範囲
@@ -129,14 +136,14 @@ namespace nsMyGame {
 	constexpr const char16_t* c_bloodEffectFilePath = u"Assets/effect/bloodGreen.efk";	//血しぶきエフェクトのファイルパス
 	const CVector3 c_bloodEffectSize = { 5.0f,5.0f,5.0f };								//血しぶきエフェクトのサイズ
 
-	constexpr float c_playerPointLightRange = 300.0f;		//プレイヤー中心のポイントライトの影響範囲
+	constexpr float c_playerPointLightRange = 300.0f;				//プレイヤー中心のポイントライトの影響範囲
 	constexpr float c_playerPointLightAffectPowParam = 2.5f;		//プレイヤー中心のポイントライトの減衰率
 	constexpr float c_playerPointLightAddParam = 130.0f;			//プレイヤー中心のポイントライトの加算座標
 	constexpr float c_fireEffectLoopTime = 1.0f;					//松明の炎エフェクトのループまでの時間
 
 	const CVector3 c_noticePlayerTriggerBoxSize = { 1300.0f,3000.0f,1300.0f };	//ボスが登場するためのトリガーボックスのサイズ
 
-	constexpr const char* c_filePathTitleSprite = "Assets/image/title.dds";	//タイトル画像のファイルパス
+	constexpr const char* c_filePathTitleSprite = "Assets/image/title.dds";		//タイトル画像のファイルパス
 }
 
 

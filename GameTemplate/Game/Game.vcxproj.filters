@@ -814,9 +814,6 @@
     <ClInclude Include="..\..\MiniEngine\Stopwatch.h">
       <Filter>MiniEngine</Filter>
     </ClInclude>
-    <ClInclude Include="constPlayer.h">
-      <Filter>ソース ファイル\player</Filter>
-    </ClInclude>
     <ClInclude Include="enemy\constEnemy.h">
       <Filter>ソース ファイル\enemy</Filter>
     </ClInclude>
@@ -831,6 +828,9 @@
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\postEffect\constPostEffect.h">
       <Filter>MiniEngine\postEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="player\constPlayer.h">
+      <Filter>ソース ファイル\player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

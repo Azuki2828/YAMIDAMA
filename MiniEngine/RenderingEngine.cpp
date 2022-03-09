@@ -20,14 +20,14 @@ namespace nsMyGame {
 		//ライトカリングの初期化。
 		m_lightCulling.Init();
 
-		auto skyCube = NewGO<SkyCube>(0, "skycube");
+		auto skyCube = NewGO<SkyCube>(enPriority_Zeroth, c_classNameSkyCube);
 
-		skyCube->SetLuminance(0.2f);
+		skyCube->SetLuminance(c_skyCubeLumminance);
 
 		skyCube->SetType(enSkyCubeType_NightToon_2);
 
 		// 環境光の計算のためのIBLテクスチャをセットする。
-		CRenderingEngine::GetInstance()->InitIbl(skyCube->GetTextureFilePath(), 0.2f);
+		CRenderingEngine::GetInstance()->InitIbl(skyCube->GetTextureFilePath(), c_skyCubeLumminance);
 
 		//ディファードライティング用のスプライトを初期化。
 		InitDeferredLightingSprite();

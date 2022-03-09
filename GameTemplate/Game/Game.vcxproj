@@ -553,7 +553,6 @@
     <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="constItem.h" />
-    <ClInclude Include="constPlayer.h" />
     <ClInclude Include="ConstValue.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="enemy\boss\Boss.h" />
@@ -571,6 +570,7 @@
     <ClInclude Include="GameTitle.h" />
     <ClInclude Include="item\Item.h" />
     <ClInclude Include="MainCamera.h" />
+    <ClInclude Include="player\constPlayer.h" />
     <ClInclude Include="player\Player.h" />
     <ClInclude Include="player\PlayerAnimation.h" />
     <ClInclude Include="player\PlayerAction.h" />
