@@ -2,7 +2,6 @@
 #include <random>
 #include "MainCamera.h"
 #include "player/Player.h"
-#include "enemy/boss/Boss.h"
 
 namespace nsMyGame {
 
