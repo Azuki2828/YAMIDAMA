@@ -814,6 +814,24 @@
     <ClInclude Include="..\..\MiniEngine\Stopwatch.h">
       <Filter>MiniEngine</Filter>
     </ClInclude>
+    <ClInclude Include="constPlayer.h">
+      <Filter>ソース ファイル\player</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\constEnemy.h">
+      <Filter>ソース ファイル\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="constItem.h">
+      <Filter>ソース ファイル\item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\light\constLight.h">
+      <Filter>MiniEngine\light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\font\constFont.h">
+      <Filter>MiniEngine\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MiniEngine\postEffect\constPostEffect.h">
+      <Filter>MiniEngine\postEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

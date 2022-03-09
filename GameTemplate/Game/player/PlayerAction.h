@@ -1,4 +1,5 @@
 #pragma once
+#include "constPlayer.h"
 #include "PlayerTriggerBox.h"
 
 namespace nsMyGame {

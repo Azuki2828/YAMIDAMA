@@ -1,4 +1,5 @@
 #pragma once
+#include "../constEnemy.h"
 #include "../../AttackCollision.h"
 
 namespace nsMyGame {

@@ -28,7 +28,7 @@ namespace nsMyGame {
 	constexpr const char* c_classNameMainCamera = "mainCamera";					//カメラクラスの名前
 	/*------------------------*/
 
-	//サウンドリスト
+	/*--------サウンドリスト--------*/
 	enum EnSoundList {
 		enBGM_GameMain,
 		enBGM_Boss,
@@ -51,6 +51,7 @@ namespace nsMyGame {
 
 		enSound_Num
 	};
+	/*-----------------------------*/
 
 	/*------サウンドのファイルパス------*/
 	constexpr const wchar_t* c_filePathBGM_Boss = L"Assets/sound/BGM_Boss.wav";			//ボス戦BGM
@@ -136,113 +137,7 @@ namespace nsMyGame {
 	const CVector3 c_noticePlayerTriggerBoxSize = { 1300.0f,3000.0f,1300.0f };	//ボスが登場するためのトリガーボックスのサイズ
 
 	constexpr const char* c_filePathTitleSprite = "Assets/image/title.dds";	//タイトル画像のファイルパス
-
-	namespace nsPlayer {
-
-		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/player3.tkm";		//プレイヤーのtkmファイルパス
-		constexpr const char* c_filePathTksPlayer = "Assets/modelData/player3.tks";		//プレイヤーのtksファイルパス
-		constexpr const float c_animationInterpolateTime = 0.6f;						//アニメーションの補間時間
-		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
-		constexpr float c_attackCoolTime = 0.8f;										//通常攻撃中のクールタイム
-		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
-		const CVector3 c_playerStartPosition = { 0.0f,0.0f,0.0f };					//開始時のプレイヤーの座標
-
-		constexpr const int c_playerMaxHP = 100;									//プレイヤーの最大HP
-		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
-		constexpr float c_attackTriggerBoxMul = 80.0f;									//プレイヤー攻撃時のトリガーボックスの前方向への乗算値
-		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//プレイヤー攻撃時のトリガーボックスのY方向への加算値
-
-
-		//プレイヤーのステート
-		enum EnPlayerState {
-			enState_Idle,
-			enState_Walk,
-			enState_Run,
-			enState_Attack,
-			enState_AttackBreak,
-			enState_Damage,
-			enState_Rolling,
-			enState_Guard,
-			enState_GuardSuccess,
-			enState_Death,
-
-			enState_Num
-		};
-	}
-
-	namespace nsEnemy {
-
-		constexpr const char* c_filePathTkmEnemy = "Assets/modelData/player3.tkm";		//敵のtkmファイルパス
-		constexpr const char* c_filePathTksEnemy = "Assets/modelData/player3.tks";		//敵のtksファイルパス
-		constexpr const char* c_filePathTkmBoss = "Assets/modelData/boss.tkm";			//ボスのtkmファイルパス
-		constexpr const char* c_filePathTksBoss = "Assets/modelData/boss.tks";			//ボスのtksファイルパス
-
-		constexpr const float c_bossAnimBlendValue = 0.4f;
-
-		constexpr const int c_bossMaxHP = 100;											//ボスの最大HP
-		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
-		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//敵攻撃時のトリガーボックスのサイズ
-		const CVector3 c_bossAttackTriggerBoxSize = { 145.0f, 90.0f, 90.0f };			//ボス攻撃時のトリガーボックスのサイズ
-		constexpr float c_attackTriggerBoxMul = 80.0f;									//敵攻撃時のトリガーボックスの前方向への乗算値
-		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//敵攻撃時のトリガーボックスのY方向への加算値
-	}
-
-	namespace nsItem {
-
-		constexpr float c_needToDistanceForGetItem = 100.0f;							//アイテムを回収するのに必要な距離
-		constexpr const char16_t* c_itemEffectFilePath = u"Assets/effect/item.efk";		//アイテムエフェクトのファイルパス
-		const CVector3 c_itemEffectSize = { 10.0f,10.0f,10.0f };						//アイテムエフェクトの拡大率
-		constexpr float c_itemEffectReplayTime = 1.0f;									//エフェクトを再生成する間隔
-	}
-
-	namespace nsLight {
-
-		constexpr int c_maxDirectionLightNum = 4;	//ディレクションライトの上限数
-		constexpr int c_maxPointLightNum = 1000;	//ポイントライトの上限数
-		constexpr int c_tileNum = 3600;				//タイルの数。
-	}
-
-
-	namespace nsFont {
-
-		constexpr int c_maxTextSize = 256;		//テキストの上限数
-	}
-
-
-	namespace nsPostEffect {
-
-
-		/*------PostEffectComponentBase------*/
-		constexpr const char* c_fxFilePathCopySprite = "Assets/shader/sprite.fx";			//メインレンダリングターゲットにコピーする時に使用するシェーダーのファイルパス
-		/*-----------------------------------*/
-
-
-		/*------GaussianBlur------*/
-		constexpr const char* c_fxFilePathGaussianBlur = "Assets/shader/gaussianBlur.fx";	//ガウシアンブラーで使用するシェーダーのファイルパス
-		constexpr const char* c_vsEntryPointFuncXBlur = "VSXBlur";							//横ブラー用のスプライトの頂点シェーダーのエントリーポイント
-		constexpr const char* c_vsEntryPointFuncYBlur = "VSYBlur";							//縦ブラー用のスプライトの頂点シェーダーのエントリーポイント
-		constexpr const char* c_psEntryPointFuncBlur = "PSBlur";							//ブラー用のスプライトのピクセルシェーダーのエントリーポイント
-		constexpr const int c_gaussianBlurNumWeight = 8;									//ガウシアンブラーの重みの数
-		/*------------------------*/
-
-
-		/*------Bloom------*/
-		constexpr const int c_gaussianBlurNum = 4;												//ガウシアンブラーの数
-		constexpr const char* c_fxFilePathBloom = "Assets/shader/bloom.fx";						//ブルーム用のシェーダーのファイルパス
-		constexpr const char* c_vsEntryPointFuncBloom = "VSMain";								//ブルーム用の頂点シェーダーのエントリーポイント
-		constexpr const char* c_psEntryPointFuncSamplingLuminance = "PSSamplingLuminance";		//輝度抽出用のピクセルシェーダーのエントリーポイント
-		constexpr const char* c_psEntryPointFuncBloomFinal = "PSBloomFinal";					//ブルーム最終のピクセルシェーダーのエントリーポイント
-		/*-----------------*/
-
-
-		/*------FXAA------*/
-		constexpr const char* c_fxFilePathFXAA = "Assets/shader/fxaa.fx";	//FXAAで使用するシェーダーのファイルパス
-		constexpr const char* c_vsEntryPointFuncFXAA = "VSMain";			//FXAA用のスプライトの頂点シェーダーのエントリーポイント
-		constexpr const char* c_psEntryPointFuncFXAA = "PSMain";			//FXAA用のスプライトのピクセルシェーダーのエントリーポイント
-		/*----------------*/
-	}
 }
-
 
 
 

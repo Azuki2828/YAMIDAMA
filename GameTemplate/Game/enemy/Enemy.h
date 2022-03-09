@@ -1,4 +1,5 @@
 #pragma once
+#include "constEnemy.h"
 #include "../player/Player.h"
 #include "../../../ExEngine/physics/CharacterController.h"
 

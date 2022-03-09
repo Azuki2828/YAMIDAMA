@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include "PlayerStateProcess.h"
 #include "Player.h"
+#include "PlayerStateProcess.h"
 #include "../AttackCollision.h"
 #include "../enemy/Enemy.h"
 #include "../BackGround.h"

@@ -1,4 +1,5 @@
 #pragma once
+#include "../constEnemy.h"
 #include "../Enemy.h"
 #include "FirstWinEnemyAttackCollisionDetection.h"
 #include "../../AttackCollision.h"

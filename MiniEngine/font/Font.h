@@ -1,9 +1,9 @@
+#pragma once
+#include "constFont.h"
+
 /*!
 * @brief	ƒtƒHƒ“ƒg
 */
-
-#pragma once
-
 namespace nsMyGame {
 
 	namespace nsFont {

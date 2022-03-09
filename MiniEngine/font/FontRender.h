@@ -1,6 +1,6 @@
 #pragma once
+#include "constFont.h"
 #include "stdafx.h"
-
 
 namespace nsMyGame {
 

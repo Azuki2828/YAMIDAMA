@@ -1,4 +1,5 @@
 #pragma once
+#include "constPostEffect.h"
 #include "PostEffectComponentBase.h"
 
 namespace nsMyGame {

@@ -1,4 +1,6 @@
 #pragma once
+#include "constPlayer.h"
+
 namespace nsMyGame {
 
 	namespace nsPlayer {

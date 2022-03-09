@@ -1,4 +1,5 @@
 #pragma once
+#include "constLight.h"
 
 namespace nsMyGame {
 

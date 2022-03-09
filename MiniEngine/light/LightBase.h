@@ -1,4 +1,5 @@
 #pragma once
+#include "constLight.h"
 #include "stdafx.h"
 #include "../../ExEngine/gameObject/IGameobject.h"
 

@@ -1,4 +1,6 @@
 #pragma once
+#include "constItem.h"
+
 namespace nsMyGame {
 
 	//エイリアス宣言

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "constFont.h"
 
 namespace nsMyGame {
 

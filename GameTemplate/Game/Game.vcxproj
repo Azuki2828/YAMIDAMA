@@ -477,6 +477,7 @@
     <ClInclude Include="..\..\MiniEngine\DescriptorHeap.h" />
     <ClInclude Include="..\..\MiniEngine\DescriptorHeap_inline.h" />
     <ClInclude Include="..\..\MiniEngine\Fade.h" />
+    <ClInclude Include="..\..\MiniEngine\font\constFont.h" />
     <ClInclude Include="..\..\MiniEngine\font\Font.h" />
     <ClInclude Include="..\..\MiniEngine\font\FontEngine.h" />
     <ClInclude Include="..\..\MiniEngine\font\FontRender.h" />
@@ -488,6 +489,7 @@
     <ClInclude Include="..\..\MiniEngine\level\Level.h" />
     <ClInclude Include="..\..\MiniEngine\level\MapChip.h" />
     <ClInclude Include="..\..\MiniEngine\LightCulling.h" />
+    <ClInclude Include="..\..\MiniEngine\light\constLight.h" />
     <ClInclude Include="..\..\MiniEngine\light\DirectionLight.h" />
     <ClInclude Include="..\..\MiniEngine\light\LightBase.h" />
     <ClInclude Include="..\..\MiniEngine\light\LightManager.h" />
@@ -505,6 +507,7 @@
     <ClInclude Include="..\..\MiniEngine\NullTextureMaps.h" />
     <ClInclude Include="..\..\MiniEngine\PipelineState.h" />
     <ClInclude Include="..\..\MiniEngine\postEffect\Bloom.h" />
+    <ClInclude Include="..\..\MiniEngine\postEffect\constPostEffect.h" />
     <ClInclude Include="..\..\MiniEngine\postEffect\FXAA.h" />
     <ClInclude Include="..\..\MiniEngine\postEffect\GaussianBlur.h" />
     <ClInclude Include="..\..\MiniEngine\postEffect\PostEffect.h" />
@@ -549,10 +552,13 @@
     <ClInclude Include="AppearSprite.h" />
     <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="constItem.h" />
+    <ClInclude Include="constPlayer.h" />
     <ClInclude Include="ConstValue.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="enemy\boss\Boss.h" />
     <ClInclude Include="enemy\boss\BossAttackCollisionDetection.h" />
+    <ClInclude Include="enemy\constEnemy.h" />
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="enemy\EnemyAction.h" />
     <ClInclude Include="enemy\EnemyAnimation.h" />
