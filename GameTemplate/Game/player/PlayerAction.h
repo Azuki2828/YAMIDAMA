@@ -28,7 +28,7 @@ namespace nsMyGame {
 			 * @brief 回転処理を行う関数。
 			 * @param rotation 回転
 			*/
-			void Rotate(CQuaternion& rotation);
+			void Rotate(CQuaternion& rotation, const CVector3& forward);
 
 			/**
 			 * @brief アクションを行う関数。

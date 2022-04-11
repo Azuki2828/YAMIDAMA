@@ -11,6 +11,7 @@ namespace nsMyGame {
 		constexpr float c_attackCoolTime = 0.8f;										//通常攻撃中のクールタイム
 		constexpr float c_threeComboCoolTime = 3.0f;									//3連続攻撃中のクールタイム
 		const CVector3 c_playerStartPosition = { 0.0f,0.0f,0.0f };						//開始時のプレイヤーの座標
+		constexpr float c_rotSpeed = 8.0f;												//回転処理に用いる度合
 
 		constexpr const int c_playerMaxHP = 100;										//プレイヤーの最大HP
 		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ

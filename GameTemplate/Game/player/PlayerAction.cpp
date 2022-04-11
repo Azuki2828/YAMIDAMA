@@ -141,7 +141,7 @@ namespace nsMyGame {
 			position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
 		}
 
-		void CPlayerAction::Rotate(CQuaternion& rotation) {
+		void CPlayerAction::Rotate(CQuaternion& rotation, const CVector3& forward) {
 
 			//入力量を調べる。
 			float lStick_x = g_pad[0]->GetLStickXF();
@@ -168,12 +168,25 @@ namespace nsMyGame {
 			CVector3 rotSource = CVector3::Zero;
 			rotSource += cameraForward * lStick_y;		//奥方向を計算。
 			rotSource += cameraRight * lStick_x;		//右方向を計算。
+			rotSource.Normalize();
 
-			//回転角度を求める。
-			float angle = atan2(-rotSource.x, rotSource.z);
+			//前方向と入力方向の内積から回転する必要があるかどうかを調べる。
+			if (Dot(forward, rotSource) < 0.99f) {
 
-			//回転を設定。
-			rotation.SetRotationY(-angle);
+				//回転速度を求める。
+				float rotSpeed = c_rotSpeed * g_gameTime->GetFrameDeltaTime();
+
+				//前方向と入力方向の外積から回転方向を求める。
+				if (Cross(forward, rotSource).y >= 0.0f) {
+
+					//時計回り。
+					rotation.AddRotationY(rotSpeed);
+				}
+				else {
+					//反時計回り。
+					rotation.AddRotationY(-rotSpeed);
+				}
+			}
 		}
 
 		void CPlayerAction::Action(EnPlayerState& playerState, const bool selectFlag) {
