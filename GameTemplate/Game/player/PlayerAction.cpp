@@ -93,7 +93,7 @@ namespace nsMyGame {
 			
 				float value = c_attackCoolTime - m_coolTime;
 				if (c_attackCoolTime - m_coolTime > 0.1f && c_attackCoolTime - m_coolTime < 0.4f) {
-					m_rollingSpeed = forward * 20.0f *(-4.0f * pow((value - 1.0f), 2.0f) + 8.0f);
+					m_moveSpeed = forward * 20.0f *(-4.0f * pow((value - 1.0f), 2.0f) + 8.0f);
 				}
 			}
 
@@ -130,16 +130,15 @@ namespace nsMyGame {
 			//ローリングの速度を加算。
 			m_moveSpeed += m_rollingSpeed;
 
-			//キャラコンを使用して、座標を更新。
-			position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
-
-
 			//地面についているか判定。
 			if (m_charaCon.IsOnGround()) {
 
 				//地面についているなら下向きには力をかけない。
 				m_moveSpeed.y = 0.0f;
 			}
+
+			//キャラコンを使用して、座標を更新。
+			position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
 		}
 
 		void CPlayerAction::Rotate(CQuaternion& rotation) {

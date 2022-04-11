@@ -17,17 +17,11 @@ namespace nsMyGame {
 		//ポストエフェクトを初期化。
 		m_postEffect.Init();
 
-		//ライトカリングの初期化。
+		//ライトカリングを初期化。
 		m_lightCulling.Init();
 
-		auto skyCube = NewGO<SkyCube>(enPriority_Zeroth, c_classNameSkyCube);
-
-		skyCube->SetLuminance(c_skyCubeLumminance);
-
-		skyCube->SetType(enSkyCubeType_NightToon_2);
-
-		// 環境光の計算のためのIBLテクスチャをセットする。
-		CRenderingEngine::GetInstance()->InitIbl(skyCube->GetTextureFilePath(), c_skyCubeLumminance);
+		//スカイキューブを初期化。
+		InitSkyCube();
 
 		//ディファードライティング用のスプライトを初期化。
 		InitDeferredLightingSprite();
@@ -161,6 +155,18 @@ namespace nsMyGame {
 
 		m_iblData.texture.InitFromDDSFile(iblTexFilePath);
 		m_iblData.luminance = luminance;
+	}
+
+	void CRenderingEngine::InitSkyCube() {
+
+		auto skyCube = NewGO<SkyCube>(enPriority_Zeroth, c_classNameSkyCube);
+
+		skyCube->SetLuminance(c_skyCubeLumminance);
+
+		skyCube->SetType(enSkyCubeType_NightToon_2);
+
+		// 環境光の計算のためのIBLテクスチャをセットする。
+		CRenderingEngine::GetInstance()->InitIbl(skyCube->GetTextureFilePath(), c_skyCubeLumminance);
 	}
 
 	void CRenderingEngine::DrawShadowMap(CRenderContext& rc) {

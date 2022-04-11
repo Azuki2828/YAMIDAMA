@@ -65,6 +65,11 @@ namespace nsMyGame {
 		 * @brief IBLのための初期化関数。
 		*/
 		void InitIbl(const wchar_t* iblTexFilePath, float luminance);
+
+		/**
+		 * @brief スカイキューブの初期化関数。
+		*/
+		void InitSkyCube();
 	private:
 		/**
 		 * @brief レンダリングターゲットを作成する関数。

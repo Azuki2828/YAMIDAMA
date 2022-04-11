@@ -84,9 +84,11 @@ namespace nsMyGame {
 				IsDamagedStateProcess();
 				break;
 			case enState_Guard:				//ガード中
+
 				IsGuardStateProcess();
 				break;
 			case enState_Attack:			//攻撃中
+
 				IsAttackStateProcess();
 				break;
 			default:						//通常処理
@@ -98,8 +100,11 @@ namespace nsMyGame {
 
 		void CPlayer::JudgeDamage(const CVector3& effectPos) {
 
-			//ガード成功中なら終了。
-			if (m_playerState == enState_GuardSuccess || m_playerState == enState_Death) { return; }
+			//ガード成功中、被弾中、死んだ状態なら終了。
+			if (m_playerState == enState_GuardSuccess
+				|| m_playerState == enState_Death
+				|| m_playerState == enState_Damage
+			) { return; }
 
 			//ガードしたならガード成功状態に。
 			if (m_playerState == enState_Guard) {
