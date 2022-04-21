@@ -111,7 +111,7 @@ namespace nsMyGame {
 				//指数関数的に速度を求める。
 				//ラストの0.2秒間だけは着地のため、移動しない。
 				if (c_rollingCoolTime - value > 0.8f) {
-					m_rollingSpeed = forward * 400.0f;// *(-1.5f * pow((value - 1.0f), 2.0f) + 2.0f);
+					m_rollingSpeed = forward * 400.0f;
 				}
 				else if (c_rollingCoolTime - value > 0.2f) {
 					m_rollingSpeed = forward * 100.0f;
