@@ -1,5 +1,6 @@
 #pragma once
 #include "../../MiniEngine/SpringCamera.h"
+#include "CameraBase.h"
 
 namespace nsMyGame {
 
@@ -10,25 +11,25 @@ namespace nsMyGame {
 	}
 
 	//メインカメラクラス
-	class CMainCamera : public CIGameObject
+	class CMainCamera : public CCameraBase
 	{
 		//ステート
 		enum EnState {
 			enNormal,		//通常
 			enShake			//揺れ状態
 		};
-	public:
+	private:
 		/**
 		 * @brief Update()関数の前に一度だけ呼ばれる関数。
 		 * @return 成功した？
 		*/
-		bool Start()override final;
+		bool StartSub()override final;
 
 		/**
 		 * @brief 更新関数。
 		*/
-		void Update()override final;
-
+		void UpdateSub()override final;
+	public:
 		/**
 		 * @brief カメラを揺れ状態にする関数。
 		*/
@@ -48,9 +49,6 @@ namespace nsMyGame {
 		EnState m_state = enNormal;							//ステート
 		float m_eventTimer = 0.0f;							//イベントタイマー(ボス登場時のカメラワーク)
 		SpringCamera m_springCamera;						//ばねカメラ。
-		CVector3 m_pos = CVector3::Zero;					//視点
-		CQuaternion m_rot = CQuaternion::Identity;			//回転
-		CVector3 m_sca = CVector3::One;						//拡大
 
 		CVector3 m_tar = CVector3::Zero;					//注視点
 		CVector3 m_toCameraPos = { 0.0f,150.0f,200.0f };	//カメラの追加座標

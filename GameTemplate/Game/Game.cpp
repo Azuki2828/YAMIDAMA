@@ -4,7 +4,7 @@
 #include "enemy/boss/Boss.h"
 #include "Game.h"
 #include "BackGround.h"
-#include "MainCamera.h"
+#include "CameraManager.h"
 #include "GameTitle.h"
 #include "GameHUD.h"
 
@@ -19,7 +19,7 @@ namespace nsMyGame {
 		m_backGround = NewGO<CBackGround>(enPriority_Zeroth, c_classNameBackGround);
 
 		//メインカメラを生成。
-		m_mainCamera = NewGO<CMainCamera>(enPriority_Zeroth, c_classNameMainCamera);
+		m_cameraManager = NewGO<CCameraManager>(enPriority_Zeroth, c_classNameCameraManager);
 
 		//HUDを作成。
 		m_gameHUD = NewGO<CGameHUD>(enPriority_Zeroth, c_classNameGameHUD);
@@ -56,7 +56,7 @@ namespace nsMyGame {
 		DeleteGO(m_youDiedSprite);
 		DeleteGO(m_gameClearSprite);
 		DeleteGO(m_backGround);
-		DeleteGO(m_mainCamera);
+		DeleteGO(m_cameraManager);
 		DeleteGO(m_gameHUD);
 	}
 
@@ -87,6 +87,20 @@ namespace nsMyGame {
 				//だんだん表示されるようにする。
 				m_youDiedSpriteTrans += GameTime().GameTimeFunc().GetFrameDeltaTime() * 0.5f;
 				m_youDiedSprite->SetMulColor({ CVector4::White.x,CVector4::White.y,CVector4::White.z, m_youDiedSpriteTrans });
+			}
+		}
+		else if (g_pad[0]->IsTrigger(enButtonRB3)) {
+
+			//ロックオン状態じゃないなら
+			if (m_cameraManager->GetCameraType() != enCamera_LockOn) {
+
+				//ロックオン状態に。
+				m_cameraManager->SetCameraType(enCamera_LockOn);
+			}
+			//ロックオン状態なら
+			else {
+				//通常カメラに。
+				m_cameraManager->SetCameraType(enCamera_Main);
 			}
 		}
 

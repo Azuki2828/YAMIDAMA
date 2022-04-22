@@ -4,7 +4,7 @@ namespace nsMyGame {
 
 	//エイリアス宣言
 	class CBackGround;
-	class CMainCamera;
+	class CCameraManager;
 	class CGameHUD;
 
 	namespace nsPlayer {
@@ -53,7 +53,7 @@ namespace nsMyGame {
 		CSpriteRender* m_gameClearSprite = nullptr;
 		CBackGround* m_backGround = nullptr;
 		CGameHUD* m_gameHUD = nullptr;
-		CMainCamera* m_mainCamera = nullptr;
+		CCameraManager* m_cameraManager = nullptr;
 		CFade* m_fade = nullptr;
 	};
 }

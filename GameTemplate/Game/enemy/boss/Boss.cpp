@@ -221,10 +221,10 @@ namespace nsMyGame {
 				//攻撃中にする。
 				m_triggerBox.ActivateRangeAttack();
 
-				auto mainCamera = FindGO<CMainCamera>(c_classNameMainCamera);
+				//auto mainCamera = FindGO<CMainCamera>(c_classNameMainCamera);
 
 				//カメラを揺れ状態にする。
-				mainCamera->ShakeCamera();
+				//mainCamera->ShakeCamera();
 			}
 			//キーの名前が「attack_end」の時。
 			else if (wcscmp(eventName, L"endRangeAttack") == 0)
@@ -258,10 +258,10 @@ namespace nsMyGame {
 			}
 			else if (wcscmp(eventName, L"endShakeCamera") == 0) {
 
-				auto mainCamera = FindGO<CMainCamera>(c_classNameMainCamera);
+				//auto mainCamera = FindGO<CMainCamera>(c_classNameMainCamera);
 				
 				//カメラを通常状態にする。
-				mainCamera->SetNormalCamera();
+				//mainCamera->SetNormalCamera();
 			}
 			else if (wcscmp(eventName, L"scream") == 0) {
 

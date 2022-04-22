@@ -2,6 +2,7 @@
 #include "PlayerAction.h"
 #include "Player.h"
 #include "../AttackCollision.h"
+#include "../CameraManager.h"
 
 namespace nsMyGame {
 
@@ -143,16 +144,46 @@ namespace nsMyGame {
 
 		void CPlayerAction::Rotate(CQuaternion& rotation, const CVector3& forward) {
 
+			//XZ成分の移動速度をクリア。
+			CVector3 rotSource = CVector3::Zero;
+
+			//カメラ情報を取得。
+			CCameraManager* cameraManager = FindGO<CCameraManager>(c_classNameCameraManager);
+
+			//ロックオン中なら
+			if (cameraManager->GetCameraType() == enCamera_LockOn) {
+
+				//プレイヤーを検索。
+				auto player = FindGO<CPlayer>(c_classNamePlayer);
+
+				//ロックオン中の敵の座標を取得。
+				CVector3 lockOnEnemyPosition = cameraManager->GetLockOnEnemyPosition();
+				CVector3 vecToEnemy = lockOnEnemyPosition - player->GetPosition();
+				//正規化。
+				vecToEnemy.Normalize();
+
+				//角度を格納する変数を初期化。
+				float angle = 0.0f;
+
+				//ワールドのZ軸と敵方向へのベクトルのなす角（ラジアン）を求める。
+				angle = acos(Dot(CVector3::AxisZ, vecToEnemy) / CVector3::AxisZ.Length() * vecToEnemy.Length());
+
+				//二つのベクトルの外積が負の値なら符号を入れかえる。
+				if (Cross(CVector3::AxisZ, vecToEnemy).y < 0.0f) {
+
+					angle *= -1.0f;
+				}
+
+				//回転を設定。
+				rotation.SetRotationY(angle);
+
+				//ここで終了。
+				return;
+			}
+
 			//入力量を調べる。
 			float lStick_x = g_pad[0]->GetLStickXF();
 			float lStick_y = g_pad[0]->GetLStickYF();
-
-			//移動ボタンが入力されていなかったら
-			if (fabsf(lStick_x) < 0.001f
-				&& fabsf(lStick_y) < 0.001f) {
-				//このフレームではキャラは移動していないので旋回する必要はない。
-				return;
-			}
 
 			//カメラの前方方向と右方向を取得。
 			CVector3 cameraForward = g_camera3D->GetForward();
@@ -164,10 +195,16 @@ namespace nsMyGame {
 			cameraRight.y = 0.0f;
 			cameraRight.Normalize();
 
-			//XZ成分の移動速度をクリア。
-			CVector3 rotSource = CVector3::Zero;
+			//移動ボタンが入力されていなかったら
+			if (fabsf(lStick_x) < 0.001f
+				&& fabsf(lStick_y) < 0.001f) {
+				//このフレームではキャラは移動していないので入力による旋回はする必要はない。
+				return;
+			}
+
 			rotSource += cameraForward * lStick_y;		//奥方向を計算。
 			rotSource += cameraRight * lStick_x;		//右方向を計算。
+			//正規化。
 			rotSource.Normalize();
 
 			//前方向と入力方向の内積から回転する必要があるかどうかを調べる。
@@ -186,7 +223,7 @@ namespace nsMyGame {
 					//反時計回り。
 					rotation.AddRotationY(-rotSpeed);
 				}
-			}
+			}	
 		}
 
 		void CPlayerAction::Action(EnPlayerState& playerState, const bool selectFlag) {

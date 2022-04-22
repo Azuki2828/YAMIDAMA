@@ -87,9 +87,6 @@ namespace nsMyGame {
 		////////////////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで
 		////////////////////////////////////////////////
-
-		//レンダーコンテキストを取得。
-		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		
 		//タイトル画面から始まる。
 		NewGO<CGameTitle>(enPriority_Zeroth);

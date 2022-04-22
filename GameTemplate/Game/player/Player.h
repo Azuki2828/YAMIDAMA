@@ -119,6 +119,15 @@ namespace nsMyGame {
 			}
 
 			/**
+			 * @brief 前方向を取得する関数。
+			 * @return 前方向
+			*/
+			const CVector3& GetForward()const {
+
+				return m_forward;
+			}
+
+			/**
 			 * @brief モデルレンダーのインスタンスを取得する関数。
 			 * @return モデルレンダーのインスタンス
 			*/

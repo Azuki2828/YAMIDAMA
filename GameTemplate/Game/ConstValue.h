@@ -25,7 +25,7 @@ namespace nsMyGame {
 	constexpr const char* c_classnameEnemyAttackCollision = "enemyAttackCollision";		//敵の攻撃判定の名前
 	constexpr const char* c_classNameFade = "fade";										//フェードクラスの名前
 	constexpr const char* c_classNameGameHUD = "gameHUD";								//HUDクラスの名前
-	constexpr const char* c_classNameMainCamera = "mainCamera";							//カメラクラスの名前
+	constexpr const char* c_classNameCameraManager = "cameraManager";					//カメラマネージャークラスの名前
 	constexpr const char* c_classNameSkyCube = "skycube";								//空クラスの名前
 	/*------------------------*/
 

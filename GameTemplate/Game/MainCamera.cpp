@@ -5,10 +5,10 @@
 
 namespace nsMyGame {
 
-	bool CMainCamera::Start() {
+	bool CMainCamera::StartSub() {
 
-		g_camera3D->SetPosition(m_pos);
-		g_camera3D->SetTarget(m_tar);
+		g_camera3D->SetPosition(m_position);
+		g_camera3D->SetTarget(m_target);
 		g_camera3D->SetFar(80000.0f);
 
 		//ばねカメラの初期化。
@@ -22,18 +22,15 @@ namespace nsMyGame {
 		return true;
 	}
 
-	void CMainCamera::Update() {
-
-		CVector3 pos;
-		CVector3 target;
+	void CMainCamera::UpdateSub() {
 
 		m_player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
 		//カメラを更新。
 		//注視点を計算する。
-		target = m_player->GetPosition();
+		m_target = m_player->GetPosition();
 		//プレイヤの足元からちょっと上を注視点とする。
-		target.y += 80.0f;
-		target += g_camera3D->GetForward() * 20.0f;
+		m_target.y += 80.0f;
+		m_target += g_camera3D->GetForward() * 20.0f;
 
 		CVector3 toCameraPosOld = m_toCameraPos;
 		//パッドの入力を使ってカメラを回す。
@@ -76,16 +73,15 @@ namespace nsMyGame {
 
 			
 			shakeTarget = { static_cast<float>(random() % 201) - 100.0f,static_cast<float>(random() % 201) - 100.0f ,static_cast<float>(random() % 201) - 100.0f};
-			int a = 0;
 		}
 
 		//視点を計算する。
-		pos = target + m_toCameraPos;
+		m_position = m_target + m_toCameraPos;
 
 		//バネカメラに注視点と視点を設定する。
 		m_springCamera.SetFar(80000.0f);
-		m_springCamera.SetPosition(pos + shakeTarget);
-		m_springCamera.SetTarget(target + shakeTarget);
+		m_springCamera.SetPosition(m_position + shakeTarget);
+		m_springCamera.SetTarget(m_target + shakeTarget);
 		m_springCamera.Update();
 	}
 }

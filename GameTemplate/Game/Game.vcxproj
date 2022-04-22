@@ -411,6 +411,8 @@
     <ClCompile Include="AppearSprite.cpp" />
     <ClCompile Include="AttackCollision.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="CameraBase.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="enemy\boss\Boss.cpp" />
     <ClCompile Include="enemy\boss\BossAttackCollisionDetection.cpp" />
@@ -425,6 +427,7 @@
     <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="GameTitle.cpp" />
     <ClCompile Include="item\Item.cpp" />
+    <ClCompile Include="LockOnCamera.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCamera.cpp" />
     <ClCompile Include="player\Player.cpp" />
@@ -552,6 +555,8 @@
     <ClInclude Include="AppearSprite.h" />
     <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="CameraBase.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="constItem.h" />
     <ClInclude Include="ConstValue.h" />
     <ClInclude Include="Door.h" />
@@ -569,6 +574,7 @@
     <ClInclude Include="GameHUD.h" />
     <ClInclude Include="GameTitle.h" />
     <ClInclude Include="item\Item.h" />
+    <ClInclude Include="LockOnCamera.h" />
     <ClInclude Include="MainCamera.h" />
     <ClInclude Include="player\constPlayer.h" />
     <ClInclude Include="player\Player.h" />
