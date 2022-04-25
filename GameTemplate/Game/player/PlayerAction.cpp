@@ -61,11 +61,25 @@ namespace nsMyGame {
 				m_moveSpeed += cameraForward * lStick_y * 200.0f;	//奥方向への移動速度を加算。
 				m_moveSpeed += cameraRight * lStick_x * 200.0f;		//右方向への移動速度を加算。
 
+				//カメラタイプを取得。
+				auto cameraManager = FindGO<CCameraManager>(c_classNameCameraManager);
+				auto cameraState = cameraManager->GetCameraType();
+
 				//移動していたら移動アニメーションを再生。
 				if (lStick_x != 0.0f || lStick_y != 0.0f) {
 
-					//かつBボタンが押されていたら
-					if (g_pad[0]->IsPress(enButtonB)) {
+					//ロックオン状態なら横移動アニメーションに。
+					if (cameraState == enCamera_LockOn) {
+
+						if (lStick_x > 0.0f) {
+							playerState = enState_RightWalk;
+						}
+						else {
+							playerState = enState_LeftWalk;
+						}
+					}
+					//Bボタンが押されていたら
+					else if (g_pad[0]->IsPress(enButtonB)) {
 
 						//移動速度を1.5倍に
 						m_moveSpeed.x *= 1.5f;
@@ -86,7 +100,6 @@ namespace nsMyGame {
 					//待機状態にする。
 					playerState = enState_Idle;
 				}
-
 			}
 
 			//通常攻撃中なら
@@ -126,7 +139,6 @@ namespace nsMyGame {
 
 			//重力をかける。
 			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
-
 
 			//ローリングの速度を加算。
 			m_moveSpeed += m_rollingSpeed;

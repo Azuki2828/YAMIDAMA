@@ -28,6 +28,10 @@ namespace nsMyGame {
 			m_animationClip[enAnim_GuardSuccess].SetLoopFlag(false);
 			m_animationClip[enAnim_Death].Load("Assets/animData/death.tka");
 			m_animationClip[enAnim_Death].SetLoopFlag(false);
+			m_animationClip[enAnim_LeftWalk].Load("Assets/animData/leftWalk.tka");
+			m_animationClip[enAnim_LeftWalk].SetLoopFlag(true);
+			m_animationClip[enAnim_RightWalk].Load("Assets/animData/rightWalk.tka");
+			m_animationClip[enAnim_RightWalk].SetLoopFlag(true);
 		}
 
 		void CPlayerAnimation::Update(CModelRender& modelRender, const EnPlayerState& playerState) {
@@ -40,6 +44,12 @@ namespace nsMyGame {
 				break;
 			case enState_Walk:
 				modelRender.PlayAnimation(enAnim_Walk, 0.8f);
+				break;
+			case enState_LeftWalk:
+				modelRender.PlayAnimation(enAnim_LeftWalk, 0.8f);
+				break;
+			case enState_RightWalk:
+				modelRender.PlayAnimation(enAnim_RightWalk, 0.8f);
 				break;
 			case enState_Run:
 				modelRender.PlayAnimation(enAnim_Run, 0.8f);

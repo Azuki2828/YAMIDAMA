@@ -23,6 +23,8 @@ namespace nsMyGame {
 		enum EnPlayerState {
 			enState_Idle,
 			enState_Walk,
+			enState_LeftWalk,
+			enState_RightWalk,
 			enState_Run,
 			enState_Attack,
 			enState_AttackBreak,

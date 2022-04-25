@@ -9,6 +9,8 @@ namespace nsMyGame {
 		enum EnAnimationList {
 			enAnim_Idle,
 			enAnim_Walk,
+			enAnim_LeftWalk,
+			enAnim_RightWalk,
 			enAnim_Run,
 			enAnim_Attack,
 			enAnim_AttackBreak,
