@@ -2,7 +2,7 @@
 #include "Boss.h"
 #include "../../AttackCollision.h"
 #include "../../BackGround.h"
-#include "../../MainCamera.h"
+#include "../../camera/MainCamera.h"
 
 namespace nsMyGame {
 

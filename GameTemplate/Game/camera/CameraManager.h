@@ -16,8 +16,6 @@ namespace nsMyGame {
 	class CCameraManager : public CIGameObject
 	{
 	private:
-		
-	private:
 		/**
 		 * @brief 初期化関数。
 		 * @return 成功した？
@@ -57,11 +55,21 @@ namespace nsMyGame {
 		}
 
 		/**
+		 * @brief 切り替え可能か？
+		 * @return 成功した？
+		*/
+		const bool CanSwitch(EnCameraType cameraType) {
+
+			return m_camera[cameraType]->CanSwitch();
+		}
+
+		/**
 		 * @brief カメラの種類を設定する関数。
 		 * @param cameraType カメラの種類
 		*/
 		void SetCameraType(EnCameraType cameraType) {
 
+			//カメラタイプを設定。
 			m_cameraType = cameraType;
 
 			//カメラが切り替わったことを知らせる。
@@ -83,7 +91,7 @@ namespace nsMyGame {
 		*/
 		const CVector3& GetLockOnEnemyPosition() {
 
-			return m_camera[enCamera_LockOn]->GetLockOnEnemyPosition();
+			return m_lockOnCamera.GetLockOnEnemyPosition();
 		}
 	private:
 		EnCameraType m_cameraType = enCamera_Main;				//カメラの種類

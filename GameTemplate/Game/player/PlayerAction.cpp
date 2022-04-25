@@ -2,7 +2,7 @@
 #include "PlayerAction.h"
 #include "Player.h"
 #include "../AttackCollision.h"
-#include "../CameraManager.h"
+#include "../camera/CameraManager.h"
 
 namespace nsMyGame {
 
@@ -148,7 +148,7 @@ namespace nsMyGame {
 			CVector3 rotSource = CVector3::Zero;
 
 			//カメラ情報を取得。
-			CCameraManager* cameraManager = FindGO<CCameraManager>(c_classNameCameraManager);
+			auto cameraManager = FindGO<CCameraManager>(c_classNameCameraManager);
 
 			//ロックオン中なら
 			if (cameraManager->GetCameraType() == enCamera_LockOn) {

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include <random>
 #include "MainCamera.h"
-#include "player/Player.h"
+#include "../player/Player.h"
 
 namespace nsMyGame {
 

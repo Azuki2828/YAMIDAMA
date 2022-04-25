@@ -29,6 +29,10 @@ namespace nsMyGame {
 		 * @brief 更新関数。
 		*/
 		void UpdateSub()override final;
+
+		void Switched()override final {
+
+		}
 	public:
 		/**
 		 * @brief カメラを揺れ状態にする関数。

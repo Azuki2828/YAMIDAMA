@@ -20,9 +20,6 @@ namespace nsMyGame {
 		void Update() {
 
 			UpdateSub();
-
-			//切り替わって１フレームたった。
-			if (m_switched) { m_switched = false; }
 		}
 
 		/**
@@ -44,21 +41,17 @@ namespace nsMyGame {
 		}
 
 		/**
-		 * @brief カメラを切り替えたことを知らせる関数。
+		 * @brief カメラを切り替えたときに呼び出される関数。
 		*/
-		void Switched() {
-
-			m_switched = true;
-		}
+		virtual void Switched() = 0;
 
 		/**
-		 * @brief ロックオン中の敵の座標を取得する関数。
-		 * @return ロックオン中の敵の座標
+		 * @brief カメラの切り替えが可能か？
+		 * @return 成功した？
 		*/
-		virtual const CVector3& GetLockOnEnemyPosition()const {
+		virtual const bool CanSwitch() {
 
-			MessageBoxA(nullptr, "正しい情報が呼び出されていません。", "エラー", MB_OK);
-			return CVector3::Zero;
+			return true;
 		}
 	protected:
 		/**
@@ -74,7 +67,6 @@ namespace nsMyGame {
 	protected:
 		CVector3 m_position;		//視点
 		CVector3 m_target;			//注視点
-		bool m_switched = false;	//カメラが切り替わった？
 	};
 }
 

@@ -8,6 +8,8 @@ namespace nsMyGame {
 		constexpr float c_addCameraPosition = -300.0f;
 		constexpr float c_addCameraTarget = 50.0f;
 		constexpr float c_addCameraPositionY = 250.0f;
+		constexpr float c_searchPlayerAngle = 60.0f;
+		constexpr float c_searchDistance = 500.0f;
 	}
 
 	bool CLockOnCamera::StartSub() {
@@ -23,16 +25,10 @@ namespace nsMyGame {
 		//遠平面を設定。
 		m_springCamera.SetFar(80000.0f);
 
-		//敵を検索。
-		LockOnEnemy();
-
 		return true;
 	}
 
 	void CLockOnCamera::UpdateSub() {
-
-		//カメラが切り替わったら敵を再検索。
-		if (m_switched) { LockOnEnemy(); }
 
 		//ロックオン対象の敵の座標から注視点を求める。
 		m_target = m_lockOnEnemy->GetPosition();
@@ -67,28 +63,64 @@ namespace nsMyGame {
 		m_springCamera.Update();
 	}
 
-	void CLockOnCamera::LockOnEnemy() {
+	const bool CLockOnCamera::LockOnEnemy() {
 
-		//敵との距離を取得する変数。
-		float enemyPosition = 0.0f;
+		//ロックオンできた？
+		bool canLockOn = false;
+
+		//敵の座標を格納する変数。
+		CVector3 enemyPosition = CVector3::Zero;
+
+		//視野角の値を格納する変数。
+		//初期値は負の値で最初の敵は必ず検索圏に入るように。
+		float angle = -1.0f;
+
+		//プレイヤーの前方向と座標を取得。
+		auto player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
+		CVector3 playerForward = player->GetForward();
+		CVector3 playerPosition = player->GetPosition();
+		playerPosition.y = 0.0f;
 
 		//敵を検索。
 		QueryGOs<nsEnemy::CEnemy>(c_classNameEnemy, [&](nsEnemy::CEnemy* enemy) {
 
-			//初めて検索した敵なら、そのまま代入。
-			//２人目以降の敵なら、これまでの敵との距離と比較してより短いほうの敵を取得。
-			if (enemyPosition == 0.0f
-				|| enemyPosition > enemy->GetPosition().Length()
-			)
-			{
-				//距離のサンプルを更新。
-				enemyPosition = enemy->GetPosition().Length();
+			//敵の座標を取得。
+			enemyPosition = enemy->GetPosition();
+			enemyPosition.y = 0.0f;
 
-				//ロックオン対象の敵を更新。
-				m_lockOnEnemy = enemy;
+			//プレイヤーから敵に伸びるベクトルを求める。
+			CVector3 toEnemyVec = enemyPosition - playerPosition;
+
+			//プレイヤーの視野角に入っているか求める。
+			float carentAngle = acosf(toEnemyVec.Dot(playerForward));
+
+			//一定の距離の範囲にいる。
+			if (toEnemyVec.Length() < c_searchDistance) {
+
+				//プレイヤーから敵に向かって伸びるベクトルを正規化。
+				toEnemyVec.Normalize();
+
+				//入ってる。
+				if (fabsf(carentAngle) < CMath::PI * c_searchPlayerAngle
+					&& fabsf(carentAngle) < angle		//かつこれまでの視野角より内側にいる。
+
+					|| angle < 0.0f					//もしくは初めての検索。
+					)
+				{
+					//視野角（ラジアン）を更新。
+					angle = fabsf(carentAngle);
+
+					//ロックオン対象をこの敵に変更。
+					m_lockOnEnemy = enemy;
+
+					//ロックオンできた。
+					canLockOn = true;
+				}
 			}
 
 			return true;
-			});
+		});
+
+		return canLockOn;
 	}
 }

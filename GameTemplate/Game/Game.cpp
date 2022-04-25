@@ -4,7 +4,7 @@
 #include "enemy/boss/Boss.h"
 #include "Game.h"
 #include "BackGround.h"
-#include "CameraManager.h"
+#include "camera/CameraManager.h"
 #include "GameTitle.h"
 #include "GameHUD.h"
 
@@ -92,7 +92,9 @@ namespace nsMyGame {
 		else if (g_pad[0]->IsTrigger(enButtonRB3)) {
 
 			//ロックオン状態じゃないなら
-			if (m_cameraManager->GetCameraType() != enCamera_LockOn) {
+			if (m_cameraManager->GetCameraType() != enCamera_LockOn
+				&& m_cameraManager->CanSwitch(enCamera_LockOn)			//かつ敵の検索に成功した
+				) {
 
 				//ロックオン状態に。
 				m_cameraManager->SetCameraType(enCamera_LockOn);

@@ -87,6 +87,9 @@
     <Filter Include="ソース ファイル\enemy\boss">
       <UniqueIdentifier>{fb22078b-063c-45be-95da-3035ceb243d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\camera">
+      <UniqueIdentifier>{14657a7c-0515-48de-8f34-2abe7faf372d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -249,9 +252,6 @@
       <Filter>MiniEngine\Animation</Filter>
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MainCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="..\..\MiniEngine\RenderTarget.cpp">
@@ -428,14 +428,17 @@
     <ClCompile Include="GameHUD.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="LockOnCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="camera\CameraBase.cpp">
+      <Filter>ソース ファイル\camera</Filter>
     </ClCompile>
-    <ClCompile Include="CameraManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="camera\CameraManager.cpp">
+      <Filter>ソース ファイル\camera</Filter>
     </ClCompile>
-    <ClCompile Include="CameraBase.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="camera\LockOnCamera.cpp">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="camera\MainCamera.cpp">
+      <Filter>ソース ファイル\camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -623,9 +626,6 @@
       <Filter>MiniEngine\Animation</Filter>
     </ClInclude>
     <ClInclude Include="BackGround.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MainCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\..\MiniEngine\RenderTarget.h">
@@ -841,14 +841,17 @@
     <ClInclude Include="player\constPlayer.h">
       <Filter>ソース ファイル\player</Filter>
     </ClInclude>
-    <ClInclude Include="LockOnCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="camera\CameraBase.h">
+      <Filter>ソース ファイル\camera</Filter>
     </ClInclude>
-    <ClInclude Include="CameraManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="camera\CameraManager.h">
+      <Filter>ソース ファイル\camera</Filter>
     </ClInclude>
-    <ClInclude Include="CameraBase.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="camera\LockOnCamera.h">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="camera\MainCamera.h">
+      <Filter>ソース ファイル\camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

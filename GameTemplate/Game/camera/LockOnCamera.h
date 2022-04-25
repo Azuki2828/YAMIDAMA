@@ -1,6 +1,6 @@
 #pragma once
 #include "../../MiniEngine/SpringCamera.h"
-#include "enemy/Enemy.h"
+#include "../enemy/Enemy.h"
 #include "CameraBase.h"
 
 namespace nsMyGame {
@@ -23,15 +23,29 @@ namespace nsMyGame {
 		/**
 		 * @brief 敵をロックオンする関数。
 		*/
-		void LockOnEnemy();
+		const bool LockOnEnemy();
 
-		
+		/**
+		 * @brief カメラが切り替わった。
+		*/
+		void Switched()override final {
+
+		}
+
+		/**
+		 * @brief カメラの切り替えが可能か？
+		 * @return 敵を感知できた？
+		*/
+		const bool CanSwitch()override final {
+
+			return LockOnEnemy();
+		}
 	public:
 		/**
 		 * @brief ロックオン中の敵の座標を取得する関数。
 		 * @return ロックオン中の敵の座標
 		*/
-		const CVector3& GetLockOnEnemyPosition()const override final {
+		const CVector3& GetLockOnEnemyPosition()const {
 
 			return m_lockOnEnemy->GetPosition();
 		}
