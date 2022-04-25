@@ -82,7 +82,7 @@ namespace nsMyGame {
 		InitBGMAndSE();
 
 		//ワイヤーフレーム表示をONにする。
-		//PhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
+		//CPhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
 
 		////////////////////////////////////////////////
 		// 初期化を行うコードを書くのはここまで

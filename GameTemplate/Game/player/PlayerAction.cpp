@@ -12,9 +12,9 @@ namespace nsMyGame {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
-				20.0f,			//半径。
-				100.0f,			//高さ。
-				position		//座標。
+				20.0f,			//半径
+				100.0f,			//高さ
+				position		//座標
 			);
 
 			m_swordBone = swordBone;
@@ -232,6 +232,7 @@ namespace nsMyGame {
 					rotation.AddRotationY(rotSpeed);
 				}
 				else {
+
 					//反時計回り。
 					rotation.AddRotationY(-rotSpeed);
 				}

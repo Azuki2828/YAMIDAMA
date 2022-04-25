@@ -8,6 +8,10 @@
 #include "enemy/goteWinEnemy/GoteWinEnemy.h"
 #include "enemy/boss/Boss.h"
 
+namespace {
+
+	constexpr const char* c_stageName = "Assets/level/stage_1.tkl";
+}
 
 namespace nsMyGame {
 
@@ -206,7 +210,7 @@ namespace nsMyGame {
 		CSoundManager::GetInstance()->Play(enSE_Torch);
 
 		//ステージをロード。
-		m_level.Init("Assets/level/stage_1.tkl", [&](LevelObjectData& objData) {
+		m_level.Init(c_stageName, [&](LevelObjectData& objData) {
 
 			if (objData.EqualObjectName("door")) {
 
