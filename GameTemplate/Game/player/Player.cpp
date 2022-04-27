@@ -51,7 +51,7 @@ namespace nsMyGame {
 			m_modelRender->Init();
 
 			//剣に取り付けられたボーンの番号を読み込む。
-			int swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHand");
+			int swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHandRing4");
 
 			//剣のボーンを取得。
 			Bone* swordBone = m_modelRender->GetSkeleton()->GetBone(swordBoneNum);

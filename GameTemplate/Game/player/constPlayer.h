@@ -4,8 +4,8 @@ namespace nsMyGame {
 
 	namespace nsPlayer {
 
-		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/human.tkm";		//プレイヤーのtkmファイルパス
-		constexpr const char* c_filePathTksPlayer = "Assets/modelData/human.tks";		//プレイヤーのtksファイルパス
+		constexpr const char* c_filePathTkmPlayer = "Assets/modelData/player2.tkm";		//プレイヤーのtkmファイルパス
+		constexpr const char* c_filePathTksPlayer = "Assets/modelData/player2.tks";		//プレイヤーのtksファイルパス
 		constexpr const float c_animationInterpolateTime = 0.6f;						//アニメーションの補間時間
 		constexpr float c_rollingCoolTime = 1.2f;										//ローリング中のクールタイム
 		constexpr float c_attackCoolTime = 0.8f;										//通常攻撃中のクールタイム
@@ -14,7 +14,7 @@ namespace nsMyGame {
 		constexpr float c_rotSpeed = 8.0f;												//回転処理に用いる度合
 
 		constexpr const int c_playerMaxHP = 100;										//プレイヤーの最大HP
-		const CVector3 c_attackTriggerBoxSize = { 15.0f, 110.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
+		const CVector3 c_attackTriggerBoxSize = { 110.0f, 15.0f, 15.0f };				//プレイヤー攻撃時のトリガーボックスのサイズ
 		constexpr float c_attackTriggerBoxMul = 80.0f;									//プレイヤー攻撃時のトリガーボックスの前方向への乗算値
 		constexpr float c_attackTriggerBoxAddYPos = 50.0f;								//プレイヤー攻撃時のトリガーボックスのY方向への加算値
 
