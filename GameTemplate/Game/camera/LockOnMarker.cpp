@@ -5,7 +5,7 @@ namespace {
 
 	constexpr const char* c_lockOnMarkerFilePath = "Assets/Image/lockOnMarker_white.dds";		//アイコンのファイルパス
 	const CVector2 c_lockOnMarkerWH = { 200.0f,180.0f };										//アイコンの幅と高さ
-	constexpr short c_markerSpeedMul = 20;														//アイコン速度
+	constexpr short c_markerSpeedMul = 15;														//アイコン速度
 	constexpr float c_scaleDiff = 0.2f;															//拡大率の差の比較の定数
 }
 
@@ -14,9 +14,9 @@ namespace nsMyGame {
 	//目標となる拡大率の定義
 	const float CLockOnMarker::m_stepScale[] = {
 
-		0.60f,
+		0.50f,
 		0.20f,
-		0.35f
+		0.30f
 	};
 
 	void CLockOnMarker::Init() {

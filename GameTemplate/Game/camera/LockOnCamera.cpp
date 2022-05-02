@@ -5,13 +5,14 @@ namespace nsMyGame {
 
 	namespace {
 
-		constexpr float c_addCameraPosition = -300.0f;
-		constexpr float c_addCameraTarget = 50.0f;
-		constexpr float c_addCameraPositionY = 250.0f;
-		constexpr float c_searchPlayerAngle = 60.0f;
-		constexpr float c_searchDistance = 500.0f;
-		constexpr float c_enemyLockOnAddY = 100.0f;
-		
+		constexpr float c_cameraFar = 80000.0f;			//カメラの遠平面
+		constexpr float c_addCameraPosition = -300.0f;		//カメラの視点を決める値
+		constexpr float c_addCameraPositionY = 250.0f;		//カメラの視点（高さ）を決める値
+		constexpr float c_addCameraTarget = 50.0f;			//カメラの注視点を決める値
+		constexpr float c_searchPlayerAngle = 60.0f;		//プレイヤーの視野角
+		constexpr float c_searchDistance = 500.0f;			//索敵距離
+		constexpr float c_enemyLockOnAddY = 100.0f;			//ロックオンアイコンの場所を決める加算座標
+		constexpr float c_inputBorder = 0.8f;				//右スティックの入力判定が起こる値
 	}
 
 	bool CLockOnCamera::StartSub() {
@@ -25,7 +26,7 @@ namespace nsMyGame {
 		);
 
 		//遠平面を設定。
-		m_springCamera.SetFar(80000.0f);
+		m_springCamera.SetFar(c_cameraFar);
 
 		return true;
 	}
@@ -64,6 +65,9 @@ namespace nsMyGame {
 		//ばねカメラを更新。
 		m_springCamera.Update();
 
+		//ロックオン対象を更新。
+		ChangeLockOnEnemy();
+
 		//ロックオン中の敵の座標を取得。
 		CVector3 enemyPosition = m_lockOnEnemy->GetPosition();
 
@@ -78,7 +82,7 @@ namespace nsMyGame {
 		m_lockOnMarker.UpdateMarker(screenPosEnemy);
 	}
 
-	const bool CLockOnCamera::LockOnEnemy() {
+	const bool CLockOnCamera::LockOnEnemy(R3ButtonInput r3Input) {
 
 		//ロックオンできた？
 		bool canLockOn = false;
@@ -122,14 +126,50 @@ namespace nsMyGame {
 					|| angle < 0.0f					//もしくは初めての検索。
 					)
 				{
-					//視野角（ラジアン）を更新。
-					angle = fabsf(carentAngle);
+					switch(r3Input){
+					
+					//右スティックの入力が無ければ一番近い敵をロックオンするように
+					case No_Input:
 
-					//ロックオン対象をこの敵に変更。
-					m_lockOnEnemy = enemy;
+						//視野角（ラジアン）を更新。
+						angle = fabsf(carentAngle);
 
-					//ロックオンできた。
-					canLockOn = true;
+						//ロックオン対象をこの敵に変更。
+						m_lockOnEnemy = enemy;
+
+						//ロックオンできた。
+						canLockOn = true;
+						break;
+					//右入力状態なら右側の敵をロックオン対象に切り替える。
+					case Input_Right:
+						angle = Cross(toEnemyVec, playerForward).y;
+						if (m_lockOnEnemy != enemy && Cross(toEnemyVec, playerForward).y < 0.0f) {
+
+							//視野角（ラジアン）を更新。
+							angle = fabsf(carentAngle);
+
+							//ロックオン対象をこの敵に変更。
+							m_lockOnEnemy = enemy;
+
+							//ロックオンできた。
+							canLockOn = true;
+						}
+						break;
+						//右入力状態なら左側の敵をロックオン対象に切り替える。
+					case Input_Left:
+						if (m_lockOnEnemy != enemy && Cross(toEnemyVec, playerForward).y > 0.0f) {
+
+							//視野角（ラジアン）を更新。
+							angle = fabsf(carentAngle);
+
+							//ロックオン対象をこの敵に変更。
+							m_lockOnEnemy = enemy;
+
+							//ロックオンできた。
+							canLockOn = true;
+						}
+						break;
+					}
 				}
 			}
 
@@ -137,5 +177,48 @@ namespace nsMyGame {
 		});
 
 		return canLockOn;
+	}
+
+	void CLockOnCamera::ChangeLockOnEnemy() {
+
+		//右スティックが入力されている？
+		if (CheckR3Input()) {
+
+			//ロックオン対象を更新。
+			LockOnEnemy(m_r3Input);
+			m_isR3XInput = true;
+		}
+	}
+
+	const bool CLockOnCamera::CheckR3Input() {
+
+		//現フレームの入力を調べる変数。
+		bool isR3XInput = false;
+
+		//入力を調べる。
+		float x = g_pad[0]->GetRStickXF();
+
+		//右スティックが左右に倒されているか
+		if (x > c_inputBorder) {
+
+			//現フレームで右入力があった。
+			isR3XInput = true;
+			m_r3Input = Input_Right;
+		}
+		else if (x < -c_inputBorder) {
+
+			//現フレームで左入力があった。
+			isR3XInput = true;
+			m_r3Input = Input_Left;
+		}
+		else {
+			//入力がなかったので、前フレームの入力情報を消去。
+			m_isR3XInput = false;
+			m_r3Input = No_Input;
+		}
+
+		//前フレームで入力されていなくて、
+		//現フレームで入力がある
+		return !m_isR3XInput && isR3XInput;
 	}
 }
