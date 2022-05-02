@@ -2,6 +2,7 @@
 #include "../../MiniEngine/SpringCamera.h"
 #include "../enemy/Enemy.h"
 #include "CameraBase.h"
+#include "LockOnMarker.h"
 
 namespace nsMyGame {
 
@@ -20,6 +21,12 @@ namespace nsMyGame {
 		*/
 		void UpdateSub()override;
 
+		void Release()override final {
+
+			//ロックオンアイコンを削除。
+			m_lockOnMarker.Release();
+		}
+
 		/**
 		 * @brief 敵をロックオンする関数。
 		*/
@@ -30,6 +37,8 @@ namespace nsMyGame {
 		*/
 		void Switched()override final {
 
+			//ロックオンアイコンを初期化。
+			m_lockOnMarker.Init();
 		}
 
 		/**
@@ -54,6 +63,8 @@ namespace nsMyGame {
 		CVector3 m_position = CVector3::Zero;		//視点
 		CVector3 m_target = CVector3::Zero;			//注視点
 		nsEnemy::CEnemy* m_lockOnEnemy = nullptr;	//ロックオン対象の敵
+		CLockOnMarker m_lockOnMarker;				//ロックオンアイコン
+		CVector3 LockOnIconPosition;
 	};
 }
 

@@ -411,9 +411,11 @@
     <ClCompile Include="AppearSprite.cpp" />
     <ClCompile Include="AttackCollision.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="BackGroundObject.cpp" />
     <ClCompile Include="camera\CameraBase.cpp" />
     <ClCompile Include="camera\CameraManager.cpp" />
     <ClCompile Include="camera\LockOnCamera.cpp" />
+    <ClCompile Include="camera\LockOnMarker.cpp" />
     <ClCompile Include="camera\MainCamera.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="enemy\boss\Boss.cpp" />
@@ -555,9 +557,11 @@
     <ClInclude Include="AppearSprite.h" />
     <ClInclude Include="AttackCollision.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BackGroundObject.h" />
     <ClInclude Include="camera\CameraBase.h" />
     <ClInclude Include="camera\CameraManager.h" />
     <ClInclude Include="camera\LockOnCamera.h" />
+    <ClInclude Include="camera\LockOnMarker.h" />
     <ClInclude Include="camera\MainCamera.h" />
     <ClInclude Include="constItem.h" />
     <ClInclude Include="ConstValue.h" />

@@ -46,6 +46,11 @@ namespace nsMyGame {
 		virtual void Switched() = 0;
 
 		/**
+		 * @brief 各カメラの解放関数。
+		*/
+		virtual void Release(){}
+
+		/**
 		 * @brief カメラの切り替えが可能か？
 		 * @return 成功した？
 		*/

@@ -3,9 +3,10 @@
 #include "Level.h"
 #include "Material.h"
 
+#include "../../GameTemplate/Game/BackGroundObject.h"
+
 
 namespace nsMyGame {
-
 
 	struct LevelObjectData;
 
@@ -19,70 +20,54 @@ namespace nsMyGame {
 
 		if (p == nullptr) {
 
-			m_modelRender = NewGO<CModelRender>(0);
-			//m_skinModelRender->SetFileNametks("Assets/modelData/Player_N.tks");
-			//m_skinModelRender->Init(true, false);
-
-
+			//ファイルパスを決定。
 			char filePathtkm[256];
 			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
-			m_modelRender->SetFilePathTkm(static_cast<const char*>(filePathtkm));
 
-			m_modelRender->SetShadowReceiverFlag(true);
-			m_modelRender->Init();
-
-
-			m_modelRender->SetPosition(objData.position);
-			m_modelRender->SetRotation(objData.rotation);
-			m_modelRender->SetScale(objData.scale);
-			m_modelRender->UpdateWorldMatrix();
-
-			m_physicsStaticObject.CreateFromModel(
-				*m_modelRender->GetModel(),
-				m_modelRender->GetModel()->GetWorldMatrix()
+			//モデルを初期化。
+			CBackGroundObject* model = NewGO<CBackGroundObject>(enPriority_Zeroth);
+			model->InitModel(
+				static_cast<const char*>(filePathtkm),
+				objData.position,
+				objData.rotation,
+				objData.scale,
+				true
 			);
-			m_physicsStaticObject.SetFriction(10.0f);
+
 		}
 		else {
 
-			m_modelRender = NewGO<CModelRender>(0);
-
+			//ファイルパスを決定。
 			char filePathtkm[256];
-			strcpy(objName, (p+4));
+			strcpy(objName, (p + 4));
 			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
-			m_modelRender->SetFilePathTkm(static_cast<const char*>(filePathtkm));
 
-			m_modelRender->SetShadowCasterFlag(true);
-			m_modelRender->SetShadowReceiverFlag(true);
-			m_modelRender->Init();
+			//モデルを初期化。
+			CBackGroundObject* model = NewGO<CBackGroundObject>(enPriority_Zeroth);
+			model->InitModel(
+				static_cast<const char*>(filePathtkm),
+				objData.position,
+				objData.rotation,
+				objData.scale,
+				false
+			);
 
-
-			m_modelRender->SetPosition(objData.position);
-			m_modelRender->SetRotation(objData.rotation);
-			m_modelRender->SetScale(objData.scale);
-			m_modelRender->UpdateWorldMatrix();
-
-
+			//ファイルパスを決定。
 			char filePathtkm2[256];
 			sprintf(filePathtkm2, "Assets/modelData/backGround/Coll%s.tkm", p);
-			m_collisionModelRender = NewGO<CModelRender>(0);
-			m_collisionModelRender->SetFilePathTkm(static_cast<const char*>(filePathtkm2));
 
-			m_collisionModelRender->Init();
+			//モデルを初期化。
+			CBackGroundObject* collModel = NewGO<CBackGroundObject>(enPriority_Zeroth);
 
+			collModel->IgnoreObj();
 
-			m_collisionModelRender->SetPosition(objData.position);
-			m_collisionModelRender->SetRotation(objData.rotation);
-			m_collisionModelRender->SetScale(objData.scale);
-			m_collisionModelRender->UpdateWorldMatrix();
-
-			m_collisionModelRender->SetCollisionModelFlag(true);
-
-			m_physicsStaticObject.CreateFromModel(
-				*m_collisionModelRender->GetModel(),
-				m_collisionModelRender->GetModel()->GetWorldMatrix()
+			collModel->InitModel(
+				static_cast<const char*>(filePathtkm2),
+				objData.position,
+				objData.rotation,
+				objData.scale,
+				true
 			);
-			m_physicsStaticObject.SetFriction(10.0f);
 		}
 	}
 

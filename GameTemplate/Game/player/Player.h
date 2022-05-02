@@ -151,7 +151,7 @@ namespace nsMyGame {
 			void ReceiveDamage(const CVector3& effectPos) {
 
 				//”í’eB
-				m_status.hp -= 30;
+				m_status.hp -= 15;
 
 				//€‚ñ‚¾‚È‚ç
 				if (m_status.hp <= 0) {

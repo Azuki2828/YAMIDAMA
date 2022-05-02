@@ -69,6 +69,9 @@ namespace nsMyGame {
 		*/
 		void SetCameraType(EnCameraType cameraType) {
 
+			//先にすべてのカメラを解放。
+			for (const auto& camera : m_camera) { camera->Release(); }
+
 			//カメラタイプを設定。
 			m_cameraType = cameraType;
 

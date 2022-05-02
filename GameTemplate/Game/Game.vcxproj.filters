@@ -440,6 +440,12 @@
     <ClCompile Include="camera\MainCamera.cpp">
       <Filter>ソース ファイル\camera</Filter>
     </ClCompile>
+    <ClCompile Include="BackGroundObject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="camera\LockOnMarker.cpp">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -851,6 +857,12 @@
       <Filter>ソース ファイル\camera</Filter>
     </ClInclude>
     <ClInclude Include="camera\MainCamera.h">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="camera\LockOnMarker.h">
       <Filter>ソース ファイル\camera</Filter>
     </ClInclude>
   </ItemGroup>

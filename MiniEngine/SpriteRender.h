@@ -39,6 +39,8 @@ namespace nsMyGame {
 		*/
 		void SetPosition(const CVector3& pos) { m_pos = pos; }
 
+		void SetPosition(const CVector2& pos) { m_pos = { pos.x, pos.y, 0.0f }; }
+
 		/**
 		 * @brief 回転を設定する関数。
 		 * @param rot 回転

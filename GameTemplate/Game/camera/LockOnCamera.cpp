@@ -10,6 +10,8 @@ namespace nsMyGame {
 		constexpr float c_addCameraPositionY = 250.0f;
 		constexpr float c_searchPlayerAngle = 60.0f;
 		constexpr float c_searchDistance = 500.0f;
+		constexpr float c_enemyLockOnAddY = 100.0f;
+		
 	}
 
 	bool CLockOnCamera::StartSub() {
@@ -61,6 +63,19 @@ namespace nsMyGame {
 
 		//ばねカメラを更新。
 		m_springCamera.Update();
+
+		//ロックオン中の敵の座標を取得。
+		CVector3 enemyPosition = m_lockOnEnemy->GetPosition();
+
+		//ロックオン座標を調整。
+		enemyPosition.y += c_enemyLockOnAddY;
+
+		//スクリーン空間上での敵の座標を計算する。
+		CVector2 screenPosEnemy = CVector2::Zero;
+		m_springCamera.GetCamera()->CalcScreenPositionFromWorldPosition(screenPosEnemy, enemyPosition);
+
+		//ロックオンアイコンを更新。
+		m_lockOnMarker.UpdateMarker(screenPosEnemy);
 	}
 
 	const bool CLockOnCamera::LockOnEnemy() {
