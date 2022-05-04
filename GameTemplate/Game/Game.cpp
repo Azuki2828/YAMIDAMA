@@ -56,8 +56,8 @@ namespace nsMyGame {
 		DeleteGO(m_youDiedSprite);
 		DeleteGO(m_gameClearSprite);
 		DeleteGO(m_backGround);
-		DeleteGO(m_cameraManager);
 		DeleteGO(m_gameHUD);
+		DeleteGO(m_cameraManager);
 	}
 
 	void CGameMain::Update() {

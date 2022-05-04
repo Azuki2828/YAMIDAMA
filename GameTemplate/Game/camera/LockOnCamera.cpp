@@ -68,6 +68,12 @@ namespace nsMyGame {
 		//ロックオン対象を更新。
 		ChangeLockOnEnemy();
 
+		//もしロックオン対象の敵が死んだらカメラを無効化する。
+		if (m_lockOnEnemy->IsDeath()) {
+
+			m_isEnable = false;
+		}
+
 		//ロックオン中の敵の座標を取得。
 		CVector3 enemyPosition = m_lockOnEnemy->GetPosition();
 
@@ -113,8 +119,10 @@ namespace nsMyGame {
 			//プレイヤーの視野角に入っているか求める。
 			float carentAngle = acosf(toEnemyVec.Dot(playerForward));
 
-			//一定の距離の範囲にいる。
-			if (toEnemyVec.Length() < c_searchDistance) {
+			//一定の距離の範囲にいて、かつ死んでいない。
+			if (toEnemyVec.Length() < c_searchDistance
+				&& !enemy->IsDeath()
+				) {
 
 				//プレイヤーから敵に向かって伸びるベクトルを正規化。
 				toEnemyVec.Normalize();

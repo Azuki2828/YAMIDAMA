@@ -28,7 +28,7 @@ namespace nsMyGame {
 		*/
 		void UpdateSub()override;
 
-		void Release()override final {
+		void SubRelease()override final {
 
 			//ロックオンアイコンを削除。
 			m_lockOnMarker.Release();
@@ -42,7 +42,7 @@ namespace nsMyGame {
 		/**
 		 * @brief カメラが切り替わった。
 		*/
-		void Switched()override final {
+		void SubSwitched()override final {
 
 			//ロックオンアイコンを初期化。
 			m_lockOnMarker.Init();

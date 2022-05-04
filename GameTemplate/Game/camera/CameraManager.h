@@ -23,10 +23,26 @@ namespace nsMyGame {
 		bool Start()override final;
 
 		/**
+		 * @brief 削除関数。
+		*/
+		void OnDestroy()override final {
+
+			//カメラを解放。
+			Release();
+		}
+
+		/**
 		 * @brief 更新関数。
 		*/
 		void Update()override final {
 
+			//現在のカメラが無効になったらメインカメラに戻す。
+			if (!m_camera[m_cameraType]->IsEnable()) {
+
+				SetCameraType(enCamera_Main);
+			}
+
+			//カメラを更新。
 			m_camera[m_cameraType]->Update();
 		}
 
@@ -35,6 +51,18 @@ namespace nsMyGame {
 		*/
 		void CreateCamera();
 	public:
+
+		/**
+		 * @brief 解放関数。
+		*/
+		void Release() {
+
+			//各カメラの解放を行う。
+			for (const auto& camera : m_camera) {
+
+				camera->Release();
+			}
+		}
 
 		/**
 		 * @brief カメラの視点の座標を取得する関数。

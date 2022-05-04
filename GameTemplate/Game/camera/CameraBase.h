@@ -41,14 +41,47 @@ namespace nsMyGame {
 		}
 
 		/**
+		 * @brief カメラが有効か調べる関数。
+		 * @return カメラが有効？
+		*/
+		const bool IsEnable()const {
+
+			return m_isEnable;
+		}
+
+		/**
 		 * @brief カメラを切り替えたときに呼び出される関数。
 		*/
-		virtual void Switched() = 0;
+		void Switched() {
+
+			//カメラを有効化。
+			m_isEnable = true;
+
+			//サブクラスでのカメラ切り替わった時の処理を呼び出す。
+			SubSwitched();
+		}
+
+		/**
+		 * @brief サブクラスでのカメラ切り替わった時用の関数。
+		*/
+		virtual void SubSwitched(){}
+
+		/**
+		 * @brief 解放関数。
+		*/
+		void Release() {
+
+			//カメラを無効化。
+			m_isEnable = false;
+
+			//サブクラスの解放。
+			SubRelease();
+		}
 
 		/**
 		 * @brief 各カメラの解放関数。
 		*/
-		virtual void Release(){}
+		virtual void SubRelease(){}
 
 		/**
 		 * @brief カメラの切り替えが可能か？
@@ -72,6 +105,7 @@ namespace nsMyGame {
 	protected:
 		CVector3 m_position;		//視点
 		CVector3 m_target;			//注視点
+		bool m_isEnable = false;	//有効かどうか
 	};
 }
 

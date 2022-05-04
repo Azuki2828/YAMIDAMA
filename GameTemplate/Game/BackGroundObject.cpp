@@ -54,4 +54,13 @@ namespace nsMyGame {
 			m_physicsStaticObject.SetFriction(c_objFriction);
 		}
 	}
+
+	void CBackGroundObject::OnDestroy() {
+
+		//ƒ‚ƒfƒ‹‚ğíœB
+		if (m_modelRender != nullptr) {
+			DeleteGO(m_modelRender);
+			m_modelRender = nullptr;
+		}
+	}
 }

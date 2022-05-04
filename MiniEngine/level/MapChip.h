@@ -8,6 +8,7 @@ namespace nsMyGame {
 	struct LevelObjectData;
 
 	class Material;
+	class CBackGroundObject;
 
 	class MapChip
 	{
@@ -33,8 +34,8 @@ namespace nsMyGame {
 		std::vector< SMesh* > m_meshs;							//メッシュ。
 		std::vector< DescriptorHeap > m_descriptorHeap;		//ディスクリプタヒープ。
 
-		CModelRender* m_modelRender = nullptr;
-		CModelRender* m_collisionModelRender = nullptr;
+		CBackGroundObject* m_modelRender = nullptr;
+		CBackGroundObject* m_collisionModelRender = nullptr;
 		PhysicsStaticObject m_physicsStaticObject;
 	};
 }

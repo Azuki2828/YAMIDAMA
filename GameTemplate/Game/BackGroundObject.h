@@ -6,14 +6,9 @@ namespace nsMyGame {
 	{
 	private:
 		/**
-		 * @brief 開始時に呼ばれる関数。
-		 * @return 成功した？
+		 * @brief 削除関数。
 		*/
-		//bool Start()override final;
-		/**
-		 * @brief 更新関数。
-		*/
-		//void Update()override final;
+		void OnDestroy()override final;
 	public:
 		/**
 		 * @brief 初期化関数。

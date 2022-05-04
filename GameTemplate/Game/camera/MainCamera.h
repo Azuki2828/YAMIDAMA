@@ -30,7 +30,7 @@ namespace nsMyGame {
 		*/
 		void UpdateSub()override final;
 
-		void Switched()override final {
+		void SubSwitched()override final {
 
 		}
 	public:

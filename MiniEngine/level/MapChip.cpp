@@ -25,8 +25,8 @@ namespace nsMyGame {
 			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
 
 			//モデルを初期化。
-			CBackGroundObject* model = NewGO<CBackGroundObject>(enPriority_Zeroth);
-			model->InitModel(
+			m_modelRender = NewGO<CBackGroundObject>(enPriority_Zeroth);
+			m_modelRender->InitModel(
 				static_cast<const char*>(filePathtkm),
 				objData.position,
 				objData.rotation,
@@ -43,8 +43,8 @@ namespace nsMyGame {
 			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
 
 			//モデルを初期化。
-			CBackGroundObject* model = NewGO<CBackGroundObject>(enPriority_Zeroth);
-			model->InitModel(
+			m_modelRender = NewGO<CBackGroundObject>(enPriority_Zeroth);
+			m_modelRender->InitModel(
 				static_cast<const char*>(filePathtkm),
 				objData.position,
 				objData.rotation,
@@ -57,11 +57,11 @@ namespace nsMyGame {
 			sprintf(filePathtkm2, "Assets/modelData/backGround/Coll%s.tkm", p);
 
 			//モデルを初期化。
-			CBackGroundObject* collModel = NewGO<CBackGroundObject>(enPriority_Zeroth);
+			m_collisionModelRender = NewGO<CBackGroundObject>(enPriority_Zeroth);
 
-			collModel->IgnoreObj();
+			m_collisionModelRender->IgnoreObj();
 
-			collModel->InitModel(
+			m_collisionModelRender->InitModel(
 				static_cast<const char*>(filePathtkm2),
 				objData.position,
 				objData.rotation,
@@ -74,9 +74,11 @@ namespace nsMyGame {
 	MapChip::~MapChip() {
 		if (m_modelRender != nullptr) {
 			DeleteGO(m_modelRender);
+			m_modelRender = nullptr;
 		}
 		if (m_collisionModelRender != nullptr) {
 			DeleteGO(m_collisionModelRender);
+			m_collisionModelRender = nullptr;
 		}
 	}
 

@@ -78,6 +78,14 @@ namespace nsMyGame {
 
 		//松明SEを停止。
 		CSoundManager::GetInstance()->Release(enSE_Torch);
+
+		//松明エフェクトを削除。
+		for (int i = 0; i < m_fireEffectNum; i++) {
+
+			DeleteGO(m_fireEffect[i]);
+			m_fireEffect[i] = nullptr;
+		}
+		m_fireEffect.clear();
 	}
 
 	void CBackGround::Update() {
