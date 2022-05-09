@@ -5,12 +5,12 @@ namespace nsMyGame {
 
 	namespace {
 
-		constexpr float c_cameraFar = 80000.0f;			//カメラの遠平面
+		constexpr float c_cameraFar = 80000.0f;				//カメラの遠平面
 		constexpr float c_addCameraPosition = -300.0f;		//カメラの視点を決める値
 		constexpr float c_addCameraPositionY = 250.0f;		//カメラの視点（高さ）を決める値
 		constexpr float c_addCameraTarget = 50.0f;			//カメラの注視点を決める値
 		constexpr float c_searchPlayerAngle = 60.0f;		//プレイヤーの視野角
-		constexpr float c_searchDistance = 500.0f;			//索敵距離
+		constexpr float c_searchDistance = 800.0f;			//索敵距離
 		constexpr float c_enemyLockOnAddY = 100.0f;			//ロックオンアイコンの場所を決める加算座標
 		constexpr float c_inputBorder = 0.8f;				//右スティックの入力判定が起こる値
 	}
