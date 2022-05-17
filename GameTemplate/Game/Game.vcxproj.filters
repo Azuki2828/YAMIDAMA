@@ -865,6 +865,9 @@
     <ClInclude Include="camera\LockOnMarker.h">
       <Filter>ソース ファイル\camera</Filter>
     </ClInclude>
+    <ClInclude Include="camera\constCamera.h">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

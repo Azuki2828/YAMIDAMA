@@ -27,6 +27,7 @@ def Update() :
     #クールタイムが0秒になったら待機状態に。
     if(GetCoolTime() == 0.0):
         ChangeState(0)
+        SetCoolTime(1.2)
 
     #アニメーションを更新。
     AnimationUpdate()

@@ -51,7 +51,7 @@ namespace nsMyGame {
 			cameraRight.Normalize();
 
 			//クールタイム中でなく、ガード中、ガード成功時でなかったら
-			if (!IsCoolTime() && !IsGuard() && !IsGuardSccessCoolTime()) {
+			if (!IsCoolTime() && !IsGuardSccessCoolTime()) {
 				//このフレームの移動量を求める。
 				//左スティックの入力量を受け取る。
 				float lStick_x = g_pad[0]->GetLStickXF();
@@ -62,14 +62,14 @@ namespace nsMyGame {
 				m_moveSpeed += cameraRight * lStick_x * 200.0f;		//右方向への移動速度を加算。
 
 				//カメラタイプを取得。
-				auto cameraManager = FindGO<CCameraManager>(c_classNameCameraManager);
+				auto cameraManager = FindGO<nsCamera::CCameraManager>(c_classNameCameraManager);
 				auto cameraState = cameraManager->GetCameraType();
 
 				//移動していたら移動アニメーションを再生。
 				if (lStick_x != 0.0f || lStick_y != 0.0f) {
 
 					//ロックオン状態なら横移動アニメーションに。
-					if (cameraState == enCamera_LockOn) {
+					if (cameraState == nsCamera::enCamera_LockOn) {
 
 						if (lStick_x > 0.0f) {
 							playerState = enState_RightWalk;
@@ -160,10 +160,10 @@ namespace nsMyGame {
 			CVector3 rotSource = CVector3::Zero;
 
 			//カメラ情報を取得。
-			auto cameraManager = FindGO<CCameraManager>(c_classNameCameraManager);
+			auto cameraManager = FindGO<nsCamera::CCameraManager>(c_classNameCameraManager);
 
 			//ロックオン中なら
-			if (cameraManager->GetCameraType() == enCamera_LockOn) {
+			if (cameraManager->GetCameraType() == nsCamera::enCamera_LockOn) {
 
 				//プレイヤーを検索。
 				auto player = FindGO<CPlayer>(c_classNamePlayer);

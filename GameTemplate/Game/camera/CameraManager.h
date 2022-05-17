@@ -4,132 +4,135 @@
 
 namespace nsMyGame {
 
-	//カメラの種類
-	enum EnCameraType {
-		enCamera_Main,			//通常カメラ
-		enCamera_LockOn,		//ロックオンカメラ
+	namespace nsCamera {
 
-		enCamera_Num			//カメラの数
-	};
+		//カメラの種類
+		enum EnCameraType {
+			enCamera_Main,			//通常カメラ
+			enCamera_LockOn,		//ロックオンカメラ
 
-	//カメラ管理クラス
-	class CCameraManager : public CIGameObject
-	{
-	private:
-		/**
-		 * @brief 初期化関数。
-		 * @return 成功した？
-		*/
-		bool Start()override final;
+			enCamera_Num			//カメラの数
+		};
 
-		/**
-		 * @brief 削除関数。
-		*/
-		void OnDestroy()override final {
+		//カメラ管理クラス
+		class CCameraManager : public CIGameObject
+		{
+		private:
+			/**
+			 * @brief 初期化関数。
+			 * @return 成功した？
+			*/
+			bool Start()override final;
 
-			//カメラを解放。
-			Release();
-		}
+			/**
+			 * @brief 削除関数。
+			*/
+			void OnDestroy()override final {
 
-		/**
-		 * @brief 更新関数。
-		*/
-		void Update()override final {
-
-			//現在のカメラが無効になったらメインカメラに戻す。
-			if (!m_camera[m_cameraType]->IsEnable()) {
-
-				SetCameraType(enCamera_Main);
+				//カメラを解放。
+				Release();
 			}
 
-			//カメラを更新。
-			m_camera[m_cameraType]->Update();
-		}
+			/**
+			 * @brief 更新関数。
+			*/
+			void Update()override final {
 
-		/**
-		 * @brief カメラを生成する関数。
-		*/
-		void CreateCamera();
-	public:
+				//現在のカメラが無効になったらメインカメラに戻す。
+				if (!m_camera[m_cameraType]->IsEnable()) {
 
-		/**
-		 * @brief 解放関数。
-		*/
-		void Release() {
+					SetCameraType(enCamera_Main);
+				}
 
-			//各カメラの解放を行う。
-			for (const auto& camera : m_camera) {
-
-				camera->Release();
+				//カメラを更新。
+				m_camera[m_cameraType]->Update();
 			}
-		}
 
-		/**
-		 * @brief カメラの視点の座標を取得する関数。
-		 * @return カメラの視点の座標
-		*/
-		const CVector3& GetPosition()const {
+			/**
+			 * @brief カメラを生成する関数。
+			*/
+			void CreateCamera();
+		public:
 
-			return m_camera[m_cameraType]->GetPosition();
-		}
+			/**
+			 * @brief 解放関数。
+			*/
+			void Release() {
 
-		/**
-		 * @brief カメラの注視点の座標を取得する関数。
-		 * @return カメラの注視点の座標
-		*/
-		const CVector3& GetTarget()const {
+				//各カメラの解放を行う。
+				for (const auto& camera : m_camera) {
 
-			return m_camera[m_cameraType]->GetTarget();
-		}
+					camera->Release();
+				}
+			}
 
-		/**
-		 * @brief 切り替え可能か？
-		 * @return 成功した？
-		*/
-		const bool CanSwitch(EnCameraType cameraType) {
+			/**
+			 * @brief カメラの視点の座標を取得する関数。
+			 * @return カメラの視点の座標
+			*/
+			const CVector3& GetPosition()const {
 
-			return m_camera[cameraType]->CanSwitch();
-		}
+				return m_camera[m_cameraType]->GetPosition();
+			}
 
-		/**
-		 * @brief カメラの種類を設定する関数。
-		 * @param cameraType カメラの種類
-		*/
-		void SetCameraType(EnCameraType cameraType) {
+			/**
+			 * @brief カメラの注視点の座標を取得する関数。
+			 * @return カメラの注視点の座標
+			*/
+			const CVector3& GetTarget()const {
 
-			//先にすべてのカメラを解放。
-			for (const auto& camera : m_camera) { camera->Release(); }
+				return m_camera[m_cameraType]->GetTarget();
+			}
 
-			//カメラタイプを設定。
-			m_cameraType = cameraType;
+			/**
+			 * @brief 切り替え可能か？
+			 * @return 成功した？
+			*/
+			const bool CanSwitch(EnCameraType cameraType) {
 
-			//カメラが切り替わったことを知らせる。
-			m_camera[m_cameraType]->Switched();
-		}
+				return m_camera[cameraType]->CanSwitch();
+			}
 
-		/**
-		 * @brief カメラの種類を主六する関数。
-		 * @return カメラの種類
-		*/
-		const EnCameraType GetCameraType()const {
+			/**
+			 * @brief カメラの種類を設定する関数。
+			 * @param cameraType カメラの種類
+			*/
+			void SetCameraType(EnCameraType cameraType) {
 
-			return m_cameraType;
-		}
+				//先にすべてのカメラを解放。
+				for (const auto& camera : m_camera) { camera->Release(); }
 
-		/**
-		 * @brief ロックオン中の敵の座標を取得する関数。
-		 * @return ロックオン中の敵の座標
-		*/
-		const CVector3& GetLockOnEnemyPosition() {
+				//カメラタイプを設定。
+				m_cameraType = cameraType;
 
-			return m_lockOnCamera.GetLockOnEnemyPosition();
-		}
-	private:
-		EnCameraType m_cameraType = enCamera_Main;				//カメラの種類
-		CCameraBase* m_camera[enCamera_Num] = { nullptr };		//カメラのポインタ配列
+				//カメラが切り替わったことを知らせる。
+				m_camera[m_cameraType]->Switched();
+			}
 
-		CMainCamera m_mainCamera;								//メインカメラ
-		CLockOnCamera m_lockOnCamera;							//ロックオンカメラ
-	};
+			/**
+			 * @brief カメラの種類を主六する関数。
+			 * @return カメラの種類
+			*/
+			const EnCameraType GetCameraType()const {
+
+				return m_cameraType;
+			}
+
+			/**
+			 * @brief ロックオン中の敵の座標を取得する関数。
+			 * @return ロックオン中の敵の座標
+			*/
+			const CVector3& GetLockOnEnemyPosition() {
+
+				return m_lockOnCamera.GetLockOnEnemyPosition();
+			}
+		private:
+			EnCameraType m_cameraType = enCamera_Main;				//カメラの種類
+			CCameraBase* m_camera[enCamera_Num] = { nullptr };		//カメラのポインタ配列
+
+			CMainCamera m_mainCamera;								//メインカメラ
+			CLockOnCamera m_lockOnCamera;							//ロックオンカメラ
+		};
+	}
 }
 

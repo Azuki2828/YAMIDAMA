@@ -190,6 +190,13 @@
 			m_isRefresh = true;
 		}
 		/// <summary>
+		/// リフレッシュを意図的にしないようにするときに使用してください。
+		/// </summary>
+		void NonRefresh() {
+
+			m_isRefresh = false;
+		}
+		/// <summary>
 		/// バネカメラの更新処理。
 		/// Update関数で呼ばれています。
 		/// バネカメラの更新処理だけ個別で呼びたいなどの特殊なケースで使用してください。

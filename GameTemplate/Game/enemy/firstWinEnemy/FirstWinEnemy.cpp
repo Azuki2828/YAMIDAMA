@@ -127,7 +127,7 @@ namespace nsMyGame {
 			//アニメーションクリップを設定。
 			m_animationClip[enAnim_Walk].Load("Assets/animData/run.tka");
 			m_animationClip[enAnim_Walk].SetLoopFlag(true);
-			m_animationClip[enAnim_Idle].Load("Assets/animData/idle.tka");
+			m_animationClip[enAnim_Idle].Load("Assets/animData/enemyIdle.tka");
 			m_animationClip[enAnim_Idle].SetLoopFlag(true);
 			m_animationClip[enAnim_ThreeCombo].Load("Assets/animData/threeCombo.tka");
 			m_animationClip[enAnim_ThreeCombo].SetLoopFlag(false);
@@ -146,7 +146,7 @@ namespace nsMyGame {
 			//各ステートに対応したアニメーションを再生する。
 			switch (m_state) {
 			case enState_Idle:
-				m_modelRender->PlayAnimation(enAnim_Idle, 0.4f);
+				m_modelRender->PlayAnimation(enAnim_Idle, 0.8f);
 				break;
 			case enState_Walk:
 				m_modelRender->PlayAnimation(enAnim_Walk, 0.4f);

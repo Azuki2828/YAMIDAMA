@@ -231,7 +231,11 @@ public:
 	}
 public:
 		
+	void CopyBone(Skeleton& skeleton)
+	{
 
+	}
+	
 	/// <summary>
 	/// çXêVÅB
 	/// </summary>

@@ -3,24 +3,27 @@
 
 namespace nsMyGame {
 
-	bool CCameraManager::Start() {
+	namespace nsCamera {
 
-		//カメラを生成。
-		CreateCamera();
+		bool CCameraManager::Start() {
 
-		return true;
-	}
+			//カメラを生成。
+			CreateCamera();
 
-	void CCameraManager::CreateCamera() {
+			return true;
+		}
 
-		//必要なカメラをポインタに格納。
-		m_camera[enCamera_Main] = &m_mainCamera;
-		m_camera[enCamera_LockOn] = &m_lockOnCamera;
+		void CCameraManager::CreateCamera() {
 
-		//それぞれのカメラのStart()関数を呼び出す。
-		for (const auto& camera : m_camera) {
+			//必要なカメラをポインタに格納。
+			m_camera[enCamera_Main] = &m_mainCamera;
+			m_camera[enCamera_LockOn] = &m_lockOnCamera;
 
-			camera->Start();
+			//それぞれのカメラのStart()関数を呼び出す。
+			for (const auto& camera : m_camera) {
+
+				camera->Start();
+			}
 		}
 	}
 }

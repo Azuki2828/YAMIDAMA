@@ -560,6 +560,7 @@
     <ClInclude Include="BackGroundObject.h" />
     <ClInclude Include="camera\CameraBase.h" />
     <ClInclude Include="camera\CameraManager.h" />
+    <ClInclude Include="camera\constCamera.h" />
     <ClInclude Include="camera\LockOnCamera.h" />
     <ClInclude Include="camera\LockOnMarker.h" />
     <ClInclude Include="camera\MainCamera.h" />

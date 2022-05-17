@@ -38,6 +38,9 @@
     </Compile>
     <Compile Include="EnemyAttackBreak.py" />
     <Compile Include="EnemyBack.py" />
+    <Compile Include="EnemyCoolTime.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="EnemyDamage.py">
       <SubType>Code</SubType>
     </Compile>

@@ -1,5 +1,6 @@
 from Game import ChangeState
 from Game import GetLengthToPlayer
+from Game import GetCoolTime
 from Game import Move
 from Game import Rotate
 from Game import AnimationUpdate
@@ -26,7 +27,7 @@ def Update() :
     lengthToPlayer = GetLengthToPlayer()
 
     #プレイヤーとの距離が500以下ならプレイヤーに近づく。
-    if(playerIsDeath == False and lengthToPlayer <= 500.0):
+    if(playerIsDeath == False and lengthToPlayer <= 500.0 and GetCoolTime() == 0.0):
         ChangeState(1)
 
     #アニメーションを更新。

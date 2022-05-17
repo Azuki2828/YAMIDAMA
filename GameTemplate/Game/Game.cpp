@@ -19,7 +19,7 @@ namespace nsMyGame {
 		m_backGround = NewGO<CBackGround>(enPriority_Zeroth, c_classNameBackGround);
 
 		//メインカメラを生成。
-		m_cameraManager = NewGO<CCameraManager>(enPriority_Zeroth, c_classNameCameraManager);
+		m_cameraManager = NewGO<nsCamera::CCameraManager>(enPriority_Zeroth, c_classNameCameraManager);
 
 		//HUDを作成。
 		m_gameHUD = NewGO<CGameHUD>(enPriority_Zeroth, c_classNameGameHUD);
@@ -92,17 +92,17 @@ namespace nsMyGame {
 		else if (g_pad[0]->IsTrigger(enButtonRB3)) {
 
 			//ロックオン状態じゃないなら
-			if (m_cameraManager->GetCameraType() != enCamera_LockOn
-				&& m_cameraManager->CanSwitch(enCamera_LockOn)			//かつ敵の検索に成功した
+			if (m_cameraManager->GetCameraType() != nsCamera::enCamera_LockOn
+				&& m_cameraManager->CanSwitch(nsCamera::enCamera_LockOn)			//かつ敵の検索に成功した
 				) {
 
 				//ロックオン状態に。
-				m_cameraManager->SetCameraType(enCamera_LockOn);
+				m_cameraManager->SetCameraType(nsCamera::enCamera_LockOn);
 			}
 			//ロックオン状態なら
 			else {
 				//通常カメラに。
-				m_cameraManager->SetCameraType(enCamera_Main);
+				m_cameraManager->SetCameraType(nsCamera::enCamera_Main);
 			}
 		}
 
