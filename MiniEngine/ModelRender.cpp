@@ -174,7 +174,12 @@ namespace nsMyGame {
 	void CModelRender::Update() {
 
 		//スケルトンを更新。
-		m_skeleton.Update(m_model.GetWorldMatrix());
+		if (!m_hasUniqueAnimation) {
+			m_skeleton.Update(m_model.GetWorldMatrix());
+		}
+		else {
+			m_skeleton.UpdateHasVerUniqueAnimation(m_model.GetWorldMatrix());
+		}
 
 		//アニメーションを進める。
 		if (m_animFlg) {

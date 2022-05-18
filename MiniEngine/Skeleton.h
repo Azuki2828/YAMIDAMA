@@ -214,6 +214,15 @@ public:
 	{
 		return m_bones[boneNo].get();
 	}
+
+	/// <summary>
+	/// 指定のボーン行列を取得。
+	/// </summary>
+	/// <returns></returns>
+	CMatrix* GetBoneMatrix(const int boneNo)const
+	{
+		return &m_boneMatrixs[boneNo];
+	}
 	/// <summary>
 	/// ボーン行列の先頭アドレスを取得。
 	/// </summary>
@@ -230,10 +239,18 @@ public:
 		m_isPlayAnimation = true;
 	}
 public:
-		
-	void CopyBone(Skeleton& skeleton)
+	
+	/**
+	 * @brief ボーン行列をコピーする関数。
+	 * @param skeletonBase コピー元となるボーン
+	*/
+	void CopyBoneMatrix(Skeleton& skeletonBase)
 	{
+		//ボーンの数だけfor分で回してコピーする。
+		for (int boneNum = 0; boneNum < m_bones.size(); boneNum++) {
 
+			m_boneMatrixs[boneNum] = skeletonBase.m_boneMatrixs[boneNum];
+		}
 	}
 	
 	/// <summary>
@@ -241,6 +258,12 @@ public:
 	/// </summary>
 	/// <param name="mWorld"></param>
 	void Update(const CMatrix& mWorld);
+
+	/// <summary>
+	/// 更新。固有のアニメーションを持っている（アニメーションブレンドをする）場合はボーン行列の更新をしない。
+	/// </summary>
+	/// <param name="mWorld"></param>
+	void UpdateHasVerUniqueAnimation(const CMatrix& mWorld);
 	
 	/// <summary>
 	/// ボーンのワールド行列の更新関数。

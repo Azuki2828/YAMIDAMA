@@ -154,3 +154,29 @@ void Skeleton::Update(const CMatrix& mWorld)
 		boneNo++;
 	}	
 }
+
+void Skeleton::UpdateHasVerUniqueAnimation(const CMatrix& mWorld){
+
+	if (m_isPlayAnimation) {
+		//ボーン行列をルートボーンの空間からワールド空間を構築していく。
+		for (auto& bone : m_bones) {
+			CMatrix mBoneWorld;
+			CMatrix localMatrix = bone->GetLocalMatrix();
+			//親の行列とローカル行列を乗算して、ワールド行列を計算する。
+			mBoneWorld = localMatrix * mWorld;
+			bone->SetWorldMatrix(mBoneWorld);
+		}
+	}
+	else {
+		//アニメーションが流し込まれていると、ボーン行列がルートボーン空間に
+		//変換されているが、流されていないと親の骨の座標系のままなので、
+		//ルートボーン空間→ワールド空間への変換を行う。
+		for (auto& bone : m_bones) {
+			if (bone->GetParentBoneNo() != -1) {
+				continue;
+			}
+			//ルート。
+			UpdateBoneWorldMatrix(*bone, mWorld);
+		}
+	}
+}

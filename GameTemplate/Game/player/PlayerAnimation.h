@@ -24,6 +24,15 @@ namespace nsMyGame {
 
 		};
 
+		//アニメーションブレンドに使用するアニメーションのリスト
+		enum EnAnimationBlendNum {
+
+			enAnimation_Base,
+			enAnimation_Blend1,
+
+			enAnimation_BlendNum
+		};
+
 		//プレイヤーのアニメーションを扱うクラス
 		class CPlayerAnimation
 		{
@@ -31,7 +40,7 @@ namespace nsMyGame {
 			/**
 			 * @brief 初期化関数。
 			*/
-			void Init();
+			void Init(CModelRender& modelRender);
 
 			/**
 			 * @brief 更新関数。
@@ -58,6 +67,9 @@ namespace nsMyGame {
 
 		private:
 			CAnimationClip m_animationClip[enAnim_Num];		//アニメーションクリップ
+			Animation m_animation[enAnimation_BlendNum];	//アニメーション
+			Skeleton m_skeleton[enAnimation_BlendNum];		//スケルトン
+			float m_animationSpeed = 1.0f;				//アニメーションの再生速度
 		};
 	}
 }

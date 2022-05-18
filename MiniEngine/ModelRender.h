@@ -66,6 +66,15 @@ namespace nsMyGame {
 		}
 
 		/**
+		 * @brief tksファイルのパスを取得する関数。
+		 * @return tksファイルのファイルパス
+		*/
+		const char* GetFilePathTks()const {
+
+			return m_filePathTks;
+		}
+
+		/**
 		 * @brief fxファイルパスを設定する関数。
 		 * @param filePathFx ファイル名(.fx)
 		*/
@@ -261,6 +270,24 @@ namespace nsMyGame {
 
 			return m_isCollisionModel;
 		}
+
+		/**
+		 * @brief ボーンをコピーする関数。
+		 * @param skeleton コピー元となるスケルトン
+		*/
+		void CopyBone(Skeleton& skeleton) {
+
+			m_skeleton.CopyBoneMatrix(skeleton);
+		}
+
+		/**
+		 * @brief 固有のアニメーションを持たせる。
+		*/
+		void GiveUniqueAnimation() {
+
+			m_hasUniqueAnimation = true;
+		}
+
 	private:
 		/**
 		 * @brief シャドウモデルを作成する関数。
@@ -289,6 +316,8 @@ namespace nsMyGame {
 		SModelData m_modelData;						//コンスタントバッファに転送するデータ
 		ModelInitData m_modelInitData;				//モデルデータ
 		Skeleton m_skeleton;						//スケルトン
+
+		bool m_hasUniqueAnimation = false;			//固有のアニメーションを保持している？
 
 		bool m_animFlg = false;						//アニメーション再生フラグ
 		int m_animNum = 0;							//アニメーション数

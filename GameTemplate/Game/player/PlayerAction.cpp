@@ -8,7 +8,7 @@ namespace nsMyGame {
 
 	namespace nsPlayer {
 
-		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, Bone* swordBone) {
+		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, CMatrix* swordBoneMatrix) {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
@@ -17,16 +17,13 @@ namespace nsMyGame {
 				position		//座標
 			);
 
-			m_swordBone = swordBone;
-
-			//剣のボーンのワールド行列を取得。
-			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
+			m_swordBoneMatrix = swordBoneMatrix;
 
 			//当たり判定のインスタンスを初期化。
 			m_attackCollision.Create(m_position, m_rotation);
 
 			//当たり判定の座標と回転を更新。
-			m_attackCollision.UpdatePositionAndRotation(swordBaseMatrix);
+			m_attackCollision.UpdatePositionAndRotation(*m_swordBoneMatrix);
 
 			//当たり判定をしないように設定。
 			m_attackCollision.Deactivate();
@@ -279,26 +276,6 @@ namespace nsMyGame {
 			}
 		}
 
-		void CPlayerAction::CreateAttackCollision() {
-
-			auto player = FindGO<CPlayer>(c_classNamePlayer);
-			
-			//剣のボーンのワールド行列を取得する。
-			CMatrix swordBaseMatrix = player->GetModelRender()->GetSkeleton()->GetBone(66)->GetWorldMatrix();
-
-			//コリジョンオブジェクトを作成する。
-			auto collisionObject = NewGO<CAttackCollision>(enPriority_Zeroth, c_classNamePlayerAttackCollision);
-
-			//有効時間を設定。
-			collisionObject->SetActiveTime(0.2f);
-
-			//ボックス状のコリジョンを作成する。
-			collisionObject->CreateBox(player->GetPosition(), CQuaternion::Identity, c_attackTriggerBoxSize);
-
-			//剣のボーンのワールド行列をコリジョンに適用させる。
-			collisionObject->SetWorldMatrix(swordBaseMatrix);
-		}
-
 		void CPlayerAction::OnAnimationEvent(const wchar_t* clipName, const wchar_t* eventName)
 		{
 			//キーの名前が「attack」の時。
@@ -339,11 +316,8 @@ namespace nsMyGame {
 
 		void CPlayerAction::Update() {
 
-			//剣のボーンのワールド行列を取得。
-			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
-
 			//当たり判定の座標と回転を更新。
-			m_attackCollision.UpdatePositionAndRotation(swordBaseMatrix);
+			m_attackCollision.UpdatePositionAndRotation(*m_swordBoneMatrix);
 
 			//当たり判定を更新。
 			m_attackCollision.Update();

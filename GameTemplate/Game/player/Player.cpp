@@ -36,7 +36,7 @@ namespace nsMyGame {
 			});
 
 			//アニメーションクラスを初期化。
-			m_playerAnimation.Init();
+			m_playerAnimation.Init(*m_modelRender);
 
 			//アニメーションを初期化。
 			m_modelRender->InitAnimation(m_playerAnimation.GetAnimationClip(), m_playerAnimation.GetAnimationNum());
@@ -56,8 +56,10 @@ namespace nsMyGame {
 			//剣のボーンを取得。
 			Bone* swordBone = m_modelRender->GetSkeleton()->GetBone(swordBoneNum);
 
+			CMatrix* swordBoneWorldMatrix = m_modelRender->GetSkeleton()->GetBoneMatrix(swordBoneNum);
+
 			//行動クラスを初期化。
-			m_playerAction.Init(m_position, m_rotation, m_forward, swordBone);
+			m_playerAction.Init(m_position, m_rotation, m_forward, swordBoneWorldMatrix);
 			return true;
 		}
 
