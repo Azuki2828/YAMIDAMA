@@ -7,9 +7,6 @@ namespace nsMyGame {
 
 		void CPlayerAnimation::Init(CModelRender& modelRender) {
 
-			//モデルからスケルトンのファイルパスを取得し、スケルトンを構築。
-			m_skeleton[enAnimation_Base].Init(modelRender.GetFilePathTks());
-
 			//アニメーションクリップを設定。
 			m_animationClip[enAnim_Walk].Load("Assets/animData/walk.tka");
 			m_animationClip[enAnim_Walk].SetLoopFlag(true);
@@ -35,21 +32,25 @@ namespace nsMyGame {
 			m_animationClip[enAnim_LeftWalk].SetLoopFlag(true);
 			m_animationClip[enAnim_RightWalk].Load("Assets/animData/rightWalk.tka");
 			m_animationClip[enAnim_RightWalk].SetLoopFlag(true);
+#if boneDebug
+
+			//モデルからスケルトンのファイルパスを取得し、スケルトンを構築。
+			m_skeleton[enAnimation_Base].Init(modelRender.GetFilePathTks());
 
 			//ベースとなるアニメーションを初期化。
 			m_animation[enAnimation_Base].Init(m_skeleton[enAnimation_Base], m_animationClip, enAnim_Num);
 
+			//固有のアニメーションを持っている。
+			modelRender.GiveUniqueAnimation();
+#else
 			//このモデルはアニメーションを再生する。
 			modelRender.SetAnimFlg(true);
-
-			modelRender.GiveUniqueAnimation();
+#endif
 		}
 
 		void CPlayerAnimation::Update(CModelRender& modelRender, const EnPlayerState& playerState) {
 
-
-			//スケルトンを更新。
-			m_skeleton[enAnimation_Base].Update(modelRender.GetModel()->GetWorldMatrix());
+#if boneDebug
 
 			//プレイヤーステートに応じてアニメーションを再生。
 
@@ -95,8 +96,51 @@ namespace nsMyGame {
 			//アニメーションを進める。
 			m_animation[enAnimation_Base].Progress(m_animationSpeed / 30.0f);
 
+			//スケルトンを更新。
+			m_skeleton[enAnimation_Base].Update(modelRender.GetModel()->GetWorldMatrix());
+
 			//スケルトンをモデルレンダーのスケルトンにコピー。
 			modelRender.CopyBone(m_skeleton[enAnimation_Base]);
+#else
+			switch (playerState) {
+			case enState_Idle:
+				modelRender.PlayAnimation(enAnim_Idle, 0.8f);
+				break;
+			case enState_Walk:
+				modelRender.PlayAnimation(enAnim_Walk, 0.8f);
+				break;
+			case enState_LeftWalk:
+				modelRender.PlayAnimation(enAnim_LeftWalk, 0.8f);
+				break;
+			case enState_RightWalk:
+				modelRender.PlayAnimation(enAnim_RightWalk, 0.8f);
+				break;
+			case enState_Run:
+				modelRender.PlayAnimation(enAnim_Run, 0.8f);
+				break;
+			case enState_Attack:
+				modelRender.PlayAnimation(enAnim_Attack, 0.8f);
+				break;
+			case enState_AttackBreak:
+				modelRender.PlayAnimation(enAnim_AttackBreak, 0.8f);
+				break;
+			case enState_Damage:
+				modelRender.PlayAnimation(enAnim_Damage, 0.4f);
+				break;
+			case enState_Rolling:
+				modelRender.PlayAnimation(enAnim_Rolling, 0.8f);
+				break;
+			case enState_Guard:
+				modelRender.PlayAnimation(enAnim_Guard, 0.4f);
+				break;
+			case enState_GuardSuccess:
+				modelRender.PlayAnimation(enAnim_GuardSuccess, 0.1f);
+				break;
+			case enState_Death:
+				modelRender.PlayAnimation(enAnim_Death, 0.8f);
+				break;
+		}
+#endif
 		}
 	}
 }

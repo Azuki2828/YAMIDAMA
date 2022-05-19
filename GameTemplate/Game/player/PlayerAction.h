@@ -14,8 +14,7 @@ namespace nsMyGame {
 			 * @brief 初期化関数。
 			 * @param position プレイヤーの座標。
 			*/
-			void Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, CMatrix* swordBoneMatrix);
-
+			void Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, Bone* swordBone);
 			/**
 			 * @brief 移動処理を行う関数。
 			 * @param position 座標
@@ -114,6 +113,15 @@ namespace nsMyGame {
 				return m_isDash;
 			}
 
+			/**
+			 * @brief 移動中？
+			 * @return 移動中かどうか
+			*/
+			const bool IsMove()const {
+
+				return m_isMove;
+			}
+
 			const bool GetHitAttackFlag()const {
 
 				return m_hitAttack;
@@ -128,9 +136,11 @@ namespace nsMyGame {
 			bool m_hitAttack = false;							//攻撃が当たった？
 			bool m_isDash = false;								//ダッシュ中？
 			bool m_isGuard = false;								//ガード中？
+			bool m_isMove = false;								//移動中？
 			float m_coolTime = 0.0f;							//クールタイム
 			float m_guardSccessCoolTime = 0.0f;					//ガード成功時のクールタイム
 			CMatrix* m_swordBoneMatrix = nullptr;				//剣に取り付けられたボーンのボーン行列
+			Bone* m_swordBone = nullptr;
 			CVector3 m_position = CVector3::Zero;				//座標
 			CQuaternion m_rotation = CQuaternion::Identity;		//回転
 			CVector3 m_moveSpeed = CVector3::Zero;				//移動速度

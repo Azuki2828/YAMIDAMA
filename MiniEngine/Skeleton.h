@@ -252,6 +252,15 @@ public:
 			m_boneMatrixs[boneNum] = skeletonBase.m_boneMatrixs[boneNum];
 		}
 	}
+
+	void SetBoneLocalMatrix(Skeleton& skeletonBase)
+	{
+		//ボーンの数だけfor分で回してコピーする。
+		for (int boneNum = 0; boneNum < m_bones.size(); boneNum++) {
+
+			m_bones[boneNum].get()->SetLocalMatrix(skeletonBase.GetBone(boneNum)->GetLocalMatrix());
+		}
+	}
 	
 	/// <summary>
 	/// 更新。

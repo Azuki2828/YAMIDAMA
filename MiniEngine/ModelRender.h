@@ -278,6 +278,7 @@ namespace nsMyGame {
 		void CopyBone(Skeleton& skeleton) {
 
 			m_skeleton.CopyBoneMatrix(skeleton);
+			m_skeleton.SetBoneLocalMatrix(skeleton);
 		}
 
 		/**

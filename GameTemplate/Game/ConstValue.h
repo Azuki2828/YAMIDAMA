@@ -1,6 +1,8 @@
 #pragma once
 #include "stdafx.h"
 
+#define boneDebug (1)
+
 namespace nsMyGame {
 
 	//—Dæ“xBenPriority_Zeroth‚ªÅ‚àæ‚É•`‰æ‚³‚ê‚éB

@@ -178,6 +178,7 @@ namespace nsMyGame {
 			m_skeleton.Update(m_model.GetWorldMatrix());
 		}
 		else {
+			m_skeleton.SetMarkPlayAnimation();
 			m_skeleton.UpdateHasVerUniqueAnimation(m_model.GetWorldMatrix());
 		}
 

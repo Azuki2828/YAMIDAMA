@@ -35,10 +35,7 @@ namespace nsMyGame {
 				m_playerAction.OnAnimationEvent(clipName, eventName);
 			});
 
-			//アニメーションクラスを初期化。
-			m_playerAnimation.Init(*m_modelRender);
-
-			//アニメーションを初期化。
+			//アニメーションに対応させる。
 			m_modelRender->InitAnimation(m_playerAnimation.GetAnimationClip(), m_playerAnimation.GetAnimationNum());
 
 			//影を落とす。
@@ -50,16 +47,18 @@ namespace nsMyGame {
 			//初期化。
 			m_modelRender->Init();
 
+			//アニメーションクラスを初期化。
+			m_playerAnimation.Init(*m_modelRender);
+
 			//剣に取り付けられたボーンの番号を読み込む。
 			int swordBoneNum = m_modelRender->GetSkeleton()->FindBoneID(L"mixamorig5:LeftHandRing4");
 
 			//剣のボーンを取得。
 			Bone* swordBone = m_modelRender->GetSkeleton()->GetBone(swordBoneNum);
 
-			CMatrix* swordBoneWorldMatrix = m_modelRender->GetSkeleton()->GetBoneMatrix(swordBoneNum);
-
 			//行動クラスを初期化。
-			m_playerAction.Init(m_position, m_rotation, m_forward, swordBoneWorldMatrix);
+			m_playerAction.Init(m_position, m_rotation, m_forward, swordBone);
+
 			return true;
 		}
 

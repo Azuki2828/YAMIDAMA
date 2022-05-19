@@ -7,8 +7,7 @@
 namespace nsMyGame {
 
 	namespace nsPlayer {
-
-		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, CMatrix* swordBoneMatrix) {
+		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, Bone* swordBone) {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
@@ -16,14 +15,14 @@ namespace nsMyGame {
 				100.0f,			//高さ
 				position		//座標
 			);
-
-			m_swordBoneMatrix = swordBoneMatrix;
+			m_swordBone = swordBone;
+			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
 
 			//当たり判定のインスタンスを初期化。
 			m_attackCollision.Create(m_position, m_rotation);
 
 			//当たり判定の座標と回転を更新。
-			m_attackCollision.UpdatePositionAndRotation(*m_swordBoneMatrix);
+			m_attackCollision.UpdatePositionAndRotation(swordBaseMatrix);
 
 			//当たり判定をしないように設定。
 			m_attackCollision.Deactivate();
@@ -65,6 +64,9 @@ namespace nsMyGame {
 				//移動していたら移動アニメーションを再生。
 				if (lStick_x != 0.0f || lStick_y != 0.0f) {
 
+					//入力によって移動している。
+					m_isMove = true;
+
 					//ロックオン状態なら横移動アニメーションに。
 					if (cameraState == nsCamera::enCamera_LockOn) {
 
@@ -96,6 +98,7 @@ namespace nsMyGame {
 				else {
 					//待機状態にする。
 					playerState = enState_Idle;
+					m_isMove = false;
 				}
 			}
 
@@ -316,8 +319,11 @@ namespace nsMyGame {
 
 		void CPlayerAction::Update() {
 
+			//剣のボーンのワールド行列を取得。
+			CMatrix swordBaseMatrix = m_swordBone->GetWorldMatrix();
+
 			//当たり判定の座標と回転を更新。
-			m_attackCollision.UpdatePositionAndRotation(*m_swordBoneMatrix);
+			m_attackCollision.UpdatePositionAndRotation(swordBaseMatrix);
 
 			//当たり判定を更新。
 			m_attackCollision.Update();
