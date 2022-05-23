@@ -27,7 +27,7 @@ namespace nsMyGame {
 			 * @brief 回転処理を行う関数。
 			 * @param rotation 回転
 			*/
-			void Rotate(CQuaternion& rotation, const CVector3& forward);
+			void Rotate(CQuaternion& rotation, const CVector3& forward, const EnPlayerState& playerState);
 
 			/**
 			 * @brief アクションを行う関数。
@@ -80,6 +80,15 @@ namespace nsMyGame {
 			}
 
 			/**
+			 * @brief 移動中？
+			 * @return 移動中かどうか
+			*/
+			const bool IsMove()const {
+
+				return m_isMove;
+			}
+
+			/**
 			 * @brief アニメーションイベント用の関数。
 			 * @param clipName アニメーションの名前
 			 * @param eventName アニメーションイベントのキーの名前
@@ -111,15 +120,6 @@ namespace nsMyGame {
 			const bool IsDash()const {
 
 				return m_isDash;
-			}
-
-			/**
-			 * @brief 移動中？
-			 * @return 移動中かどうか
-			*/
-			const bool IsMove()const {
-
-				return m_isMove;
 			}
 
 			const bool GetHitAttackFlag()const {

@@ -69,34 +69,78 @@ namespace nsMyGame {
 
 		void CPlayer::Update() {
 
-			//更新処理。
-			switch (m_playerState) {
+			//死んでいる状態かどうか判定。
+			if (IsDeath()) { m_playerState = enState_Death; }
 
-			case enState_Death:				//死んでいる状態
+			//死んでいないなら
+			if (!IsDeath()) {
 
-				IsDeathStateProcess();
-				break;
-			case enState_Rolling:			//ローリング中
+				//移動処理。
+				m_playerAction.Move(m_position, m_forward, m_playerState);
 
-				IsRollingStateProcess();
-				break;
-			case enState_Damage:			//被弾中
+				//回転処理。
+				m_playerAction.Rotate(m_rotation, m_forward, m_playerState);
 
-				IsDamagedStateProcess();
-				break;
-			case enState_Guard:				//ガード中
+				//前方向を更新。
+				UpdateForward();
 
-				IsGuardStateProcess();
-				break;
-			case enState_Attack:			//攻撃中
+				//アクション処理。
+				m_playerAction.Action(m_playerState, m_isSelect);
 
-				IsAttackStateProcess();
-				break;
-			default:						//通常処理
+				//入力によって動いているなら
+				if (m_playerAction.IsMove()) {
 
-				CommonStateProcess();
-				break;
+					//入力によって動いていることをアニメーション担当に伝える。
+					m_playerAnimation.Move();
+				}
 			}
+
+			//アニメーション処理。
+			m_playerAnimation.Update(*m_modelRender, m_playerState);
+
+			//クールタイムを更新。
+			m_playerAction.Update();
+
+			//座標を設定。
+			m_modelRender->SetPosition(m_position);
+
+			//回転を設定。
+			m_modelRender->SetRotation(m_rotation);
+
+			//ライトカメラを更新。
+			LightCameraUpdate();
+
+			//選択状態を解除。
+			m_isSelect = false;
+
+			////更新処理。
+			//switch (m_playerState) {
+
+			//case enState_Death:				//死んでいる状態
+
+			//	IsDeathStateProcess();
+			//	break;
+			//case enState_Rolling:			//ローリング中
+
+			//	IsRollingStateProcess();
+			//	break;
+			//case enState_Damage:			//被弾中
+
+			//	IsDamagedStateProcess();
+			//	break;
+			//case enState_Guard:				//ガード中
+
+			//	IsGuardStateProcess();
+			//	break;
+			//case enState_Attack:			//攻撃中
+
+			//	IsAttackStateProcess();
+			//	break;
+			//default:						//通常処理
+
+			//	CommonStateProcess();
+			//	break;
+			//}
 		}
 
 		void CPlayer::JudgeDamage(const CVector3& effectPos) {

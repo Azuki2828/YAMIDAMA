@@ -179,86 +179,184 @@ public:
 
 	/// <summary>
 	/// 初期化済みか判定。
-	/// </summary>
-	/// <returns></returns>
-	bool IsInited() const
-	{
-		return m_isInited;
-	}
-	/// <summary>
-	/// ボーン行列の構築。
-	/// 読み込みが完了した後で呼び出してください。
-	/// </summary>
-	void BuildBoneMatrices();
-	/// <summary>
-	/// ボーンの名前からボーン番号を検索。
-	/// </summary>
-	/// <param name="boneName">ボーンの名前</param>
-	/// <returns>ボーン番号。見つからなかった場合は-1が返ってきます。</returns>
-	int FindBoneID(const wchar_t* boneName) const
-	{
-		for (int i = 0; i < (int)m_bones.size(); i++) {
-			if (wcscmp(m_bones[i]->GetName(), boneName) == 0) {
-				return i;
-			}
+/// </summary>
+/// <returns></returns>
+bool IsInited() const
+{
+	return m_isInited;
+}
+/// <summary>
+/// ボーン行列の構築。
+/// 読み込みが完了した後で呼び出してください。
+/// </summary>
+void BuildBoneMatrices();
+/// <summary>
+/// ボーンの名前からボーン番号を検索。
+/// </summary>
+/// <param name="boneName">ボーンの名前</param>
+/// <returns>ボーン番号。見つからなかった場合は-1が返ってきます。</returns>
+int FindBoneID(const wchar_t* boneName) const
+{
+	for (int i = 0; i < (int)m_bones.size(); i++) {
+		if (wcscmp(m_bones[i]->GetName(), boneName) == 0) {
+			return i;
 		}
-		//見つからなかった。
-		return -1;
 	}
-	/// <summary>
-	/// ボーン番号からボーンを取得。
-	/// </summary>
-	/// <param name="boneNo">ボーン番号</param>
-	/// <returns>ボーン</returns>
-	Bone* GetBone(int boneNo) const
-	{
-		return m_bones[boneNo].get();
-	}
+	//見つからなかった。
+	return -1;
+}
+/// <summary>
+/// ボーン番号からボーンを取得。
+/// </summary>
+/// <param name="boneNo">ボーン番号</param>
+/// <returns>ボーン</returns>
+Bone* GetBone(int boneNo) const
+{
+	return m_bones[boneNo].get();
+}
 
-	/// <summary>
-	/// 指定のボーン行列を取得。
-	/// </summary>
-	/// <returns></returns>
-	CMatrix* GetBoneMatrix(const int boneNo)const
-	{
-		return &m_boneMatrixs[boneNo];
-	}
-	/// <summary>
-	/// ボーン行列の先頭アドレスを取得。
-	/// </summary>
-	/// <returns></returns>
-	CMatrix* GetBoneMatricesTopAddress() const
-	{
-		return m_boneMatrixs.get();
-	}
-	/// <summary>
-	/// アニメーションが再生されているマークを付ける。
-	/// </summary>
-	void SetMarkPlayAnimation()
-	{
-		m_isPlayAnimation = true;
-	}
+/// <summary>
+/// 指定のボーン行列を取得。
+/// </summary>
+/// <returns></returns>
+CMatrix* GetBoneMatrix(const int boneNo)const
+{
+	return &m_boneMatrixs[boneNo];
+}
+/// <summary>
+/// ボーン行列の先頭アドレスを取得。
+/// </summary>
+/// <returns></returns>
+CMatrix* GetBoneMatricesTopAddress() const
+{
+	return m_boneMatrixs.get();
+}
+/// <summary>
+/// アニメーションが再生されているマークを付ける。
+/// </summary>
+void SetMarkPlayAnimation()
+{
+	m_isPlayAnimation = true;
+}
 public:
-	
+
 	/**
 	 * @brief ボーン行列をコピーする関数。
 	 * @param skeletonBase コピー元となるボーン
 	*/
-	void CopyBoneMatrix(Skeleton& skeletonBase)
+	void CopyBoneMatrix(
+		Skeleton& upperBody,
+		Skeleton& lowerBody,
+		const char* upperBodyBoneNameArray[],
+		const char* lowerBodyBoneNameArray[],
+		int upperBodyBoneNameArraySize,
+		int lowerBodyBoneNameArraySize
+	)
 	{
 		//ボーンの数だけfor分で回してコピーする。
 		for (int boneNum = 0; boneNum < m_bones.size(); boneNum++) {
 
-			m_boneMatrixs[boneNum] = skeletonBase.m_boneMatrixs[boneNum];
+			//ボーンの名前を取得する。
+			const wchar_t* carentBoneName = m_bones[boneNum].get()->GetName();
+
+			//ボーンの名前をconst wchat_tからcharに変換。
+			char carentBoneNameChar[c_nameSize];
+			wcstombs(carentBoneNameChar, carentBoneName, c_nameSize);
+
+			//ボーンが見つかった？
+			bool findBone = false;
+
+			//文字列の数だけ繰り返す。
+			for (int arrayNum = 0; arrayNum < upperBodyBoneNameArraySize; arrayNum++) {
+
+				//文字列を比較。
+				if (
+					strcmp(
+						static_cast<const char*>(carentBoneNameChar),
+						upperBodyBoneNameArray[arrayNum]
+					) == 0) {
+					m_boneMatrixs[boneNum] = upperBody.m_boneMatrixs[boneNum];
+					m_bones[boneNum].get()->SetLocalMatrix(upperBody.GetBone(boneNum)->GetLocalMatrix());
+					findBone = true;
+				}
+			}
+
+			for (int arrayNum = 0; arrayNum < lowerBodyBoneNameArraySize; arrayNum++) {
+
+				//文字列を比較。
+				if (
+					strcmp(
+						static_cast<const char*>(carentBoneNameChar),
+						lowerBodyBoneNameArray[arrayNum]
+					) == 0) {
+					m_boneMatrixs[boneNum] = lowerBody.m_boneMatrixs[boneNum];
+					m_bones[boneNum].get()->SetLocalMatrix(lowerBody.GetBone(boneNum)->GetLocalMatrix());
+					findBone = true;
+				}
+			}
+
+			//ボーンが見つからなかった。
+			if (!findBone) {
+
+				m_boneMatrixs[boneNum] = upperBody.m_boneMatrixs[boneNum];
+			}
 		}
 	}
 
-	void SetBoneLocalMatrix(Skeleton& skeletonBase)
+	void SetBoneLocalMatrix(
+		Skeleton& upperBody,
+		Skeleton& lowerBody,
+		const char* upperBodyBoneNameArray[],
+		const char* lowerBodyBoneNameArray[],
+		int upperBodyBoneNameArraySize,
+		int lowerBodyBoneNameArraySize
+	)
 	{
 		//ボーンの数だけfor分で回してコピーする。
 		for (int boneNum = 0; boneNum < m_bones.size(); boneNum++) {
 
-			m_bones[boneNum].get()->SetLocalMatrix(skeletonBase.GetBone(boneNum)->GetLocalMatrix());
+			//ボーンの名前を取得する。
+			const wchar_t* carentBoneName = m_bones[boneNum].get()->GetName();
+
+			//ボーンの名前をconst wchat_tからcharに変換。
+			char carentBoneNameChar[c_nameSize];
+			wcstombs(carentBoneNameChar, carentBoneName, c_nameSize);
+
+			//ボーンが見つかった？
+			bool findBone = false;
+
+			//文字列の数だけ繰り返す。
+			for (int arrayNum = 0; arrayNum < upperBodyBoneNameArraySize; arrayNum++) {
+
+				//文字列を比較。
+				if (
+					strcmp(
+						static_cast<const char*>(carentBoneNameChar),
+						upperBodyBoneNameArray[arrayNum]
+					) == 0) {
+					m_bones[boneNum].get()->SetLocalMatrix(upperBody.GetBone(boneNum)->GetLocalMatrix());
+					findBone = true;
+				}
+			}
+
+			for (int arrayNum = 0; arrayNum < lowerBodyBoneNameArraySize; arrayNum++) {
+
+				//文字列を比較。
+				if (
+					strcmp(
+						static_cast<const char*>(carentBoneNameChar),
+						lowerBodyBoneNameArray[arrayNum]
+					) == 0) {
+					m_bones[boneNum].get()->SetLocalMatrix(lowerBody.GetBone(boneNum)->GetLocalMatrix());
+					findBone = true;
+				}
+			}
+
+			//ボーンが見つからなかった。
+			if (!findBone) {
+
+				m_bones[boneNum].get()->SetLocalMatrix(upperBody.GetBone(boneNum)->GetLocalMatrix());
+			}
 		}
 	}
 	

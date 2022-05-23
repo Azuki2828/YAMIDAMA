@@ -6,7 +6,7 @@ namespace nsMyGame {
 	namespace nsPlayer {
 
 		void CPlayerAnimation::Init(CModelRender& modelRender) {
-
+			 
 			//アニメーションクリップを設定。
 			m_animationClip[enAnim_Walk].Load("Assets/animData/walk.tka");
 			m_animationClip[enAnim_Walk].SetLoopFlag(true);
@@ -23,7 +23,7 @@ namespace nsMyGame {
 			m_animationClip[enAnim_Rolling].Load("Assets/animData/rolling.tka");
 			m_animationClip[enAnim_Rolling].SetLoopFlag(false);
 			m_animationClip[enAnim_Guard].Load("Assets/animData/guard.tka");
-			m_animationClip[enAnim_Guard].SetLoopFlag(false);
+			m_animationClip[enAnim_Guard].SetLoopFlag(true);
 			m_animationClip[enAnim_GuardSuccess].Load("Assets/animData/guardSuccess.tka");
 			m_animationClip[enAnim_GuardSuccess].SetLoopFlag(false);
 			m_animationClip[enAnim_Death].Load("Assets/animData/death.tka");
@@ -35,10 +35,12 @@ namespace nsMyGame {
 #if boneDebug
 
 			//モデルからスケルトンのファイルパスを取得し、スケルトンを構築。
-			m_skeleton[enAnimation_Base].Init(modelRender.GetFilePathTks());
+			m_skeleton[enUpperBody].Init(modelRender.GetFilePathTks());
+			m_skeleton[enLowerBody].Init(modelRender.GetFilePathTks());
 
 			//ベースとなるアニメーションを初期化。
-			m_animation[enAnimation_Base].Init(m_skeleton[enAnimation_Base], m_animationClip, enAnim_Num);
+			m_animation[enUpperBody].Init(m_skeleton[enUpperBody], m_animationClip, enAnim_Num);
+			m_animation[enLowerBody].Init(m_skeleton[enLowerBody], m_animationClip, enAnim_Num);
 
 			//固有のアニメーションを持っている。
 			modelRender.GiveUniqueAnimation();
@@ -54,53 +56,75 @@ namespace nsMyGame {
 
 			//プレイヤーステートに応じてアニメーションを再生。
 
-			switch (playerState) {
+		/*	switch (playerState) {
 			case enState_Idle:
-				m_animation[enAnimation_Base].Play(enAnim_Idle, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_Idle, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_Idle, 0.8f);
 				break;
 			case enState_Walk:
-				m_animation[enAnimation_Base].Play(enAnim_Walk, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_Walk, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_Walk, 0.8f);
 				break;
 			case enState_LeftWalk:
-				m_animation[enAnimation_Base].Play(enAnim_LeftWalk, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_LeftWalk, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_LeftWalk, 0.8f);
 				break;
 			case enState_RightWalk:
-				m_animation[enAnimation_Base].Play(enAnim_RightWalk, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_RightWalk, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_RightWalk, 0.8f);
 				break;
 			case enState_Run:
-				m_animation[enAnimation_Base].Play(enAnim_Run, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_Run, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_Run, 0.8f);
 				break;
 			case enState_Attack:
-				m_animation[enAnimation_Base].Play(enAnim_Attack, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_Attack, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_Attack, 0.8f);
 				break;
 			case enState_AttackBreak:
-				m_animation[enAnimation_Base].Play(enAnim_AttackBreak, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_AttackBreak, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_AttackBreak, 0.8f);
 				break;
 			case enState_Damage:
-				m_animation[enAnimation_Base].Play(enAnim_Damage, 0.4f);
+				m_animation[enUpperBody].Play(enAnim_Damage, 0.4f);
+				m_animation[enLowerBody].Play(enAnim_Damage, 0.4f);
 				break;
 			case enState_Rolling:
-				m_animation[enAnimation_Base].Play(enAnim_Rolling, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_Rolling, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_Rolling, 0.8f);
 				break;
 			case enState_Guard:
-				m_animation[enAnimation_Base].Play(enAnim_Guard, 0.4f);
+				m_animation[enUpperBody].Play(enAnim_Guard, 0.4f);
+				m_animation[enLowerBody].Play(enAnim_Guard, 0.4f);
+				if (m_isMove) {
+					m_animation[enUpperBody].Play(enAnim_Guard, 0.4f);
+					m_animation[enLowerBody].Play(enAnim_Walk, 0.4f);
+				}
 				break;
 			case enState_GuardSuccess:
-				m_animation[enAnimation_Base].Play(enAnim_GuardSuccess, 0.1f);
+				m_animation[enUpperBody].Play(enAnim_GuardSuccess, 0.1f);
+				m_animation[enLowerBody].Play(enAnim_GuardSuccess, 0.1f);
 				break;
 			case enState_Death:
-				m_animation[enAnimation_Base].Play(enAnim_Death, 0.8f);
+				m_animation[enUpperBody].Play(enAnim_Death, 0.8f);
+				m_animation[enLowerBody].Play(enAnim_Death, 0.8f);
 				break;
-			}
+			}*/
 
+
+			//Todo : ガード時に腰の高さが変わらないようにする。
+			m_animation[enUpperBody].Play(enAnim_Guard, 0.4f);
+			m_animation[enLowerBody].Play(enAnim_Walk, 0.4f);
 			//アニメーションを進める。
-			m_animation[enAnimation_Base].Progress(m_animationSpeed / 30.0f);
+			m_animation[enUpperBody].Progress(m_animationSpeed / 30.0f);
+			m_animation[enLowerBody].Progress(m_animationSpeed / 30.0f);
 
 			//スケルトンを更新。
-			m_skeleton[enAnimation_Base].Update(modelRender.GetModel()->GetWorldMatrix());
+			m_skeleton[enUpperBody].Update(modelRender.GetModel()->GetWorldMatrix());
+			m_skeleton[enLowerBody].Update(modelRender.GetModel()->GetWorldMatrix());
 
 			//スケルトンをモデルレンダーのスケルトンにコピー。
-			modelRender.CopyBone(m_skeleton[enAnimation_Base]);
+			modelRender.CopyBone(m_skeleton[enUpperBody], m_skeleton[enLowerBody], m_upperBoneName, m_lowerBoneName, c_upperBoneNum, c_lowerBoneNum);
 #else
 			switch (playerState) {
 			case enState_Idle:
@@ -141,6 +165,9 @@ namespace nsMyGame {
 				break;
 		}
 #endif
+
+			//フレームの最後には動いてないように設定する。
+			m_isMove = false;
 		}
 	}
 }

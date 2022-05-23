@@ -275,10 +275,17 @@ namespace nsMyGame {
 		 * @brief ボーンをコピーする関数。
 		 * @param skeleton コピー元となるスケルトン
 		*/
-		void CopyBone(Skeleton& skeleton) {
+		void CopyBone(
+			Skeleton& upperBody,
+			Skeleton& lowerBody, 
+			const char* upperBodyBoneNameArray[],
+			const char* lowerBodyBoneNameArray[],
+			int upperBodyBoneNameArraySize,
+			int lowerBodyBoneNameArraySize
+		) {
 
-			m_skeleton.CopyBoneMatrix(skeleton);
-			m_skeleton.SetBoneLocalMatrix(skeleton);
+			m_skeleton.CopyBoneMatrix(upperBody, lowerBody,upperBodyBoneNameArray, lowerBodyBoneNameArray, upperBodyBoneNameArraySize, lowerBodyBoneNameArraySize);
+			//m_skeleton.SetBoneLocalMatrix(upperBody, lowerBody, upperBodyBoneNameArray, lowerBodyBoneNameArray, upperBodyBoneNameArraySize, lowerBodyBoneNameArraySize);
 		}
 
 		/**

@@ -154,7 +154,14 @@ namespace nsMyGame {
 			position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
 		}
 
-		void CPlayerAction::Rotate(CQuaternion& rotation, const CVector3& forward) {
+		void CPlayerAction::Rotate(CQuaternion& rotation, const CVector3& forward, const EnPlayerState& playerState) {
+
+			//特定状態なら終了。
+			if (playerState == enState_Rolling
+				|| playerState == enState_Damage
+				|| playerState == enState_Attack
+				|| playerState == enState_AttackBreak
+				) { return; }
 
 			//XZ成分の移動速度をクリア。
 			CVector3 rotSource = CVector3::Zero;
