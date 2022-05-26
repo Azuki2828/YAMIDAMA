@@ -77,8 +77,8 @@ namespace nsMyGame {
 							playerState = enState_LeftWalk;
 						}
 					}
-					//Bボタンが押されていたら
-					else if (g_pad[0]->IsPress(enButtonB)) {
+					//Bボタンが押されていたらかつガード状態でないなら
+					else if (g_pad[0]->IsPress(enButtonB) && playerState != enState_Guard) {
 
 						//移動速度を1.5倍に
 						m_moveSpeed.x *= 1.5f;
@@ -142,13 +142,6 @@ namespace nsMyGame {
 
 			//ローリングの速度を加算。
 			m_moveSpeed += m_rollingSpeed;
-
-			//地面についているか判定。
-			if (m_charaCon.IsOnGround()) {
-
-				//地面についているなら下向きには力をかけない。
-				m_moveSpeed.y = 0.0f;
-			}
 
 			//キャラコンを使用して、座標を更新。
 			position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
@@ -251,16 +244,6 @@ namespace nsMyGame {
 			//クールタイム中でなく
 			if (!IsCoolTime()) {
 
-				//R1ボタンが押されたら
-				if (g_pad[0]->IsTrigger(enButtonRB1)) {
-
-					//弱攻撃状態に。
-					playerState = enState_Attack;
-
-					//クールタイムを設定。
-					m_coolTime = c_attackCoolTime;
-				}
-
 				//L1ボタンが押されていたら
 				if (g_pad[0]->IsPress(enButtonLB1) && !IsGuardSccessCoolTime()) {
 
@@ -272,6 +255,16 @@ namespace nsMyGame {
 
 					//ガード状態を解除。
 					m_isGuard = false;
+				}
+
+				//R1ボタンが押されたら
+				if (g_pad[0]->IsTrigger(enButtonRB1)) {
+
+					//弱攻撃状態に。
+					playerState = enState_Attack;
+
+					//クールタイムを設定。
+					m_coolTime = c_attackCoolTime;
 				}
 
 				//何も選んでいない状態でAボタンが押されたら

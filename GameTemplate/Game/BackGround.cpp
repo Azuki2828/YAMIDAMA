@@ -10,8 +10,8 @@
 
 namespace {
 
-	//constexpr const char* c_stageName = "Assets/level/stage_1.tkl";
-	constexpr const char* c_stageName = "Assets/level/sampleStage.tkl";
+	constexpr const char* c_stageName = "Assets/level/stage_1.tkl";
+	//constexpr const char* c_stageName = "Assets/level/sampleStage.tkl";
 }
 
 namespace nsMyGame {

@@ -182,15 +182,15 @@ void AnimationPlayController::Update(float deltaTime, Animation* animation)
 		
 	//ボーン行列をアニメーションクリップからサンプリングしていく。
 	SamplingBoneMatrixFromAnimationClip();
-		
+	
 	//親の骨座標系になっているボーン行列をルートのボーンの空間に変換していく。
-	CalcBoneMatrixInRootBoneSpace();
+	// CalcBoneMatrixInRootBoneSpace();
 		
 	//footstepボーンの移動量を取得する。
-	SamplingDeltaValueFootstepBone();
+	// SamplingDeltaValueFootstepBone();
 		
 	//footstepボーンの移動量を全体の骨から減算する。
-	SubtractFootstepbonePosFromAllBone();
+	// SubtractFootstepbonePosFromAllBone();
 
 	//アニメーション再生した印をスケルトンにつける。
 	m_skeleton->SetMarkPlayAnimation();

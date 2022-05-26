@@ -249,6 +249,20 @@ namespace nsMyGame {
 				m_playerSelect.SetSelectObject(selectObj, m_position);
 			}
 
+			/**
+			 * @brief アニメーションイベントを設定する関数。
+			 * @param animation アニメーション
+			 * @param modelRender モデルレンダー
+			*/
+			void AddAnimationEvent(Animation& animation, CModelRender& modelRender) {
+
+				//アニメーションイベント用の関数を設定する。
+				modelRender.AddAnimationEvent(animation, [&](const wchar_t* clipName, const wchar_t* eventName) {
+
+					m_playerAction.OnAnimationEvent(clipName, eventName);
+				});
+			}
+
 		private:
 			bool m_isSelect = false;							//何かを選んでいる状態？（近くの何かに反応している？）
 			int m_hasKeyNum = 0;								//鍵の所持数

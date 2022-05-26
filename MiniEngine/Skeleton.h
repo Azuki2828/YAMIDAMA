@@ -251,57 +251,8 @@ public:
 		const char* lowerBodyBoneNameArray[],
 		int upperBodyBoneNameArraySize,
 		int lowerBodyBoneNameArraySize
-	)
-	{
-		//ボーンの数だけfor分で回してコピーする。
-		for (int boneNum = 0; boneNum < m_bones.size(); boneNum++) {
-
-			//ボーンの名前を取得する。
-			const wchar_t* carentBoneName = m_bones[boneNum].get()->GetName();
-
-			//ボーンの名前をconst wchat_tからcharに変換。
-			char carentBoneNameChar[c_nameSize];
-			wcstombs(carentBoneNameChar, carentBoneName, c_nameSize);
-
-			//ボーンが見つかった？
-			bool findBone = false;
-
-			//文字列の数だけ繰り返す。
-			for (int arrayNum = 0; arrayNum < upperBodyBoneNameArraySize; arrayNum++) {
-
-				//文字列を比較。
-				if (
-					strcmp(
-						static_cast<const char*>(carentBoneNameChar),
-						upperBodyBoneNameArray[arrayNum]
-					) == 0) {
-					m_boneMatrixs[boneNum] = upperBody.m_boneMatrixs[boneNum];
-					m_bones[boneNum].get()->SetLocalMatrix(upperBody.GetBone(boneNum)->GetLocalMatrix());
-					findBone = true;
-				}
-			}
-
-			for (int arrayNum = 0; arrayNum < lowerBodyBoneNameArraySize; arrayNum++) {
-
-				//文字列を比較。
-				if (
-					strcmp(
-						static_cast<const char*>(carentBoneNameChar),
-						lowerBodyBoneNameArray[arrayNum]
-					) == 0) {
-					m_boneMatrixs[boneNum] = lowerBody.m_boneMatrixs[boneNum];
-					m_bones[boneNum].get()->SetLocalMatrix(lowerBody.GetBone(boneNum)->GetLocalMatrix());
-					findBone = true;
-				}
-			}
-
-			//ボーンが見つからなかった。
-			if (!findBone) {
-
-				m_boneMatrixs[boneNum] = upperBody.m_boneMatrixs[boneNum];
-			}
-		}
-	}
+	);
+	
 
 	void SetBoneLocalMatrix(
 		Skeleton& upperBody,

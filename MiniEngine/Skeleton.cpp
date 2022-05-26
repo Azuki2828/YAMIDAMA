@@ -52,6 +52,64 @@ bool Skeleton::Init(const char* tksFilePath)
 	BuildBoneMatrices();
 	return true;
 }
+void Skeleton::CopyBoneMatrix(
+	Skeleton& upperBody,
+	Skeleton& lowerBody,
+	const char* upperBodyBoneNameArray[],
+	const char* lowerBodyBoneNameArray[],
+	int upperBodyBoneNameArraySize,
+	int lowerBodyBoneNameArraySize
+)
+{
+	//ボーンの数だけfor分で回してコピーする。
+	for (int boneNum = 0; boneNum < m_bones.size(); boneNum++) {
+
+		//ボーンの名前を取得する。
+		const wchar_t* carentBoneName = m_bones[boneNum].get()->GetName();
+
+		//ボーンの名前をconst wchat_tからcharに変換。
+		char carentBoneNameChar[c_nameSize];
+		wcstombs(carentBoneNameChar, carentBoneName, c_nameSize);
+
+		//ボーンが見つかった？
+		bool findBone = false;
+
+		//文字列の数だけ繰り返す。
+		for (int arrayNum = 0; arrayNum < upperBodyBoneNameArraySize; arrayNum++) {
+
+			//文字列を比較。
+			if (
+				strcmp(
+					static_cast<const char*>(carentBoneNameChar),
+					upperBodyBoneNameArray[arrayNum]
+				) == 0) {
+				m_bones[boneNum]->SetLocalMatrix(upperBody.m_bones[boneNum]->GetLocalMatrix());
+				// todo m_bones[boneNum].get()->SetLocalMatrix(upperBody.GetBone(boneNum)->GetLocalMatrix());
+				findBone = true;
+			}
+		}
+
+		for (int arrayNum = 0; arrayNum < lowerBodyBoneNameArraySize; arrayNum++) {
+
+			//文字列を比較。
+			if (
+				strcmp(
+					static_cast<const char*>(carentBoneNameChar),
+					lowerBodyBoneNameArray[arrayNum]
+				) == 0) {
+				m_bones[boneNum]->SetLocalMatrix(lowerBody.m_bones[boneNum]->GetLocalMatrix());
+				//todo m_bones[boneNum].get()->SetLocalMatrix(lowerBody.GetBone(boneNum)->GetLocalMatrix());
+				findBone = true;
+			}
+		}
+
+		//ボーンが見つからなかった。
+		if (!findBone) {
+
+			m_boneMatrixs[boneNum] = upperBody.m_boneMatrixs[boneNum];
+		}
+	}
+}
 void Skeleton::BuildBoneMatrices()
 {
 	m_tksFile.QueryBone([&](CTksFile::SBone & tksBone) {
@@ -122,27 +180,16 @@ void Skeleton::BuildBoneMatrices()
 
 void Skeleton::Update(const CMatrix& mWorld)
 {
-	if (m_isPlayAnimation) {
-		//ボーン行列をルートボーンの空間からワールド空間を構築していく。
-		for (auto& bone : m_bones) {
-			CMatrix mBoneWorld;
-			CMatrix localMatrix = bone->GetLocalMatrix();
-			//親の行列とローカル行列を乗算して、ワールド行列を計算する。
-			mBoneWorld = localMatrix * mWorld;
-			bone->SetWorldMatrix(mBoneWorld);
+	
+	//アニメーションが流し込まれていると、ボーン行列がルートボーン空間に
+	//変換されているが、流されていないと親の骨の座標系のままなので、
+	//ルートボーン空間→ワールド空間への変換を行う。
+	for (auto& bone : m_bones) {
+		if (bone->GetParentBoneNo() != -1) {
+			continue;
 		}
-	}
-	else {
-		//アニメーションが流し込まれていると、ボーン行列がルートボーン空間に
-		//変換されているが、流されていないと親の骨の座標系のままなので、
-		//ルートボーン空間→ワールド空間への変換を行う。
-		for (auto& bone : m_bones) {
-			if (bone->GetParentBoneNo() != -1) {
-				continue;
-			}
-			//ルート。
-			UpdateBoneWorldMatrix(*bone, mWorld);
-		}
+		//ルート。
+		UpdateBoneWorldMatrix(*bone, mWorld);
 	}
 
 	//ボーン行列を計算。

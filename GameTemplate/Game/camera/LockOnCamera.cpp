@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LockOnCamera.h"
 #include "constCamera.h"
+#include "../enemy/boss/Boss.h"
 
 namespace nsMyGame {
 
@@ -52,14 +53,16 @@ namespace nsMyGame {
 
 		const bool CLockOnCamera::LockOnEnemy(R3ButtonInput r3Input) {
 
+
+
 			//ロックオンできた？
 			bool canLockOn = false;
 
 			//敵の座標を格納する変数。
 			CVector3 enemyPosition = CVector3::Zero;
 
-			//視野角の値を格納する変数。
-			//初期値は負の値で最初の敵は必ず検索圏に入るように。
+			//視野角の値を格納する変数
+			//初期値は負の値で最初の敵は必ず検索圏に入るように
 			float angle = -1.0f;
 
 			//プレイヤーの前方向と座標を取得。
@@ -67,56 +70,54 @@ namespace nsMyGame {
 			CVector3 playerForward = player->GetForward();
 			CVector3 playerPosition = player->GetPosition();
 			playerPosition.y = 0.0f;
-			
-			//敵を検索。
-			QueryGOs<nsEnemy::CEnemy>(c_classNameEnemy, [&](nsEnemy::CEnemy* enemy) {
 
 
-				//敵の座標を取得。
-				enemyPosition = enemy->GetPosition();
-				enemyPosition.y = 0.0f;
+			auto boss = FindGO<nsEnemy::CBoss>(c_classNameBoss);
 
-				//プレイヤーから敵に伸びるベクトルを求める。
-				CVector3 toEnemyVec = enemyPosition - playerPosition;
+			//ボスが出現している場合はボスを検索。
+			if (boss != nullptr && boss->NoticePlayer()) {
 
-				CVector3 toEnemyVecNormal = toEnemyVec;
-				toEnemyVecNormal.Normalize();
+				//ボスをロックオン対象に。
+				m_lockOnEnemy = boss;
+				canLockOn = true;
+			}
+			else {
+				//敵を検索。
+				QueryGOs<nsEnemy::CEnemy>(c_classNameEnemy, [&](nsEnemy::CEnemy* enemy) {
 
-				//カメラの視野角に入っているか求める。
-				float carentAngle = acosf(toEnemyVecNormal.Dot(playerForward));
 
-				//一定の距離の範囲にいて、かつ死んでいない。
-				if (toEnemyVec.Length() < c_searchDistance
-					&& !enemy->IsDeath()
-					) {
+					//敵の座標を取得。
+					enemyPosition = enemy->GetPosition();
+					enemyPosition.y = 0.0f;
 
-					//プレイヤーから敵に向かって伸びるベクトルを正規化。
-					toEnemyVec.Normalize();
+					//プレイヤーから敵に伸びるベクトルを求める。
+					CVector3 toEnemyVec = enemyPosition - playerPosition;
 
-					//入ってる。
-					if (fabsf(carentAngle) < CMath::PI * (c_searchPlayerAngle / 180.0f)
-						&& fabsf(carentAngle) < angle		//かつこれまでの視野角より内側にいる。
+					CVector3 toEnemyVecNormal = toEnemyVec;
+					toEnemyVecNormal.Normalize();
 
-						|| angle < 0.0f					//もしくは初めての検索。
-						)
-					{
-						switch (r3Input) {
+					//カメラの視野角に入っているか求める。
+					float carentAngle = acosf(toEnemyVecNormal.Dot(playerForward));
 
-							//右スティックの入力が無ければ一番近い敵をロックオンするように
-						case No_Input:
+					//一定の距離の範囲にいて、かつ死んでいない。
+					if (toEnemyVec.Length() < c_searchDistance
+						&& !enemy->IsDeath()
+						) {
 
-							//視野角（ラジアン）を更新。
-							angle = fabsf(carentAngle);
+						//プレイヤーから敵に向かって伸びるベクトルを正規化。
+						toEnemyVec.Normalize();
 
-							//ロックオン対象をこの敵に変更。
-							m_lockOnEnemy = enemy;
+						//入ってる。
+						if (fabsf(carentAngle) < CMath::PI * (c_searchPlayerAngle / 180.0f)
+							&& fabsf(carentAngle) < angle		//かつこれまでの視野角より内側にいる。
 
-							//ロックオンできた。
-							canLockOn = true;
-							break;
-							//右入力状態なら右側の敵をロックオン対象に切り替える。
-						case Input_Right:
-							if (m_lockOnEnemy != enemy && Cross(toEnemyVec, playerForward).y <= 0.0f) {
+							|| angle < 0.0f					//もしくは初めての検索。
+							)
+						{
+							switch (r3Input) {
+
+								//右スティックの入力が無ければ一番近い敵をロックオンするように
+							case No_Input:
 
 								//視野角（ラジアン）を更新。
 								angle = fabsf(carentAngle);
@@ -126,32 +127,46 @@ namespace nsMyGame {
 
 								//ロックオンできた。
 								canLockOn = true;
-								return false;
+								break;
+								//右入力状態なら右側の敵をロックオン対象に切り替える。
+							case Input_Right:
+								if (m_lockOnEnemy != enemy && Cross(toEnemyVec, playerForward).y <= 0.0f) {
+
+									//視野角（ラジアン）を更新。
+									angle = fabsf(carentAngle);
+
+									//ロックオン対象をこの敵に変更。
+									m_lockOnEnemy = enemy;
+
+									//ロックオンできた。
+									canLockOn = true;
+									return false;
+								}
+								break;
+								//右入力状態なら左側の敵をロックオン対象に切り替える。
+							case Input_Left:
+								if (m_lockOnEnemy != enemy && Cross(toEnemyVec, playerForward).y >= 0.0f) {
+
+									//視野角（ラジアン）を更新。
+									angle = fabsf(carentAngle);
+
+									//ロックオン対象をこの敵に変更。
+									m_lockOnEnemy = enemy;
+
+									//ロックオンできた。
+									canLockOn = true;
+									return false;
+								}
+								break;
 							}
-							break;
-							//右入力状態なら左側の敵をロックオン対象に切り替える。
-						case Input_Left:
-							if (m_lockOnEnemy != enemy && Cross(toEnemyVec, playerForward).y >= 0.0f) {
-
-								//視野角（ラジアン）を更新。
-								angle = fabsf(carentAngle);
-
-								//ロックオン対象をこの敵に変更。
-								m_lockOnEnemy = enemy;
-
-								//ロックオンできた。
-								canLockOn = true;
-								return false;
-							}
-							break;
 						}
 					}
-				}
 
-				return true;
-				});
+					return true;
+					});
 
-			return canLockOn;
+				return canLockOn;
+			}
 		}
 
 		void CLockOnCamera::ChangeLockOnEnemy() {

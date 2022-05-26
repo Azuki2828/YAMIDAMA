@@ -131,6 +131,7 @@ private:
 	int						m_currentKeyFrameNo = 0;			//現在再生中のキーフレーム番号。
 	float					m_time = 0.0f;
 	std::vector<CMatrix>		m_boneMatrix;						//!<このコントローラで再生中のアニメーションのボーン行列。
+	
 	float					m_interpolateTime;					//!<補完時間
 	float					m_interpolateEndTime;				//!<補完終了時間
 	bool					m_isPlaying = false;				//!<再生中？

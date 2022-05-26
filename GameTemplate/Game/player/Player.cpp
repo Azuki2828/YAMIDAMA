@@ -36,7 +36,7 @@ namespace nsMyGame {
 			});
 
 			//アニメーションに対応させる。
-			m_modelRender->InitAnimation(m_playerAnimation.GetAnimationClip(), m_playerAnimation.GetAnimationNum());
+			//m_modelRender->InitAnimation(m_playerAnimation.GetAnimationClip(), m_playerAnimation.GetAnimationNum());
 
 			//影を落とす。
 			m_modelRender->SetShadowCasterFlag(true);

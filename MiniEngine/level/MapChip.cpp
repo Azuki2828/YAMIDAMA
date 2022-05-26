@@ -21,7 +21,7 @@ namespace nsMyGame {
 		if (p == nullptr) {
 
 			//ファイルパスを決定。
-			char filePathtkm[256];
+			char filePathtkm[c_nameSize];
 			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
 
 			//モデルを初期化。
@@ -37,9 +37,60 @@ namespace nsMyGame {
 		}
 		else {
 
+			
+
+			char a = p[4];
+			switch (p[4]) {
+
+			//長い階段判定
+			case '1':
+				//ファイルパスを決定。
+				char filePathtkm2[c_nameSize];
+				sprintf(filePathtkm2, "Assets/modelData/backGround/%s.tkm", p);
+
+				//モデルを初期化。
+				m_collisionModelRender = NewGO<CBackGroundObject>(enPriority_Zeroth);
+
+				m_collisionModelRender->IgnoreObj();
+
+				m_collisionModelRender->InitModel(
+					static_cast<const char*>(filePathtkm2),
+					objData.position,
+					objData.rotation,
+					objData.scale,
+					true
+				);
+				break;
+
+			//通常階段判定
+			case '2':
+				//ファイルパスを決定。
+				char filePathtkm3[c_nameSize];
+				sprintf(filePathtkm3, "Assets/modelData/backGround/%s.tkm", p);
+
+				//モデルを初期化。
+				m_collisionModelRender = NewGO<CBackGroundObject>(enPriority_Zeroth);
+
+				m_collisionModelRender->IgnoreObj();
+
+				m_collisionModelRender->InitModel(
+					static_cast<const char*>(filePathtkm3),
+					objData.position,
+					objData.rotation,
+					objData.scale,
+					true
+				);
+				break;
+			//判定なし
+			case '3':
+				break;
+			}
+
+
+			//階段モデルを追加。
 			//ファイルパスを決定。
-			char filePathtkm[256];
-			strcpy(objName, (p + 4));
+			char filePathtkm[c_nameSize];
+			strcpy(objName, (p + 5));
 			sprintf(filePathtkm, "Assets/modelData/backGround/%s.tkm", objName);
 
 			//モデルを初期化。
@@ -52,22 +103,7 @@ namespace nsMyGame {
 				false
 			);
 
-			//ファイルパスを決定。
-			char filePathtkm2[256];
-			sprintf(filePathtkm2, "Assets/modelData/backGround/Coll%s.tkm", p);
-
-			//モデルを初期化。
-			m_collisionModelRender = NewGO<CBackGroundObject>(enPriority_Zeroth);
-
-			m_collisionModelRender->IgnoreObj();
-
-			m_collisionModelRender->InitModel(
-				static_cast<const char*>(filePathtkm2),
-				objData.position,
-				objData.rotation,
-				objData.scale,
-				true
-			);
+			
 		}
 	}
 

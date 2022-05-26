@@ -7,18 +7,18 @@ namespace nsMyGame {
 
 		//アニメーションのリスト
 		enum EnAnimationList {
-			enAnim_Idle,
-			enAnim_Walk,
-			enAnim_LeftWalk,
-			enAnim_RightWalk,
-			enAnim_Run,
-			enAnim_Attack,
-			enAnim_AttackBreak,
-			enAnim_Damage,
-			enAnim_Rolling,
-			enAnim_Guard,
-			enAnim_GuardSuccess,
-			enAnim_Death,
+			enAnim_Idle,			//待機
+			enAnim_Walk,			//歩行
+			enAnim_LeftWalk,		//左回り歩行
+			enAnim_RightWalk,		//右回り歩行
+			enAnim_Run,				//走り
+			enAnim_Attack,			//攻撃
+			enAnim_AttackBreak,		//攻撃はじかれた
+			enAnim_Damage,			//被弾
+			enAnim_Rolling,			//ローリング
+			enAnim_Guard,			//ガード
+			enAnim_GuardSuccess,	//ガード成功
+			enAnim_Death,			//死亡
 
 			enAnim_Num
 
@@ -51,10 +51,10 @@ namespace nsMyGame {
 			 * @brief アニメーションクリップを取得する関数。
 			 * @return アニメーションクリップ
 			*/
-			CAnimationClip* GetAnimationClip() {
-
-				return m_animationClip;
-			}
+			//CAnimationClip* GetAnimationClip() {
+			//
+			//	return m_animationClip;
+			//}
 
 			/**
 			 * @brief アニメーションの数を取得する関数。
@@ -65,10 +65,19 @@ namespace nsMyGame {
 				return enAnim_Num;
 			}
 
+			/**
+			 * @brief このフレームは移動していると判定。
+			*/
 			void Move() {
 
 				m_isMove = true;
 			}
+
+		private:
+			/**
+			 * @brief アニメーションクリップを初期化する関数。
+			*/
+			void InitAnimationClip();
 
 		private:
 			//上半身、下半身のボーンの数
@@ -76,13 +85,15 @@ namespace nsMyGame {
 				c_upperBoneNum = 54,
 				c_lowerBoneNum = 11
 			};
-			bool m_isMove = false;							//動いている。
-			CAnimationClip m_animationClip[enAnim_Num];		//アニメーションクリップ
+			bool m_isMove = false;							//動いているかどうか
+			CAnimationClip m_animationClip[enBodyNum][enAnim_Num];		//アニメーションクリップ
 			Animation m_animation[enBodyNum];				//アニメーション
 			Skeleton m_skeleton[enBodyNum];					//スケルトン
-			float m_animationSpeed = 1.0f;					//アニメーションの再生速度
+			float m_animationSpeed = 2.0f;					//アニメーションの再生速度
+
 			//上半身のボーンの名前のリスト
 			const char* m_upperBoneName[c_upperBoneNum] = {
+				
 				"mixamorig5:Spine",
 				"mixamorig5:Spine1",
 				"mixamorig5:Spine2",
