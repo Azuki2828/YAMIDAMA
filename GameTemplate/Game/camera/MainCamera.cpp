@@ -30,10 +30,10 @@ namespace nsMyGame {
 
 			//ばねカメラの初期化。
 			m_springCamera.Init(
-				*g_camera3D,				//ばねカメラの処理を行うカメラを指定する。
-				c_mainCameraVelocityMax,	//カメラの移動速度の最大値。
-				true,						//カメラと地形とのあたり判定を取るかどうかのフラグ。trueだとあたり判定を行う。
-				c_cameraCollisionRadius		//カメラに設定される球体コリジョンの半径。第３引数がtrueの時に有効になる。
+				*g_camera3D,						// ばねカメラの処理を行うカメラを指定する。
+				c_mainCameraVelocityMax,			// カメラの移動速度の最大値。
+				/*isEnableCollisionSolve=*/true,	// カメラと地形とのあたり判定を取るかどうかのフラグ。trueだとあたり判定を行う。
+				c_cameraCollisionRadius				// カメラに設定される球体コリジョンの半径。第３引数がtrueの時に有効になる。
 			);
 			m_springCamera.SetDampingRate(c_mainCameraDampingRate);
 			return true;
@@ -88,8 +88,9 @@ namespace nsMyGame {
 				std::random_device seed_gen;
 				std::mt19937 random(seed_gen());
 
+				float shakeRange = static_cast<float>(random() % c_cameraShakeRange) - c_cameraShakeRangeAdjustment;
 
-				shakeTarget = { static_cast<float>(random() % 201) - 100.0f,static_cast<float>(random() % 201) - 100.0f ,static_cast<float>(random() % 201) - 100.0f };
+				shakeTarget = { shakeRange,shakeRange ,shakeRange };
 			}
 
 			//視点を計算する。

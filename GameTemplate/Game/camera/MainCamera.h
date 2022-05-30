@@ -15,11 +15,7 @@ namespace nsMyGame {
 		//メインカメラクラス
 		class CMainCamera : public CCameraBase
 		{
-			//ステート
-			enum EnState {
-				enNormal,		//通常
-				enShake			//揺れ状態
-			};
+			
 		private:
 			/**
 			 * @brief Update()関数の前に一度だけ呼ばれる関数。
@@ -35,24 +31,7 @@ namespace nsMyGame {
 			void SubSwitched()override final {
 
 			}
-		public:
-			/**
-			 * @brief カメラを揺れ状態にする関数。
-			*/
-			void ShakeCamera() {
-
-				m_state = enShake;
-			}
-
-			/**
-			 * @brief カメラの状態を通常状態にする関数。
-			*/
-			void SetNormalCamera() {
-
-				m_state = enNormal;
-			}
 		private:
-			EnState m_state = enNormal;							//ステート
 			float m_eventTimer = 0.0f;							//イベントタイマー(ボス登場時のカメラワーク)
 			SpringCamera m_springCamera;						//ばねカメラ。
 

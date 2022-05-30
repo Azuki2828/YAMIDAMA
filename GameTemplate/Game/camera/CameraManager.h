@@ -126,6 +126,22 @@ namespace nsMyGame {
 
 				return m_lockOnCamera.GetLockOnEnemyPosition();
 			}
+
+			/**
+			 * @brief カメラを揺れ状態にする関数。
+			*/
+			void ShakeCamera() {
+
+				m_camera[m_cameraType]->ShakeCamera();
+			}
+
+			/**
+			 * @brief カメラの状態を通常状態にする関数。
+			*/
+			void SetNormalCamera() {
+
+				m_camera[m_cameraType]->SetNormalCamera();
+			}
 		private:
 			EnCameraType m_cameraType = enCamera_Main;				//カメラの種類
 			CCameraBase* m_camera[enCamera_Num] = { nullptr };		//カメラのポインタ配列

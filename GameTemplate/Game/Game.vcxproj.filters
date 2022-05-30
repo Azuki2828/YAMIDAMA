@@ -332,12 +332,6 @@
     <ClCompile Include="player\PlayerAnimation.cpp">
       <Filter>ソース ファイル\player</Filter>
     </ClCompile>
-    <ClCompile Include="enemy\EnemyAction.cpp">
-      <Filter>ソース ファイル\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy\EnemyAnimation.cpp">
-      <Filter>ソース ファイル\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemy.cpp">
       <Filter>ソース ファイル\enemy\firstWinEnemy</Filter>
     </ClCompile>
@@ -723,12 +717,6 @@
     </ClInclude>
     <ClInclude Include="player\PlayerAnimation.h">
       <Filter>ソース ファイル\player</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy\EnemyAction.h">
-      <Filter>ソース ファイル\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy\EnemyAnimation.h">
-      <Filter>ソース ファイル\enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ExEngine\physics\tkPhysicsObjectBase.h">
       <Filter>ExEngine\physics</Filter>

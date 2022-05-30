@@ -122,7 +122,7 @@ namespace nsMyGame {
 				//ダメージを与える。
 				if (m_receiveDamage) {
 
-					m_status.hp -= 30;
+					m_status.hp -= 20;
 
 					auto hud = FindGO<CGameHUD>(c_classNameGameHUD);
 					hud->UpdateBossHUD(m_status.hp);

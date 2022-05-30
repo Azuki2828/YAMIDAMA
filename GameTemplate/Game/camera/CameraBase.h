@@ -1,4 +1,5 @@
 #pragma once
+#include "constCamera.h"
 namespace nsMyGame {
 
 	namespace nsCamera {
@@ -93,6 +94,21 @@ namespace nsMyGame {
 
 				return true;
 			}
+			/**
+			 * @brief カメラを揺れ状態にする関数。
+			*/
+			void ShakeCamera() {
+
+				m_state = enShake;
+			}
+
+			/**
+			 * @brief カメラの状態を通常状態にする関数。
+			*/
+			void SetNormalCamera() {
+
+				m_state = enNormal;
+			}
 		protected:
 			/**
 			 * @brief 派生クラスのStart()関数。
@@ -105,6 +121,7 @@ namespace nsMyGame {
 			*/
 			virtual void UpdateSub() = 0;
 		protected:
+			static EnState m_state;							//ステート
 			CVector3 m_position;		//視点
 			CVector3 m_target;			//注視点
 			static CVector3 m_cameraToPlayerVec;	//カメラからプレイヤーに伸びるベクトル

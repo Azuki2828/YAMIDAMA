@@ -312,8 +312,6 @@ float4 PSMain(PSInput psIn) : SV_Target0
 		}
 	}
 
-	//return float4(ligFactor[0], 0.0f, 0.0f, 1.0f);
-
 	//ディレクションライトの計算。
 	for (int dirLigNo = 0; dirLigNo < MAX_DIRECTION_LIGHT; dirLigNo++) {
 	

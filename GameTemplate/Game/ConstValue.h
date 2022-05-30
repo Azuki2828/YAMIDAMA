@@ -91,7 +91,7 @@ namespace nsMyGame {
 
 	constexpr float c_attackCollisionActiveTime = 0.2f;							//攻撃用当たり判定の有効時間
 
-	constexpr const char* c_filePathYouDiedSprite = "Assets/image/youDied.dds";	//死亡スプライトのファイルパス
+	constexpr const char* c_filePathYouDiedSprite = "Assets/image/youDied.dds";		//死亡スプライトのファイルパス
 	constexpr const char* c_filePathGameClearSprite = "Assets/image/Victory.dds";	//ゲームクリアスプライトのファイルパス
 	const CVector2 c_spriteYouDiedWH = { 1740.0f, 180.0f };							//死亡スプライトの幅と高さ
 	const CVector3 c_spriteSizeYouDied = { 0.8f,0.8f,0.8f };						//死亡スプライトの拡大率

@@ -2,7 +2,7 @@
 #include "Boss.h"
 #include "../../AttackCollision.h"
 #include "../../BackGround.h"
-#include "../../camera/MainCamera.h"
+#include "../../camera/CameraManager.h"
 
 namespace nsMyGame {
 
@@ -10,6 +10,14 @@ namespace nsMyGame {
 
 		extern CEnemy* g_pCurrentEnemy;
 
+		namespace {
+			constexpr float c_charaConRadius = 100.0f;
+			constexpr float c_charaConHeight = 100.0f;
+			const CVector3 c_findPlayerTriggerBoxSize = { 1500.0f,1000.0f,1500.0f };
+			constexpr float c_startCoolTime = 2.0f;
+			constexpr float c_moveSpeed = 200.0f;
+			constexpr float c_gravity = 980.0f;
+		}
 		bool CBoss::StartSub() {
 
 			//IGameObjectに追加。
@@ -51,9 +59,9 @@ namespace nsMyGame {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
-				100.0f,			//半径。
-				100.0f,			//高さ。
-				m_position		//座標。
+				c_charaConRadius,
+				c_charaConHeight,
+				m_position
 			);
 
 			//剣に取り付けられたボーンの番号を読み込む。
@@ -76,10 +84,10 @@ namespace nsMyGame {
 			m_triggerBox.DeactivateRangeAttack();
 
 			//プレイヤーに気づくためのトリガーボックスを設定。
-			m_noticePlayerTriggerBox.CreateBox(m_position, CQuaternion::Identity, { 1500.0f,1000.0f,1500.0f });
+			m_noticePlayerTriggerBox.CreateBox(m_position, CQuaternion::Identity, c_findPlayerTriggerBoxSize);
 
-			//登場時のクールタイムは2.0秒。
-			m_coolTime = 2.0f;
+			//登場時のクールタイムを設定。
+			m_coolTime = c_startCoolTime;
 
 			//ゲーム音楽をボス戦BGMに変更。
 			CSoundManager::GetInstance()->Release(enBGM_GameMain);
@@ -137,7 +145,7 @@ namespace nsMyGame {
 		void CBoss::InitStatus() {
 
 			m_status.hp = c_bossMaxHP;
-			m_status.attack = 10;
+			m_status.attack = c_bossAttack;
 		}
 
 		void CBoss::InitAnimationClip() {
@@ -221,10 +229,10 @@ namespace nsMyGame {
 				//攻撃中にする。
 				m_triggerBox.ActivateRangeAttack();
 
-				//auto mainCamera = FindGO<CMainCamera>(c_classNameMainCamera);
+				auto cameraManager = FindGO<nsCamera::CCameraManager>(c_classNameCameraManager);
 
-				//カメラを揺れ状態にする。
-				//mainCamera->ShakeCamera();
+				//カメラを通常状態にする。
+				cameraManager->ShakeCamera();
 			}
 			//キーの名前が「attack_end」の時。
 			else if (wcscmp(eventName, L"endRangeAttack") == 0)
@@ -258,10 +266,10 @@ namespace nsMyGame {
 			}
 			else if (wcscmp(eventName, L"endShakeCamera") == 0) {
 
-				//auto mainCamera = FindGO<CMainCamera>(c_classNameMainCamera);
+				auto cameraManager = FindGO<nsCamera::CCameraManager>(c_classNameCameraManager);
 				
 				//カメラを通常状態にする。
-				//mainCamera->SetNormalCamera();
+				cameraManager->SetNormalCamera();
 			}
 			else if (wcscmp(eventName, L"scream") == 0) {
 
@@ -329,11 +337,11 @@ namespace nsMyGame {
 			//歩き状態ならプレイヤーに一定速度で近づく。
 			if (m_state == enState_Walk) {
 
-				m_moveSpeed += toPlayerVec * 200.0f;
+				m_moveSpeed += toPlayerVec * c_moveSpeed;
 			}
 
 			//重力をかける。
-			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
+			m_moveSpeed.y -= c_gravity * g_gameTime->GetFrameDeltaTime();
 
 			//座標を設定。
 			m_position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
@@ -359,7 +367,7 @@ namespace nsMyGame {
 			m_moveSpeed += m_vecToPlayer;
 
 			//重力をかける。
-			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
+			m_moveSpeed.y -= c_gravity * g_gameTime->GetFrameDeltaTime();
 
 			//座標を設定。
 			m_position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());

@@ -6,6 +6,9 @@ namespace nsMyGame {
 
 	namespace nsEnemy {
 
+		namespace {
+			const CVector3 c_jumpAttackCollisionSize = { 500.0f,100.0f,500.0f };
+		}
 		//先手必勝の敵の攻撃処理に使うトリガーボックスのクラス
 		class CBossCollisionDetection
 		{
@@ -18,7 +21,7 @@ namespace nsMyGame {
 			void Create(const CVector3& pos, const CQuaternion& rot) {
 
 				m_attackCollision.CreateBox(pos, rot, c_bossAttackTriggerBoxSize);
-				m_jumpAttackCollision.CreateBox(pos, rot, { 500.0f,100.0f,500.0f });
+				m_jumpAttackCollision.CreateBox(pos, rot, c_jumpAttackCollisionSize);
 			}
 
 			/**

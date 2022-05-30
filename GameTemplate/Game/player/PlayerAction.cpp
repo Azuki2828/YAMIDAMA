@@ -7,6 +7,10 @@
 namespace nsMyGame {
 
 	namespace nsPlayer {
+
+		namespace {
+			constexpr float c_moveSpeed = 200.0f;
+		}
 		void CPlayerAction::Init(const CVector3& position, const CQuaternion& rotation, const CVector3& forward, Bone* swordBone) {
 
 			//キャラクターコントローラーを初期化。
@@ -54,8 +58,8 @@ namespace nsMyGame {
 				float lStick_y = g_pad[0]->GetLStickYF();
 
 				//XZ成分の移動速度をクリア。
-				m_moveSpeed += cameraForward * lStick_y * 200.0f;	//奥方向への移動速度を加算。
-				m_moveSpeed += cameraRight * lStick_x * 200.0f;		//右方向への移動速度を加算。
+				m_moveSpeed += cameraForward * lStick_y * c_moveSpeed;	//奥方向への移動速度を加算。
+				m_moveSpeed += cameraRight * lStick_x * c_moveSpeed;		//右方向への移動速度を加算。
 
 				//カメラタイプを取得。
 				auto cameraManager = FindGO<nsCamera::CCameraManager>(c_classNameCameraManager);

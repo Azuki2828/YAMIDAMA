@@ -421,8 +421,6 @@
     <ClCompile Include="enemy\boss\Boss.cpp" />
     <ClCompile Include="enemy\boss\BossAttackCollisionDetection.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
-    <ClCompile Include="enemy\EnemyAction.cpp" />
-    <ClCompile Include="enemy\EnemyAnimation.cpp" />
     <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemy.cpp" />
     <ClCompile Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.cpp" />
     <ClCompile Include="enemy\goteWinEnemy\GoteWinEnemy.cpp" />
@@ -571,8 +569,6 @@
     <ClInclude Include="enemy\boss\BossAttackCollisionDetection.h" />
     <ClInclude Include="enemy\constEnemy.h" />
     <ClInclude Include="enemy\Enemy.h" />
-    <ClInclude Include="enemy\EnemyAction.h" />
-    <ClInclude Include="enemy\EnemyAnimation.h" />
     <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemy.h" />
     <ClInclude Include="enemy\firstWinEnemy\FirstWinEnemyAttackCollisionDetection.h" />
     <ClInclude Include="enemy\goteWinEnemy\GoteWinEnemy.h" />

@@ -7,6 +7,9 @@ namespace nsMyGame {
 
 	namespace nsItem {
 
+		namespace {
+			constexpr float c_translucentSpeed = 5.0f;
+		}
 		bool CItem::Start() {
 
 			//エフェクトを初期化。
@@ -144,7 +147,7 @@ namespace nsMyGame {
 				m_text->SetColor({ textColor ,textColor ,textColor,m_textSpriteTranslucent });
 
 				//スプライトの透明度を設定。
-				m_textSpriteTranslucent += GameTime().GameTimeFunc().GetFrameDeltaTime() * 5.0f;
+				m_textSpriteTranslucent += GameTime().GameTimeFunc().GetFrameDeltaTime() * c_translucentSpeed;
 				m_textSprite->SetMulColor({ 1.0f,1.0f,1.0f, m_textSpriteTranslucent });
 			}
 		}
@@ -158,7 +161,7 @@ namespace nsMyGame {
 				m_text->SetColor({ textColor,textColor,textColor,m_textSpriteTranslucent });
 
 				//スプライトの透明度を設定。
-				m_textSpriteTranslucent -= GameTime().GameTimeFunc().GetFrameDeltaTime() * 5.0f;
+				m_textSpriteTranslucent -= GameTime().GameTimeFunc().GetFrameDeltaTime() * c_translucentSpeed;
 				m_textSprite->SetMulColor({ 1.0f,1.0f,1.0f, m_textSpriteTranslucent });
 			}
 			//開くスプライトを非表示。
@@ -195,7 +198,7 @@ namespace nsMyGame {
 
 			//テキストを設定。
 			m_text = NewGO<nsFont::CFontRender>(enPriority_Zeroth);
-			m_text->Init(L"A: Pick up");
+			m_text->Init(/*テキスト*/L"A: Pick up");
 			m_text->SetPosition(c_textPosition);
 			m_text->SetScale(c_textSize);
 			m_text->SetColor(CVector4::White);

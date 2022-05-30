@@ -6,7 +6,7 @@ namespace {
 	constexpr const char* c_lockOnMarkerFilePath = "Assets/Image/lockOnMarker_white.dds";		//アイコンのファイルパス
 	const CVector2 c_lockOnMarkerWH = { 200.0f,180.0f };										//アイコンの幅と高さ
 	constexpr short c_markerSpeedMul = 15;														//アイコン速度
-	constexpr float c_scaleDiff = 0.2f;															//拡大率の差の比較の定数
+	constexpr float c_scaleBase = 0.2f;															//開始時の拡大率
 }
 
 namespace nsMyGame {
@@ -30,7 +30,7 @@ namespace nsMyGame {
 			//パラメータを初期化。
 			m_sizeStep = 0;										//ステップ
 			m_position = CVector3::Zero;						//座標
-			m_scale = 0.2f;										//拡大
+			m_scale = c_scaleBase;										//拡大
 			m_scaleDiff = m_stepScale[m_sizeStep] - m_scale;	//拡大率変動の値
 			m_updateNum = 0;									//拡大率更新回数
 		}

@@ -26,9 +26,9 @@ namespace nsMyGame {
 
 						//血しぶきエフェクトを再生。
 						Effect* bloodEffect = NewGO<Effect>(enPriority_Zeroth);
-						bloodEffect->Init(u"Assets/effect/bloodGreen.efk");
+						bloodEffect->Init(c_bloodEffectFilePath);
 						bloodEffect->SetPosition(m_position);
-						bloodEffect->SetScale({ 5.0f, 5.0f,5.0f });
+						bloodEffect->SetScale(c_bloodEffectSize);
 						bloodEffect->Play();
 
 						//斬るサウンドを再生。

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <random>
 #include "LockOnCamera.h"
 #include "constCamera.h"
 #include "../enemy/boss/Boss.h"
@@ -14,16 +15,18 @@ namespace nsMyGame {
 			constexpr float c_searchDistance = 800.0f;				//索敵距離
 			constexpr float c_enemyLockOnAddY = 80.0f;				//ロックオンアイコンの場所を決める加算座標
 			constexpr float c_inputBorder = 0.5f;					//右スティックの入力判定が起こる値
+			constexpr float c_addCameraTargetPlayerY = 30.0f;		//どこを注視点にするのか調整する値
+			constexpr float c_addLockOnMarkerPosition = 100.0f;		//ロックオンアイコンの座標を調整する値
 		}
 
 		bool CLockOnCamera::StartSub() {
 
 			//ばねカメラの初期化。
 			m_springCamera.Init(
-				*g_camera3D,					//ばねカメラの処理を行うカメラを指定する。
-				c_lockOnCameraVelocityMax,		//カメラの移動速度の最大値。
-				true,							//カメラと地形とのあたり判定を取るかどうかのフラグ。trueだとあたり判定を行う。
-				c_cameraCollisionRadius			//カメラに設定される球体コリジョンの半径。第３引数がtrueの時に有効になる。
+				*g_camera3D,							//ばねカメラの処理を行うカメラを指定する。
+				c_lockOnCameraVelocityMax,				//カメラの移動速度の最大値。
+				/*isEnableCollisionSolver*/true,		//カメラと地形とのあたり判定を取るかどうかのフラグ。trueだとあたり判定を行う。
+				c_cameraCollisionRadius					//カメラに設定される球体コリジョンの半径。第３引数がtrueの時に有効になる。
 			);
 
 			//遠平面を設定。
@@ -40,9 +43,22 @@ namespace nsMyGame {
 			//ロックオンカメラを更新。
 			UpdateLockOnCamera();
 
+			CVector3 shakeTarget = CVector3::Zero;
+
+			//カメラが揺れ状態ならターゲットを揺らす。
+			if (m_state == enShake) {
+
+				std::random_device seed_gen;
+				std::mt19937 random(seed_gen());
+
+				float shakeRange = static_cast<float>(random() % c_cameraShakeRange) - c_cameraShakeRangeAdjustment;
+
+				shakeTarget = { shakeRange,shakeRange ,shakeRange };
+			}
+
 			//バネカメラに注視点と視点を設定する。
-			m_springCamera.SetPosition(m_position);
-			m_springCamera.SetTarget(m_target);
+			m_springCamera.SetPosition(m_position + shakeTarget);
+			m_springCamera.SetTarget(m_target + shakeTarget);
 
 			//ばねカメラを更新。
 			m_springCamera.Update();
@@ -224,11 +240,11 @@ namespace nsMyGame {
 
 		void CLockOnCamera::UpdateLockOnCamera() {
 
-			//ロックオン対象の敵の座標から注視点を求める。
-			m_target = m_lockOnEnemy->GetPosition();
+			//敵の座標を取得する。
+			CVector3 enemyPosition = m_lockOnEnemy->GetPosition();
 
 			//少し上に設定。
-			m_target.y += c_addCameraTarget;
+			enemyPosition.y += c_addCameraTarget;
 
 			//プレイヤーを検索。
 			nsPlayer::CPlayer* player = FindGO<nsPlayer::CPlayer>(c_classNamePlayer);
@@ -238,14 +254,11 @@ namespace nsMyGame {
 			playerPosition.y += c_addCameraTarget;
 
 			//敵からプレイヤーに向かって伸びるベクトルを求める。
-			CVector3 enemyToPlayerVec = playerPosition - m_target;
-			CVector3 enemytoPlayerVecHalf = enemyToPlayerVec;
-			enemytoPlayerVecHalf /= 2.0f;
+			CVector3 enemyToPlayerVec = playerPosition - enemyPosition;
 
-			playerPosition.y += 30.0f;
+			//プレイヤーの頭上を注視点に設定。
+			playerPosition.y += c_addCameraTargetPlayerY;
 			m_target = playerPosition;
-
-			//m_target = m_target + enemytoPlayerVecHalf;
 
 			CVector3 enemyToPlayerVecYZero = enemyToPlayerVec;
 			enemyToPlayerVecYZero.y = 0.0f;
@@ -265,7 +278,6 @@ namespace nsMyGame {
 
 			//プレイヤーの少し後ろに視点を設定。
 			m_position = m_target + m_cameraToPlayerVec;
-			//m_position = m_target + enemyToPlayerVec + m_cameraToPlayerVec;
 
 			//ロックオン対象を更新。
 			ChangeLockOnEnemy();
@@ -287,13 +299,14 @@ namespace nsMyGame {
 			CVector3 enemyPosition = m_lockOnEnemy->GetPosition();
 
 			//ロックオン座標を調整。
-			enemyPosition.y += 100.0f;
-
-			//enemyPosition = m_target;
+			enemyPosition.y += c_addLockOnMarkerPosition;
 
 			//スクリーン空間上での敵の座標を計算する。
 			CVector2 screenPosEnemy = CVector2::Zero;
-			m_springCamera.GetCamera()->CalcScreenPositionFromWorldPosition(screenPosEnemy, enemyPosition);
+			m_springCamera.GetCamera()->CalcScreenPositionFromWorldPosition(
+				/*screenPos*/screenPosEnemy,
+				/*worldPos*/enemyPosition
+			);
 
 			//ロックオンアイコンを更新。
 			m_lockOnMarker.UpdateMarker(screenPosEnemy);

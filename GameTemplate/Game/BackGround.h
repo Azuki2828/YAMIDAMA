@@ -62,7 +62,7 @@ namespace nsMyGame {
 		void UpdateFireEffect();
 	public:
 		/**
-		 * @brief 太陽光用のディレクションライトを作成する関数。
+		 * @brief ディレクションライトを作成する関数。
 		*/
 		static void CreateDirLight() {
 

@@ -9,6 +9,10 @@ namespace nsMyGame {
 
 	namespace nsPlayer {
 
+		namespace {
+			constexpr float lightCameraDirection = 300.0f;
+			constexpr float lightCameraFar = 800.0f;
+		}
 		bool CPlayer::Start() {
 
 			//初期座標を設定。
@@ -112,35 +116,6 @@ namespace nsMyGame {
 
 			//選択状態を解除。
 			m_isSelect = false;
-
-			////更新処理。
-			//switch (m_playerState) {
-
-			//case enState_Death:				//死んでいる状態
-
-			//	IsDeathStateProcess();
-			//	break;
-			//case enState_Rolling:			//ローリング中
-
-			//	IsRollingStateProcess();
-			//	break;
-			//case enState_Damage:			//被弾中
-
-			//	IsDamagedStateProcess();
-			//	break;
-			//case enState_Guard:				//ガード中
-
-			//	IsGuardStateProcess();
-			//	break;
-			//case enState_Attack:			//攻撃中
-
-			//	IsAttackStateProcess();
-			//	break;
-			//default:						//通常処理
-
-			//	CommonStateProcess();
-			//	break;
-			//}
 		}
 
 		void CPlayer::JudgeDamage(const CVector3& effectPos) {
@@ -191,12 +166,12 @@ namespace nsMyGame {
 			//ライトカメラの情報を更新。
 			CVector3 m_lightCameraTar = m_position;
 			auto ligDirection = backGround->GetSunDirectionLight()->GetLigDirection();
-			CVector3 m_lightCameraPos = m_lightCameraTar - *ligDirection * 300.0f;
+			CVector3 m_lightCameraPos = m_lightCameraTar - *ligDirection * lightCameraDirection;
 
 			//ライトカメラの情報を設定。
 			CCamera::GetLightCamera()->SetPosition(m_lightCameraPos);
 			CCamera::GetLightCamera()->SetTarget(m_lightCameraTar);
-			CCamera::GetLightCamera()->SetFar(800.0f);
+			CCamera::GetLightCamera()->SetFar(lightCameraFar);
 
 			//カメラの上方向を求める。
 			CVector3 Vec_x = CVector3::AxisX;

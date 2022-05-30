@@ -7,5 +7,6 @@ namespace nsMyGame {
 	namespace nsCamera {
 
 		CVector3 CCameraBase::m_cameraToPlayerVec = c_defaultCameraVec;
+		EnState CCameraBase::m_state = enNormal;
 	}
 }

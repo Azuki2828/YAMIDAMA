@@ -8,6 +8,18 @@ namespace nsMyGame {
 
 		extern CEnemy* g_pCurrentEnemy;
 
+		namespace {
+
+			constexpr float c_charaConRadius = 20.0f;	//キャラコンの半径
+			constexpr float c_charaConHeight = 100.0f;	//キャラコンの高さ
+			constexpr int c_maxHP = 100.0f;				//最大HP
+			constexpr int c_attack = 10.0f;				//攻撃力
+			constexpr int c_moveSpeed = 240.0f;			//移動速度
+			constexpr int c_backMoveSpeed = 120.0f;		//バック中の移動速度
+			constexpr int c_attackCoolTime = 2.4f;		//攻撃中のクールタイム
+			constexpr int c_attackMoveSpeed = 50.0f;	//攻撃中の移動速度
+			constexpr float c_gravity = 980.0f;			//重力
+		}
 		bool CFirstWinEnemy::StartSub() {
 
 			//IGameObjectに追加。
@@ -49,9 +61,9 @@ namespace nsMyGame {
 
 			//キャラクターコントローラーを初期化。
 			m_charaCon.Init(
-				20.0f,			//半径。
-				100.0f,			//高さ。
-				m_position		//座標。
+				c_charaConRadius,			//半径。
+				c_charaConHeight,			//高さ。
+				m_position					//座標。
 			);
 
 			//剣に取り付けられたボーンの番号を読み込む。
@@ -118,8 +130,8 @@ namespace nsMyGame {
 
 		void CFirstWinEnemy::InitStatus() {
 
-			m_status.hp = 100;
-			m_status.attack = 10;
+			m_status.hp = c_maxHP;
+			m_status.attack = c_attack;
 		}
 
 		void CFirstWinEnemy::InitAnimationClip() {
@@ -235,12 +247,12 @@ namespace nsMyGame {
 			//歩き状態ならプレイヤーに一定速度で近づく。
 			if (m_state == enState_Walk) {
 
-				m_moveSpeed += toPlayerVec * 240.0f;
+				m_moveSpeed += toPlayerVec * c_moveSpeed;
 			}
-			//歩き状態ならプレイヤーに一定速度で近づく。
+			//バック状態ならプレイヤーに一定速度で近づく。
 			if (m_state == enState_Back) {
 
-				m_moveSpeed -= toPlayerVec * 120.0f;
+				m_moveSpeed -= toPlayerVec * c_backMoveSpeed;
 				m_canRotate = true;
 			}
 			else {
@@ -250,13 +262,13 @@ namespace nsMyGame {
 			//3連続攻撃状態なら一定速度でプレイヤーに近づく。
 			if (m_state == enState_ThreeCombo) {
 
-				if (c_threeComboCoolTime - m_coolTime < 2.4f) {
-					m_moveSpeed += toPlayerVec * 50.0f;
+				if (c_threeComboCoolTime - m_coolTime < c_attackCoolTime) {
+					m_moveSpeed += toPlayerVec * c_attackMoveSpeed;
 				}
 			}
 
 			//重力をかける。
-			m_moveSpeed.y -= 980.0f * g_gameTime->GetFrameDeltaTime();
+			m_moveSpeed.y -= c_gravity * g_gameTime->GetFrameDeltaTime();
 
 			//座標を設定。
 			m_position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());

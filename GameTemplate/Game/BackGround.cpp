@@ -11,7 +11,7 @@
 namespace {
 
 	constexpr const char* c_stageName = "Assets/level/stage_1.tkl";
-	//constexpr const char* c_stageName = "Assets/level/sampleStage.tkl";
+	constexpr float c_torchEffectPosition = 145.0f;
 }
 
 namespace nsMyGame {
@@ -228,11 +228,6 @@ namespace nsMyGame {
 				m_door[m_doorNum]->SetRotation(objData.rotation);
 				m_door[m_doorNum]->SetScale(objData.scale);
 
-				//m_door[m_doorNum]->AddEventListener([&] {
-				//
-				//	m_door[m_doorNum] = nullptr;
-				//});
-
 				m_doorNum++;
 
 				return true;
@@ -247,11 +242,6 @@ namespace nsMyGame {
 
 				//鍵をかける。
 				m_door[m_doorNum]->Lock();
-
-				//m_door[m_doorNum]->AddEventListener([&] {
-				//
-				//	m_door[m_doorNum] = nullptr;
-				//});
 
 				m_doorNum++;
 				return true;
@@ -342,7 +332,7 @@ namespace nsMyGame {
 
 				//燃えるエフェクトの座標と回転を調整。
 				CVector3 effectPos = objData.position;
-				effectPos.y += 145.0f;
+				effectPos.y += c_torchEffectPosition;
 
 				//エフェクトを初期化。
 				m_fireEffect.push_back(NewGO<Effect>(enPriority_Zeroth));
