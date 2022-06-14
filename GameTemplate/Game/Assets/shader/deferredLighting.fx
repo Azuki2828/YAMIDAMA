@@ -165,7 +165,6 @@ float CookTorranceSpecular(float3 L, float3 V, float3 N, float metaric, float mi
 /// </summary>
 float CalcDiffuseFromFresnel(float3 N, float3 L, float3 V, float roughness)
 {
-	// step-1 ディズニーベースのフレネル反射による拡散反射を真面目に実装する。
    // 光源に向かうベクトルと視線に向かうベクトルのハーフベクトルを求める
 	float3 H = normalize(L + V);
 
