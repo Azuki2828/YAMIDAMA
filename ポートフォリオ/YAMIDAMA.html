@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>YAMIDAMA.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E6%B2%B3%E5%8E%9F%E9%9B%BB%E5%AD%90%E3%83%93%E3%82%B8%E3%83%8D%E3%82%B9%E5%B0%82%E9%96%80%E5%AD%A6%E6%A0%A1br%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%AF%E3%83%AA%E3%82%A8%E3%82%A4%E3%82%BF%E3%83%BC%E7%A7%91-3%E5%B9%B4-%E6%9D%B1-%E6%B5%A9%E6%A8%B9">河原電子ビジネス専門学校<br>ゲームクリエイター科　　3年　東　浩樹</h1>
+<h3 id="%E7%9B%AE%E6%AC%A1">目次</h3>
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E6%93%8D%E4%BD%9C%E8%AA%AC%E6%98%8E">操作説明</a></li>
+<li><a href="#%E6%8B%85%E5%BD%93%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89">担当ソースコード</a></li>
+<li><a href="#%E6%94%B9%E9%80%A0%E3%81%97%E3%81%9F%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89">改造したエンジンコード</a></li>
+<li><a href="#%E6%8A%80%E8%A1%93%E8%A6%81%E7%B4%A0">技術要素</a>
+<ul>
+<li><a href="#1pbr%E7%89%A9%E7%90%86%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">1.PBR（物理ベースレンダリング）</a></li>
+<li><a href="#2tbr%E3%82%BF%E3%82%A4%E3%83%AB%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">2.TBR（タイルベースレンダリング）</a>
+<ul>
+<li><a href="#21%E3%83%A9%E3%82%A4%E3%83%88%E3%82%AB%E3%83%AA%E3%83%B3%E3%82%B0">2.1.ライトカリング</a></li>
+</ul>
+</li>
+<li><a href="#3%E3%83%87%E3%82%A3%E3%83%95%E3%82%A1%E3%83%BC%E3%83%89%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E9%81%85%E5%BB%B6%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">3.ディファードレンダリング（遅延レンダリング）</a>
+<ul>
+<li><a href="#31%E3%83%87%E3%82%A3%E3%83%95%E3%82%A1%E3%83%BC%E3%83%89%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%AE%E6%AC%A0%E7%82%B9">3.1.ディファードレンダリングの欠点</a></li>
+</ul>
+</li>
+<li><a href="#4vsm%E5%88%86%E6%95%A3%E3%82%B7%E3%83%A3%E3%83%89%E3%82%A6%E3%83%9E%E3%83%83%E3%83%97">4.VSM（分散シャドウマップ）</a></li>
+<li><a href="#5fxaa%E3%82%A2%E3%83%B3%E3%83%81%E3%82%A8%E3%82%A4%E3%83%AA%E3%82%A2%E3%82%B7%E3%83%B3%E3%82%B0">5.FXAA（アンチエイリアシング）</a></li>
+<li><a href="#6c%E3%81%A8python%E3%81%AE%E9%80%A3%E6%90%BA">6.C++とPythonの連携</a></li>
+<li><a href="#7%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%96%E3%83%AC%E3%83%B3%E3%83%89">7.アニメーションブレンド</a></li>
+</ul>
+</li>
+<li><a href="#%E3%81%93%E3%81%A0%E3%82%8F%E3%82%8A%E5%B7%A5%E5%A4%AB%E3%81%97%E3%81%9F%E7%82%B9%E8%8B%A6%E5%8A%B4%E3%81%97%E3%81%9F%E7%82%B9">こだわり・工夫した点・苦労した点</a>
+<ul>
+<li><a href="#1%E3%83%AD%E3%83%83%E3%82%AF%E3%82%AA%E3%83%B3%E3%82%AB%E3%83%A1%E3%83%A9">1.ロックオンカメラ</a></li>
+<li><a href="#2ibl%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">2.IBLについて</a></li>
+<li><a href="#3%E3%83%9C%E3%82%B9%E6%88%A6%E6%99%82%E3%81%AE%E3%82%AB%E3%83%A1%E3%83%A9%E3%81%AE%E6%8F%BA%E3%82%8C">3.ボス戦時のカメラの揺れ</a></li>
+<li><a href="#4%E8%AA%BF%E6%95%B4%E3%82%92%E9%87%8D%E3%81%AD%E3%81%9F%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF">4.調整を重ねたグラフィック</a>
+<br></li>
+</ul>
+</li>
+</ul>
+<h1 id="%E6%A6%82%E8%A6%81">概要</h1>
+<h2 id="%E4%BD%9C%E5%93%81%E5%90%8Dyamidama">作品名：YAMIDAMA</h2>
+<img src = "image/YAMIDAMA_Title.png" ald = "YAMIDAMA_Title" width = "540" height = "320">
+<h2 id="%E4%BD%BF%E7%94%A8%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E5%AD%A6%E5%86%85%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%82%92%E6%94%B9%E9%80%A0%E3%81%97%E3%81%9F%E3%82%82%E3%81%AE">使用ゲームエンジン：学内エンジンを改造したもの</h2>
+<h2 id="%E4%BD%BF%E7%94%A8%E8%A8%80%E8%AA%9Echlslpython">使用言語：C++、HLSL、Python</h2>
+<h2 id="%E4%BD%BF%E7%94%A8%E3%83%84%E3%83%BC%E3%83%ABvisual-studio-20193ds-maxadobe-photoshop-elements-2020effekseer">使用ツール：Visual Studio 2019、3ds Max、Adobe Photoshop Elements 2020、Effekseer</h2>
+<h2 id="%E4%BD%BF%E7%94%A8%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AAbulletphysicseffekseerdirectxtk12">使用ライブラリ：BulletPhysics、Effekseer、DirectXTK12</h2>
+<h2 id="%E7%92%B0%E5%A2%83windows10directx12">環境：Windows10、DirectX12</h2>
+<h2 id="%E5%88%B6%E4%BD%9C%E4%BA%BA%E6%95%B01%E4%BA%BA">制作人数：1人</h2>
+<h2 id="%E5%88%B6%E4%BD%9C%E6%9C%9F%E9%96%936%E3%83%B5%E6%9C%88">制作期間：6ヵ月</h2>
+<h2 id="github--httpsgithubcomazuki2828yamidamabrbr">GitHub : <a href="https://github.com/Azuki2828/YAMIDAMA" title="GitHub URL">https://github.com/Azuki2828/YAMIDAMA</a><br><br></h2>
+<h1 id="%E6%93%8D%E4%BD%9C%E8%AA%AC%E6%98%8E">操作説明</h1>
+<p><img src = "image/controller.png" ald = "controller" width = "540" height = "360"><br>
+Aボタン・Jキー：<strong>ローリング、決定</strong><br>
+Bボタン・Kキー：<strong>ダッシュ</strong><br>
+R1ボタン・７キー：<strong>攻撃</strong><br>
+L1ボタン・Bキー：<strong>ガード</strong><br>
+右スティック・方向キー：<strong>カメラ移動</strong><br>
+右スティック押し込み・９キー：<strong>ロックオン</strong><br>
+左スティック・WASDキー：<strong>キャラ移動</strong><br>
+<br></p>
+<h1 id="%E6%8B%85%E5%BD%93%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89">担当ソースコード</h1>
+<ul>
+<li>エンジン部分（C++）
+<ul>
+<li>FontRender.cpp<br></li>
+<li>FontRender.h<br></li>
+<li>DirectionLight.cpp<br></li>
+<li>DirectionLight.h<br></li>
+<li>LightBase.cpp<br></li>
+<li>LightBase.h<br></li>
+<li>LightCulling.cpp<br></li>
+<li>LightCulling.h<br></li>
+<li>Lightmanager.cpp<br></li>
+<li>LightManager.h<br></li>
+<li>PointLight.cpp<br></li>
+<li>PointLight.h<br></li>
+<li>Bloom.cpp<br></li>
+<li>Bloom.h<br></li>
+<li>FXAA.cpp<br></li>
+<li>FXAA.h<br></li>
+<li>GaussianBlur.cpp<br></li>
+<li>GaussianBlur.h<br></li>
+<li>PostEffect.cpp<br></li>
+<li>PostEffect.h<br></li>
+<li>PostEffectComponentBase.cpp<br></li>
+<li>PostEffectComponentBase.h<br></li>
+<li>ShadowMap.cpp<br></li>
+<li>ShadowMap.h<br></li>
+<li>SoundManager.cpp<br></li>
+<li>SoundManager.h<br></li>
+<li>Fade.cpp<br></li>
+<li>Fade.h<br></li>
+<li>GameTime.h<br></li>
+<li>ModelRender.cpp<br></li>
+<li>ModelRender.h<br></li>
+<li>RenderingEngine.cpp<br></li>
+<li>RenderingEngine.h<br></li>
+<li>SpriteRender.cpp<br></li>
+<li>SpriteRender.h<br><br></li>
+</ul>
+</li>
+<li>エンジン部分（HLSL）
+<ul>
+<li>bloom.fx<br></li>
+<li>deferredLighting.fx<br></li>
+<li>drawShadowMap.fx<br></li>
+<li>gaussianBlur.fx<br></li>
+<li>lightCulling.fx<br></li>
+<li>model.fx<br></li>
+<li>sprite.fx<br><br></li>
+</ul>
+</li>
+<li>ゲーム部分（C++）
+<ul>
+<li>Boss.cpp<br></li>
+<li>Boss.h<br></li>
+<li>BossAttackCollisionDetection.cpp<br></li>
+<li>BossAttackCollisionDetection.h<br></li>
+<li>FirstWinEnemy.cpp<br></li>
+<li>FirstWinEnemy.h<br></li>
+<li>FirstWinEnemyAttackCollisionDetection.cpp<br></li>
+<li>FirstWinEnemyAttackCollisionDetection.h<br></li>
+<li>Enemy.cpp<br></li>
+<li>Enemy.h<br></li>
+<li>Item.cpp<br></li>
+<li>Item.h<br></li>
+<li>Player.cpp<br></li>
+<li>Player.h<br></li>
+<li>PlayerAction.cpp<br></li>
+<li>PlayerAction.h<br></li>
+<li>PlayerAnimation.cpp<br></li>
+<li>PlayerAnimation.h<br></li>
+<li>PlayerStateProcess.h<br></li>
+<li>PlayerTriggerBox.cpp<br></li>
+<li>PlayerTriggerBox.h<br></li>
+<li>AppearSprite.cpp<br></li>
+<li>AppearSprite.h<br></li>
+<li>AttackCollision.cpp<br></li>
+<li>AttackCollision.h<br></li>
+<li>BackGround.cpp<br></li>
+<li>BackGround.h<br></li>
+<li>BackGroundObject.h<br></li>
+<li>BackGroundObject.cpp<br></li>
+<li>ConstValue.h<br></li>
+<li>Door.cpp<br></li>
+<li>Door.h<br></li>
+<li>Game.cpp<br></li>
+<li>Game.h<br></li>
+<li>GameHUD.cpp<br></li>
+<li>GameHUD.h<br></li>
+<li>GameTitle.cpp<br></li>
+<li>GameTitle.h<br></li>
+<li>main.cpp<br></li>
+<li>MainCamera.cpp<br></li>
+<li>MainCamera.h<br></li>
+<li>LockOnCamera.cpp<br></li>
+<li>LockOnCamera.h<br></li>
+<li>LockOnMarker.cpp<br></li>
+<li>LockOnMarker.h<br></li>
+<li>CameraManager.cpp<br></li>
+<li>CameraManager.h<br></li>
+<li>stdafx.h<br><br></li>
+</ul>
+</li>
+<li>ゲーム部分（Python）
+<ul>
+<li>BossDeath.py<br></li>
+<li>BossIdle.py<br></li>
+<li>BossJumpAttack.py<br></li>
+<li>BossMove.py<br></li>
+<li>BossScream.py<pr></li>
+<li>BossStart.py<br></li>
+<li>BossSwipingAttack.py<br></li>
+<li>EnemyAttack.py<br></li>
+<li>EnemyAttackBreak.py<br></li>
+<li>EnemyBack.py<br></li>
+<li>EnemyDamage.py<br></li>
+<li>EnemyDeath.py<br></li>
+<li>EnemyIdle.py<br></li>
+<li>EnemyMove.py<br><br></li>
+</ul>
+</li>
+</ul>
+<h1 id="%E6%94%B9%E9%80%A0%E3%81%97%E3%81%9F%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89">改造したエンジンコード</h1>
+<ul>
+<li>AnimationPlayController.cpp(l.187～/footstep関連の処理を削除)</li>
+<li>MapChip.cpp(l.14～/コリジョンオブジェクトか通常オブジェクトを判断して配置するコードを追加)</li>
+<li>MapChip.h(l.36～/データメンバを追加)</li>
+<li>Vector.h(l.3、l.154～、l.479～/bulletPhisicsに対応する関数を追加)</li>
+<li>SkyCube.cpp(l.35～/キューブマップモデルをフォワードレンダリングで描画できるように改造)</li>
+<li>SkyCube.h(l.75～/データメンバを追加)</li>
+<li>tkSoundSource.cpp(l.92～/wavファイルを読み込めなかった時にエラーを出すコードを追加)</li>
+<li>TkmFile.cpp(l.220～/ロードしたファイルを保存、読み込みできるように改造)</li>
+<li>TkmFile.h(l.21～/データメンバを追加)</li>
+<li>Material.cpp(l.13～/ロードしたファイルを保存、読み込みできるように改造)</li>
+<li>Material.h(l.30～/メンバ関数、データメンバを追加)</li>
+<li>MiniEngine.h(l.70～/プリプロセッサ(include)を追加)</li>
+<li>RenderContext.h(l.410～/描画モードのセッターとゲッターを追加)</li>
+<li>RenderTarget.cpp(l.5～l.6/静的メンバの初期化を行うコードを追加)</li>
+<li>RenderTarget.h(l.11～/列挙型のG-Bufferリストを追加、レンダーターゲットの初期化と取得を行うメンバ関数を追加、シャドウマップの初期化と取得を行うメンバ関数を追加)</li>
+<li>Sprite.cpp(l.256/乗算カラーを設定するコードを追加)</li>
+<li>sprite.h(l.123～/乗算カラーを設定する関数とデータメンバを追加)</li>
+<li>tkEngine.h(l.31～/ロードしたファイルを保存、読み込みできる関数、データメンバを追加)</li>
+<li>Skeleton.cpp(l.55～/スケルトンからボーンをコピーをできる関数の実装、特殊なボーンの更新をする関数の実装を追加)</li>
+<li>Skeleton.h(l.247～/スケルトンからボーンをコピーできる関数の宣言、特殊なボーンの更新をする関数の宣言を追加)
+<br><br>
+※行は22/05/30時点のものである。</li>
+</ul>
+<h1 id="%E6%8A%80%E8%A1%93%E8%A6%81%E7%B4%A0">技術要素</h1>
+<h2 id="1pbr%E7%89%A9%E7%90%86%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">1.PBR（物理ベースレンダリング）</h2>
+<p>今回のゲームは、グラフィック表現が魅せるポイントとなっている。よって、ライティングが非常に重要だった。Phongの反射モデルを使用した鏡面反射は物理的に正しいシェーダーではなく、各モデルのライティング調整をするには、専用のライトを作る必要があった。そこで起用したのが、ウォルト・ディズニー社が開発した     <strong>Disney based PBR</strong> である。Disney based PBRは各パラメータを調整することで様々な表現をするので、ライトをモデルごとに分ける必要がない。フレネル反射を考慮した拡散反射、クックトランスモデルを利用した鏡面反射で、凝ったグラフィックを実現させた。以下の画像は、ライティングを一切行っていないゲーム画面と実際のゲーム画面の比較である。
+<br><br>
+▼ライティングなし（テクスチャカラー）<br>
+<img src = "image/inGameNoLight.png" ald = "gameAlbedo" width = "320" height = "180">
+<br>
+▼実際のゲーム画面<br>
+<img src = "image/inGameLight.png" ald = "gameLighting" width = "320" height = "180">
+<br><br></p>
+<h2 id="2tbr%E3%82%BF%E3%82%A4%E3%83%AB%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">2.TBR（タイルベースレンダリング）</h2>
+<br>
+本作品は、砦内の空気感を引き立たせるために、ポイントライト（点光源）を多少強く設定してある。逆に、ディレクションライト（平行光源）は弱く設定してあるため、砦内を魅せるためにはたくさんのポイントライトを配置する必要があった。<br><br>
+<img src = "image/pointLight.png" ald = "pointLight" width = "520" height = "300">
+<br>
+▲いくつも配置されたポイントライト
+<br><br><br>
+実際、この砦には60個以上のポイントライトが配置されている。そこで問題になってくるのが処理速度だ。1080×720の解像度の場合、ピクセルの数は1080×720=777600になり、ポイントライトが60個だと、777600×60=約4600万回を１フレームに計算することになる。ただこれは現状この数で済んでいるだけで、仮に1920×1080の解像度で1000個のポイントライトを配置した場合は、計算量は約20億回にまで増えてしまう。そうなるとゲームはまともにプレイできないだろう。そこで今回実装したのが、**TBR（タイルベースドレンダリング）** である。
+<br><br>
+<h3 id="21%E3%83%A9%E3%82%A4%E3%83%88%E3%82%AB%E3%83%AA%E3%83%B3%E3%82%B0">2.1.ライトカリング</h3>
+<p>では、どうやって多くのポイントライトの処理を高速で行うのか。このTBRにおいてキモとなるのが<strong>ライトカリング</strong>である。これは、<strong>スクリーンをタイル状に分割し、各タイルごとに影響を与える可能性のある光源のリストを作成する</strong>ものである。もう少し分かりやすく言うと、<strong>各タイルでポイントライトとの当たり判定を行い、衝突しているポイントライトだけ計算処理をする</strong>ということだ。
+<br>
+<img src = "image/lightCulling_1.png" ald = "lightCulling_1" width = "540" height = "360"><br>
+▲各タイルごとにポイントライトとの当たり判定をとる。<br>
+<img src = "image/lightCulling_2.png" ald = "lightCulling_2" width = "540" height = "440">
+<br>
+▲視錘台とポイントライトの当たり判定をとる<br>
+<br>
+本来ならば、全てのタイルで全てのポイントライトの影響を計算していたのが、<strong>そのタイルに必要なポイントライトだけの計算で済む</strong>ようになるわけだ。つまり、ポイントライトと全く接していないタイルでは計算をそもそもする必要がないため処理を行わない。<br>
+以下、ライトカリングを行うまでの手順である。<br><br>
+1.シーンの深度値テクスチャを作成する(本作品ではディファードレンダリングと融合したTBDRを実装しているため、G-Bufferを使用)<br>
+2.深度値テクスチャ、タイルごとのポイントライトの番号のリストを出力するUAV、カメラの情報、ライトの情報をディスクリプタヒープに登録[^1]<br></p>
+<p>3.ライトカリングのコンピュートシェーダーをディスパッチ<br>
+------------------------ここからシェーダー側------------------------<br><br></p>
+<p>4.共有メモリを初期化<br>
+5.全てのスレッドがここまでの処理が終わるまで同期[^2]<br>
+6.そのタイルでの最大深度・最小深度を求める<br>
+7.タイルの視錘台を構成する6つの平面を求める<br>
+8.タイルとポイントライトの衝突判定を行う<br>
+9.ライトのインデックスを出力バッファに出力<br>
+10.影響リストの終端に番兵を設定<br>
+11.影響リストを元に、そのタイルでのポイントライトの計算を行う<br><br><br></p>
+<h2 id="3%E3%83%87%E3%82%A3%E3%83%95%E3%82%A1%E3%83%BC%E3%83%89%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E9%81%85%E5%BB%B6%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">3.ディファードレンダリング（遅延レンダリング）</h2>
+<p>オブジェクトを配置していると、ライティングで無駄な処理が生まれることがある。それはカメラから見て物体が重なっているときである。
+<br>
+<img src = "image/deferredRendering_1.png" ald = "deferredRendering_1" width = "540" height = "320">
+<br>
+　こういった場合、先に描画した三角形の一部が隠れてしまうため、その部分で行ったライティング処理が無駄になる。
+<br>
+<img src = "image/deferredRendering_2.png" ald = "deferredRendering_2" width = "540" height = "320">
+<br>
+　そのため本作品では、ライティング計算を後で行うディファードレンダリングを採用している。そうすることでオブジェクトの配置場所、量に関係なく、一定の回数でライティング計算を行うことができる。<br>
+　しかし、ディファードレンダリングを行うにはいくつかの情報を先に書き出す必要がある。これは<strong>G-Buffer</strong>と呼ばれるもので、<strong>MRT（マルチレンダリングターゲット）</strong> で作られる複数のテクスチャであり、後にライティングを行うための情報になる。以下の画像は本作品のシーンの一部のG-Bufferである。
+<br>
+▼テクスチャカラー<br>
+<img src = "image/gameAlbedo.png" ald = "gameAlbedo" width = "320" height = "180"><br>
+▼法線<br>
+<img src = "image/gameNormal.png" ald = "gameNormal" width = "320" height = "180"><br>
+▼ワールド座標<br>
+<img src = "image/gameWorldPos.png" ald = "gameWorldPos" width = "320" height = "180"><br>
+▼滑らかさと金属度<br>
+<img src = "image/gameSmoothMetaric.png" ald = "gameSmoothMetaric" width = "320" height = "180"><br>
+<br>
+これらのG-Bufferを元にライティングされたものが以下の画像である。
+<br>
+▼ライティング後のシーン<br>
+<img src = "image/inGameLight.png" ald = "inGameLight" width = "640" height = "360">
+<br></p>
+<h3 id="31%E3%83%87%E3%82%A3%E3%83%95%E3%82%A1%E3%83%BC%E3%83%89%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%AE%E6%AC%A0%E7%82%B9">3.1.ディファードレンダリングの欠点</h3>
+<p>しかし、<strong>ディファードレンダリングは半透明描画が出来ない</strong>という問題を抱えている。もし半透明描画をしようと思った場合、手前にある半透明オブジェクトと奥にあるオブジェクト、どちらもライティング計算をしなくてはいけない。具体的には法線が必要になる。しかし、ディファードレンダリングではG-Bufferを使って法線マップを作成するため、ピクセルには一つの値しか書き込むことができない。そのため、半透明オブジェクトを描画するには、他の手段を取る必要がある。そこで、本作品は<strong>ディファードレンダリングとフォワードレンダリングを組み合わせたハイブリッドエンジン</strong>を実装している。これは、ディファードレンダリングを行った後で、フォワードレンダリングしたモデルを加算合成するというものだ。本作品に半透明オブジェクトは出てこないが、空を表現する際に必要になった。
+<br>
+　空を表現する時にはキューブマップを使用したが、もし先にディファードレンダリングで描画すると、当然G-Bufferにその情報が書き込まれることになる。そうすると、空までライティングの影響を受けてしまう。そのため、本作品では、空に関してはフォワードレンダリングで表現している。</p>
+<p>ディファードレンダリングの欠点として、MRTを活用しているため、<strong>メモリ使用量が増える</strong>問題がある。さらに、複数のG-Bufferに書き込む関係上、<strong>書き込み速度にも注意が必要</strong>だ。</p>
+<h2 id="4vsm%E5%88%86%E6%95%A3%E3%82%B7%E3%83%A3%E3%83%89%E3%82%A6%E3%83%9E%E3%83%83%E3%83%97">4.VSM（分散シャドウマップ）</h2>
+<p>本作品はソフトシャドウとして<strong>VSM（分散シャドウマップ)</strong> を実装している。これは影生成で発生したジャギーを和らげるものだ。<strong>PCF</strong>は近辺４テクセルの平均を取って遮蔽率を計算し、線形補間で影の縁を和らげるものだが、これではジャギーを消すには足りなかった。
+そこで実装したのがVSMである。<br>
+VSMは「シャドウマップをいくつかのブロックに分け、その分散を利用して影を和らげる」というものだ。まずは、シャドウマップをいくつかのブロックに分けたいので、シャドウマップにガウシアンブラーをかけてテクスチャを縮小させる。これにより、周囲のテクセルの値と混ざったテクスチャが出来上がり、この混ざったところが分散を求めるブロックになる。
+<br><br>
+▼ガウシアンブラーをかけたシャドウマップをいくつかのグループに分けた図<br>
+<img src = "image/shadowMap_Front_Line1.png" ald = "shadowMap_Front_Line1" width = "320" height = "320">
+<br><br>
+▼グループごとの深度値の分散を考える<br>
+<img src = "image/shadowMap_Front_Line3.png" ald = "shadowMap_Front_Line3" width = "320" height = "320">
+<br><br>
+この分散を使って、光が届く確率を求め、影を落とすというのがVSMである。分散が小さい=影が薄くなる、分散が大きい時=ほぼ光が遮断されているので、影が濃くなる、というわけだ。
+<br>
+分散を求める式は以下である。<br>
+<img src = "image/variance.png" ald = "variance" width = "640" height = "90"><br>
+深度値はライトカメラの情報と合わせて得ることができる。<br>
+<img src = "image/depth.png" ald = "depth" width = "560" height = "360"><br></p>
+<p>影を落とすときは、<strong>チェビシェフの不等式</strong>を使っている。このチェビシェフの不等式は<strong>分散</strong>と<strong>ライトから見た深度値とシャドウマップの平均の深度値の差</strong>を用いて光が届く確率を求めるというものだ。<br>
+<img src = "image/chebyshev.png" ald = "chebyshev" width = "600" height = "240"><br>
+▲チェビシェフの不等式を使って光が届く確率を求める。
+<br></p>
+<p><strong>lit_factor</strong>と<strong>variance</strong>の関係は以下のようになる（<strong>md</strong>は0.5とする）。<br>
+<img src = "image/chebyshev_2.png" ald = "chebyshev_2" width = "480" height = "250"><br>
+<img src = "image/chebyshev_3.png" ald = "chebyshev_3" width = "480" height = "320"><br></p>
+<p><strong>lit_factor</strong>と<strong>md</strong>の関係は以下のようになる（<strong>variance</strong>は0.5とする）。<br>
+<img src = "image/chebyshev_4.png" ald = "chebyshev_4" width = "480" height = "250"><br>
+<img src = "image/chebyshev_5.png" ald = "chebyshev_5" width = "480" height = "320"><br></p>
+<p>後は、求まった確率をライトの強さに乗算すればVSMは完了だ。
+以下、実際にVSMを使ったシーンを一部拡大したものである。<br>
+<img src = "image/vsm.png" ald = "vsm" width = "540" height = "480"><br><br><br></p>
+<h2 id="5fxaa%E3%82%A2%E3%83%B3%E3%83%81%E3%82%A8%E3%82%A4%E3%83%AA%E3%82%A2%E3%82%B7%E3%83%B3%E3%82%B0">5.FXAA（アンチエイリアシング）</h2>
+<p>ジャギーの問題は影だけではない。モデルに関しても、ジャギーは発生する。<br>
+<img src = "image/fxaa_3.png" ald = "fxaa_3" width = "540" height = "360"><br>
+▲角の部分でジャギーが発生している。
+<br>
+ジャギーは&quot;オブジェクトと背景&quot;など、輝度差が大きくなりやすいところで発生しやすい。そこで、近辺４テクセルの輝度を調べて、ブレンドすることで、ジャギーを軽減しようというのが<strong>FXAA</strong>である。
+<br>
+<img src = "image/fxaaImage_1.png" ald = "fxaaImage_1" width = "400" height = "250"><br>
+<img src = "image/fxaaImage_2.png" ald = "fxaaImage_2" width = "440" height = "270"><br>
+<img src = "image/fxaaImage_3.png" ald = "fxaaImage_3" width = "440" height = "280"><br>
+<img src = "image/fxaaImage_4.png" ald = "fxaaImage_4" width = "440" height = "240"><br><br><br>
+▼FXAA後。角の部分のジャギーが軽減されている。<br>
+<img src = "image/fxaa_2.png" ald = "fxaa_2" width = "360" height = "250"><br></p>
+<h2 id="6c%E3%81%A8python%E3%81%AE%E9%80%A3%E6%90%BA">6.C++とPythonの連携</h2>
+<p>本作品では、<strong>敵の行動をPythonで管理</strong>している。C++側で関数の定義をし、Python側で、定義された関数を呼び出す仕組みだ。<br></p>
+<p>手順は以下である。<br><br>
+1.まず、C++側で関数を定義する。<br>
+<img src = "image/python_1.png" ald = "python_1" width = "540" height = "320"><br>
+2.関数定義をPython側に登録する。<br>
+<img src = "image/python_2.png" ald = "python_2" width = "540" height = "320"><br>
+3.Python側は関数をインポートし、Update()内で指定した関数を呼び出す。<br>
+<img src = "image/python_3.png" ald = "python_3" width = "540" height = "320"><br><br></p>
+<p>この手順は一見無駄なように感じられる。しかし、これにはメリットがある。それは、<strong>Pythonの方がコードを改造するのに安全だということだ</strong>。この作品の目的の一つとして、<strong>敵の行動を自分でカスタマイズできる</strong>ようにするというものがある。難易度も、敵の攻撃スピードやパターンを変更することで調整でき、自分のスタイルにあったゲームに変えられるのだ。<br>
+しかし、プログラミングの経験がない方に、C++のコードを改造させるのは難しい。そこで、「どの関数がどのような働きをするのか」、そこまではこちらで記しておき、コードの書きやすいPythonを介する（かつ、Update()ただ一つの中で完結させる）ことにした。すると、改造に必要なことは、用意された関数を呼び出すことだけで済むのだ。もちろん、敵の行動を管理する中で、クールタイム等を変更したり、行動パターンをランダムに変えたりすることだってできる。[^3]<br></p>
+<p><img src = "image/think.png" ald = "think" width = "540" height = "320"><br></p>
+<p><br><br><br></p>
+<h2 id="7%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%96%E3%83%AC%E3%83%B3%E3%83%89">7.アニメーションブレンド</h2>
+<p>本作品のキャラクターは二つの状態を持つことがある。それは、<strong>ガードしながらの移動</strong>だ。当然、対応するアニメーションを用意しなければならない。
+本来ならばアニメータの方にお願いするところだが、プログラマとしてどうにか実装できないかと考えたところ、新しくアニメーションのアセットを用意するのではなく、<strong>アニメーションブレンド</strong>に挑戦することに決めた。<br><br>
+以下、実装前と実装後の比較である。<br><br>
+▼ガードしながら移動しようとすると、ガードモーションのまま滑ってしまう。<br>
+<img src = "image/beforeMove.gif" ald = "bossCamera" width = "540" height = "320"><br><br>
+▼上半身はガードモーションを、下半身は歩行モーションを使用する。<br>
+<img src = "image/afterMove.gif" ald = "bossCamera" width = "540" height = "320"><br><br></p>
+<p><br><br><br></p>
+<h1 id="%E3%81%93%E3%81%A0%E3%82%8F%E3%82%8A%E3%83%BB%E5%B7%A5%E5%A4%AB%E3%81%97%E3%81%9F%E7%82%B9%E3%83%BB%E8%8B%A6%E5%8A%B4%E3%81%97%E3%81%9F%E7%82%B9">こだわり・工夫した点・苦労した点</h1>
+<br>
+<h2 id="1%E3%83%AD%E3%83%83%E3%82%AF%E3%82%AA%E3%83%B3%E3%82%AB%E3%83%A1%E3%83%A9">1.ロックオンカメラ</h2>
+<br>
+ロックオンカメラは、ダークソウルリマスターを参考にして細かく調整した。<br><br>
+<h3 id="11%E3%82%AB%E3%83%A1%E3%83%A9%E3%81%AE%E6%B3%A8%E8%A6%96%E7%82%B9br">1.1.カメラの注視点<br></h3>
+<p>最初は敵の座標をカメラの注視点に設定していたため、カメラの範囲にプレイヤーと敵が綺麗に収まらない瞬間が見られた。<br>
+そのため、敵の座標ではなく、プレイヤーの頭上をカメラの注視点にすることによってこの問題を解決させた。<br><br>
+▼敵の座標を注視点に設定した場合。プレイヤーの下半身が見切れやすく、画面上部に空間ができやすい。<br>
+<img src = "image/beforeLockOn.gif" ald = "bossCamera" width = "540" height = "320"><br><br>
+▼プレイヤーの頭上を注視点に設定した場合。画面にプレイヤーと敵がいい感じに画面に収まっている。<br>
+<img src = "image/afterLockOn.gif" ald = "bossCamera" width = "540" height = "320"><br><br></p>
+<h3 id="12%E3%82%AB%E3%83%A1%E3%83%A9%E3%81%AE%E9%81%B7%E7%A7%BBbr">1.2.カメラの遷移<br></h3>
+<p>通常、カメラを切り替えると瞬間的に画面が切り替わってしまう。そこで今回はロックオンカメラと通常カメラの二つを用意するのではなく、同じカメラに対して様々な設定を行う二つのカメラクラス（ロックオンと通常）を用意することにした。そして、カメラを切り替える際に減衰率を元に視点と注視点の座標を補間することでスムーズな遷移を実装することができた。<br><br>
+▼滑らかにカメラが遷移している。<br>
+<img src = "image/ChangeCamera.gif" ald = "bossCamera" width = "540" height = "320"><br><br></p>
+<h3 id="13%E3%83%AD%E3%83%83%E3%82%AF%E3%82%AA%E3%83%B3%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3br">1.3.ロックオンアイコン<br></h3>
+<p>ロックオン対象がはっきり分かるように、ロックオンアイコンも実装した。<br>
+アイコンの画像はロックオン対象の敵と同じ座標に設定し、スクリーン空間座標系に変換することで、画面上でもロックオン対象の敵にアイコンが映るようになっている。<br><br>
+<img src = "image/LockOnIcon.png" ald = "think" width = "540" height = "400"><br><br></p>
+<h3 id="14%E3%83%AD%E3%83%83%E3%82%AF%E3%82%AA%E3%83%B3%E5%AF%BE%E8%B1%A1%E3%81%AE%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88br">1.4.ロックオン対象の切り替え<br></h3>
+<p>敵が複数体いる場合、右スティックの入力でロックオン対象を切り替えられるようにした。<br>
+<img src = "image/ChangeLockOn.gif" ald = "bossCamera" width = "540" height = "320"><br><br></p>
+<h2 id="2ibl%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">2.IBLについて</h2>
+<p>本作品は、空気感を少しでも良くするために、映り込み表現として<strong>IBL（イメージベースドライティング）</strong> を実装している。
+IBLは、最も簡単に実装できる映り込み表現だと言えるだろう。
+手順は以下のようになる。<br>
+1.移り込ませるテクスチャを用意する（本作品はキューブマップを使っている）<br>
+2.IBLで用いる輝度を設定する<br>
+------------------------ここからシェーダー側------------------------<br><br>
+3.視線（シーンカメラ）からの反射ベクトルを求める  <br>
+4.そのピクセルに該当するオブジェクトの滑らかさから映り込みの度合を求める<br>
+5.反射ベクトルと、映り込みの度合いから、移り込ませるテクスチャをサンプリングし、ピクセルのテクスチャカラーとIBLで設定しているテクスチャと輝度をそれぞれ乗算する<br>
+6.そのピクセルのライトのカラーに加算する<br><br><br></p>
+<p>このIBLを実装しようと思った理由は、床や壁に不気味な空が映ると雰囲気がでると思ったからである。ただ、床や壁は滑らかとは言えず、テクスチャカラーも暗かったため、綺麗な表現にはならなかった。<br>
+▼赤い月を移り込ませたかったが、床や壁のカラー、質から上手く映らなかった<br>
+<img src = "image/ibl.png" ald = "ibl" width = "540" height = "320"><br><br></p>
+<h2 id="3%E3%83%9C%E3%82%B9%E6%88%A6%E6%99%82%E3%81%AE%E3%82%AB%E3%83%A1%E3%83%A9%E3%81%AE%E6%8F%BA%E3%82%8C">3.ボス戦時のカメラの揺れ</h2>
+<p>ボス戦は盛り上げる形にしたかった。BGMもそうだが、雰囲気づくりにもう少し踏み込みたかった。
+ボスは通常の敵と違い、ジャンプ攻撃を仕掛けてくることがある。そこで、地面に着地した時にカメラを揺らす演出を入れた。<br>
+<img src = "image/bossCamera.gif" ald = "bossCamera" width = "540" height = "320"><br><br>
+基本的にこのゲームはプレイヤーを中心にカメラが動く。なので、カメラの動き（画面の動き）は操作している人にとって大方予測できるのだ。カメラを揺らし、不規則に画面を動かすことで、臨場感を底上げした。<br><br></p>
+<h2 id="4%E8%AA%BF%E6%95%B4%E3%82%92%E9%87%8D%E3%81%AD%E3%81%9F%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF">4.調整を重ねたグラフィック</h2>
+<p>本作品の魅力は何といってもグラフィックである。ゲームの空気感に合うように、違和感がでないように、<a href="#1pbr%E7%89%A9%E7%90%86%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">PBR</a>を上手く使った。剣や盾は木材部分と金属部分で滑らかさや金属度を、床や壁は反射しすぎないように滑らかさを調整した。<br>
+<img src = "image/pbr.gif" ald = "pbr" width = "720" height = "540"><br><br>
+[^1]: 深度値テクスチャは、シェーダー側では読み込むだけなのでシェーダーリソースビューで十分だが、UAVに関してはシェーダー側で情報を書き込む必要があるため、アンオーダーアクセスビューに指定しなくてはいけない
+[^2]: 共有メモリの初期化を行う前に他のスレッドが最大深度・最小深度の更新を行うのを防ぐため
+[^3]: 敵の動き（呼び出されるpythonファイル）はステートで管理されているため、ステートを変更するだけで行動を変えられる。</p>
+
+</body>
+</html>
